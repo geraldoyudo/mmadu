@@ -3,5 +3,7 @@ This is a user management service that enables developers to focus on writing ap
 
 # Steps to Run Mmadu Service 
 
+```shell
 cd mmadu-user-service
 mvn spring-boot:run
+```
