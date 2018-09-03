@@ -95,4 +95,8 @@ public class AppUser {
     public void setDomainId(String domainId) {
         this.domainId = domainId;
     }
+
+    public boolean passwordMatches(String password){
+        return this.password.equals(password);
+    }
 }

@@ -28,4 +28,9 @@ public class AppUserRepositoryTest {
         assertThat(retrievedUser, notNullValue());
     }
 
+    @Test
+    public void findByUserNameAndDomain(){
+        AppUser user = appUserRepository.findByUsernameAndDomainId("user", "test").get();
+        assertThat(user, notNullValue());
+    }
 }
