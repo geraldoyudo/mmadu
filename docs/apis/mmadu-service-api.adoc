@@ -1,0 +1,15 @@
+= Mmadu Service Api
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v0.0.1, 2018-09-04
+:toc: left
+:sectnums:
+:showtitle:
+:page-navtitle: Mmadu Service Api Documentation
+:page-excerpt: Mmadu
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: api
+:snippets: ../../transfer-service/apidocs/snippets
+
+== Introduction
