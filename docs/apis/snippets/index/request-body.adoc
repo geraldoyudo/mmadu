@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"domain":"test","username":"user","password":"password"}
+----
