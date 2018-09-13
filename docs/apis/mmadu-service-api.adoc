@@ -1,0 +1,208 @@
+= Mmadu Service Api
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v0.0.1, 2018-09-04
+:toc: left
+:sectnums:
+:showtitle:
+:page-navtitle: Mmadu Service Api Documentation
+:page-excerpt: Mmadu
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: api
+:snippets: snippets
+
+== Introduction
+
+Mmadu user service exposes API's to help you interact with the user service.
+
+== API Features
+
+=== Authentication
+
+Using the rest api, you can authenticate users given a username and
+password.
+
+A post request authenticates a user on a domain.
+
+==== Request Fields
+
+include::{snippets}/authentication-documentation/authentication/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/authentication-documentation/authentication/1/http-request.adoc[]
+
+==== Response Fields
+
+This API returns a JSON response with the following fields:
+
+include::{snippets}/authentication-documentation/authentication/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/authentication-documentation/authentication/1/http-response.adoc[]
+
+=== User Management
+
+With Mmadu user service, you can manage your users across any domain.
+
+==== Domains
+
+A client application references users in one domain. A domain is referenced by a domain id. Applications
+can share the same user base by using the same domain id.
+
+==== AppUsers
+
+An AppUser contains user information for a specific user. A user should have a username, password,
+id, and a domain id. Other properties can be stored in the "properties" property of the user.
+
+
+==== Creating A User
+
+A POST request will create a user.
+
+===== Request Fields
+
+include::{snippets}/user-management-documentation/create-user/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/create-user/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+
+==== Getting A User with an ID
+
+A GET request will get a user with an ID.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns an AppUser with these fields:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-response.adoc[]
+
+==== Getting All Users Across Domains
+
+A GET request will get all users regardless of domains.
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a list of all users with these fields:
+
+include::{snippets}/user-management-documentation/getting-all-users/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users/1/http-response.adoc[]
+
+==== Removing A User with an ID
+
+A DELETE request will remove a user with an ID.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-response.adoc[]
+
+==== Updating A User with an ID
+
+A PATCH request will update a user with an ID.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-response.adoc[]
+
+==== Getting All Users In A Domain
+
+A GET request will get all users in a domain.
+
+===== Request Parameters
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a list of all users with these fields:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-response.adoc[]
+
+==== Getting A User with a username and domain id
+
+A GET request will get a user with the specified username and domain id.
+
+===== Request Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns an AppUser with these fields:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-response.adoc[]
+

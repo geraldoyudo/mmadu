@@ -1,0 +1,8 @@
+*~
+/.bundle/
+/tmp/
+/_site
+*.bundle
+Gemfile.lock
+.asciidoctor
+_posts/.asciidoctor

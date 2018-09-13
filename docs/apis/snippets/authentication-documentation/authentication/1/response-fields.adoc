@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+status+`
+|`+String+`
+|The authentication status. One of the following: AUTHENTICATED, USERNAME_INVALID, PASSWORD_INVALID
+
+|===

@@ -1,0 +1,77 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 1821
+
+{
+  "_embedded" : {
+    "appUsers" : [ {
+      "username" : "test-user0",
+      "password" : "my-password0",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF0"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF0"
+        }
+      }
+    }, {
+      "username" : "test-user1",
+      "password" : "my-password1",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF1"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF1"
+        }
+      }
+    }, {
+      "username" : "test-user2",
+      "password" : "my-password2",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF2"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF2"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/appUsers/search/findByDomainId?page=0&size=20"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 3,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----

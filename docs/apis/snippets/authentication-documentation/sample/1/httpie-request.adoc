@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"domain":"domain","username":"username","password":"password"}' | http POST 'http://localhost:8080/authenticate' \
+    'Content-Type:application/json'
+----

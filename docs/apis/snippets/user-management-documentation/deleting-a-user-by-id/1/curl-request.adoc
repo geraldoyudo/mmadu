@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appUsers/12345ABCDEF' -i -X DELETE
+----

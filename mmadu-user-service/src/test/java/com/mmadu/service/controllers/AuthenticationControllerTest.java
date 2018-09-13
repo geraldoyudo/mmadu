@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +38,9 @@ public class AuthenticationControllerTest {
     public void testAuthentication() throws Exception {
         doReturn(AuthenticateResponse.builder().status(AUTHENTICATED).build()).when(service).authenticate(any());
 
-        mockMvc.perform(post("/authenticate").content(mapper.writeValueAsString(
+        mockMvc.perform(post("/authenticate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(
                 AuthenticateRequest.builder().domain("domain").password("password").username("username").build())))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.status").value(AUTHENTICATED.name()));
     }

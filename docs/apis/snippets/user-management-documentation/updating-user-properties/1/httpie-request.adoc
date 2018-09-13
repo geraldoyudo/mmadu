@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"password":"new-password","properties":{"favourite-colour":"green"}}' | http PATCH 'http://localhost:8080/appUsers/12345ABCDEF' \
+    'Content-Type:application/json'
+----
