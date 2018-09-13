@@ -1,0 +1,19 @@
+[source,http,options="nowrap"]
+----
+POST /appUsers HTTP/1.1
+Host: localhost:8080
+Content-Length: 266
+
+{
+  "id" : "12345ABCDEF",
+  "username" : "test-user",
+  "password" : "my-password",
+  "domainId" : "test-app",
+  "roles" : [ "admin-role" ],
+  "authorities" : [ "admin" ],
+  "properties" : {
+    "country" : "Nigeria",
+    "favourite-colour" : "blue"
+  }
+}
+----

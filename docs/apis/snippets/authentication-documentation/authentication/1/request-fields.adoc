@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+username+`
+|`+String+`
+|The user identification
+
+|`+domain+`
+|`+String+`
+|The user authentication domain id
+
+|`+password+`
+|`+String+`
+|The user's password
+
+|===

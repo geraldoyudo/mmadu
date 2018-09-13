@@ -1,0 +1,13 @@
+|===
+|Relation|Description
+
+|`+self+`
+|Self reference link
+
+|`+search+`
+|Link to query appUsers
+
+|`+profile+`
+|Meta data for api
+
+|===

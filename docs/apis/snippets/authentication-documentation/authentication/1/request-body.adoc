@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "domain" : "test-app",
+  "username" : "test-user",
+  "password" : "my-password"
+}
+----

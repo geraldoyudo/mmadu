@@ -1,0 +1,8 @@
+.+/appUsers/{userId}+
+|===
+|Parameter|Description
+
+|`+userId+`
+|The user's ID
+
+|===

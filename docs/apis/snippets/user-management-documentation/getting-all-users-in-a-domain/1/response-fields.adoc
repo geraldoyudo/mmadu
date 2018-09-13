@@ -1,0 +1,40 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.appUsers.[].domainId+`
+|`+String+`
+|Domain Id of the user
+
+|`+_embedded.appUsers.[].username+`
+|`+String+`
+|Username of the user
+
+|`+_embedded.appUsers.[].password+`
+|`+String+`
+|password of the user
+
+|`+_embedded.appUsers.[].roles+`
+|`+string list+`
+|List of roles assigned to this user
+
+|`+_embedded.appUsers.[].authorities+`
+|`+string list+`
+|List of authorities given to ths user
+
+|`+_embedded.appUsers.[].properties+`
+|`+map+`
+|Other user properties
+
+|`+_embedded.appUsers.[]._links+`
+|`+map+`
+|User item resource links
+
+|`+_links+`
+|`+map+`
+|Resource links
+
+|`+page+`
+|`+map+`
+|Page information
+
+|===

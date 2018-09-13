@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appUsers/search/findByUsernameAndDomainId?username=test-user&domainId=test-app' -i -X GET
+----

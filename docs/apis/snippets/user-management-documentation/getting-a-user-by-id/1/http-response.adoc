@@ -1,0 +1,26 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 435
+
+{
+  "username" : "test-user",
+  "password" : "my-password",
+  "domainId" : "test-app",
+  "roles" : [ "admin-role" ],
+  "authorities" : [ "admin" ],
+  "properties" : {
+    "country" : "Nigeria",
+    "favourite-colour" : "blue"
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
+    },
+    "appUser" : {
+      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
+    }
+  }
+}
+----
