@@ -138,3 +138,71 @@ This API returns a HTTP 204 NO CONTENT response.
 Example:
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-response.adoc[]
+
+==== Updating A User with an ID
+
+A PATCH request will update a user with an ID.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-response.adoc[]
+
+==== Getting All Users In A Domain
+
+A GET request will get all users in a domain.
+
+===== Request Parameters
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a list of all users with these fields:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-response.adoc[]
+
+==== Getting A User with a username and domain id
+
+A GET request will get a user with the specified username and domain id.
+
+===== Request Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns an AppUser with these fields:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-response.adoc[]
+

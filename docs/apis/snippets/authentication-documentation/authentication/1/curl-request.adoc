@@ -3,8 +3,8 @@
 $ curl 'http://localhost:8080/authenticate' -i -X POST \
     -H 'Content-Type: application/json' \
     -d '{
-  "domain" : "test",
-  "username" : "user",
-  "password" : "password"
+  "domain" : "test-app",
+  "username" : "test-user",
+  "password" : "my-password"
 }'
 ----

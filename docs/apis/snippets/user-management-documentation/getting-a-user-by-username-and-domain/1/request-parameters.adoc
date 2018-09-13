@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+username+`
+|The username of the user
+
+|`+domainId+`
+|The domain id of the user
+
+|===

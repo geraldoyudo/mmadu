@@ -2,7 +2,7 @@
 ----
 POST /appUsers HTTP/1.1
 Host: localhost:8080
-Content-Length: 265
+Content-Length: 266
 
 {
   "id" : "12345ABCDEF",
@@ -13,7 +13,7 @@ Content-Length: 265
   "authorities" : [ "admin" ],
   "properties" : {
     "country" : "Nigeria",
-    "favourite-color" : "blue"
+    "favourite-colour" : "blue"
   }
 }
 ----

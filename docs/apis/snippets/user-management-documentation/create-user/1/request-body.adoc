@@ -9,7 +9,7 @@
   "authorities" : [ "admin" ],
   "properties" : {
     "country" : "Nigeria",
-    "favourite-color" : "blue"
+    "favourite-colour" : "blue"
   }
 }
 ----

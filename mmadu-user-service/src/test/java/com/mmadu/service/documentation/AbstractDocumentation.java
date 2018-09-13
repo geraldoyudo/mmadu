@@ -42,7 +42,7 @@ public abstract class AbstractDocumentation {
     @Autowired
     private WebApplicationContext context;
     @Autowired
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
     @Autowired
     protected AppUserRepository appUserRepository;
 
@@ -74,7 +74,7 @@ public abstract class AbstractDocumentation {
         user.addAuthorities(TEST_AUTHORITY);
         user.addRoles(TEST_ROLE);
         user.set("country", "Nigeria");
-        user.set("favourite-color", "blue");
+        user.set("favourite-colour", "blue");
         return user;
     }
 

@@ -9,7 +9,7 @@ $ echo '{
   "authorities" : [ "admin" ],
   "properties" : {
     "country" : "Nigeria",
-    "favourite-color" : "blue"
+    "favourite-colour" : "blue"
   }
 }' | http POST 'http://localhost:8080/appUsers'
 ----

@@ -2,7 +2,7 @@
 ----
 HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
-Content-Length: 1994
+Content-Length: 1821
 
 {
   "_embedded" : {
@@ -64,14 +64,7 @@ Content-Length: 1994
   },
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/appUsers{?page,size,sort}",
-      "templated" : true
-    },
-    "profile" : {
-      "href" : "http://localhost:8080/profile/appUsers"
-    },
-    "search" : {
-      "href" : "http://localhost:8080/appUsers/search"
+      "href" : "http://localhost:8080/appUsers/search/findByDomainId?page=0&size=20"
     }
   },
   "page" : {
