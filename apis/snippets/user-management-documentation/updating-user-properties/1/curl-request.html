@@ -44,13 +44,9 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/authenticate' -i -X POST \
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/appUsers/12345ABCDEF' -i -X PATCH \
     -H 'Content-Type: application/json' \
-    -d '{
-  &quot;domain&quot; : &quot;test-app&quot;,
-  &quot;username&quot; : &quot;test-user&quot;,
-  &quot;password&quot; : &quot;my-password&quot;
-}'</code></pre>
+    -d '{&quot;password&quot;:&quot;new-password&quot;,&quot;properties&quot;:{&quot;favourite-colour&quot;:&quot;green&quot;}}'</code></pre>
 </div>
 </div>
 

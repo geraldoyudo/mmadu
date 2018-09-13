@@ -44,13 +44,76 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/authenticate' -i -X POST \
-    -H 'Content-Type: application/json' \
-    -d '{
-  &quot;domain&quot; : &quot;test-app&quot;,
-  &quot;username&quot; : &quot;test-user&quot;,
-  &quot;password&quot; : &quot;my-password&quot;
-}'</code></pre>
+<pre class="CodeRay highlight nowrap"><code>{
+  "_embedded" : {
+    "appUsers" : [ {
+      "username" : "test-user0",
+      "password" : "my-password0",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF0"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF0"
+        }
+      }
+    }, {
+      "username" : "test-user1",
+      "password" : "my-password1",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF1"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF1"
+        }
+      }
+    }, {
+      "username" : "test-user2",
+      "password" : "my-password2",
+      "domainId" : "test-app",
+      "roles" : [ "admin-role" ],
+      "authorities" : [ "admin" ],
+      "properties" : {
+        "country" : "Nigeria",
+        "favourite-color" : "blue"
+      },
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF2"
+        },
+        "appUser" : {
+          "href" : "http://localhost:8080/appUsers/12345ABCDEF2"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/appUsers/search/findByDomainId?page=0&amp;size=20"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 3,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}</code></pre>
 </div>
 </div>
 

@@ -1,0 +1,173 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/coderay.css">
+    <link rel="stylesheet" href="css/asciidoctor.css">
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/toc.js"></script>
+</head>
+<body>
+
+
+<!-- Nav Bar -->
+
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+            <h1>
+                <a href="">Mmadu Documentation</a>
+            </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 1994
+
+{
+  &quot;_embedded&quot; : {
+    &quot;appUsers&quot; : [ {
+      &quot;username&quot; : &quot;test-user0&quot;,
+      &quot;password&quot; : &quot;my-password0&quot;,
+      &quot;domainId&quot; : &quot;test-app&quot;,
+      &quot;roles&quot; : [ &quot;admin-role&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;properties&quot; : {
+        &quot;country&quot; : &quot;Nigeria&quot;,
+        &quot;favourite-color&quot; : &quot;blue&quot;
+      },
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF0&quot;
+        },
+        &quot;appUser&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF0&quot;
+        }
+      }
+    }, {
+      &quot;username&quot; : &quot;test-user1&quot;,
+      &quot;password&quot; : &quot;my-password1&quot;,
+      &quot;domainId&quot; : &quot;test-app&quot;,
+      &quot;roles&quot; : [ &quot;admin-role&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;properties&quot; : {
+        &quot;country&quot; : &quot;Nigeria&quot;,
+        &quot;favourite-color&quot; : &quot;blue&quot;
+      },
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF1&quot;
+        },
+        &quot;appUser&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF1&quot;
+        }
+      }
+    }, {
+      &quot;username&quot; : &quot;test-user2&quot;,
+      &quot;password&quot; : &quot;my-password2&quot;,
+      &quot;domainId&quot; : &quot;test-app&quot;,
+      &quot;roles&quot; : [ &quot;admin-role&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;properties&quot; : {
+        &quot;country&quot; : &quot;Nigeria&quot;,
+        &quot;favourite-color&quot; : &quot;blue&quot;
+      },
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF2&quot;
+        },
+        &quot;appUser&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF2&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appUsers{?page,size,sort}&quot;,
+      &quot;templated&quot; : true
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/profile/appUsers&quot;
+    },
+    &quot;search&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appUsers/search&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 3,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+
+    <aside class="large-3 columns">
+
+        <h4>Documents</h4>
+        <ul id="posts" class="posts nav">
+            
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-12 columns">
+                <p>Footer</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

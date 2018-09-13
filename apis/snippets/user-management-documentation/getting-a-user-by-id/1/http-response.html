@@ -44,13 +44,29 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/authenticate' -i -X POST \
-    -H 'Content-Type: application/json' \
-    -d '{
-  &quot;domain&quot; : &quot;test-app&quot;,
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 435
+
+{
   &quot;username&quot; : &quot;test-user&quot;,
-  &quot;password&quot; : &quot;my-password&quot;
-}'</code></pre>
+  &quot;password&quot; : &quot;my-password&quot;,
+  &quot;domainId&quot; : &quot;test-app&quot;,
+  &quot;roles&quot; : [ &quot;admin-role&quot; ],
+  &quot;authorities&quot; : [ &quot;admin&quot; ],
+  &quot;properties&quot; : {
+    &quot;country&quot; : &quot;Nigeria&quot;,
+    &quot;favourite-colour&quot; : &quot;blue&quot;
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF&quot;
+    },
+    &quot;appUser&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF&quot;
+    }
+  }
+}</code></pre>
 </div>
 </div>
 
