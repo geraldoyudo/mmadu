@@ -33,6 +33,7 @@ To run Mmadu User service, take the following steps:
 cd mmadu-user-service
 mvn spring-boot:run
 ----
+
 == API Documentation 
 
-Check https://github.com/geraldoyudo/mmadu/apis/mmadu-user-service[here] for the API Documentation.
+Check https://geraldoyudo.github.io/mmadu/apis/mmadu-service-api[here] for the API Documentation.
