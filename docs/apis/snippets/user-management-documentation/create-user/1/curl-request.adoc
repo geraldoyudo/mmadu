@@ -1,0 +1,16 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appUsers' -i -X POST \
+    -d '{
+  "id" : "12345ABCDEF",
+  "username" : "test-user",
+  "password" : "my-password",
+  "domainId" : "test-app",
+  "roles" : [ "admin-role" ],
+  "authorities" : [ "admin" ],
+  "properties" : {
+    "country" : "Nigeria",
+    "favourite-color" : "blue"
+  }
+}'
+----

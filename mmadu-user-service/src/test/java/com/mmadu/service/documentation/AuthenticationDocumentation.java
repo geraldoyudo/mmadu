@@ -10,16 +10,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.mmadu.service.models.AuthenticateRequest;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
 public class AuthenticationDocumentation extends AbstractDocumentation {
 
+    @Before
+    public void setUp(){
+        appUserRepository.save(createAppUserWithConstantId());
+    }
+
     @Test
     public void authentication() throws Exception {
         this.mockMvc.perform(post("/authenticate")
             .contentType(MediaType.APPLICATION_JSON).content(objectToString(
-                                AuthenticateRequest.builder().username("user").password("password").domain("test")
+                                AuthenticateRequest.builder().username(USERNAME).password(USER_PASSWORD)
+                                        .domain(USER_DOMAIN_ID)
                                 .build()
                         )
                 ))
