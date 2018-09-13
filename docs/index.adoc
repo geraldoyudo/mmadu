@@ -6,5 +6,33 @@
 :page-root: 
 :imagesrootdir: {page-root}/images
 
-== Overview
-Hello World
+== Introduction
+
+Mmadu is basically a user management service. Mmadu takes care of routine operations like user
+management, authentication, domain management and so on.
+
+== What's New
+
+=== v.0.0.1
+* Api for creating and updating user information created.
+* Api for authenticating username and password information has been created.
+
+== Getting Started
+
+Mmadu service uses MongoDB for storing user information. By default, it uses the
+default mongo connections to create the database.
+
+=== Steps to Run Mmadu User Service
+To run Mmadu User service, take the following steps:
+
+. Pull the code from https://github.com/geraldoyudo/mmadu[GitHub]
+. Ensure that MongoDB is running.
+. Open terminal and execute the following
+
+----
+cd mmadu-user-service
+mvn spring-boot:run
+----
+== API Documentation 
+
+Check https://github.com/geraldoyudo/mmadu/apis/mmadu-user-service[here] for the API Documentation.
