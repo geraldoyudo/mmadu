@@ -1,0 +1,8 @@
+mmadu:
+  security:
+    master-key: 11111111111111111111111111111111
+  domain-config:
+    domains:
+      - id: 0
+        name: global-config
+        tokenEncryptionKey: 12345
