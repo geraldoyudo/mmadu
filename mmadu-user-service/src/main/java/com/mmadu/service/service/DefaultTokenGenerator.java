@@ -3,7 +3,9 @@ package com.mmadu.service.service;
 import java.util.Random;
 import javax.annotation.PostConstruct;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DefaultTokenGenerator implements TokenGenerator {
     private static final int TOKEN_LENGTH = 128;
     private long seed = System.currentTimeMillis();
