@@ -19,6 +19,7 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
     @Before
     public void setUp(){
         appUserRepository.save(createAppUserWithConstantId());
+        appDomainRepository.save(createDomain());
     }
 
     @Test

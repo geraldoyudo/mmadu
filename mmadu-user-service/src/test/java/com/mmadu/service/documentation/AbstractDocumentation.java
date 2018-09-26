@@ -8,7 +8,9 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.AppUser;
+import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public abstract class AbstractDocumentation {
     public static final String USERNAME = "test-user";
     public static final String TEST_AUTHORITY = "admin";
     public static final String TEST_ROLE = "admin-role";
+    private static final String DOMAIN_NAME = "test";
 
     @Rule
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(ROOT_DOC_FOLDER);
@@ -45,6 +48,8 @@ public abstract class AbstractDocumentation {
     protected ObjectMapper objectMapper;
     @Autowired
     protected AppUserRepository appUserRepository;
+    @Autowired
+    protected AppDomainRepository appDomainRepository;
 
     protected MockMvc mockMvc;
 
@@ -56,6 +61,7 @@ public abstract class AbstractDocumentation {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()))).build();
         appUserRepository.deleteAll();
+        appDomainRepository.deleteAll();
     }
 
     protected final String objectToString(Object object) throws JsonProcessingException {
@@ -97,5 +103,12 @@ public abstract class AbstractDocumentation {
             appUsers.add(createAppUserWithIndex(i));
         }
         return appUsers;
+    }
+
+    protected AppDomain createDomain(){
+        AppDomain domain = new AppDomain();
+        domain.setName(DOMAIN_NAME);
+        domain.setId(USER_DOMAIN_ID);
+        return domain;
     }
 }
