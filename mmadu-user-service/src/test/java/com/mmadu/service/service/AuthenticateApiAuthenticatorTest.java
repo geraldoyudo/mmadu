@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doThrow;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.exceptions.DomainAuthenticationException;
 import com.mmadu.service.exceptions.DomainNotFoundException;
+import com.mmadu.service.exceptions.InvalidDomainCredentialsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,5 +104,35 @@ public class AuthenticateApiAuthenticatorTest {
         doThrow(new DomainNotFoundException())
                 .when(domainConfigurationService).getConfigurationForDomain(INVALID_DOMAIN);
         authenticateApiAuthenticator.authenticateDomain(INVALID_DOMAIN, INVALID_TOKEN);
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenNullDomainAndNullTokenShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain(null, null);
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenEmptyDomainAndEmptyTokenShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain("", "");
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenEmptyDomainShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain("", VALID_TOKEN);
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenEmptyTokenShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain(VALID_DOMAIN, "");
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenNullTokenShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain(VALID_DOMAIN, null);
+    }
+
+    @Test(expected = InvalidDomainCredentialsException.class)
+    public void givenNullDomainShouldThrowInvalidDomainCredentialsException() {
+        authenticateApiAuthenticator.authenticateDomain("", VALID_TOKEN);
     }
 }

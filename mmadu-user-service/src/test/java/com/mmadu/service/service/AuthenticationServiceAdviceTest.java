@@ -6,7 +6,6 @@ import static org.mockito.Mockito.doThrow;
 
 import com.mmadu.service.exceptions.DomainAuthenticationException;
 import com.mmadu.service.exceptions.DomainNotFoundException;
-import com.mmadu.service.exceptions.InvalidDomainCredentialsException;
 import com.mmadu.service.interceptors.AuthenticationServiceAdvice;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
@@ -62,39 +61,6 @@ public class AuthenticationServiceAdviceTest {
         doThrow(new DomainAuthenticationException()).when(apiAuthenticator).authenticateDomain(DOMAIN_ID, TOKEN_VALUE);
         doReturn(TOKEN_VALUE).when(httpServletRequest).getHeader("domain-auth-token");
         authenticationService.authenticate(getAuthRequest());
-    }
-
-    @Test(expected = InvalidDomainCredentialsException.class)
-    public void throwInvalidDomainCredentialsExceptionWhenTokenIsBlank(){
-        doThrow(new DomainAuthenticationException()).when(apiAuthenticator).authenticateDomain(DOMAIN_ID, TOKEN_VALUE);
-        doReturn("").when(httpServletRequest).getHeader("domain-auth-token");
-        authenticationService.authenticate(getAuthRequest());
-    }
-
-    @Test(expected = InvalidDomainCredentialsException.class)
-    public void throwInvalidDomainCredentialsExceptionWhenTokenIsNull(){
-        doThrow(new DomainAuthenticationException()).when(apiAuthenticator).authenticateDomain(DOMAIN_ID, TOKEN_VALUE);
-        doReturn(null).when(httpServletRequest).getHeader("domain-auth-token");
-        authenticationService.authenticate(getAuthRequest());
-    }
-
-    @Test(expected = InvalidDomainCredentialsException.class)
-    public void throwInvalidDomainCredentialsExceptionWhenDomainIsNull(){
-        doThrow(new DomainAuthenticationException()).when(apiAuthenticator).authenticateDomain(DOMAIN_ID, TOKEN_VALUE);
-        doReturn(TOKEN_VALUE).when(httpServletRequest).getHeader("domain-auth-token");
-        authenticationService.authenticate(getAuthRequestWithDomain(null));
-    }
-
-    @Test(expected = InvalidDomainCredentialsException.class)
-    public void throwInvalidDomainCredentialsExceptionWhenDomainIsEmpty(){
-        doThrow(new DomainAuthenticationException()).when(apiAuthenticator).authenticateDomain(DOMAIN_ID, TOKEN_VALUE);
-        doReturn(TOKEN_VALUE).when(httpServletRequest).getHeader("domain-auth-token");
-        authenticationService.authenticate(getAuthRequestWithDomain(""));
-    }
-
-    private AuthenticateRequest getAuthRequestWithDomain(String domain) {
-        return AuthenticateRequest.builder()
-                .username("user").password("password").domain(domain).build();
     }
 
     public static class TestConfig {

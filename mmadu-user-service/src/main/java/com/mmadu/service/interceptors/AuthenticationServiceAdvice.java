@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 @Aspect
@@ -23,9 +22,10 @@ public class AuthenticationServiceAdvice {
     public void authenticateRequest(AuthenticateRequest authRequest){
         String domain = authRequest.getDomain();
         String tokenValue = request.getHeader("domain-auth-token");
-        if(StringUtils.isEmpty(domain) || StringUtils.isEmpty(tokenValue)){
-            throw new InvalidDomainCredentialsException();
-        }
+        preAuthorize(domain, tokenValue);
+    }
+
+    private void preAuthorize(String domain, String tokenValue) {
         apiAuthenticator.authenticateDomain(domain, tokenValue);
     }
 
