@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DomainConfigurationService {
 
-    private static final String GLOBAL_DOMAIN_CONFIG = "0";
+    public static final String GLOBAL_DOMAIN_CONFIG = "0";
     private AppDomainRepository appDomainRepository;
     private DomainConfigurationRepository domainConfigurationRepository;
 
