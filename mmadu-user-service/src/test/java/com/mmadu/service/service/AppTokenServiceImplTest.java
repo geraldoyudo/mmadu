@@ -21,7 +21,6 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.codec.Hex;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -64,7 +63,7 @@ public class AppTokenServiceImplTest {
     public void refreshToken() {
         AppToken token = appTokenService.generateToken();
         collector.checkThat(token.getValue(), equalTo(TOKEN));
-        AppToken refreshedToken = appTokenService.refreshToken(token.getId());
+        AppToken refreshedToken = appTokenService.resetToken(token.getId());
         assertThat(refreshedToken.getId(), equalTo(token.getId()));
         assertThat(refreshedToken.getValue(), equalTo(TOKEN_2));
     }

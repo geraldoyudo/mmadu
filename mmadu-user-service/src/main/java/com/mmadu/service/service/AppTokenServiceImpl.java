@@ -35,7 +35,7 @@ public class AppTokenServiceImpl implements AppTokenService {
     }
 
     @Override
-    public AppToken refreshToken(String tokenId) {
+    public AppToken resetToken(String tokenId) {
         AppToken token = appTokenRepository.findById(tokenId).orElseThrow(() -> new TokenNotFoundException());
         token.setValue(keyCipher.encrypt(tokenGenerator.generateToken()));
         return token;

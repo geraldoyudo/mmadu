@@ -6,7 +6,7 @@ public interface AppTokenService {
 
     AppToken generateToken();
 
-    AppToken refreshToken(String tokenId);
+    AppToken resetToken(String tokenId);
 
     AppToken getToken(String tokenId);
 
