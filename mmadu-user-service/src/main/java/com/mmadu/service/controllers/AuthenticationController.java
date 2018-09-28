@@ -14,9 +14,9 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+
     @PostMapping(path = "/authenticate")
     public AuthenticateResponse authenticateUser(@RequestBody AuthenticateRequest request) {
         return authenticationService.authenticate(request);
     }
-
 }

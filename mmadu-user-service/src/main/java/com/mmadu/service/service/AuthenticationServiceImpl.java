@@ -20,6 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private AppUserRepository appUserRepository;
     private AppDomainRepository appDomainRepository;
+    private PasswordHasher passwordHasher = new NoOpPasswordHasher();
 
     @Autowired
     public void setAppUserRepository(AppUserRepository appUserRepository) {
@@ -29,6 +30,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     public void setAppDomainRepository(AppDomainRepository appDomainRepository) {
         this.appDomainRepository = appDomainRepository;
+    }
+
+    @Autowired
+    public void setPasswordHasher(PasswordHasher passwordHasher) {
+        this.passwordHasher = passwordHasher;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return createAuthenticateResponse(USERNAME_INVALID);
         }
 
-        if (userOptional.get().passwordMatches(authRequest.getPassword())) {
+        if (passwordHasher.matches(authRequest.getPassword(), userOptional.get().getPassword())) {
             return createAuthenticateResponse(AUTHENTICATED);
         } else {
             return createAuthenticateResponse(PASSWORD_INVALID);

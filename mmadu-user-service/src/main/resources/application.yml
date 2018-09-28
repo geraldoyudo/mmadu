@@ -1,0 +1,11 @@
+mmadu:
+  security:
+    master-key: 11111111111111111111111111111111
+  domain-config:
+    domains:
+      - id: 0
+        name: global-config
+        authenticationApiToken: 1111
+      - id: 1
+        name: test
+        authenticationApiToken: 1234
