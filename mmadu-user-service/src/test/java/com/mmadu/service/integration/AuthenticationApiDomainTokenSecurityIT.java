@@ -1,7 +1,7 @@
 package com.mmadu.service.integration;
 
 import static com.mmadu.service.models.AuthenticationStatus.AUTHENTICATED;
-import static com.mmadu.service.utils.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

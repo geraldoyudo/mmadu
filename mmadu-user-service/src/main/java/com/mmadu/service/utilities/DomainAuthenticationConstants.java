@@ -1,4 +1,4 @@
-package com.mmadu.service.utils;
+package com.mmadu.service.utilities;
 
 public class DomainAuthenticationConstants {
 
