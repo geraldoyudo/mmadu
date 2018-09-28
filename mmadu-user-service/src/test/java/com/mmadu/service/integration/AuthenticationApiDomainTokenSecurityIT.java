@@ -13,6 +13,7 @@ import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.repositories.AppTokenRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import com.mmadu.service.service.DomainPopulator;
+import com.mmadu.service.service.KeyCipher;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,8 @@ public class AuthenticationApiDomainTokenSecurityIT {
     private AppUserRepository appUserRepository;
     @Autowired
     private AppTokenRepository appTokenRepository;
-
+    @Autowired
+    private KeyCipher keyCipher;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Before
@@ -56,7 +58,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
         repositories.forEach(MongoRepository::deleteAll);
         domainPopulator.setUpDomains();
         AppToken token = new AppToken();
-        token.setValue(TOKEN);
+        token.setValue(keyCipher.encrypt(TOKEN));
         token.setId("1234");
         appTokenRepository.save(token);
     }
