@@ -1,12 +1,12 @@
 package com.mmadu.service.interceptors;
 
-import com.mmadu.service.exceptions.InvalidDomainCredentialsException;
 import com.mmadu.service.models.AuthenticateRequest;
-import com.mmadu.service.service.AuthenticateApiAuthenticator;
+import com.mmadu.service.service.DomainTokenAuthenticator;
 import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +15,8 @@ public class AuthenticationServiceAdvice {
     @Autowired
     private HttpServletRequest request;
     @Autowired
-    private AuthenticateApiAuthenticator apiAuthenticator;
+    @Qualifier("authenticateApi")
+    private DomainTokenAuthenticator apiAuthenticator;
 
     @Before("execution(public * com.mmadu.service.service.AuthenticationService.authenticate(..)) && "
             + "args(authRequest)")

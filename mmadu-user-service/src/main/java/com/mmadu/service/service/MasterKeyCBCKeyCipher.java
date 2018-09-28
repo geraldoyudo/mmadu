@@ -1,14 +1,14 @@
 package com.mmadu.service.service;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.encrypt.BouncyCastleAesCbcBytesEncryptor;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(value = "mmadu.domain.encrypt-keys", havingValue = "true")
 public class MasterKeyCBCKeyCipher implements KeyCipher {
     private MasterKeyResolver masterKeyResolver;
     private BouncyCastleAesCbcBytesEncryptor encryptor;
