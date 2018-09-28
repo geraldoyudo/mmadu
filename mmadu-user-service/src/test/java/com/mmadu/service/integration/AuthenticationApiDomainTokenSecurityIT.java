@@ -12,7 +12,7 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.repositories.AppTokenRepository;
 import com.mmadu.service.repositories.AppUserRepository;
-import com.mmadu.service.service.DomainPopulator;
+import com.mmadu.service.populators.DomainPopulator;
 import com.mmadu.service.service.KeyCipher;
 import java.util.List;
 import org.junit.Before;

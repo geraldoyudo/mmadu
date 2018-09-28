@@ -1,4 +1,4 @@
-package com.mmadu.service.service;
+package com.mmadu.service.populators;
 
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -11,6 +11,7 @@ import com.mmadu.service.config.DomainConfigurationList;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.models.DomainConfig;
+import com.mmadu.service.populators.DomainPopulator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.DomainConfigurationRepository;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.mmadu.service.service;
+package com.mmadu.service.populators;
 
 import com.mmadu.service.config.DomainConfigurationList;
 import com.mmadu.service.entities.AppDomain;
