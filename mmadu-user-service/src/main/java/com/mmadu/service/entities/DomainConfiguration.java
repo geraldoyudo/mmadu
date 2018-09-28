@@ -8,7 +8,7 @@ public class DomainConfiguration {
     @Id
     private String id;
     private String domainId;
-    private String tokenEncryptionKey;
+    private String authenticationApiToken;
 
     public String getId() {
         return id;
@@ -26,11 +26,11 @@ public class DomainConfiguration {
         this.domainId = domainId;
     }
 
-    public String getTokenEncryptionKey() {
-        return tokenEncryptionKey;
+    public String getAuthenticationApiToken() {
+        return authenticationApiToken;
     }
 
-    public void setTokenEncryptionKey(String tokenEncryptionKey) {
-        this.tokenEncryptionKey = tokenEncryptionKey;
+    public void setAuthenticationApiToken(String authenticationApiToken) {
+        this.authenticationApiToken = authenticationApiToken;
     }
 }

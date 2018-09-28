@@ -44,7 +44,7 @@ public class DomainPopulator {
         }
         DomainConfiguration configuration = new DomainConfiguration();
         configuration.setDomainId(domain.getId());
-        configuration.setTokenEncryptionKey(domainConfig.getTokenEncryptionKey());
+        configuration.setAuthenticationApiToken(domainConfig.getAuthenticationApiToken());
         domainConfigurationRepository.save(configuration);
     }
 }

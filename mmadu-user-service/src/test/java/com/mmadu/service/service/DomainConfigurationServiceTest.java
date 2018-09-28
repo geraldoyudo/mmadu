@@ -50,7 +50,7 @@ public class DomainConfigurationServiceTest {
 
     private DomainConfiguration createConfig(String id, String domainId, String token) {
         DomainConfiguration configuration = new DomainConfiguration();
-        configuration.setTokenEncryptionKey(token);
+        configuration.setAuthenticationApiToken(token);
         configuration.setDomainId(domainId);
         configuration.setId(id);
         return configuration;

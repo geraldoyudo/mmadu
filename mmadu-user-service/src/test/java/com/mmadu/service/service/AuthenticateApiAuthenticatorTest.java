@@ -44,11 +44,11 @@ public class AuthenticateApiAuthenticatorTest {
         globalConfiguration = new DomainConfiguration();
         globalConfiguration.setId("global");
         globalConfiguration.setDomainId("0");
-        globalConfiguration.setTokenEncryptionKey(VALID_GLOBAL_TOKEN);
+        globalConfiguration.setAuthenticationApiToken(VALID_GLOBAL_TOKEN);
         domain1Configuration = new DomainConfiguration();
         domain1Configuration.setId("domain-1");
         domain1Configuration.setDomainId(VALID_DOMAIN);
-        domain1Configuration.setTokenEncryptionKey(VALID_TOKEN);
+        domain1Configuration.setAuthenticationApiToken(VALID_TOKEN);
         doAnswer(invocationOnMock -> invocationOnMock.getArgument(0) == invocationOnMock.getArgument(1))
                 .when(appTokenService).tokenMatches(anyString(), anyString());
     }
@@ -85,7 +85,7 @@ public class AuthenticateApiAuthenticatorTest {
 
     @Test
     public void givenValidDomainAndNullTokenConfiguredInDomainAuthenticateDomainWithGlobalTokenShouldBeSuccessful() {
-        domain1Configuration.setTokenEncryptionKey(null);
+        domain1Configuration.setAuthenticationApiToken(null);
         doReturn(domain1Configuration).when(domainConfigurationService).getConfigurationForDomain(VALID_DOMAIN);
         doReturn(globalConfiguration).when(domainConfigurationService)
                 .getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
@@ -94,7 +94,7 @@ public class AuthenticateApiAuthenticatorTest {
 
     @Test(expected = DomainAuthenticationException.class)
     public void givenValidDomainAndNullTokenConfiguredInDomainAuthenticateDomainWithInvalidTokenShouldThrowError() {
-        domain1Configuration.setTokenEncryptionKey(null);
+        domain1Configuration.setAuthenticationApiToken(null);
         doReturn(globalConfiguration).when(domainConfigurationService)
                 .getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
         doReturn(domain1Configuration).when(domainConfigurationService).getConfigurationForDomain(VALID_DOMAIN);

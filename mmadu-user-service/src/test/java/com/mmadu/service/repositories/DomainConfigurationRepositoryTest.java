@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.mmadu.service.entities.DomainConfiguration;
-import com.sun.java.browser.plugin2.DOM;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +34,7 @@ public class DomainConfigurationRepositoryTest {
     private void createDomain() {
         DomainConfiguration configuration = new DomainConfiguration();
         configuration.setDomainId(DOMAIN_ID);
-        configuration.setTokenEncryptionKey("1234");
+        configuration.setAuthenticationApiToken("1234");
         domainConfigurationRepository.save(configuration);
     }
 

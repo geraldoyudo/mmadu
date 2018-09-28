@@ -57,7 +57,7 @@ public class DomainPopulatorTest {
         DomainConfig config = new DomainConfig();
         config.setId(DOMAIN_ID);
         config.setName(DOMAIN_NAME);
-        config.setTokenEncryptionKey(TOKEN_ENCRYPTION_KEY);
+        config.setAuthenticationApiToken(TOKEN_ENCRYPTION_KEY);
         return Arrays.asList(config);
     }
 
@@ -71,6 +71,6 @@ public class DomainPopulatorTest {
         AppDomain domain = appDomainRepository.findById(DOMAIN_ID).get();
         collector.checkThat(domain.getName(), equalTo(DOMAIN_NAME));
         DomainConfiguration configuration = domainConfigurationRepository.findByDomainId(DOMAIN_ID).get();
-        collector.checkThat(configuration.getTokenEncryptionKey(), equalTo(TOKEN_ENCRYPTION_KEY));
+        collector.checkThat(configuration.getAuthenticationApiToken(), equalTo(TOKEN_ENCRYPTION_KEY));
     }
 }

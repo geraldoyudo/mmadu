@@ -33,10 +33,10 @@ public class AuthenticateApiAuthenticator implements DomainTokenAuthenticator {
             throw new InvalidDomainCredentialsException();
         }
         DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain(domainId);
-        String token = configuration.getTokenEncryptionKey();
+        String token = configuration.getAuthenticationApiToken();
         if(StringUtils.isEmpty(token)){
             configuration = domainConfigurationService.getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
-            token = configuration.getTokenEncryptionKey();
+            token = configuration.getAuthenticationApiToken();
         }
         if(!appTokenService.tokenMatches(token, tokenValue)){
             throw new DomainAuthenticationException();
