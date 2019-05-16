@@ -29,9 +29,14 @@ public class AppTokenServiceImpl implements AppTokenService {
 
     @Override
     public AppToken generateToken() {
+        AppToken token = generateAppToken();
+        return appTokenRepository.save(token);
+    }
+
+    private AppToken generateAppToken() {
         AppToken token = new AppToken();
         token.setValue(keyCipher.encrypt(tokenGenerator.generateToken()));
-        return appTokenRepository.save(token);
+        return token;
     }
 
     @Override
@@ -52,5 +57,12 @@ public class AppTokenServiceImpl implements AppTokenService {
         AppToken token = appTokenRepository.findById(tokenId).orElseThrow(() -> new TokenNotFoundException());
         String clearToken = keyCipher.decrypt(token.getValue());
         return clearToken.equals(tokenValue);
+    }
+
+    @Override
+    public AppToken generateTokenWithId(String tokenId) {
+        AppToken token = generateAppToken();
+        token.setId(tokenId);
+        return appTokenRepository.save(token);
     }
 }
