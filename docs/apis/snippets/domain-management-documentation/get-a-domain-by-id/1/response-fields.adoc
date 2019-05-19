@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+name+`
+|`+String+`
+|The domain name
+
+|`+_links+`
+|`+map+`
+|Domain item resource links
+
+|===

@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appDomains' -i -X POST \
+    -d '{
+  "id" : "00111111",
+  "name" : "new-domain"
+}'
+----

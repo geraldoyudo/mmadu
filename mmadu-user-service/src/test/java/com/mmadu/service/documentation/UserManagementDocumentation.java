@@ -54,16 +54,16 @@ public class UserManagementDocumentation extends AbstractDocumentation {
 
     private ResponseFieldsSnippet usersResponseFields() {
         return responseFields(
-        fieldWithPath("_embedded.appUsers.[].domainId").description("Domain Id of the user"),
-        fieldWithPath("_embedded.appUsers.[].username").description("Username of the user"),
-        fieldWithPath("_embedded.appUsers.[].password").description("password of the user"),
-        fieldWithPath("_embedded.appUsers.[].roles").type("string list").description("List of roles assigned to this user"),
-        fieldWithPath("_embedded.appUsers.[].authorities").type("string list").description("List of authorities given to ths user"),
-        subsectionWithPath("_embedded.appUsers.[].properties").optional().type("map").description("Other user properties"),
-        subsectionWithPath("_embedded.appUsers.[]._links").type("map").description("User item resource links"),
-        subsectionWithPath("_links").type("map").description("Resource links"),
-        subsectionWithPath("page").type("map").description("Page information")
-);
+                fieldWithPath("_embedded.appUsers.[].domainId").description("Domain Id of the user"),
+                fieldWithPath("_embedded.appUsers.[].username").description("Username of the user"),
+                fieldWithPath("_embedded.appUsers.[].password").description("password of the user"),
+                fieldWithPath("_embedded.appUsers.[].roles").type("string list").description("List of roles assigned to this user"),
+                fieldWithPath("_embedded.appUsers.[].authorities").type("string list").description("List of authorities given to ths user"),
+                subsectionWithPath("_embedded.appUsers.[].properties").optional().type("map").description("Other user properties"),
+                subsectionWithPath("_embedded.appUsers.[]._links").type("map").description("User item resource links"),
+                subsectionWithPath("_links").type("map").description("Resource links"),
+                subsectionWithPath("page").type("map").description("Page information")
+        );
     }
 
     @Test

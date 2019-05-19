@@ -1,0 +1,11 @@
+[source,http,options="nowrap"]
+----
+POST /appDomains HTTP/1.1
+Host: localhost:8080
+Content-Length: 51
+
+{
+  "id" : "00111111",
+  "name" : "new-domain"
+}
+----

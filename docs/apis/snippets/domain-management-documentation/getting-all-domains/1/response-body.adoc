@@ -1,0 +1,53 @@
+[source,options="nowrap"]
+----
+{
+  "_embedded" : {
+    "appDomains" : [ {
+      "name" : "global-config",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appDomains/0"
+        },
+        "appDomain" : {
+          "href" : "http://localhost:8080/appDomains/0"
+        }
+      }
+    }, {
+      "name" : "test",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appDomains/1"
+        },
+        "appDomain" : {
+          "href" : "http://localhost:8080/appDomains/1"
+        }
+      }
+    }, {
+      "name" : "test-domain",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/appDomains/test-app"
+        },
+        "appDomain" : {
+          "href" : "http://localhost:8080/appDomains/test-app"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/appDomains{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/profile/appDomains"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 3,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----

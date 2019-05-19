@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ echo '{
+  "id" : "00111111",
+  "name" : "new-domain"
+}' | http POST 'http://localhost:8080/appDomains'
+----

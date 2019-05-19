@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appDomains/00111111' -i -X PATCH \
+    -H 'Content-Type: application/json' \
+    -d '{"name":"changed-name"}'
+----
