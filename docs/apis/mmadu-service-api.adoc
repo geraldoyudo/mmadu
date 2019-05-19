@@ -18,6 +18,18 @@ Mmadu user service exposes API's to help you interact with the user service.
 
 == API Features
 
+=== Security
+
+If token security is enabled, you will need a token to access the api.
+
+Simply set the domain-auth-token header to the value of the token. For more information on tokens, see token management.
+
+==== Permissions
+
+Some tokens have admin permissions, while others have domain permissions. Admin tokens can access all parts of the API,
+while domain tokens can only access parts of the api that returns resources pertaining to the domain.
+
+
 === Authentication
 
 Using the rest api, you can authenticate users given a username and
