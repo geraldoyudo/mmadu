@@ -9,8 +9,11 @@ import static org.mockito.Mockito.doReturn;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.models.DomainIdObject;
 import com.mmadu.service.repositories.AppUserRepository;
+import com.mmadu.service.security.domainidextractors.AppUserIdDomainIdExtractor;
+import com.mmadu.service.security.domainidextractors.TransparentDomainIdExtractor;
 import com.mmadu.service.service.AppTokenService;
 import com.mmadu.service.service.DomainConfigurationService;
+import java.util.Arrays;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.Before;
@@ -50,6 +53,11 @@ public class DomainPermissionEvaluatorTest {
         doReturn(domainConfiguration).when(domainConfigurationService).getConfigurationForDomain(DOMAIN_ID);
         doReturn(DOMAIN_TOKEN_ID).when(domainConfiguration).getAuthenticationApiToken();
         doReturn(Optional.of(new DomainIdObject(DOMAIN_ID))).when(appUserRepository).findDomainIdForUser(USER_ID);
+        TransparentDomainIdExtractor transparentDomainIdExtractor = new TransparentDomainIdExtractor();
+        AppUserIdDomainIdExtractor appUserIdDomainIdExtractor = new AppUserIdDomainIdExtractor();
+        appUserIdDomainIdExtractor.setAppUserRepository(appUserRepository);
+        domainPermissionEvaluator.setDomainIdExtractors(Arrays.asList(transparentDomainIdExtractor,
+                appUserIdDomainIdExtractor));
     }
 
     @Test

@@ -3,13 +3,15 @@ package com.mmadu.service.security;
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.ADMIN_TOKEN_ID;
 
 import com.mmadu.service.entities.DomainConfiguration;
-import com.mmadu.service.models.DomainIdObject;
 import com.mmadu.service.repositories.AppUserRepository;
+import com.mmadu.service.security.domainidextractors.DomainIdExtractor;
 import com.mmadu.service.service.AppTokenService;
 import com.mmadu.service.service.DomainConfigurationService;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
     private AppTokenService appTokenService;
     private DomainConfigurationService domainConfigurationService;
     private AppUserRepository appUserRepository;
+    private Map<String, DomainIdExtractor> domainIdExtractorMap = new HashMap<>();
 
     @Autowired
     public void setAppTokenService(AppTokenService appTokenService) {
@@ -41,45 +44,48 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
         this.appUserRepository = appUserRepository;
     }
 
+    @Autowired
+    public void setDomainIdExtractors(List<DomainIdExtractor> domainIdExtractors){
+        domainIdExtractorMap = new HashMap<>();
+        domainIdExtractors
+                .forEach(domainIdExtractor -> domainIdExtractorMap.put(domainIdExtractor.domain(), domainIdExtractor));
+    }
+
     @Override
     public boolean hasPermission(Authentication authentication, Object o, Object permissionObject) {
         String domain = (String) o;
-        String permission;
-        if(domain.equals("user")){
-            String userId = (String) permissionObject;
-            Optional<DomainIdObject> domainIdObject = appUserRepository.findDomainIdForUser(userId);
-            if(!domainIdObject.isPresent()){
-                return false;
-            }else {
-                permission = domainIdObject.get().getDomainId();
-            }
-        }else {
-            permission = (String) permissionObject;
+        DomainIdExtractor domainIdExtractor = domainIdExtractorMap.get(domain);
+        if(domainIdExtractor == null){
+            return false;
         }
-        String token = (String) authentication.getPrincipal();
-        if (token == null) {
-            token = "";
+        Optional<String> domainIdValue = domainIdExtractor.extractDomainId(permissionObject);
+        if(!domainIdValue.isPresent()){
+            return false;
         }
-        if(permission.equals("admin")){
-            return appTokenService.tokenMatches(ADMIN_TOKEN_ID, token);
-        }else{
-            if(appTokenService.tokenMatches(ADMIN_TOKEN_ID, token))
-                return true;
+        String token = Optional.ofNullable((String) authentication.getPrincipal()).orElse("");
+        if(appTokenService.tokenMatches(ADMIN_TOKEN_ID, token)) {
+            return true;
+        }
+        String domainId = domainIdValue.get();
+        if(domainId.equals("admin")){
+            return false;
+        }
+        return checkIfTokenMatchesDomainToken(token, domainId);
+    }
 
-            try {
-                String domainId = permission;
-                DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain(domainId);
-                String tokenId = configuration.getAuthenticationApiToken();
-                if (StringUtils.isEmpty(tokenId)) {
-                    configuration = domainConfigurationService.getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
-                    tokenId = configuration.getAuthenticationApiToken();
-                }
-                return appTokenService.tokenMatches(tokenId, token);
-            }catch (Exception ex){
-                logger.warn("An error occurred while evaluating permission: {}: {}. Rejecting permission.",
-                        ex.getClass().getName(), ex.getMessage());
-                return  false;
+    private boolean checkIfTokenMatchesDomainToken(String token, String domainId) {
+        try {
+            DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain(domainId);
+            String tokenId = configuration.getAuthenticationApiToken();
+            if (StringUtils.isEmpty(tokenId)) {
+                configuration = domainConfigurationService.getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
+                tokenId = configuration.getAuthenticationApiToken();
             }
+            return appTokenService.tokenMatches(tokenId, token);
+        } catch (Exception ex) {
+            logger.warn("An error occurred while evaluating permission: {}: {}. Rejecting permission.",
+                    ex.getClass().getName(), ex.getMessage());
+            return false;
         }
     }
 
