@@ -1,5 +1,7 @@
 package com.mmadu.service.interceptors;
 
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.service.DomainTokenAuthenticator;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,7 @@ public class AuthenticationServiceAdvice {
             + "args(authRequest)")
     public void authenticateRequest(AuthenticateRequest authRequest){
         String domain = authRequest.getDomain();
-        String tokenValue = request.getHeader("domain-auth-token");
+        String tokenValue = request.getHeader(DOMAIN_AUTH_TOKEN_FIELD);
         preAuthorize(domain, tokenValue);
     }
 

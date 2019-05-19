@@ -11,5 +11,6 @@ $ echo '{
     "country" : "Nigeria",
     "favourite-colour" : "blue"
   }
-}' | http POST 'http://localhost:8080/appUsers'
+}' | http POST 'http://localhost:8080/appUsers' \
+    'domain-auth-token:1234'
 ----

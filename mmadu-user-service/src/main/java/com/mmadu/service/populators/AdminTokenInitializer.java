@@ -4,9 +4,11 @@ import com.mmadu.service.service.AppTokenService;
 import com.mmadu.service.utilities.DomainAuthenticationConstants;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 @Component
+@DependsOn("tokenPopulator")
 public class AdminTokenInitializer {
     private AppTokenService tokenService;
 

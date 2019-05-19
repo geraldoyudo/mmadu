@@ -18,8 +18,8 @@ public class MasterKeyCBCKeyCipherTest {
     @Rule
     public final ErrorCollector collector = new ErrorCollector();
 
-    private static final String KEY = "1111111111111111111111111111111111111111111111111111111111111111";
-    private static final String MASTER_KEY = "2222222222222222222222222222222222222222222222222222222222222222";
+    private static final String KEY = "11111111111111111111111111111111";
+    private static final String MASTER_KEY = "11111111111111111111111111111111";
 
     private MasterKeyCBCKeyCipher ecbKeyCipher;
     @Mock
@@ -41,6 +41,12 @@ public class MasterKeyCBCKeyCipherTest {
         String decryptedValue = ecbKeyCipher.decrypt(encryptedValue);
         collector.checkThat(decryptedValue, notNullValue());
         collector.checkThat(decryptedValue, equalTo(KEY));
+    }
+
+    @Test
+    public void encryptInstance(){
+        String encryptedValue = ecbKeyCipher.encrypt("11111111111111111111111111111111");
+        System.out.println(encryptedValue);
     }
 
 }

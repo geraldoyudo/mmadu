@@ -33,6 +33,7 @@ public class MasterKeyCBCKeyCipher implements KeyCipher {
     @Override
     public String decrypt(String encryptedData) {
         byte [] bytes = Hex.decode(encryptedData);
+        System.out.println("Byte length: " + bytes.length);
         return new String(Hex.encode(encryptor.decrypt(bytes)));
     }
 }
