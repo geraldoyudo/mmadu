@@ -68,6 +68,9 @@ can share the same user base by using the same domain id.
 
 If token security is enabled, the domain api can be accessed with the admin token.
 
+Token security is enabled by default. To disable, set the environment property `mmadu.domain.api-security-enabled`
+to `false`.
+
 ===== Creating A domain
 
 A POST request will create a domain

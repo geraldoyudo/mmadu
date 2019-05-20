@@ -27,7 +27,6 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
 
     private AppTokenService appTokenService;
     private DomainConfigurationService domainConfigurationService;
-    private AppUserRepository appUserRepository;
     private Map<String, DomainIdExtractor> domainIdExtractorMap = new HashMap<>();
     private boolean apiSecurityEnabled = true;
 
@@ -39,11 +38,6 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
     @Autowired
     public void setDomainConfigurationService(DomainConfigurationService domainConfigurationService) {
         this.domainConfigurationService = domainConfigurationService;
-    }
-
-    @Autowired
-    public void setAppUserRepository(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
     }
 
     @Autowired
