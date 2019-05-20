@@ -8,7 +8,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1147
+Content-Length: 1140
 
 {
   "_embedded" : {
@@ -33,7 +33,7 @@ Content-Length: 1147
         }
       }
     }, {
-      "name" : "test-domain",
+      "name" : "test",
       "_links" : {
         "self" : {
           "href" : "http://localhost:8080/appDomains/test-app"

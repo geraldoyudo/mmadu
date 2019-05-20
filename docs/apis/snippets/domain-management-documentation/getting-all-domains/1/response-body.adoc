@@ -23,7 +23,7 @@
         }
       }
     }, {
-      "name" : "test-domain",
+      "name" : "test",
       "_links" : {
         "self" : {
           "href" : "http://localhost:8080/appDomains/test-app"

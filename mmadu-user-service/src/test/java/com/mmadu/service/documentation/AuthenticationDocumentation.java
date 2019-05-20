@@ -1,6 +1,7 @@
 package com.mmadu.service.documentation;
 
 import static com.mmadu.service.models.AuthenticationStatus.AUTHENTICATED;
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -25,6 +26,7 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
     @Test
     public void authentication() throws Exception {
         this.mockMvc.perform(post("/authenticate")
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
             .contentType(MediaType.APPLICATION_JSON).content(objectToString(
                                 AuthenticateRequest.builder().username(USERNAME).password(USER_PASSWORD)
                                         .domain(USER_DOMAIN_ID)

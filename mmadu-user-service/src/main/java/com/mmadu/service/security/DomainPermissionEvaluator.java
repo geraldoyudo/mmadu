@@ -15,6 +15,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,7 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
     private DomainConfigurationService domainConfigurationService;
     private AppUserRepository appUserRepository;
     private Map<String, DomainIdExtractor> domainIdExtractorMap = new HashMap<>();
+    private boolean apiSecurityEnabled = true;
 
     @Autowired
     public void setAppTokenService(AppTokenService appTokenService) {
@@ -51,8 +53,16 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
                 .forEach(domainIdExtractor -> domainIdExtractorMap.put(domainIdExtractor.domain(), domainIdExtractor));
     }
 
+    @Value("${mmadu.domain.api-security-enabled:true}")
+    public void setApiSecurityEnabled(boolean apiSecurityEnabled) {
+        this.apiSecurityEnabled = apiSecurityEnabled;
+    }
+
     @Override
     public boolean hasPermission(Authentication authentication, Object o, Object permissionObject) {
+        if(!apiSecurityEnabled){
+            return true;
+        }
         String domain = (String) o;
         DomainIdExtractor domainIdExtractor = domainIdExtractorMap.get(domain);
         if(domainIdExtractor == null){

@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/appDomains/*").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.PATCH, "/appDomains/*").access("hasPermission('domain', 'admin')")
                 .antMatchers("/appDomains/**").access("hasPermission('domain', 'admin')")
+                .antMatchers(HttpMethod.POST, "/authenticate").access("hasPermission('domain', request.getAttribute('domainId'))")
+                .antMatchers("/**").access("hasPermission('domain', 'admin')")
                 .anyRequest()
                 .permitAll()
                 .and()

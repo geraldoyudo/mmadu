@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +28,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = "mmadu.domain.authenticate-api-security-enabled=true")
 @Import(MongoInitializationConfig.class)
 public class AuthenticationApiDomainTokenSecurityIT {
 
@@ -42,7 +42,9 @@ public class AuthenticationApiDomainTokenSecurityIT {
 
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
     }
 
     @Test
@@ -50,7 +52,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
         this.mockMvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON).content(
                 mapper.writeValueAsString(
                         AuthenticateRequest.builder().username("user").password("password").domain("1").build())))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -59,7 +61,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
                 post("/authenticate").header(DOMAIN_AUTH_TOKEN_FIELD, "33333").contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
                                 AuthenticateRequest.builder().username("user").password("password").domain("1")
-                                        .build()))).andExpect(status().isUnauthorized());
+                                        .build()))).andExpect(status().isForbidden());
     }
 
     @Test
