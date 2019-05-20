@@ -1,5 +1,6 @@
 package com.mmadu.service.documentation;
 
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -22,10 +23,12 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
 
     private static final String DOMAIN_NAME = "new-domain";
     private static final String NEW_DOMAIN_ID = "00111111";
+    private static final String NEW_DOMAIN_TOKEN = "1111";
 
     @Test
     public void createADomain() throws Exception {
         mockMvc.perform(post("/appDomains")
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                 .content(objectToString(createConstantDomain()))
             ).andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -43,7 +46,9 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
 
     @Test
     public void gettingAllDomains() throws Exception {
-        mockMvc.perform(get("/appDomains"))
+        mockMvc.perform(get("/appDomains")
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, domainsResponseFields()));
     }
@@ -60,7 +65,9 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     public void getADomainById() throws Exception {
         createAndSaveDomain();
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID))
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, NEW_DOMAIN_TOKEN)
+        )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
                         pathParameters(
@@ -82,7 +89,9 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     public void deletingADomainById() throws Exception {
         createAndSaveDomain();
-        mockMvc.perform(RestDocumentationRequestBuilders.delete("/appDomains/{domainId}", NEW_DOMAIN_ID))
+        mockMvc.perform(RestDocumentationRequestBuilders.delete("/appDomains/{domainId}", NEW_DOMAIN_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
                         pathParameters(
@@ -96,6 +105,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("name", "changed-name");
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/appDomains/{domainId}", NEW_DOMAIN_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                 .content(objectNode.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())

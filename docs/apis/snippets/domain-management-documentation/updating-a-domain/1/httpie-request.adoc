@@ -1,5 +1,6 @@
 [source,bash]
 ----
 $ echo '{"name":"changed-name"}' | http PATCH 'http://localhost:8080/appDomains/00111111' \
-    'Content-Type:application/json'
+    'Content-Type:application/json' \
+    'domain-auth-token:2222'
 ----
