@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"id":"1","value":"1234"}
+----

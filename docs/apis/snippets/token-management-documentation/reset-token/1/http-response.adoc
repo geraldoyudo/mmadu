@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 277
+
+{"id":"1","value":"5518f6cf61a82811a6f0ecf5bb581efb692a391db70e550bedf079d47696b04a1d9f9c1b9ea6df4a1484c19ec9ce8bf5a2a5faa8c0a4dea6106ebe6bd3b55133d5b4b69ac3b6b1a62a7e5ecb178478d89d33ed5cde8dc60e068822632695d1c797c34aa1aefe82c6e168d65a9ebd4e64f5113bf04aca1003199d6d62528cf28b"}
+----
