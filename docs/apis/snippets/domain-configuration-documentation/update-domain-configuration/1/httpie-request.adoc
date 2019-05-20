@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ echo '{"authenticationApiToken":"2"}' | http PATCH 'http://localhost:8080/domainConfigurations/12333' \
+    'Content-Type:application/json' \
+    'domain-auth-token:2222'
+----

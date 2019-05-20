@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+domainId+`
+|`+String+`
+|The domain ID)
+
+|`+authenticationApiToken+`
+|`+String+`
+|The api token ID used to secure this domain
+
+|`+_links+`
+|`+map+`
+|User item resource links
+
+|===

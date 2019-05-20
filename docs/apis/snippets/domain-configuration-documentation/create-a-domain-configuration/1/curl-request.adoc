@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/domainConfigurations' -i -X POST \
+    -H 'domain-auth-token: 2222' \
+    -d '{
+  "id" : "12333",
+  "domainId" : "1111111111",
+  "authenticationApiToken" : "1"
+}'
+----

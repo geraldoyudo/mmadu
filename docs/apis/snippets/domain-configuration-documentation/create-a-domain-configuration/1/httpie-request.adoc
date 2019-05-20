@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "id" : "12333",
+  "domainId" : "1111111111",
+  "authenticationApiToken" : "1"
+}' | http POST 'http://localhost:8080/domainConfigurations' \
+    'domain-auth-token:2222'
+----

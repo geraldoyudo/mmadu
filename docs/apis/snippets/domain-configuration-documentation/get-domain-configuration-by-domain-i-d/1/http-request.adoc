@@ -1,0 +1,7 @@
+[source,http,options="nowrap"]
+----
+GET /domainConfigurations/search/findByDomainId?domainId=test-app HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080
+
+----

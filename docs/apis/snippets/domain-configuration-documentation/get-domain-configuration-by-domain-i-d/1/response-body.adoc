@@ -1,0 +1,15 @@
+[source,options="nowrap"]
+----
+{
+  "domainId" : "test-app",
+  "authenticationApiToken" : "1",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/domainConfigurations/5ce27da3e48b652d7434660e"
+    },
+    "domainConfiguration" : {
+      "href" : "http://localhost:8080/domainConfigurations/5ce27da3e48b652d7434660e"
+    }
+  }
+}
+----
