@@ -46,6 +46,7 @@
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/appUsers/12345ABCDEF' -i -X PATCH \
     -H 'Content-Type: application/json' \
+    -H 'domain-auth-token: 1234' \
     -d '{&quot;password&quot;:&quot;new-password&quot;,&quot;properties&quot;:{&quot;favourite-colour&quot;:&quot;green&quot;}}'</code></pre>
 </div>
 </div>
