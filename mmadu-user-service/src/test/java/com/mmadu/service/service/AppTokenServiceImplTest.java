@@ -110,4 +110,11 @@ public class AppTokenServiceImplTest {
         assertThat(generatedToken.getId(), equalTo(tokenId));
         assertThat(generatedToken.getValue(), equalTo(TOKEN));
     }
+
+    @Test
+    public void givenTokenIdExistsAndBlankTokenValueWhenMatchThenReturnTrue(){
+        when(tokenGenerator.generateToken()).thenReturn("");
+        AppToken token = appTokenService.generateToken();
+        assertThat(appTokenService.tokenMatches(token.getId(), "any-abritrary-value"), equalTo(true));
+    }
 }

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.repositories.DomainConfigurationRepository;
+import com.mmadu.service.service.DomainConfigurationService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +31,8 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
 
     @Autowired
     private DomainConfigurationRepository domainConfigurationRepository;
+    @Autowired
+    private DomainConfigurationService domainConfigurationService;
 
     @Test
     public void createADomainConfiguration() throws Exception {
@@ -84,6 +87,16 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
                 fieldWithPath("authenticationApiToken").description("The api token ID used to secure this domain"),
                 subsectionWithPath("_links").type("map").description("User item resource links")
         );
+    }
+
+    @Test
+    public void getDefaultDomainConfiguration() throws Exception{
+        domainConfigurationService.init();
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/{domainConfigurationId}", "0")
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        )
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENTATION_NAME, parameterFields(), domainConfigurationResponseFields()));
     }
 
     @Test

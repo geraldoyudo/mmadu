@@ -1,8 +1,13 @@
 package com.mmadu.service.service;
 
+import static com.mmadu.service.service.DomainConfigurationService.GLOBAL_DOMAIN_CONFIG;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.DomainConfiguration;
@@ -13,6 +18,8 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -29,6 +36,9 @@ public class DomainConfigurationServiceTest {
     private DomainConfiguration domain1Configuration;
     private AppDomain domain1;
     private AppDomain domain2;
+
+    @Captor
+    private final ArgumentCaptor<DomainConfiguration> appDomainConfigurationCaptor = ArgumentCaptor.forClass(DomainConfiguration.class);
 
     @Before
     public void setUp() {
@@ -78,5 +88,23 @@ public class DomainConfigurationServiceTest {
     @Test(expected = DomainNotFoundException.class)
     public void givenDomainNotPresentWhenGetDomainConfigurationShouldThrowException() {
         domainConfigurationService.getConfigurationForDomain("3");
+    }
+
+    @Test
+    public void givenNoGlobalDomainExistsWhenInitShouldCreateGlobalConfig(){
+        domainConfigurationService.init();
+
+        verify(domainConfigurationRepository, times(1)).save(appDomainConfigurationCaptor.capture());
+        DomainConfiguration domainConfiguration = appDomainConfigurationCaptor.getValue();
+        assertThat(domainConfiguration.getId(), equalTo(GLOBAL_DOMAIN_CONFIG));
+        assertThat(domainConfiguration.getDomainId(), isEmptyString());
+        assertThat(domainConfiguration.getAuthenticationApiToken(), isEmptyString());
+    }
+
+    @Test
+    public void givenGlobalDomainExistsWhenInitShouldDoNothing(){
+        doReturn(true).when(domainConfigurationRepository).existsById(GLOBAL_DOMAIN_CONFIG);
+        domainConfigurationService.init();
+        verify(domainConfigurationRepository, times(0)).save(any(DomainConfiguration.class));
     }
 }
