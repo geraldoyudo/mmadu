@@ -4,8 +4,16 @@ mmadu:
   domain-config:
     domains:
       - id: 0
-        name: global-config
-        authenticationApiToken: 1111
-      - id: 1
-        name: test
-        authenticationApiToken: 1234
+        name: sample-domain
+        authenticationApiToken: 0
+  token-config:
+    tokens:
+      - id: 0
+        value: 1111
+      - id: admin-token
+        value: 2222
+spring:
+  data:
+    mongodb:
+      database: mmadu_db
+      host: localhost
