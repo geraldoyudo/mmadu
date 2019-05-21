@@ -1,0 +1,8 @@
+.+/token/reset/{tokenId}+
+|===
+|Parameter|Description
+
+|`+tokenId+`
+|The token ID
+
+|===

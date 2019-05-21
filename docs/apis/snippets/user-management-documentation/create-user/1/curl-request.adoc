@@ -1,6 +1,7 @@
 [source,bash]
 ----
 $ curl 'http://localhost:8080/appUsers' -i -X POST \
+    -H 'domain-auth-token: 1234' \
     -d '{
   "id" : "12345ABCDEF",
   "username" : "test-user",

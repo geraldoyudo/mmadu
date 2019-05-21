@@ -1,0 +1,8 @@
+.+/domainConfigurations/{domainConfigurationId}+
+|===
+|Parameter|Description
+
+|`+domainConfigurationId+`
+|The domain configuration ID
+
+|===

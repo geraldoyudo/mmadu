@@ -1,0 +1,19 @@
+mmadu:
+  security:
+    master-key: 11111111111111111111111111111111
+  domain-config:
+    domains:
+      - id: 0
+        name: sample-domain
+        authenticationApiToken: 0
+  token-config:
+    tokens:
+      - id: 0
+        value: 1111
+      - id: admin-token
+        value: 2222
+spring:
+  data:
+    mongodb:
+      database: mmadu_db
+      host: localhost

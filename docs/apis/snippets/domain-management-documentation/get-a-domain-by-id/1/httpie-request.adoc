@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http GET 'http://localhost:8080/appDomains/00111111' \
+    'domain-auth-token:1111'
+----

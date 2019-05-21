@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/token/retrieve/1' -i -X GET \
+    -H 'domain-auth-token: 2222'
+----
