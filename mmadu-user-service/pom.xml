@@ -5,7 +5,7 @@
 
 	<groupId>com.mmadu</groupId>
 	<artifactId>mmadu-user-service</artifactId>
-	<version>0.0.1-RELEASE</version>
+	<version>1.0.0-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>mmadu-user-service</name>
@@ -85,7 +85,10 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>1.60</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -93,6 +96,30 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<imageName>geraldoyudo/${project.name}</imageName>
+					<baseImage>openjdk:8u212-jdk-alpine3.9</baseImage>
+					<entryPoint>["java", "-jar", "./${project.build.finalName}.jar"]</entryPoint>
+					<exposes>
+						<expose>8080</expose>
+					</exposes>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+					</imageTags>
+					<!-- copy the service's jar file from target into the root directory of the image -->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
