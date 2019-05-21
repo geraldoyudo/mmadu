@@ -1,0 +1,7 @@
+[source,http,options="nowrap"]
+----
+GET /token/generate HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080
+
+----

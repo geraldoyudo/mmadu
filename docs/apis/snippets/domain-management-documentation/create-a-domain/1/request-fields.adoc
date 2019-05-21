@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+name+`
+|`+String+`
+|The domain name
+
+|`+id+`
+|`+String+`
+|ID of the domain (optional, auto-generated)
+
+|===

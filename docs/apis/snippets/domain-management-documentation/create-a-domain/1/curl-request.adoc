@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/appDomains' -i -X POST \
+    -H 'domain-auth-token: 2222' \
+    -d '{
+  "id" : "00111111",
+  "name" : "new-domain"
+}'
+----

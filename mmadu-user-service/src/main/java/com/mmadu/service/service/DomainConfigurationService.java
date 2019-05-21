@@ -5,6 +5,7 @@ import com.mmadu.service.exceptions.DomainConfigurationNotFoundException;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.DomainConfigurationRepository;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,17 @@ public class DomainConfigurationService {
         }else{
             return domainConfigurationRepository.findByDomainId(GLOBAL_DOMAIN_CONFIG)
                     .orElseThrow(() -> new DomainConfigurationNotFoundException());
+        }
+    }
+
+    @PostConstruct
+    public void init(){
+        if(!domainConfigurationRepository.existsById(GLOBAL_DOMAIN_CONFIG)){
+            DomainConfiguration configuration = new DomainConfiguration();
+            configuration.setDomainId("");
+            configuration.setId(GLOBAL_DOMAIN_CONFIG);
+            configuration.setAuthenticationApiToken("");
+            domainConfigurationRepository.save(configuration);
         }
     }
 }

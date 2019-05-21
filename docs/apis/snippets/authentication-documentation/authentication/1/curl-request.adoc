@@ -2,6 +2,7 @@
 ----
 $ curl 'http://localhost:8080/authenticate' -i -X POST \
     -H 'Content-Type: application/json' \
+    -H 'domain-auth-token: 1234' \
     -d '{
   "domain" : "test-app",
   "username" : "test-user",

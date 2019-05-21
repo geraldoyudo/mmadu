@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+String+`
+|The token ID
+
+|`+value+`
+|`+String+`
+|The token value (Encrypted under master key if encryption is enabled)
+
+|===

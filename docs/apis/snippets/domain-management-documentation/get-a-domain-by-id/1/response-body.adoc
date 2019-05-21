@@ -1,0 +1,14 @@
+[source,options="nowrap"]
+----
+{
+  "name" : "new-domain",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/appDomains/00111111"
+    },
+    "appDomain" : {
+      "href" : "http://localhost:8080/appDomains/00111111"
+    }
+  }
+}
+----

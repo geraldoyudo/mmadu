@@ -1,6 +1,7 @@
 [source,http,options="nowrap"]
 ----
 GET /appUsers/search/findByUsernameAndDomainId?username=test-user&domainId=test-app HTTP/1.1
+domain-auth-token: 1234
 Host: localhost:8080
 
 ----

@@ -5,3 +5,4 @@ mmadu:
       - id: 1234
         name: test
         tokenEncryptionKey: 12345
+

@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "id" : "00111111",
+  "name" : "new-domain"
+}
+----

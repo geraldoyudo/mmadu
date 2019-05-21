@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.appDomains.[].name+`
+|`+String+`
+|The name of the domain
+
+|`+_embedded.appDomains.[]._links+`
+|`+map+`
+|Domain item resource links
+
+|`+_links+`
+|`+map+`
+|Resource links
+
+|`+page+`
+|`+map+`
+|Page information
+
+|===

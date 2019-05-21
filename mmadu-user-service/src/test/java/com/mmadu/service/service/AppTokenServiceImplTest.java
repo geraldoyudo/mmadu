@@ -7,9 +7,12 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.mmadu.service.entities.AppToken;
+import com.mmadu.service.exceptions.TokenNotFoundException;
 import com.mmadu.service.repositories.AppTokenRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -86,5 +89,32 @@ public class AppTokenServiceImplTest {
     public void tokenNegativeMatch() {
         AppToken token = appTokenService.generateToken();
         assertThat(appTokenService.tokenMatches(token.getId(), "323237392323"), is(false));
+    }
+
+    @Test
+    public void givenTokenIdExistsWhenGenerateTokenWithIdThenReturnSameToken() {
+        AppTokenService spiedTokenService = spy(appTokenService);
+        AppToken token = spiedTokenService.generateToken();
+        doReturn(token).when(spiedTokenService).getToken(token.getId());
+        AppToken generatedToken = spiedTokenService.generateToken(token.getId());
+        assertThat(generatedToken, equalTo(token));
+    }
+
+    @Test
+    public void givenTokenIdNotExistsWhenGenerateTokenWithIdThenReturnNewToken() {
+        final String tokenId = "token-id";
+        AppTokenService spiedTokenService = spy(appTokenService);
+        doThrow(new TokenNotFoundException()).when(spiedTokenService).getToken(tokenId);
+        AppToken generatedToken = spiedTokenService.generateToken(tokenId);
+        assertThat(generatedToken, notNullValue());
+        assertThat(generatedToken.getId(), equalTo(tokenId));
+        assertThat(generatedToken.getValue(), equalTo(TOKEN));
+    }
+
+    @Test
+    public void givenTokenIdExistsAndBlankTokenValueWhenMatchThenReturnTrue(){
+        when(tokenGenerator.generateToken()).thenReturn("");
+        AppToken token = appTokenService.generateToken();
+        assertThat(appTokenService.tokenMatches(token.getId(), "any-abritrary-value"), equalTo(true));
     }
 }

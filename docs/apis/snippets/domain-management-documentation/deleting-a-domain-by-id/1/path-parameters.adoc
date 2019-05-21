@@ -1,0 +1,8 @@
+.+/appDomains/{domainId}+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain ID
+
+|===
