@@ -46,11 +46,35 @@
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
-Content-Length: 1821
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 2332
 
 {
   &quot;_embedded&quot; : {
     &quot;appUsers&quot; : [ {
+      &quot;username&quot; : &quot;test-user&quot;,
+      &quot;password&quot; : &quot;new-password&quot;,
+      &quot;domainId&quot; : &quot;test-app&quot;,
+      &quot;roles&quot; : [ &quot;admin-role&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;properties&quot; : {
+        &quot;country&quot; : &quot;Nigeria&quot;,
+        &quot;favourite-colour&quot; : &quot;green&quot;
+      },
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF&quot;
+        },
+        &quot;appUser&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF&quot;
+        }
+      }
+    }, {
       &quot;username&quot; : &quot;test-user0&quot;,
       &quot;password&quot; : &quot;my-password0&quot;,
       &quot;domainId&quot; : &quot;test-app&quot;,
@@ -113,7 +137,7 @@ Content-Length: 1821
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 3,
+    &quot;totalElements&quot; : 4,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
