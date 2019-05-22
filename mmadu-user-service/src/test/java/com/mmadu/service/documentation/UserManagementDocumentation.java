@@ -27,7 +27,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void createUser() throws Exception {
         AppUser user = createAppUserWithConstantId();
         mockMvc.perform(post("/appUsers")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
             .content(objectToString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(

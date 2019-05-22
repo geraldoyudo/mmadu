@@ -1,6 +1,5 @@
 package com.mmadu.service.config;
 
-import com.mmadu.service.security.DomainIdExtractorFilter;
 import com.mmadu.service.security.DomainPermissionEvaluator;
 import com.mmadu.service.security.TokenAuthenticationFilter;
 import com.mmadu.service.security.TokenAuthenticationProvider;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,25 +28,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/appUsers/*").access("hasPermission('user', request.pathInfo.split('/')[2])")
                 .antMatchers(HttpMethod.DELETE, "/appUsers/*").access("hasPermission('user', request.pathInfo.split('/')[2])")
                 .antMatchers(HttpMethod.PATCH, "/appUsers/*").access("hasPermission('user', request.pathInfo.split('/')[2])")
-                .antMatchers(HttpMethod.POST, "/appUsers").access("hasPermission('domain', request.getAttribute('domainId'))")
+                .antMatchers(HttpMethod.POST, "/appUsers").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.GET, "/appUsers/search/*DomainId")
                 .access("hasPermission('domain', request.getParameterValues('domainId')[0])")
                 .antMatchers("/appUsers/**").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.GET, "/appDomains").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.POST, "/appDomains").access("hasPermission('domain', 'admin')")
-                .antMatchers(HttpMethod.GET, "/appDomains/*").access("hasPermission('domain', request.pathInfo.split('/')[2])")
+                .antMatchers(HttpMethod.GET, "/appDomains/*").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.GET, "/appDomains/search/**").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.DELETE, "/appDomains/*").access("hasPermission('domain', 'admin')")
                 .antMatchers(HttpMethod.PATCH, "/appDomains/*").access("hasPermission('domain', 'admin')")
                 .antMatchers("/appDomains/**").access("hasPermission('domain', 'admin')")
-                .antMatchers(HttpMethod.POST, "/authenticate").access("hasPermission('domain', request.getAttribute('domainId'))")
+                .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                 .antMatchers("/**").access("hasPermission('domain', 'admin')")
                 .anyRequest()
                 .permitAll()
                 .and()
                 .addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(commonsRequestLoggingFilter(), TokenAuthenticationFilter.class)
-                .addFilterAfter(domainIdExtractorFilter(), CommonsRequestLoggingFilter.class)
                 .authenticationProvider(tokenAuthenticationProvider());
     }
 
@@ -78,15 +74,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         handler.setPermissionEvaluator(domainPermissionEvaluator);
         handler.setExpressionParser(spelExpressionParser());
         return handler;
-    }
-
-    @Bean
-    public CommonsRequestLoggingFilter commonsRequestLoggingFilter(){
-        return new CommonsRequestLoggingFilter();
-    }
-
-    @Bean
-    public DomainIdExtractorFilter domainIdExtractorFilter(){
-        return new DomainIdExtractorFilter();
     }
 }

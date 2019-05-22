@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
@@ -29,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(MongoInitializationConfig.class)
+@TestPropertySource(properties = "mmadu.domain.api-security-enabled=true")
 public class AuthenticationApiDomainTokenSecurityIT {
 
     private static final String TOKEN = "1234";
@@ -52,7 +54,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
         this.mockMvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON).content(
                 mapper.writeValueAsString(
                         AuthenticateRequest.builder().username("user").password("password").domain("1").build())))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -61,7 +63,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
                 post("/authenticate").header(DOMAIN_AUTH_TOKEN_FIELD, "33333").contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
                                 AuthenticateRequest.builder().username("user").password("password").domain("1")
-                                        .build()))).andExpect(status().isForbidden());
+                                        .build()))).andExpect(status().isUnauthorized());
     }
 
     @Test

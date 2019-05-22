@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 
 @Component
 @Qualifier("authenticateApi")
-@ConditionalOnProperty(value = "mmadu.domain.authenticate-api-security-enabled", havingValue = "true")
+@ConditionalOnProperty(value = "mmadu.domain.api-security-enabled", havingValue = "true")
 public class AuthenticateApiAuthenticator implements DomainTokenAuthenticator {
 
     private DomainConfigurationService domainConfigurationService;
