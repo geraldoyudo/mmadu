@@ -1,1 +1,1 @@
-docker run --name heroku-mmadu-user-service geraldoyudo/mmadu-user-service-heroku-test:1.0.0-RELEASE
+docker run --name heroku-mmadu-user-service -p 8080:8080 geraldoyudo/mmadu-user-service-heroku-test:1.0.1-RELEASE

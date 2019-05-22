@@ -1,1 +1,1 @@
-docker build -t geraldoyudo/mmadu-user-service:1.0.0-RELEASE .
+docker build -t geraldoyudo/mmadu-user-service-heroku-test:1.0.1-RELEASE .
