@@ -23,7 +23,6 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
 
     private static final String DOMAIN_NAME = "new-domain";
     private static final String NEW_DOMAIN_ID = "00111111";
-    private static final String NEW_DOMAIN_TOKEN = "1111";
 
     @Test
     public void createADomain() throws Exception {
@@ -66,7 +65,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     public void getADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, NEW_DOMAIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,

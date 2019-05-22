@@ -12,5 +12,5 @@ $ echo '{
     "favourite-colour" : "blue"
   }
 }' | http POST 'http://localhost:8080/appUsers' \
-    'domain-auth-token:1234'
+    'domain-auth-token:2222'
 ----

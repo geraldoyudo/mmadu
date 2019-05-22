@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Qualifier("authenticateApi")
-@ConditionalOnProperty(value = "mmadu.domain.authenticate-api-security-enabled", havingValue = "false",
+@ConditionalOnProperty(value = "mmadu.domain.api-security-enabled", havingValue = "false",
         matchIfMissing = true)
 public class NoOpApiAuthenticator implements DomainTokenAuthenticator {
 
