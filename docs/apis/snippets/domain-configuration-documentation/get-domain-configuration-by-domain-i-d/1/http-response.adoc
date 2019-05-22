@@ -15,10 +15,10 @@ Content-Length: 322
   "authenticationApiToken" : "1",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/domainConfigurations/5ce2db1ae48b6541bce4968e"
+      "href" : "http://localhost:8080/domainConfigurations/5ce55397475fbd478cfc5e46"
     },
     "domainConfiguration" : {
-      "href" : "http://localhost:8080/domainConfigurations/5ce2db1ae48b6541bce4968e"
+      "href" : "http://localhost:8080/domainConfigurations/5ce55397475fbd478cfc5e46"
     }
   }
 }

@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = AuthenticateApiAuthenticator.class)
-@TestPropertySource(properties = "mmadu.domain.authenticate-api-security-enabled=true")
+@TestPropertySource(properties = "mmadu.domain.api-security-enabled=true")
 public class AuthenticateApiAuthenticatorTest {
     public static final String VALID_DOMAIN = "1";
     public static final String VALID_TOKEN = "1234";

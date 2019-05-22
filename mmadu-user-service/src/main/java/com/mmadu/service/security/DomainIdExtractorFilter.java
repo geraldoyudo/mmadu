@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
-@Component
 public class DomainIdExtractorFilter extends GenericFilterBean {
     private ObjectMapper objectMapper;
 
