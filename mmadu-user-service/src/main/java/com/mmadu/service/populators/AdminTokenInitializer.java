@@ -1,6 +1,6 @@
 package com.mmadu.service.populators;
 
-import com.mmadu.service.service.AppTokenService;
+import com.mmadu.service.providers.AppTokenService;
 import com.mmadu.service.utilities.DomainAuthenticationConstants;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

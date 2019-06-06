@@ -3,7 +3,7 @@ package com.mmadu.service.interceptors;
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 
 import com.mmadu.service.models.AuthenticateRequest;
-import com.mmadu.service.service.DomainTokenAuthenticator;
+import com.mmadu.service.providers.DomainTokenAuthenticator;
 import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -20,7 +20,7 @@ public class AuthenticationServiceAdvice {
     @Qualifier("authenticateApi")
     private DomainTokenAuthenticator apiAuthenticator;
 
-    @Before("execution(public * com.mmadu.service.service.AuthenticationService.authenticate(..)) && "
+    @Before("execution(public * com.mmadu.service.providers.AuthenticationService.authenticate(..)) && "
             + "args(authRequest)")
     public void authenticateRequest(AuthenticateRequest authRequest){
         String domain = authRequest.getDomain();

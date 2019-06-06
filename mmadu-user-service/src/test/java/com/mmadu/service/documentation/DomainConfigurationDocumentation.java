@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.repositories.DomainConfigurationRepository;
-import com.mmadu.service.service.DomainConfigurationService;
+import com.mmadu.service.providers.DomainConfigurationService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

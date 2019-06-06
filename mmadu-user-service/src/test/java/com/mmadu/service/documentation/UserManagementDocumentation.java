@@ -1,7 +1,10 @@
 package com.mmadu.service.documentation;
 
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+import static java.util.Arrays.asList;
+import static org.assertj.core.util.Maps.newHashMap;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -10,13 +13,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppUser;
 import java.util.List;
+
+import com.mmadu.service.model.UserView;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
@@ -25,19 +30,15 @@ public class UserManagementDocumentation extends AbstractDocumentation {
 
     @Test
     public void createUser() throws Exception {
-        AppUser user = createAppUserWithConstantId();
-        mockMvc.perform(post("/appUsers")
+        UserView user = new UserView("user", "password",
+                asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
+        mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
-            .content(objectToString(user)))
+            .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
-                .andDo(document(DOCUMENTATION_NAME, requestFields(
-                        fieldWithPath("domainId").description("Domain Id of the user"),
-                        fieldWithPath("username").description("Username of the user"),
-                        fieldWithPath("password").description("password of the user"),
-                        fieldWithPath("id").optional().description("ID of the user (optional, auto-generated)"),
-                        fieldWithPath("roles").type("string list").description("List of roles assigned to this user"),
-                        fieldWithPath("authorities").type("string list").description("List of authorities given to ths user"),
-                        subsectionWithPath("properties").optional().type("map").description("Other user properties")
+                .andDo(document(DOCUMENTATION_NAME, pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user")
                 )));
     }
 

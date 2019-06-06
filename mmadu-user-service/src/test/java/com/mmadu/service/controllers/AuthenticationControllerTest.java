@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
-import com.mmadu.service.service.AuthenticateApiAuthenticator;
-import com.mmadu.service.service.AuthenticationService;
+import com.mmadu.service.providers.AuthenticateApiAuthenticator;
+import com.mmadu.service.providers.AuthenticationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

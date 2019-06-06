@@ -1,15 +1,11 @@
 package com.mmadu.service.entities;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.validation.constraints.NotEmpty;
+import com.mmadu.service.model.UserView;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.*;
 
 @Document
 public class AppUser {
@@ -26,6 +22,18 @@ public class AppUser {
     private Collection<String> authorities = new HashSet<>();
     private Map<String, Object> properties = new HashMap<>();
 
+    public AppUser() {
+
+    }
+
+    public AppUser(String domainId, UserView userView) {
+        this.domainId = domainId;
+        this.username = userView.getUsername();
+        this.password = userView.getPassword();
+        this.roles = new ArrayList<>(userView.getRoles());
+        this.authorities = new ArrayList<>(userView.getAuthorities());
+        this.properties = new HashMap<>(userView.getProperties());
+    }
 
     public String getId() {
         return id;
@@ -100,7 +108,17 @@ public class AppUser {
         this.domainId = domainId;
     }
 
-    public boolean passwordMatches(String password){
+    public boolean passwordMatches(String password) {
         return this.password.equals(password);
+    }
+
+    public UserView userView() {
+        return new UserView(
+                username,
+                password,
+                new ArrayList<>(roles),
+                new ArrayList<>(authorities),
+                new HashMap<>(properties)
+        );
     }
 }

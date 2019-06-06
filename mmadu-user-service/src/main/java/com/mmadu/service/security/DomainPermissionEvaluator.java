@@ -3,10 +3,9 @@ package com.mmadu.service.security;
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.ADMIN_TOKEN_ID;
 
 import com.mmadu.service.entities.DomainConfiguration;
-import com.mmadu.service.repositories.AppUserRepository;
 import com.mmadu.service.security.domainidextractors.DomainIdExtractor;
-import com.mmadu.service.service.AppTokenService;
-import com.mmadu.service.service.DomainConfigurationService;
+import com.mmadu.service.providers.AppTokenService;
+import com.mmadu.service.providers.DomainConfigurationService;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

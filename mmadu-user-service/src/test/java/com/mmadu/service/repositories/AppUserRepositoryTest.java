@@ -1,8 +1,7 @@
 package com.mmadu.service.repositories;
 
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.mmadu.service.entities.AppUser;
@@ -56,5 +55,12 @@ public class AppUserRepositoryTest {
         AppUser appUser = initializeAppUser();
         DomainIdObject domainId = appUserRepository.findDomainIdForUser(appUser.getId()).get();
         assertThat(domainId.getDomainId(), equalTo(appUser.getDomainId()));
+    }
+
+    @Test
+    public void existsByUserNameAndDomain(){
+        initializeAppUser();
+        boolean exists = appUserRepository.existsByUsernameAndDomainId("user", "test");
+        assertThat(exists, is(true));
     }
 }

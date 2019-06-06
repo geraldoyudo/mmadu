@@ -1,6 +1,6 @@
 package com.mmadu.service.utilities;
 
-import com.mmadu.service.service.PasswordHasher;
+import com.mmadu.service.providers.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
