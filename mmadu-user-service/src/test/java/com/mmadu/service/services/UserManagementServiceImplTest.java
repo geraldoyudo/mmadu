@@ -4,8 +4,10 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.model.UserView;
+import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
+import com.sun.java.browser.plugin2.DOM;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,11 +23,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = UserManagementServiceImpl.class)
 public class UserManagementServiceImplTest {
+    public static final String TEST_ID = "test-id";
+    public static final String UNIQUE_USER_ID = "13234434";
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
     @Rule
@@ -37,6 +42,8 @@ public class UserManagementServiceImplTest {
     private AppUserRepository appUserRepository;
     @MockBean
     private AppDomainRepository appDomainRepository;
+    @MockBean
+    private UniqueUserIdGenerator uniqueUserIdGenerator;
 
     @Autowired
     private UserManagementService userManagementService;
@@ -46,6 +53,7 @@ public class UserManagementServiceImplTest {
     @Before
     public void setUp() {
         doReturn(true).when(appDomainRepository).existsById(DOMAIN_ID);
+        doReturn(UNIQUE_USER_ID).when(uniqueUserIdGenerator).generateUniqueId(DOMAIN_ID);
     }
 
     @Test
@@ -60,6 +68,7 @@ public class UserManagementServiceImplTest {
         collector.checkThat(appUser.getAuthorities(), equalTo(userView.getAuthorities()));
         collector.checkThat(appUser.getRoles(), equalTo(userView.getRoles()));
         collector.checkThat(appUser.getProperties(), equalTo(userView.getProperties()));
+        collector.checkThat(appUser.getExternalId(), equalTo(UNIQUE_USER_ID));
     }
 
     private UserView createUserView() {
@@ -112,5 +121,21 @@ public class UserManagementServiceImplTest {
         expectedException.expect(DomainNotFoundException.class);
         doReturn(false).when(appDomainRepository).existsById(DOMAIN_ID);
         userManagementService.createUser(DOMAIN_ID, createUserView());
+    }
+
+    @Test
+    public void givenUserWithIdWhenCreateUserThenExternalIdShouldBeTheSame() {
+        UserView userView = createUserView();
+        userView.setId(TEST_ID);
+        userManagementService.createUser(DOMAIN_ID, userView);
+        verify(appUserRepository, times(1)).save(appUserArgumentCaptor.capture());
+        AppUser appUser = appUserArgumentCaptor.getValue();
+        collector.checkThat(appUser.getDomainId(), equalTo(DOMAIN_ID));
+        collector.checkThat(appUser.getPassword(), equalTo(userView.getPassword()));
+        collector.checkThat(appUser.getUsername(), equalTo(userView.getUsername()));
+        collector.checkThat(appUser.getAuthorities(), equalTo(userView.getAuthorities()));
+        collector.checkThat(appUser.getRoles(), equalTo(userView.getRoles()));
+        collector.checkThat(appUser.getProperties(), equalTo(userView.getProperties()));
+        collector.checkThat(appUser.getExternalId(), equalTo(TEST_ID));
     }
 }

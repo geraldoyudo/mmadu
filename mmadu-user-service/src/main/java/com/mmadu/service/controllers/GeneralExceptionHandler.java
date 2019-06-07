@@ -1,9 +1,6 @@
 package com.mmadu.service.controllers;
 
-import com.mmadu.service.exceptions.DomainAuthenticationException;
-import com.mmadu.service.exceptions.DomainNotFoundException;
-import com.mmadu.service.exceptions.InvalidDomainCredentialsException;
-import com.mmadu.service.exceptions.TokenNotFoundException;
+import com.mmadu.service.exceptions.*;
 import com.mmadu.service.models.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,5 +29,12 @@ public class GeneralExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIllegalArgumentException(IllegalArgumentException ex) {
         return new ErrorResponse("215", ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            DuplicationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDuplicationException(DuplicationException ex) {
+        return new ErrorResponse("220", ex.getMessage());
     }
 }

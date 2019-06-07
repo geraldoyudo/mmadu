@@ -2,6 +2,7 @@ package com.mmadu.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenBadUserArgment400BadRequest() throws Exception {
+    public void givenBadArgmentWhenCreateUserReturn400BadRequest() throws Exception {
         String errorMessage = "invalid user";
         doThrow(new IllegalArgumentException(errorMessage)).when(userManagementService)
                 .createUser(anyString(), any(UserView.class));
@@ -72,6 +73,20 @@ public class UserManagementControllerTest {
                 ))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(FIELD_ERROR_CODE, equalTo(BAD_ARGUMENT_CODE)))
+                .andExpect(jsonPath(FIELD_ERROR_MESSAGE, equalTo(errorMessage)));
+    }
+
+    @Test
+    public void givenDuplicateWhenCreateWhenCreateUserReturnDuplicateException() throws Exception {
+        String errorMessage = "user already exists";
+        doThrow(new DuplicationException(errorMessage)).when(userManagementService)
+                .createUser(anyString(), any(UserView.class));
+
+        mockMvc.perform(post("/domains/{domainId}/users", DOMAIN_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .content(testUser()))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath(FIELD_ERROR_CODE, equalTo("220")))
                 .andExpect(jsonPath(FIELD_ERROR_MESSAGE, equalTo(errorMessage)));
     }
 }

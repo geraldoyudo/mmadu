@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
 
 public class UserView {
+    private String id;
     @JsonProperty("username")
     private String username;
     @JsonProperty("password")
@@ -27,6 +28,15 @@ public class UserView {
         this.roles = roles;
         this.authorities = authorities;
         this.properties = properties;
+    }
+
+    public UserView(String id, String username, String password, List<String> roles, List<String> authorities, Map<String, Object> properties) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.authorities = authorities;
+        this.properties = properties;
+        this.id = id;
     }
 
     @JsonAnySetter
@@ -77,5 +87,13 @@ public class UserView {
         if(authorities != null) {
             this.authorities = authorities;
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -13,6 +13,8 @@ public class AppUser {
     @Id
     private String id;
     @NotEmpty
+    private String externalId;
+    @NotEmpty
     private String username;
     @NotEmpty
     private String password;
@@ -27,6 +29,7 @@ public class AppUser {
     }
 
     public AppUser(String domainId, UserView userView) {
+        this.externalId = userView.getId();
         this.domainId = domainId;
         this.username = userView.getUsername();
         this.password = userView.getPassword();
@@ -112,8 +115,17 @@ public class AppUser {
         return this.password.equals(password);
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     public UserView userView() {
         return new UserView(
+                externalId,
                 username,
                 password,
                 new ArrayList<>(roles),
