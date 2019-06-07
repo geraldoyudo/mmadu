@@ -95,4 +95,11 @@ public class AppUserRepositoryTest {
         appUserRepository.save(appUser1);
         appUserRepository.save(appUser2);
     }
+
+    @Test
+    public void findByDomainAndExternalId(){
+        initializeAppUser();
+        AppUser user = appUserRepository.findByDomainIdAndExternalId("test", "ext-id").get();
+        assertThat(user, notNullValue());
+    }
 }

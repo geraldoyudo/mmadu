@@ -1,6 +1,7 @@
 [source,options="nowrap"]
 ----
 {
+  "externalId" : "123453432",
   "username" : "test-user",
   "password" : "my-password",
   "domainId" : "test-app",

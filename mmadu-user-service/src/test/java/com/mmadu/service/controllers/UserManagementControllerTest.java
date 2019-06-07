@@ -3,6 +3,7 @@ package com.mmadu.service.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.exceptions.DuplicationException;
+import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
 import org.junit.Rule;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
@@ -38,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = UserManagementController.class, secure = false)
 public class UserManagementControllerTest {
+    public static final String USER_ID = "13423";
     @Rule
     public final ErrorCollector collector = new ErrorCollector();
 
@@ -137,5 +140,31 @@ public class UserManagementControllerTest {
             userViewList.add(userView);
         }
         return userViewList;
+    }
+
+    @Test
+    public void givenNoUserWhenGetUserByExternalIdThenReturn404Response() throws Exception {
+        doThrow(new UserNotFoundException())
+                .when(userManagementService).getUserByDomainIdAndExternalId(DOMAIN_ID, USER_ID);
+        mockMvc.perform(
+                get("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void givenUserWhenGetUserByExternalIdThenReturnUser() throws Exception {
+        UserView userView = new UserView(USER_ID, "user", "password",
+                asList("admin"), asList("manage-users"), new HashMap<>());
+        doReturn(userView).when(userManagementService).getUserByDomainIdAndExternalId(DOMAIN_ID, USER_ID);
+        mockMvc.perform(
+                get("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", equalTo(userView.getId())))
+                .andExpect(jsonPath("username", equalTo(userView.getUsername())))
+                .andExpect(jsonPath("password", equalTo(userView.getPassword())))
+                .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
+                .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
     }
 }

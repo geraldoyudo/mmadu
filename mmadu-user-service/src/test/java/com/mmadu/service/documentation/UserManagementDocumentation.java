@@ -69,25 +69,25 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     public void gettingAUserById() throws Exception {
         createAUserAndSave();
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/appUsers/{userId}", TEST_USER_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/{userId}",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
                         pathParameters(
-                                parameterWithName("userId").description("The user's ID")
+                                parameterWithName("userId").description("The user's ID"),
+                                parameterWithName("domainId").description("The domain id of the user")
                         ), userResponseFields()));
     }
 
     private ResponseFieldsSnippet userResponseFields() {
-        return responseFields(
-                fieldWithPath("domainId").description("Domain Id of the user"),
+        return relaxedResponseFields(
+                fieldWithPath("id").description("The user's id"),
                 fieldWithPath("username").description("Username of the user"),
                 fieldWithPath("password").description("password of the user"),
                 fieldWithPath("roles").type("string list").description("List of roles assigned to this user"),
-                fieldWithPath("authorities").type("string list").description("List of authorities given to ths user"),
-                subsectionWithPath("properties").optional().type("map").description("Other user properties"),
-                subsectionWithPath("_links").type("map").description("User item resource links")
+                fieldWithPath("authorities").type("string list").description("List of authorities given to ths user")
         );
     }
 

@@ -13,15 +13,15 @@ public class GeneralExceptionHandler {
     @ExceptionHandler({
             DomainNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleNotFoundException() {
-
+    public ErrorResponse handleDomainNotFoundException() {
+        return new ErrorResponse("200", "domain not found");
     }
 
-    @ExceptionHandler({DomainAuthenticationException.class, InvalidDomainCredentialsException.class,
-            TokenNotFoundException.class})
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public void handleUnauthorizedException() {
-
+    @ExceptionHandler({
+            UserNotFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleUserNotFoundException() {
+        return new ErrorResponse("210", "user not found");
     }
 
     @ExceptionHandler({
@@ -36,5 +36,12 @@ public class GeneralExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleDuplicationException(DuplicationException ex) {
         return new ErrorResponse("220", ex.getMessage());
+    }
+
+    @ExceptionHandler({DomainAuthenticationException.class, InvalidDomainCredentialsException.class,
+            TokenNotFoundException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleUnauthorizedException() {
+        return new ErrorResponse("225", "Unauthorized");
     }
 }

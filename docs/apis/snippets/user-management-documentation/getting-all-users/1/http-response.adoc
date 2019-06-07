@@ -8,7 +8,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 705
+Content-Length: 796
 
-{"content":[{"id":"3d602a2a64844528ae4ea51f17f0eeeb","username":"test-user0","password":"my-password0","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"4b202a4c389a4fe8be3c4c472c838386","username":"test-user1","password":"my-password1","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"d79e313d0e33469e896c985ea31b5891","username":"test-user2","password":"my-password2","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"}],"totalPages":1,"totalElements":3,"last":true,"size":20,"number":0,"sort":{"sorted":false,"unsorted":true},"numberOfElements":3,"first":true}
+{"content":[{"id":"123453432","username":"test-user","password":"my-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"},{"id":"123453432","username":"test-user0","password":"my-password0","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user1","password":"my-password1","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user2","password":"my-password2","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"}],"totalElements":4,"last":true,"totalPages":1,"size":20,"number":0,"numberOfElements":4,"sort":{"sorted":false,"unsorted":true},"first":true}
 ----

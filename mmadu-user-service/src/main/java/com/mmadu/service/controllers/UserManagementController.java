@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/domains/{domainId}/users")
 public class UserManagementController {
@@ -16,13 +18,19 @@ public class UserManagementController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody UserView user,
+    public void createUserInDomain(@RequestBody UserView user,
                            @PathVariable("domainId") String  domainId) {
         userManagementService.createUser(domainId, user);
     }
 
     @GetMapping
-    public Page<UserView> getAllUsers(@PathVariable("domainId") String domainId, Pageable p){
+    public Page<UserView> getAllUsersInDomain(@PathVariable("domainId") String domainId, Pageable p){
         return userManagementService.getAllUsers(domainId, p);
+    }
+
+    @GetMapping("/{userId}")
+    public UserView getUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
+                                                           @PathVariable("userId") String externalId){
+        return userManagementService.getUserByDomainIdAndExternalId(domainId, externalId);
     }
 }

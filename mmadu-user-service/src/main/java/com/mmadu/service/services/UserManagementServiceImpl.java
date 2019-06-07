@@ -3,6 +3,7 @@ package com.mmadu.service.services;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
+import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.models.PagedList;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -68,8 +70,21 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public Page<UserView> getAllUsers(String domainId, Pageable pageable) {
+        if (!appDomainRepository.existsById(domainId)) {
+            throw new DomainNotFoundException();
+        }
         Page<UserView> userViewPage = appUserRepository.findByDomainId(domainId, pageable)
                 .map(AppUser::userView);
         return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
+    }
+
+    @Override
+    public UserView getUserByDomainIdAndExternalId(String domainId, String externalId) {
+        if (!appDomainRepository.existsById(domainId)) {
+            throw new DomainNotFoundException();
+        }
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, externalId)
+                .orElseThrow(UserNotFoundException::new);
+        return user.userView();
     }
 }

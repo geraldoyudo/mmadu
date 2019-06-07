@@ -3,6 +3,7 @@ package com.mmadu.service.services;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
+import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
@@ -26,6 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -170,5 +172,27 @@ public class UserManagementServiceImplTest {
         collector.checkThat(userViews.getTotalElements(), equalTo(appUserPage.getTotalElements()));
         collector.checkThat(userViews.getTotalPages(), equalTo(appUserPage.getTotalPages()));
         collector.checkThat(userViews.getContent().get(0).getId(), equalTo(appUserPage.getContent().get(0).getExternalId()));
+    }
+
+    @Test
+    public void givenUserNotFoundWhenGetUserByDomainAndExternalIdThenThrowUserNotFoundException() throws Exception {
+        expectedException.expect(UserNotFoundException.class);
+        doReturn(Optional.empty()).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
+
+    @Test
+    public void givenDomainNotFoundWhenGetUserByDomainAndExternalIdThenThrowDomainNotFoundException() throws Exception {
+        expectedException.expect(DomainNotFoundException.class);
+        doReturn(false).when(appDomainRepository).existsById(DOMAIN_ID);
+        userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
+
+    @Test
+    public void givenUserWhenGetUserByDomainAndExternalIdThenReturnUser(){
+        AppUser user = new AppUser(DOMAIN_ID, createUserView());
+        doReturn(Optional.of(user)).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        UserView userView = userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        assertThat(userView.getId(), equalTo(user.getExternalId()));
     }
 }

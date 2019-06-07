@@ -43,6 +43,7 @@ public abstract class AbstractDocumentation {
     public static final String TEST_ROLE = "admin-role";
     private static final String DOMAIN_NAME = "test";
     public static final String DOMAIN_TOKEN = "1234";
+    public static final String USER_EXTERNAL_ID = "123453432";
     protected final String ADMIN_TOKEN = "2222";
 
     @Rule
@@ -56,8 +57,6 @@ public abstract class AbstractDocumentation {
     protected AppUserRepository appUserRepository;
     @Autowired
     protected AppDomainRepository appDomainRepository;
-    @Autowired
-    private UniqueUserIdGenerator uniqueUserIdGenerator;
 
     protected MockMvc mockMvc;
 
@@ -86,7 +85,7 @@ public abstract class AbstractDocumentation {
         user.setId(TEST_USER_ID);
         user.addAuthorities(TEST_AUTHORITY);
         user.addRoles(TEST_ROLE);
-        user.setExternalId(uniqueUserIdGenerator.generateUniqueId(USER_DOMAIN_ID));
+        user.setExternalId(USER_EXTERNAL_ID);
         user.set("country", "Nigeria");
         user.set("favourite-colour", "blue");
         return user;
@@ -100,7 +99,7 @@ public abstract class AbstractDocumentation {
         user.setId(TEST_USER_ID + index);
         user.addAuthorities(TEST_AUTHORITY);
         user.addRoles(TEST_ROLE);
-        user.setExternalId(uniqueUserIdGenerator.generateUniqueId(USER_DOMAIN_ID));
+        user.setExternalId(USER_EXTERNAL_ID);
         user.set("country", "Nigeria");
         user.set("favourite-color", "blue");
         return user;

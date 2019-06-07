@@ -28,4 +28,7 @@ public interface AppUserRepository extends MongoRepository<AppUser, String> {
 
     @Query(value = "{ _id: ?0 }", fields = "{ domainId: 1, _id: 0}")
     Optional<DomainIdObject> findDomainIdForUser(@Param("id") String id);
+
+    Optional<AppUser> findByDomainIdAndExternalId(@Param("domainId")String domainId,
+                                                  @Param("externalId")String externalId);
 }
