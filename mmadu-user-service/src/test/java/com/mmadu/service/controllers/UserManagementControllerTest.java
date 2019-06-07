@@ -5,27 +5,42 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = UserManagementController.class, secure = false)
 public class UserManagementControllerTest {
+    @Rule
+    public final ErrorCollector collector = new ErrorCollector();
+
     public static final String BAD_ARGUMENT_CODE = "215";
     public static final String FIELD_ERROR_CODE = "code";
     public static final String FIELD_ERROR_MESSAGE = "message";
@@ -88,5 +103,39 @@ public class UserManagementControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(FIELD_ERROR_CODE, equalTo("220")))
                 .andExpect(jsonPath(FIELD_ERROR_MESSAGE, equalTo(errorMessage)));
+    }
+
+    @Test
+    public void givenUserListWhenGetAllUsersReturnUserPage() throws Exception {
+        PageImpl<UserView> page = new PageImpl<>(createUserViewList());
+        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
+        doReturn(page).when(userManagementService).getAllUsers(eq(DOMAIN_ID), pageableCaptor.capture());
+        mockMvc.perform(get("/domains/{domainId}/users", DOMAIN_ID)
+                .param("page", "2")
+                .param("size", "10")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content.length()", equalTo(5)))
+                .andExpect(jsonPath("totalPages", equalTo(1)))
+                .andExpect(jsonPath("totalElements", equalTo(5)));
+        Pageable p = pageableCaptor.getValue();
+        collector.checkThat(p.getPageNumber(), equalTo(2));
+        collector.checkThat(p.getPageSize(), equalTo(10));
+    }
+
+    private List<UserView> createUserViewList(){
+        List<UserView> userViewList = new LinkedList<>();
+        for(int i=0; i< 5; ++i){
+            UserView userView = new UserView(
+                    "id" + i,
+                    "user"+i,
+                    "password" +i,
+                    asList("member"),
+                    asList("view-profile"),
+                    new HashMap<>()
+            );
+            userViewList.add(userView);
+        }
+        return userViewList;
     }
 }

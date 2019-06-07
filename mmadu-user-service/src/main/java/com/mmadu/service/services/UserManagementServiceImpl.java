@@ -4,12 +4,18 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.PagedList;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.Collections;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -46,13 +52,24 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
         }
-        if (appUserRepository.existsByUsernameAndDomainId(userView.getUsername(), domainId)) {
+        if (appUserRepository.existsByUsernameAndDomainId(userView.getUsername(), domainId) ||
+            appUserRepository.existsByExternalIdAndDomainId(userView.getId(), domainId)) {
             throw new DuplicationException("user already exists");
+        }
+        if(StringUtils.isEmpty(userView.getId())){
+            userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
         }
         if(StringUtils.isEmpty(userView.getId())){
             userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
         }
         AppUser appUser = new AppUser(domainId, userView);
         appUserRepository.save(appUser);
+    }
+
+    @Override
+    public Page<UserView> getAllUsers(String domainId, Pageable pageable) {
+        Page<UserView> userViewPage = appUserRepository.findByDomainId(domainId, pageable)
+                .map(AppUser::userView);
+        return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
     }
 }

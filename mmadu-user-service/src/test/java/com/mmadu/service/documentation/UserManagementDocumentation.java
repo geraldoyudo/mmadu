@@ -5,10 +5,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.util.Maps.newHashMap;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
@@ -37,7 +34,13 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
             .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
-                .andDo(document(DOCUMENTATION_NAME, pathParameters(
+                .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
+                        fieldWithPath("username").description("The user's username (must be unigue)"),
+                        fieldWithPath("id").description("The user's id (unique identifier used to reference user in your application)"),
+                        fieldWithPath("password").description("The user's password"),
+                        fieldWithPath("roles").description("The user's assigned roles"),
+                        fieldWithPath("authorities").description("The user's granted authorities")
+                ) ,pathParameters(
                         parameterWithName("domainId").description("The domain id of the user")
                 )));
     }
@@ -46,7 +49,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void gettingAllUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
-        mockMvc.perform(get("/appUsers")
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
@@ -54,16 +57,12 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     private ResponseFieldsSnippet usersResponseFields() {
-        return responseFields(
-                fieldWithPath("_embedded.appUsers.[].domainId").description("Domain Id of the user"),
-                fieldWithPath("_embedded.appUsers.[].username").description("Username of the user"),
-                fieldWithPath("_embedded.appUsers.[].password").description("password of the user"),
-                fieldWithPath("_embedded.appUsers.[].roles").type("string list").description("List of roles assigned to this user"),
-                fieldWithPath("_embedded.appUsers.[].authorities").type("string list").description("List of authorities given to ths user"),
-                subsectionWithPath("_embedded.appUsers.[].properties").optional().type("map").description("Other user properties"),
-                subsectionWithPath("_embedded.appUsers.[]._links").type("map").description("User item resource links"),
-                subsectionWithPath("_links").type("map").description("Resource links"),
-                subsectionWithPath("page").type("map").description("Page information")
+        return relaxedResponseFields(
+                fieldWithPath("content.[].id").description("The user's unique identification"),
+                fieldWithPath("content.[].username").description("Username of the user"),
+                fieldWithPath("content.[].username").description("password of the user"),
+                fieldWithPath("content.[].roles").type("string list").description("List of roles assigned to this user"),
+                fieldWithPath("content.[].authorities").type("string list").description("List of authorities given to ths user")
         );
     }
 

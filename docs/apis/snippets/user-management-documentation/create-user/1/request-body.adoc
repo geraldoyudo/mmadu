@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}
+{"id":null,"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}
 ----

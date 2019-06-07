@@ -18,6 +18,9 @@ public interface AppUserRepository extends MongoRepository<AppUser, String> {
     boolean existsByUsernameAndDomainId(@Param("username") String username,
                                                 @Param("domainId") String domain);
 
+    boolean existsByExternalIdAndDomainId(@Param("externalId") String username,
+                                        @Param("domainId") String domain);
+
     Optional<AppUser> findByUsernameAndDomainId(@Param("username") String username,
             @Param("domainId") String domain);
 

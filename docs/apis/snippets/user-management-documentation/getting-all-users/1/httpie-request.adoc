@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http GET 'http://localhost:8080/appUsers' \
+$ http GET 'http://localhost:8080/domains/test-app/users' \
     'domain-auth-token:2222'
 ----

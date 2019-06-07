@@ -16,14 +16,21 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Collections;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -44,6 +51,9 @@ public class UserManagementServiceImplTest {
     private AppDomainRepository appDomainRepository;
     @MockBean
     private UniqueUserIdGenerator uniqueUserIdGenerator;
+
+    @Mock
+    private Pageable pageable;
 
     @Autowired
     private UserManagementService userManagementService;
@@ -82,12 +92,22 @@ public class UserManagementServiceImplTest {
     }
 
     @Test
-    public void givenUserAlreadyExistsWhenCreateUserThrowUserExistsException() {
+    public void givenUserNameAlreadyExistsWhenCreateUserThrowUserExistsException() {
         expectedException.expectMessage("user already exists");
         expectedException.expect(DuplicationException.class);
         UserView userView = createUserView();
         doReturn(true).when(appUserRepository)
                 .existsByUsernameAndDomainId(userView.getUsername(), DOMAIN_ID);
+        userManagementService.createUser(DOMAIN_ID, userView);
+    }
+
+    @Test
+    public void givenUserExternalIdAlreadyExistsWhenCreateUserThrowUserExistsException() {
+        expectedException.expectMessage("user already exists");
+        expectedException.expect(DuplicationException.class);
+        UserView userView = createUserView();
+        doReturn(true).when(appUserRepository)
+                .existsByExternalIdAndDomainId(userView.getId(), DOMAIN_ID);
         userManagementService.createUser(DOMAIN_ID, userView);
     }
 
@@ -137,5 +157,18 @@ public class UserManagementServiceImplTest {
         collector.checkThat(appUser.getRoles(), equalTo(userView.getRoles()));
         collector.checkThat(appUser.getProperties(), equalTo(userView.getProperties()));
         collector.checkThat(appUser.getExternalId(), equalTo(TEST_ID));
+    }
+
+    @Test
+    public void givenPagedListWhenGetAllUsersThenReturnPagedList(){
+        AppUser user = new AppUser(DOMAIN_ID, createUserView());
+        user.setId("id");
+        PageImpl<AppUser> appUserPage = new PageImpl<>(asList(user));
+        doReturn(appUserPage).when(appUserRepository).findByDomainId(DOMAIN_ID, pageable);
+        Page<UserView> userViews = userManagementService.getAllUsers(DOMAIN_ID, pageable);
+        assertThat(userViews.getContent().size(), equalTo(appUserPage.getContent().size()));
+        collector.checkThat(userViews.getTotalElements(), equalTo(appUserPage.getTotalElements()));
+        collector.checkThat(userViews.getTotalPages(), equalTo(appUserPage.getTotalPages()));
+        collector.checkThat(userViews.getContent().get(0).getId(), equalTo(appUserPage.getContent().get(0).getExternalId()));
     }
 }

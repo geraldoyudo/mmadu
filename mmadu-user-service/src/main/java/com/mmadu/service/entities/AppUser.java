@@ -2,12 +2,18 @@ package com.mmadu.service.entities;
 
 import com.mmadu.service.model.UserView;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 @Document
+@CompoundIndexes({
+        @CompoundIndex(name = "domain_external_id", def = "{'domainId': 1, 'externalId': 1}", unique = true),
+        @CompoundIndex(name = "domain_username", def = "{'domainId': 1, 'username': 1}", unique = true)
+})
 public class AppUser {
 
     @Id

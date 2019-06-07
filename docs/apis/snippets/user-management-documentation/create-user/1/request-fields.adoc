@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+username+`
+|`+String+`
+|The user's username (must be unigue)
+
+|`+id+`
+|`+Null+`
+|The user's id (unique identifier used to reference user in your application)
+
+|`+password+`
+|`+String+`
+|The user's password
+
+|`+roles+`
+|`+Array+`
+|The user's assigned roles
+
+|`+authorities+`
+|`+Array+`
+|The user's granted authorities
+
+|===
