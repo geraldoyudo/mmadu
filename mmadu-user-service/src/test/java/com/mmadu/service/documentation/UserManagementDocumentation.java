@@ -99,12 +99,14 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     public void deletingAUserById() throws Exception {
         createAUserAndSave();
-        mockMvc.perform(RestDocumentationRequestBuilders.delete("/appUsers/{userId}", TEST_USER_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+        mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/users/{userId}",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
                         pathParameters(
+                                parameterWithName("domainId").description("The user's domain ID"),
                                 parameterWithName("userId").description("The user's ID")
                         )));
     }

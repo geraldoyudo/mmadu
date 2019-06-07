@@ -87,4 +87,15 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .orElseThrow(UserNotFoundException::new);
         return user.userView();
     }
+
+    @Override
+    public void deleteUserByDomainAndExternalId(String domainId, String externalId) {
+        if (!appDomainRepository.existsById(domainId)) {
+            throw new DomainNotFoundException();
+        }
+        if(!appUserRepository.existsByExternalIdAndDomainId(externalId, domainId)){
+            throw new UserNotFoundException();
+        }
+        appUserRepository.deleteByDomainIdAndExternalId(domainId, externalId);
+    }
 }

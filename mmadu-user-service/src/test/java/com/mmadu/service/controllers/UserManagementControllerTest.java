@@ -31,8 +31,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -167,4 +166,23 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
                 .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
     }
+
+    @Test
+    public void givenNoUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception{
+        doThrow(new UserNotFoundException()).when(userManagementService)
+                .deleteUserByDomainAndExternalId(DOMAIN_ID, USER_ID);
+        mockMvc.perform(
+                delete("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void givenUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception{
+        mockMvc.perform(
+                delete("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
+        )
+                .andExpect(status().isNoContent());
+    }
+
 }

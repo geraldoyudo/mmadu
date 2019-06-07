@@ -195,4 +195,27 @@ public class UserManagementServiceImplTest {
         UserView userView = userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
         assertThat(userView.getId(), equalTo(user.getExternalId()));
     }
+
+    @Test
+    public void givenUserNotFoundWhenDeleteUserByDomainAndExternalIdThenThrowUserNotFoundException() throws Exception {
+        expectedException.expect(UserNotFoundException.class);
+        doReturn(false).when(appUserRepository).existsByExternalIdAndDomainId(UNIQUE_USER_ID, DOMAIN_ID);
+        userManagementService.deleteUserByDomainAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
+
+    @Test
+    public void givenDomainNotFoundWhenDeleteUserByDomainAndExternalIdThenThrowDomainNotFoundException() throws Exception {
+        expectedException.expect(DomainNotFoundException.class);
+        doReturn(false).when(appDomainRepository).existsById(DOMAIN_ID);
+        userManagementService.deleteUserByDomainAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
+
+    @Test
+    public void givenUserWhenDeleteUserByDomainAndExternalIdThenReturnUser(){
+        doReturn(true).when(appDomainRepository).existsById(DOMAIN_ID);
+        doReturn(true).when(appUserRepository).existsByExternalIdAndDomainId(UNIQUE_USER_ID, DOMAIN_ID);
+        userManagementService.deleteUserByDomainAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        verify(appUserRepository, times(1))
+                .deleteByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
 }

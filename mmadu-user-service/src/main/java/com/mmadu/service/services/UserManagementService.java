@@ -13,4 +13,6 @@ public interface UserManagementService {
     Page<UserView> getAllUsers(String domainId, Pageable pageable);
 
     UserView getUserByDomainIdAndExternalId(String domainId, String externalId);
+
+    void deleteUserByDomainAndExternalId(String domainId, String externalId);
 }
