@@ -1,6 +1,6 @@
 package com.mmadu.service.utilities;
 
-import com.mmadu.service.service.PasswordHasher;
+import com.mmadu.service.providers.PasswordHasher;
 
 public class TestPasswordHasher implements PasswordHasher {
     public static final String HASH_PREFIX = "hash-";

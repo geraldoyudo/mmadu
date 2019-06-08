@@ -1,7 +1,6 @@
 package com.mmadu.service.security;
 
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.ADMIN_TOKEN_ID;
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -11,11 +10,11 @@ import com.mmadu.service.models.DomainIdObject;
 import com.mmadu.service.repositories.AppUserRepository;
 import com.mmadu.service.security.domainidextractors.AppUserIdDomainIdExtractor;
 import com.mmadu.service.security.domainidextractors.TransparentDomainIdExtractor;
-import com.mmadu.service.service.AppTokenService;
-import com.mmadu.service.service.DomainConfigurationService;
+import com.mmadu.service.providers.AppTokenService;
+import com.mmadu.service.providers.DomainConfigurationService;
 import java.util.Arrays;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

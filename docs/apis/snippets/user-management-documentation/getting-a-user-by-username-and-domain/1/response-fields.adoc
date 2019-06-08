@@ -1,9 +1,9 @@
 |===
 |Path|Type|Description
 
-|`+domainId+`
+|`+id+`
 |`+String+`
-|Domain Id of the user
+|The user's id
 
 |`+username+`
 |`+String+`
@@ -20,13 +20,5 @@
 |`+authorities+`
 |`+string list+`
 |List of authorities given to ths user
-
-|`+properties+`
-|`+map+`
-|Other user properties
-
-|`+_links+`
-|`+map+`
-|User item resource links
 
 |===

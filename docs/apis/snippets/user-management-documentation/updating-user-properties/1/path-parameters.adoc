@@ -1,6 +1,9 @@
-.+/appUsers/{userId}+
+.+/domains/{domainId}/users/{userId}+
 |===
 |Parameter|Description
+
+|`+domainId+`
+|The user's domain ID
 
 |`+userId+`
 |The user's ID

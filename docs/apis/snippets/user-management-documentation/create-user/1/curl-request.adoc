@@ -1,17 +1,7 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/appUsers' -i -X POST \
+$ curl 'http://localhost:8080/domains/test-app/users' -i -X POST \
+    -H 'Content-Type: application/json' \
     -H 'domain-auth-token: 2222' \
-    -d '{
-  "id" : "12345ABCDEF",
-  "username" : "test-user",
-  "password" : "my-password",
-  "domainId" : "test-app",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "properties" : {
-    "country" : "Nigeria",
-    "favourite-colour" : "blue"
-  }
-}'
+    -d '{"id":null,"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}'
 ----

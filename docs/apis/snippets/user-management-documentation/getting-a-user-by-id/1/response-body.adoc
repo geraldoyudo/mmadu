@@ -1,22 +1,4 @@
 [source,options="nowrap"]
 ----
-{
-  "username" : "test-user",
-  "password" : "my-password",
-  "domainId" : "test-app",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "properties" : {
-    "country" : "Nigeria",
-    "favourite-colour" : "blue"
-  },
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
-    },
-    "appUser" : {
-      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
-    }
-  }
-}
+{"id":"123453432","username":"test-user","password":"my-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}
 ----

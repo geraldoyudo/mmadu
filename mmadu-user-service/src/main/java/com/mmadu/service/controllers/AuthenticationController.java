@@ -2,7 +2,7 @@ package com.mmadu.service.controllers;
 
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
-import com.mmadu.service.service.AuthenticationService;
+import com.mmadu.service.providers.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

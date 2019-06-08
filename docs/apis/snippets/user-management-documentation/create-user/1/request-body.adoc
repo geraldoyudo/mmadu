@@ -1,15 +1,4 @@
 [source,options="nowrap"]
 ----
-{
-  "id" : "12345ABCDEF",
-  "username" : "test-user",
-  "password" : "my-password",
-  "domainId" : "test-app",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "properties" : {
-    "country" : "Nigeria",
-    "favourite-colour" : "blue"
-  }
-}
+{"id":null,"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}
 ----

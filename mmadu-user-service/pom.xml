@@ -111,7 +111,7 @@
 					<imageTags>
 						<imageTag>${project.version}</imageTag>
 					</imageTags>
-					<!-- copy the service's jar file from target into the root directory of the image -->
+					<!-- copy the providers's jar file from target into the root directory of the image -->
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
