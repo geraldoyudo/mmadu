@@ -46,4 +46,10 @@ public class UserManagementController {
                                                 @RequestBody UserView userView) {
         userManagementService.updateUser(domainId, externalId, userView);
     }
+
+    @GetMapping("/load")
+    public UserView loadUserByUsername(@PathVariable("domainId") String domainId,
+                                       @RequestParam("username") String username) {
+        return userManagementService.getUserByDomainIdAndUsername(domainId, username);
+    }
 }

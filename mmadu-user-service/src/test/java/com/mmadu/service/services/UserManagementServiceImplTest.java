@@ -39,6 +39,7 @@ public class UserManagementServiceImplTest {
     public static final String TEST_ID = "test-id";
     public static final String UNIQUE_USER_ID = "13234434";
     public static final String APP_USER_ID = "2323";
+    public static final String USERNAME = "user";
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
     @Rule
@@ -84,7 +85,7 @@ public class UserManagementServiceImplTest {
 
     private UserView createUserView() {
         UserView userView = new UserView();
-        userView.setUsername("user");
+        userView.setUsername(USERNAME);
         userView.setPassword("password");
         userView.setRoles(asList("admin"));
         userView.setAuthorities(asList("manage-users"));
@@ -194,6 +195,28 @@ public class UserManagementServiceImplTest {
         doReturn(Optional.of(user)).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
         UserView userView = userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
         assertThat(userView.getId(), equalTo(user.getExternalId()));
+    }
+
+    @Test
+    public void givenUserNotFoundWhenGetUserByDomainAndUsernameThenThrowUserNotFoundException() throws Exception {
+        expectedException.expect(UserNotFoundException.class);
+        doReturn(Optional.empty()).when(appUserRepository).findByUsernameAndDomainId(USERNAME, DOMAIN_ID);
+        userManagementService.getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
+    }
+
+    @Test
+    public void givenDomainNotFoundWhenGetUserByDomainAndUsernameThenThrowDomainNotFoundException() throws Exception {
+        expectedException.expect(DomainNotFoundException.class);
+        doReturn(false).when(appDomainRepository).existsById(DOMAIN_ID);
+        userManagementService.getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
+    }
+
+    @Test
+    public void givenUserWhenGetUserByDomainAndUsernameThenReturnUser() {
+        AppUser user = new AppUser(DOMAIN_ID, createUserView());
+        doReturn(Optional.of(user)).when(appUserRepository).findByUsernameAndDomainId(USERNAME, DOMAIN_ID);
+        UserView userView = userManagementService.getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
+        assertThat(userView.getUsername(), equalTo(user.getUsername()));
     }
 
     @Test

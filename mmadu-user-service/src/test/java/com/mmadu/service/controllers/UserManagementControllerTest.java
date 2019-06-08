@@ -39,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value = UserManagementController.class, secure = false)
 public class UserManagementControllerTest {
     public static final String USER_ID = "13423";
+    public static final String USERNAME = "test-user";
     @Rule
     public final ErrorCollector collector = new ErrorCollector();
 
@@ -67,7 +68,7 @@ public class UserManagementControllerTest {
 
     private String testUser() {
         ObjectNode user = objectMapper.createObjectNode();
-        user.put("username", "test-user")
+        user.put("username", USERNAME)
                 .put("password", "password")
                 .putArray("roles").add("admin");
         user.putArray("authorities").add("manage-users");
@@ -199,5 +200,33 @@ public class UserManagementControllerTest {
         collector.checkThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian"));
         collector.checkThat(userView.getRoles(), equalTo(asList("admin")));
         collector.checkThat(userView.getAuthorities(), equalTo(asList("manage-users")));
+    }
+
+    @Test
+    public void givenNoUserWhenLoadUserByUsernameThenReturn404Response() throws Exception {
+        doThrow(new UserNotFoundException())
+                .when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
+        mockMvc.perform(
+                get("/domains/{domainId}/users/load", DOMAIN_ID)
+                .param("username", USERNAME)
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void givenUserWhenLoadUserByUsernameThenReturnUser() throws Exception {
+        UserView userView = new UserView(USER_ID, "user", "password",
+                asList("admin"), asList("manage-users"), new HashMap<>());
+        doReturn(userView).when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
+        mockMvc.perform(
+                get("/domains/{domainId}/users/load", DOMAIN_ID)
+                .param("username", USERNAME)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id", equalTo(userView.getId())))
+                .andExpect(jsonPath("username", equalTo(userView.getUsername())))
+                .andExpect(jsonPath("password", equalTo(userView.getPassword())))
+                .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
+                .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
     }
 }

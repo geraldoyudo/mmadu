@@ -79,9 +79,8 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
         }
-        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, externalId)
-                .orElseThrow(UserNotFoundException::new);
-        return user.userView();
+        return appUserRepository.findByDomainIdAndExternalId(domainId, externalId)
+                .orElseThrow(UserNotFoundException::new).userView();
     }
 
     @Override
@@ -112,5 +111,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         appUser.setPassword(userView.getPassword());
         appUser.setProperties(userView.getProperties());
         appUserRepository.save(appUser);
+    }
+
+    @Override
+    public UserView getUserByDomainIdAndUsername(String domainId, String username) {
+        if (!appDomainRepository.existsById(domainId)) {
+            throw new DomainNotFoundException();
+        }
+        return appUserRepository.findByUsernameAndDomainId(username, domainId)
+                .orElseThrow(UserNotFoundException::new).userView();
     }
 }

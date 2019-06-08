@@ -1,33 +1,14 @@
 [source,http,options="nowrap"]
 ----
 HTTP/1.1 200 OK
-Content-Type: application/hal+json;charset=UTF-8
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 466
+Content-Length: 159
 
-{
-  "externalId" : "123453432",
-  "username" : "test-user",
-  "password" : "my-password",
-  "domainId" : "test-app",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "properties" : {
-    "country" : "Nigeria",
-    "favourite-colour" : "blue"
-  },
-  "_links" : {
-    "self" : {
-      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
-    },
-    "appUser" : {
-      "href" : "http://localhost:8080/appUsers/12345ABCDEF"
-    }
-  }
-}
+{"id":"123453432","username":"test-user","password":"my-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}
 ----

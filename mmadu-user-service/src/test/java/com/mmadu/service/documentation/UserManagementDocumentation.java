@@ -1,29 +1,31 @@
 package com.mmadu.service.documentation;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
-import static java.util.Arrays.asList;
-import static org.assertj.core.util.Maps.newHashMap;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppUser;
-import java.util.List;
-
 import com.mmadu.service.model.UserView;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
+import java.util.List;
+
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+import static java.util.Arrays.asList;
+import static org.assertj.core.util.Maps.newHashMap;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 public class UserManagementDocumentation extends AbstractDocumentation {
+
+    @Before
+    public void setUp(){
+        appUserRepository.deleteAll();
+    }
 
     @Test
     public void createUser() throws Exception {
@@ -32,7 +34,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
-            .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
                         fieldWithPath("username").description("The user's username (must be unigue)"),
@@ -40,7 +42,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                         fieldWithPath("password").description("The user's password"),
                         fieldWithPath("roles").description("The user's assigned roles"),
                         fieldWithPath("authorities").description("The user's granted authorities")
-                ) ,pathParameters(
+                ), pathParameters(
                         parameterWithName("domainId").description("The domain id of the user")
                 )));
     }
@@ -114,16 +116,18 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     public void updatingUserProperties() throws Exception {
         createAUserAndSave();
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        objectNode.put("password", "new-password")
-                .putObject("properties").put("favourite-colour", "green");
-        mockMvc.perform(RestDocumentationRequestBuilders.patch("/appUsers/{userId}", TEST_USER_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
-                .content(objectNode.toString())
+        UserView userView = appUserRepository.findById(TEST_USER_ID).get().userView();
+        userView.setUsername("changed-username");
+        userView.setPassword("changed-password");
+        mockMvc.perform(RestDocumentationRequestBuilders.put("/domains/{domainId}/users/{userId}",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .content(objectMapper.writeValueAsString(userView))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
                         pathParameters(
+                                parameterWithName("domainId").description("The user's domain ID"),
                                 parameterWithName("userId").description("The user's ID")
                         )));
     }
@@ -131,29 +135,17 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     public void gettingAUserByUsernameAndDomain() throws Exception {
         createAUserAndSave();
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/appUsers/search/findByUsernameAndDomainId")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
-                .param("username", USERNAME)
-                .param("domainId", USER_DOMAIN_ID))
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load", USER_DOMAIN_ID)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .param("username", USERNAME))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, userResponseFields(),
                         requestParameters(
-                                parameterWithName("username").description("The username of the user"),
+                                parameterWithName("username").description("The username of the user")
+                        ),
+                        pathParameters(
                                 parameterWithName("domainId").description("The domain id of the user")
-                        )));
-    }
-
-    @Test
-    public void gettingAllUsersInADomain() throws Exception {
-        List<AppUser> appUserList = createMultipleUsers(3);
-        appUserRepository.saveAll(appUserList);
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/appUsers/search/findByDomainId")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
-                .param("domainId", USER_DOMAIN_ID))
-                .andExpect(status().isOk())
-                .andDo(document(DOCUMENTATION_NAME, usersResponseFields(),
-                        requestParameters(
-                                parameterWithName("domainId").description("The domain id of the user")
-                        )));
+                        )
+                ));
     }
 }
