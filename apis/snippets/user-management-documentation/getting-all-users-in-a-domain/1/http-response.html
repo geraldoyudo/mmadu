@@ -52,11 +52,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2332
+Content-Length: 3016
 
 {
   &quot;_embedded&quot; : {
     &quot;appUsers&quot; : [ {
+      &quot;externalId&quot; : &quot;123453432&quot;,
       &quot;username&quot; : &quot;test-user&quot;,
       &quot;password&quot; : &quot;new-password&quot;,
       &quot;domainId&quot; : &quot;test-app&quot;,
@@ -75,6 +76,7 @@ Content-Length: 2332
         }
       }
     }, {
+      &quot;externalId&quot; : &quot;123453432&quot;,
       &quot;username&quot; : &quot;test-user0&quot;,
       &quot;password&quot; : &quot;my-password0&quot;,
       &quot;domainId&quot; : &quot;test-app&quot;,
@@ -93,6 +95,7 @@ Content-Length: 2332
         }
       }
     }, {
+      &quot;externalId&quot; : &quot;123453432&quot;,
       &quot;username&quot; : &quot;test-user1&quot;,
       &quot;password&quot; : &quot;my-password1&quot;,
       &quot;domainId&quot; : &quot;test-app&quot;,
@@ -111,6 +114,7 @@ Content-Length: 2332
         }
       }
     }, {
+      &quot;externalId&quot; : &quot;123453432&quot;,
       &quot;username&quot; : &quot;test-user2&quot;,
       &quot;password&quot; : &quot;my-password2&quot;,
       &quot;domainId&quot; : &quot;test-app&quot;,
@@ -128,6 +132,24 @@ Content-Length: 2332
           &quot;href&quot; : &quot;http://localhost:8080/appUsers/12345ABCDEF2&quot;
         }
       }
+    }, {
+      &quot;externalId&quot; : &quot;b4c09b542f7b48dc89ef341be6e9e72c&quot;,
+      &quot;username&quot; : &quot;user&quot;,
+      &quot;password&quot; : &quot;password&quot;,
+      &quot;domainId&quot; : &quot;test-app&quot;,
+      &quot;roles&quot; : [ &quot;admin&quot; ],
+      &quot;authorities&quot; : [ &quot;manage-users&quot; ],
+      &quot;properties&quot; : {
+        &quot;color&quot; : &quot;blue&quot;
+      },
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/5cfa5046d4638749d8c3e75a&quot;
+        },
+        &quot;appUser&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appUsers/5cfa5046d4638749d8c3e75a&quot;
+        }
+      }
     } ]
   },
   &quot;_links&quot; : {
@@ -137,7 +159,7 @@ Content-Length: 2332
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 4,
+    &quot;totalElements&quot; : 5,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
