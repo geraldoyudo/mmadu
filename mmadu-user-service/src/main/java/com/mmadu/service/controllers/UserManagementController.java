@@ -38,4 +38,12 @@ public class UserManagementController {
                                                 @PathVariable("userId") String externalId) {
         userManagementService.deleteUserByDomainAndExternalId(domainId, externalId);
     }
+
+    @PutMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
+                                                @PathVariable("userId") String externalId,
+                                                @RequestBody UserView userView) {
+        userManagementService.updateUser(domainId, externalId, userView);
+    }
 }

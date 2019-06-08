@@ -15,4 +15,6 @@ public interface UserManagementService {
     UserView getUserByDomainIdAndExternalId(String domainId, String externalId);
 
     void deleteUserByDomainAndExternalId(String domainId, String externalId);
+
+    void updateUser(String domainId, String externalId, UserView userView);
 }

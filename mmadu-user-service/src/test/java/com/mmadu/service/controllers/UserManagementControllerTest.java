@@ -29,8 +29,7 @@ import java.util.Optional;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -185,4 +184,20 @@ public class UserManagementControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    public void givenUserWhenUpdateAllUserPropertiesThenReturnNoContent() throws Exception {
+        ArgumentCaptor<UserView> userCaptor = ArgumentCaptor.forClass(UserView.class);
+        doNothing().when(userManagementService).updateUser(eq(DOMAIN_ID), eq(USER_ID), userCaptor.capture());
+        mockMvc.perform(
+                put("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .content(testUser())
+        )
+                .andExpect(status().isNoContent());
+        UserView userView = userCaptor.getValue();
+        collector.checkThat(userView.getUsername(), equalTo("test-user"));
+        collector.checkThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian"));
+        collector.checkThat(userView.getRoles(), equalTo(asList("admin")));
+        collector.checkThat(userView.getAuthorities(), equalTo(asList("manage-users")));
+    }
 }

@@ -8,7 +8,7 @@ import com.mmadu.service.model.UserView;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
-import com.sun.java.browser.plugin2.DOM;
+import org.assertj.core.util.Maps;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,12 +26,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -40,6 +38,7 @@ import static org.mockito.Mockito.*;
 public class UserManagementServiceImplTest {
     public static final String TEST_ID = "test-id";
     public static final String UNIQUE_USER_ID = "13234434";
+    public static final String APP_USER_ID = "2323";
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
     @Rule
@@ -90,6 +89,7 @@ public class UserManagementServiceImplTest {
         userView.setRoles(asList("admin"));
         userView.setAuthorities(asList("manage-users"));
         userView.setProperty("color", "red");
+        userView.setId(UNIQUE_USER_ID);
         return userView;
     }
 
@@ -162,7 +162,7 @@ public class UserManagementServiceImplTest {
     }
 
     @Test
-    public void givenPagedListWhenGetAllUsersThenReturnPagedList(){
+    public void givenPagedListWhenGetAllUsersThenReturnPagedList() {
         AppUser user = new AppUser(DOMAIN_ID, createUserView());
         user.setId("id");
         PageImpl<AppUser> appUserPage = new PageImpl<>(asList(user));
@@ -189,7 +189,7 @@ public class UserManagementServiceImplTest {
     }
 
     @Test
-    public void givenUserWhenGetUserByDomainAndExternalIdThenReturnUser(){
+    public void givenUserWhenGetUserByDomainAndExternalIdThenReturnUser() {
         AppUser user = new AppUser(DOMAIN_ID, createUserView());
         doReturn(Optional.of(user)).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
         UserView userView = userManagementService.getUserByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
@@ -211,11 +211,59 @@ public class UserManagementServiceImplTest {
     }
 
     @Test
-    public void givenUserWhenDeleteUserByDomainAndExternalIdThenReturnUser(){
+    public void givenUserWhenDeleteUserByDomainAndExternalIdThenReturnUser() {
         doReturn(true).when(appDomainRepository).existsById(DOMAIN_ID);
         doReturn(true).when(appUserRepository).existsByExternalIdAndDomainId(UNIQUE_USER_ID, DOMAIN_ID);
         userManagementService.deleteUserByDomainAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
         verify(appUserRepository, times(1))
                 .deleteByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+    }
+
+    @Test
+    public void givenNullUserWhenUpdateUserThenThrowIllegalArgumentException() {
+        expectedException.expectMessage("user cannot be null");
+        expectedException.expect(IllegalArgumentException.class);
+        userManagementService.updateUser(DOMAIN_ID, UNIQUE_USER_ID, null);
+    }
+
+    @Test
+    public void givenNoDomainWhenUpdateUserThenThrowDomainNotFoundException() {
+        expectedException.expect(DomainNotFoundException.class);
+        doReturn(false).when(appDomainRepository).existsById(DOMAIN_ID);
+        userManagementService.updateUser(DOMAIN_ID, UNIQUE_USER_ID, new UserView());
+    }
+
+    @Test
+    public void givenNoUserWhenUpdateUserThenThrowUserNotFoundException() {
+        expectedException.expect(UserNotFoundException.class);
+        doReturn(Optional.empty()).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        userManagementService.updateUser(DOMAIN_ID, UNIQUE_USER_ID, new UserView());
+    }
+
+    @Test
+    public void givenUserWhenUpdateUserThenSaveUpdatedUser() {
+        doReturn(true).when(appDomainRepository).existsById(DOMAIN_ID);
+        UserView userView = createUserView();
+        AppUser appUser = new AppUser(DOMAIN_ID, userView);
+        appUser.setId(APP_USER_ID);
+        doReturn(Optional.of(appUser)).when(appUserRepository).findByDomainIdAndExternalId(DOMAIN_ID, UNIQUE_USER_ID);
+        UserView modifiedUserView = new UserView(
+                userView.getId() + "1",
+                userView.getUsername() + "1",
+                userView.getPassword() + "1",
+                asList("member"),
+                asList("sign-card"),
+                Maps.newHashMap("color", "white")
+        );
+        userManagementService.updateUser(DOMAIN_ID, UNIQUE_USER_ID, modifiedUserView);
+        verify(appUserRepository, times(1)).save(appUserArgumentCaptor.capture());
+        AppUser updatedAppUser = appUserArgumentCaptor.getValue();
+        collector.checkThat(updatedAppUser.getId(), equalTo(APP_USER_ID));
+        collector.checkThat(updatedAppUser.getExternalId(), equalTo(UNIQUE_USER_ID + "1"));
+        collector.checkThat(updatedAppUser.getPassword(), equalTo(userView.getPassword() + "1"));
+        collector.checkThat(updatedAppUser.getUsername(), equalTo(userView.getUsername() + "1"));
+        collector.checkThat(updatedAppUser.getRoles(), equalTo(asList("member")));
+        collector.checkThat(updatedAppUser.getAuthorities(), equalTo(asList("sign-card")));
+        collector.checkThat(updatedAppUser.getProperties(), equalTo(Maps.newHashMap("color", "white")));
     }
 }
