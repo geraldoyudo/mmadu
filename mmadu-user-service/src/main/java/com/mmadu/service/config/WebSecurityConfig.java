@@ -25,7 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/domains/*/**")
-                .access("hasPermission('domain', request.pathInfo.split('/')[2])")
+                .access("hasPermission('domain', " +
+                        "(request.pathInfo != null? request.pathInfo: request.servletPath).split('/')[2])")
                 .anyRequest()
                 .access("hasPermission('domain', 'admin')")
                 .and()

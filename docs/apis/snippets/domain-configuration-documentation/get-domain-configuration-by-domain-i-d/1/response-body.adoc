@@ -5,10 +5,10 @@
   "authenticationApiToken" : "1",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/domainConfigurations/5cfcc98318e83755c426a3d8"
+      "href" : "http://localhost:8080/domainConfigurations/5cfd34230eaa9b62b0166e70"
     },
     "domainConfiguration" : {
-      "href" : "http://localhost:8080/domainConfigurations/5cfcc98318e83755c426a3d8"
+      "href" : "http://localhost:8080/domainConfigurations/5cfd34230eaa9b62b0166e70"
     }
   }
 }
