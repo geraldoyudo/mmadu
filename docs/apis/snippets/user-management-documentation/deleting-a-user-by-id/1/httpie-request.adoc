@@ -1,5 +1,5 @@
 [source,bash]
 ----
 $ http DELETE 'http://localhost:8080/domains/test-app/users/123453432' \
-    'domain-auth-token:2222'
+    'domain-auth-token:1234'
 ----

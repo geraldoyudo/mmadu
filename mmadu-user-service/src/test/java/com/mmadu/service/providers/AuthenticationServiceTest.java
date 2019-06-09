@@ -51,31 +51,31 @@ public class AuthenticationServiceTest {
 
     @Test
     public void givenCorrectUserNameAndPasswordWhenAuthenticateThenReturnAuthenticated() {
-        AuthenticateResponse response = authenticationService.authenticate(
-                AuthenticateRequest.builder().domain(DOMAIN_ID).password(PASSWORD).username(USERNAME).build());
+        AuthenticateResponse response = authenticationService.authenticate(DOMAIN_ID,
+                AuthenticateRequest.builder().password(PASSWORD).username(USERNAME).build());
         assertThat(response.getStatus(), equalTo(AUTHENTICATED));
     }
 
     @Test
     public void givenCorrectUserNameAndIncorrectPasswordWhenAuthenticateThenReturnInvalidPassword() {
-        AuthenticateResponse response = authenticationService.authenticate(
-                AuthenticateRequest.builder().domain(DOMAIN_ID).password("invalid-password").username(USERNAME)
+        AuthenticateResponse response = authenticationService.authenticate(DOMAIN_ID,
+                AuthenticateRequest.builder().password("invalid-password").username(USERNAME)
                         .build());
         assertThat(response.getStatus(), equalTo(PASSWORD_INVALID));
     }
 
     @Test
     public void givenIncorrectUserNameWhenAuthenticateThenReturnInvalidUsername() {
-        AuthenticateResponse response = authenticationService.authenticate(
-                AuthenticateRequest.builder().domain(DOMAIN_ID).password("invalid-password")
+        AuthenticateResponse response = authenticationService.authenticate(DOMAIN_ID,
+                AuthenticateRequest.builder().password("invalid-password")
                         .username("invalid-username").build());
         assertThat(response.getStatus(), equalTo(USERNAME_INVALID));
     }
 
     @Test
     public void givenIncorrectDomainIdhenAuthenticateThenReturnInvalidDomain() {
-        AuthenticateResponse response = authenticationService.authenticate(
-                AuthenticateRequest.builder().domain("invalid-domain").password("invalid-password")
+        AuthenticateResponse response = authenticationService.authenticate("invalid-domain",
+                AuthenticateRequest.builder().password("invalid-password")
                         .username("invalid-username").build());
         assertThat(response.getStatus(), equalTo(DOMAIN_INVALID));
     }

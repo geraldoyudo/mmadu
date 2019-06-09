@@ -55,7 +55,8 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     private ResponseFieldsSnippet domainsResponseFields() {
         return responseFields(
                 fieldWithPath("_embedded.appDomains.[].name").description("The name of the domain"),
-                subsectionWithPath("_embedded.appDomains.[]._links").type("map").description("Domain item resource links"),
+                subsectionWithPath("_embedded.appDomains.[]._links").type("map")
+                        .description("Domain item resource links"),
                 subsectionWithPath("_links").type("map").description("Resource links"),
                 subsectionWithPath("page").type("map").description("Page information")
         );

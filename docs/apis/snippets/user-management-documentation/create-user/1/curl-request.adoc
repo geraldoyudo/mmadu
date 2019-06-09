@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/domains/test-app/users' -i -X POST \
     -H 'Content-Type: application/json' \
-    -H 'domain-auth-token: 2222' \
+    -H 'domain-auth-token: 1234' \
     -d '{"id":null,"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}'
 ----

@@ -5,5 +5,5 @@ import com.mmadu.service.models.AuthenticateResponse;
 
 public interface AuthenticationService {
 
-    AuthenticateResponse authenticate(AuthenticateRequest authRequest);
+    AuthenticateResponse authenticate(String domainId, AuthenticateRequest authRequest);
 }
