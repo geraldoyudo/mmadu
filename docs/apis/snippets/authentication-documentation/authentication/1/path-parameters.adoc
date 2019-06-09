@@ -1,0 +1,8 @@
+.+/domains/{domainId}/authenticate+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The user authentication domain id
+
+|===

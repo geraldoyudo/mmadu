@@ -34,6 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class AuthenticationApiDomainTokenSecurityIT {
 
     private static final String TOKEN = "1234";
+    public static final String DOMAIN_ID = "1";
 
     @Autowired
     private WebApplicationContext context;
@@ -51,34 +52,39 @@ public class AuthenticationApiDomainTokenSecurityIT {
 
     @Test
     public void givenNoDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
-        this.mockMvc.perform(post("/authenticate").contentType(MediaType.APPLICATION_JSON).content(
+        this.mockMvc.perform(post("/domains/{domainId}/authenticate", DOMAIN_ID)
+                .contentType(MediaType.APPLICATION_JSON).content(
                 mapper.writeValueAsString(
-                        AuthenticateRequest.builder().username("user").password("password").domain("1").build())))
-                .andExpect(status().isUnauthorized());
+                        AuthenticateRequest.builder().username("user").password("password").build())))
+                .andExpect(status().isForbidden());
     }
 
     @Test
     public void givenWrongDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
         this.mockMvc.perform(
-                post("/authenticate").header(DOMAIN_AUTH_TOKEN_FIELD, "33333").contentType(MediaType.APPLICATION_JSON)
+                post("/domains/{domainId}/authenticate", DOMAIN_ID)
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, "33333")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
-                                AuthenticateRequest.builder().username("user").password("password").domain("1")
-                                        .build()))).andExpect(status().isUnauthorized());
+                                AuthenticateRequest.builder().username("user").password("password")
+                                        .build()))).andExpect(status().isForbidden());
     }
 
     @Test
     public void givenCorrectDomainTokenHeaderWhenAuthenticateShouldReturnAuthorized() throws Exception {
         createAppUser();
         this.mockMvc.perform(
-                post("/authenticate").header(DOMAIN_AUTH_TOKEN_FIELD, getToken()).contentType(MediaType.APPLICATION_JSON)
+                post("/domains/{domainId}/authenticate", DOMAIN_ID)
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, getToken()).contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
-                                AuthenticateRequest.builder().username("user").password("password").domain("1")
+                                AuthenticateRequest.builder().username("user").password("password")
                                         .build()))).andExpect(status().isOk())
                                         .andExpect(jsonPath("$.status").value(AUTHENTICATED.name()));
     }
 
     private void createAppUser() {
         AppUser user = new AppUser();
+        user.setExternalId("ext-01");
         user.setUsername("user");
         user.setPassword("password");
         user.setDomainId("1");

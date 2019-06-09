@@ -2,5 +2,5 @@
 ----
 $ echo '{"id":null,"username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}' | http POST 'http://localhost:8080/domains/test-app/users' \
     'Content-Type:application/json' \
-    'domain-auth-token:2222'
+    'domain-auth-token:1234'
 ----

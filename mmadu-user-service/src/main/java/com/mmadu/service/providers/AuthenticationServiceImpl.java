@@ -38,14 +38,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticateResponse authenticate(AuthenticateRequest authRequest) {
+    public AuthenticateResponse authenticate(String domainId, AuthenticateRequest authRequest) {
 
-        if(!appDomainRepository.existsById(authRequest.getDomain())){
+        if(!appDomainRepository.existsById(domainId)){
             return createAuthenticateResponse(DOMAIN_INVALID);
         }
 
         Optional<AppUser> userOptional = appUserRepository
-                .findByUsernameAndDomainId(authRequest.getUsername(), authRequest.getDomain());
+                .findByUsernameAndDomainId(authRequest.getUsername(), domainId);
 
         if (!userOptional.isPresent()) {
             return createAuthenticateResponse(USERNAME_INVALID);

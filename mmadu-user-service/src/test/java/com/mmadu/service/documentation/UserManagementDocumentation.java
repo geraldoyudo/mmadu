@@ -33,7 +33,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
@@ -52,7 +52,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, usersResponseFields()));
@@ -73,7 +73,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -103,7 +103,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -121,7 +121,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         userView.setPassword("changed-password");
         mockMvc.perform(RestDocumentationRequestBuilders.put("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .content(objectMapper.writeValueAsString(userView))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
@@ -136,7 +136,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void gettingAUserByUsernameAndDomain() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load", USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .param("username", USERNAME))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, userResponseFields(),
