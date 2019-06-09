@@ -45,10 +45,9 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">$ echo '{
-  &quot;domain&quot; : &quot;test-app&quot;,
   &quot;username&quot; : &quot;test-user&quot;,
   &quot;password&quot; : &quot;my-password&quot;
-}' | http POST 'http://localhost:8080/authenticate' \
+}' | http POST 'http://localhost:8080/domains/test-app/authenticate' \
     'Content-Type:application/json' \
     'domain-auth-token:1234'</code></pre>
 </div>

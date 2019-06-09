@@ -44,11 +44,10 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/authenticate' -i -X POST \
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/domains/test-app/authenticate' -i -X POST \
     -H 'Content-Type: application/json' \
     -H 'domain-auth-token: 1234' \
     -d '{
-  &quot;domain&quot; : &quot;test-app&quot;,
   &quot;username&quot; : &quot;test-user&quot;,
   &quot;password&quot; : &quot;my-password&quot;
 }'</code></pre>

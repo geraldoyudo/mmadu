@@ -44,14 +44,13 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /authenticate HTTP/1.1
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/authenticate HTTP/1.1
 Content-Type: application/json
 domain-auth-token: 1234
 Host: localhost:8080
-Content-Length: 89
+Content-Length: 63
 
 {
-  &quot;domain&quot; : &quot;test-app&quot;,
   &quot;username&quot; : &quot;test-user&quot;,
   &quot;password&quot; : &quot;my-password&quot;
 }</code></pre>

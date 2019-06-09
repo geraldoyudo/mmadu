@@ -115,11 +115,6 @@ password.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The user identification</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The user authentication domain id</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s password</p></td>
@@ -131,14 +126,13 @@ password.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /authenticate HTTP/1.1
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/authenticate HTTP/1.1
 Content-Type: application/json
 domain-auth-token: 1234
 Host: localhost:8080
-Content-Length: 89
+Content-Length: 63
 
 {
-  &quot;domain&quot; : &quot;test-app&quot;,
   &quot;username&quot; : &quot;test-user&quot;,
   &quot;password&quot; : &quot;my-password&quot;
 }</code></pre>
@@ -956,10 +950,10 @@ Content-Length: 322
   &quot;authenticationApiToken&quot; : &quot;1&quot;,
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/domainConfigurations/5ce55397475fbd478cfc5e46&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/domainConfigurations/5cfd34230eaa9b62b0166e70&quot;
     },
     &quot;domainConfiguration&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/domainConfigurations/5ce55397475fbd478cfc5e46&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/domainConfigurations/5cfd34230eaa9b62b0166e70&quot;
     }
   }
 }</code></pre>
@@ -1137,7 +1131,7 @@ id, and a domain id. Other properties can be stored in the "properties" property
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/users HTTP/1.1
 Content-Type: application/json
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080
 Content-Length: 115
 
@@ -1188,7 +1182,7 @@ Content-Length: 115
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/123453432 HTTP/1.1
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1270,7 +1264,7 @@ Content-Length: 159
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users HTTP/1.1
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1335,7 +1329,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 636
 
-{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalElements&quot;:3,&quot;last&quot;:true,&quot;totalPages&quot;:1,&quot;size&quot;:20,&quot;number&quot;:0,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true},&quot;first&quot;:true,&quot;numberOfElements&quot;:3}</code></pre>
+{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalPages&quot;:1,&quot;totalElements&quot;:3,&quot;last&quot;:true,&quot;size&quot;:20,&quot;number&quot;:0,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true},&quot;numberOfElements&quot;:3,&quot;first&quot;:true}</code></pre>
 </div>
 </div>
 </div>
@@ -1376,7 +1370,7 @@ Content-Length: 636
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /domains/test-app/users/123453432 HTTP/1.1
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1439,7 +1433,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">PUT /domains/test-app/users/123453432 HTTP/1.1
 Content-Type: application/json
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080
 Content-Length: 171
 
@@ -1669,7 +1663,7 @@ Content-Length: 3016
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/load?username=test-user HTTP/1.1
-domain-auth-token: 2222
+domain-auth-token: 1234
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1841,7 +1835,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 300
 
-{&quot;id&quot;:&quot;5ce55399475fbd478cfc5e47&quot;,&quot;value&quot;:&quot;4e48931cab674ded28c0443fcb01e92528863037c37dfe11985dcd908d86798b28fb5f5f2def04c4cc95820551d8bcc36bd5b370065b14ae42e37563b8c46fd2ecb8bbfbd0f0da835ce6c028a866d0a75eb4115cba26ec945118e6f72b9081b73b2f819e2310aa97643995da966e20911c25667360188ff459ee8bb2edcc4d7c&quot;}</code></pre>
+{&quot;id&quot;:&quot;5cfd34240eaa9b62b0166e71&quot;,&quot;value&quot;:&quot;8cfa32df748cc3657ebaff23fe95ce6f04dc5cf6a278bb5765a9502e4a5b4118b4dc5f9ce403a997ef717ea7071ff364a01cc739840b640f69d76ec32b04bae51e2ec24050ffd1795ab7c9cad27aae13b8c0bb6fb07cc55c0c09f2b275a370c15696f581fb06d48e4bd110e35b3184889c260ca805715e246c0ef55b4e8063fd&quot;}</code></pre>
 </div>
 </div>
 </div>
@@ -2017,7 +2011,7 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 277
 
-{&quot;id&quot;:&quot;1&quot;,&quot;value&quot;:&quot;a363b860188b9c6aa72abd7dcdde8fffd0ade08a2473c883945953b73549118d17fb8348f5ce54687041edfe7d045bbf57aab80ff6e597fbed19fc2644f2b324b516f72dd606ea3f031e74a64dc3989f6892cc0ad4cba49de0b48111619f99e7d1ba42a93cdf1bac1cb6b3cd73e78f30ce795f573004bffd303d099d05766b52&quot;}</code></pre>
+{&quot;id&quot;:&quot;1&quot;,&quot;value&quot;:&quot;c9d20725369af946f000abe504f5cd52528846dd7077002f55d7de37f949caa42aac26514ec7bead17d2e23357076dded1edf36dbfb31cc02f7b726d283c7a7afb288f279a5d0ec8b3730ae700303ba472ce8af1ab5d190e5b6128802d1ccb053b772a580fc3886141b05d2f2dc4d9f4f7052607c122b2c9e72c263d60a11ac2&quot;}</code></pre>
 </div>
 </div>
 </div>
