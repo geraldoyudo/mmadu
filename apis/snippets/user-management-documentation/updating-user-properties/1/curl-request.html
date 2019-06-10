@@ -47,7 +47,15 @@
 <pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/domains/test-app/users/123453432' -i -X PUT \
     -H 'Content-Type: application/json' \
     -H 'domain-auth-token: 1234' \
-    -d '{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;changed-username&quot;,&quot;password&quot;:&quot;changed-password&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}'</code></pre>
+    -d '{
+  &quot;id&quot; : &quot;123453432&quot;,
+  &quot;username&quot; : &quot;changed-username&quot;,
+  &quot;password&quot; : &quot;changed-password&quot;,
+  &quot;roles&quot; : [ &quot;admin-role&quot; ],
+  &quot;authorities&quot; : [ &quot;admin&quot; ],
+  &quot;favourite-colour&quot; : &quot;blue&quot;,
+  &quot;country&quot; : &quot;Nigeria&quot;
+}'</code></pre>
 </div>
 </div>
 
