@@ -1,32 +1,24 @@
 |===
 |Path|Type|Description
 
-|`+domainId+`
-|`+String+`
-|Domain Id of the user
-
 |`+username+`
 |`+String+`
-|Username of the user
+|The user's username (must be unigue)
+
+|`+id+`
+|`+Null+`
+|The user's id (unique identifier used to reference user in your application)
 
 |`+password+`
 |`+String+`
-|password of the user
-
-|`+id+`
-|`+String+`
-|ID of the user (optional, auto-generated)
+|The user's password
 
 |`+roles+`
-|`+string list+`
-|List of roles assigned to this user
+|`+Array+`
+|The user's assigned roles
 
 |`+authorities+`
-|`+string list+`
-|List of authorities given to ths user
-
-|`+properties+`
-|`+map+`
-|Other user properties
+|`+Array+`
+|The user's granted authorities
 
 |===

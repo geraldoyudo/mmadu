@@ -1,6 +1,14 @@
 [source,bash]
 ----
-$ echo '{"password":"new-password","properties":{"favourite-colour":"green"}}' | http PATCH 'http://localhost:8080/appUsers/12345ABCDEF' \
+$ echo '{
+  "id" : "123453432",
+  "username" : "changed-username",
+  "password" : "changed-password",
+  "roles" : [ "admin-role" ],
+  "authorities" : [ "admin" ],
+  "favourite-colour" : "blue",
+  "country" : "Nigeria"
+}' | http PUT 'http://localhost:8080/domains/test-app/users/123453432' \
     'Content-Type:application/json' \
     'domain-auth-token:1234'
 ----

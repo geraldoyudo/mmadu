@@ -2,11 +2,9 @@ package com.mmadu.service.controllers;
 
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
-import com.mmadu.service.service.AuthenticationService;
+import com.mmadu.service.providers.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationController {
@@ -15,8 +13,9 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
 
-    @PostMapping(path = "/authenticate")
-    public AuthenticateResponse authenticateUser(@RequestBody AuthenticateRequest request) {
-        return authenticationService.authenticate(request);
+    @PostMapping(path = "/domains/{domainId}/authenticate")
+    public AuthenticateResponse authenticateUser(@PathVariable("domainId") String domainId,
+                                                 @RequestBody AuthenticateRequest request) {
+        return authenticationService.authenticate(domainId, request);
     }
 }

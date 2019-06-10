@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mmadu.service.entities.AppToken;
 import com.mmadu.service.exceptions.TokenNotFoundException;
-import com.mmadu.service.service.AppTokenService;
+import com.mmadu.service.providers.AppTokenService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

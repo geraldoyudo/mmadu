@@ -1,7 +1,6 @@
 package com.mmadu.service.databaselisteners;
 
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.service.PasswordHasher;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;

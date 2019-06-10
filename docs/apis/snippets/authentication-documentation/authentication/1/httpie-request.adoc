@@ -1,10 +1,9 @@
 [source,bash]
 ----
 $ echo '{
-  "domain" : "test-app",
   "username" : "test-user",
   "password" : "my-password"
-}' | http POST 'http://localhost:8080/authenticate' \
+}' | http POST 'http://localhost:8080/domains/test-app/authenticate' \
     'Content-Type:application/json' \
     'domain-auth-token:1234'
 ----

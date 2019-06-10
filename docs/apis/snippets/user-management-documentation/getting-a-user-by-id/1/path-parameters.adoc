@@ -1,8 +1,11 @@
-.+/appUsers/{userId}+
+.+/domains/{domainId}/users/{userId}+
 |===
 |Parameter|Description
 
 |`+userId+`
 |The user's ID
+
+|`+domainId+`
+|The domain id of the user
 
 |===

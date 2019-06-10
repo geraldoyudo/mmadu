@@ -2,7 +2,7 @@ package com.mmadu.service.controllers;
 
 import com.mmadu.service.entities.AppToken;
 import com.mmadu.service.exceptions.TokenNotFoundException;
-import com.mmadu.service.service.AppTokenService;
+import com.mmadu.service.providers.AppTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

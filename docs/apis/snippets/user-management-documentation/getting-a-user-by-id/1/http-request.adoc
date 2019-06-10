@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-GET /appUsers/12345ABCDEF HTTP/1.1
+GET /domains/test-app/users/123453432 HTTP/1.1
 domain-auth-token: 1234
 Host: localhost:8080
 

@@ -1,21 +1,25 @@
 package com.mmadu.service.entities;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.validation.constraints.NotEmpty;
+import com.mmadu.service.model.UserView;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
+import java.util.*;
+
 @Document
+@CompoundIndexes({
+        @CompoundIndex(name = "domain_external_id", def = "{'domainId': 1, 'externalId': 1}", unique = true),
+        @CompoundIndex(name = "domain_username", def = "{'domainId': 1, 'username': 1}", unique = true)
+})
 public class AppUser {
 
     @Id
     private String id;
+    @NotEmpty
+    private String externalId;
     @NotEmpty
     private String username;
     @NotEmpty
@@ -26,6 +30,19 @@ public class AppUser {
     private Collection<String> authorities = new HashSet<>();
     private Map<String, Object> properties = new HashMap<>();
 
+    public AppUser() {
+
+    }
+
+    public AppUser(String domainId, UserView userView) {
+        this.externalId = userView.getId();
+        this.domainId = domainId;
+        this.username = userView.getUsername();
+        this.password = userView.getPassword();
+        this.roles = new ArrayList<>(userView.getRoles());
+        this.authorities = new ArrayList<>(userView.getAuthorities());
+        this.properties = new HashMap<>(userView.getProperties());
+    }
 
     public String getId() {
         return id;
@@ -100,7 +117,26 @@ public class AppUser {
         this.domainId = domainId;
     }
 
-    public boolean passwordMatches(String password){
+    public boolean passwordMatches(String password) {
         return this.password.equals(password);
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public UserView userView() {
+        return new UserView(
+                externalId,
+                username,
+                password,
+                new ArrayList<>(roles),
+                new ArrayList<>(authorities),
+                new HashMap<>(properties)
+        );
     }
 }

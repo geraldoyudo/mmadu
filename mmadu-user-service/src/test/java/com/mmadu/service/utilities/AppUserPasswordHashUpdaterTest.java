@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-import com.mmadu.service.service.PasswordHasher;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdaterTest.TestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;

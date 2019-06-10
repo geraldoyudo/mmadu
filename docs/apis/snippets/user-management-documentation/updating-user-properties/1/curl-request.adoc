@@ -1,7 +1,15 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/appUsers/12345ABCDEF' -i -X PATCH \
+$ curl 'http://localhost:8080/domains/test-app/users/123453432' -i -X PUT \
     -H 'Content-Type: application/json' \
     -H 'domain-auth-token: 1234' \
-    -d '{"password":"new-password","properties":{"favourite-colour":"green"}}'
+    -d '{
+  "id" : "123453432",
+  "username" : "changed-username",
+  "password" : "changed-password",
+  "roles" : [ "admin-role" ],
+  "authorities" : [ "admin" ],
+  "favourite-colour" : "blue",
+  "country" : "Nigeria"
+}'
 ----

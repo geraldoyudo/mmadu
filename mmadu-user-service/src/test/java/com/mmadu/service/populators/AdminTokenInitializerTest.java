@@ -4,7 +4,7 @@ import static com.mmadu.service.utilities.DomainAuthenticationConstants.ADMIN_TO
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.mmadu.service.service.AppTokenService;
+import com.mmadu.service.providers.AppTokenService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

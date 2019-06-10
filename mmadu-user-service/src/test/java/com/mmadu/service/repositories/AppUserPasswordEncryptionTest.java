@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.mmadu.service.databaselisteners.AppUserSaveListener;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.repositories.AppUserPasswordEncryptionTest.TestConfig;
-import com.mmadu.service.service.PasswordHasher;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdater;
 import com.mmadu.service.utilities.TestPasswordHasher;
 import org.junit.Before;

@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/appUsers' -i -X GET \
-    -H 'domain-auth-token: 2222'
+$ curl 'http://localhost:8080/domains/test-app/users?page=0&size=10' -i -X GET \
+    -H 'domain-auth-token: 1234'
 ----

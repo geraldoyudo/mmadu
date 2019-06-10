@@ -6,6 +6,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,6 +16,8 @@ import com.mmadu.service.models.AuthenticateRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.request.RequestDocumentation;
 
 public class AuthenticationDocumentation extends AbstractDocumentation {
 
@@ -25,11 +29,10 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
 
     @Test
     public void authentication() throws Exception {
-        this.mockMvc.perform(post("/authenticate")
+        this.mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authenticate", USER_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
             .contentType(MediaType.APPLICATION_JSON).content(objectToString(
                                 AuthenticateRequest.builder().username(USERNAME).password(USER_PASSWORD)
-                                        .domain(USER_DOMAIN_ID)
                                 .build()
                         )
                 ))
@@ -37,11 +40,12 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
                 .andExpect(jsonPath("$.status").value(AUTHENTICATED.name()))
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         fieldWithPath("username").description("The user identification"),
-                        fieldWithPath("domain").description("The user authentication domain id"),
                         fieldWithPath("password").description("The user's password")
                 ), responseFields(
                         fieldWithPath("status").description("The authentication status. One of the following: "
                                 + "AUTHENTICATED, USERNAME_INVALID, PASSWORD_INVALID")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The user authentication domain id")
                 )));
     }
 }
