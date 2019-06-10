@@ -52,17 +52,24 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
+                .param("page", "0")
+                .param("size", "10")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
         )
                 .andExpect(status().isOk())
-                .andDo(document(DOCUMENTATION_NAME, usersResponseFields()));
+                .andDo(document(DOCUMENTATION_NAME,
+                        requestParameters(
+                                parameterWithName("page").description("page number to request"),
+                                parameterWithName("size").description("maximum number of items in page")
+                        ),
+                        usersResponseFields()));
     }
 
     private ResponseFieldsSnippet usersResponseFields() {
         return relaxedResponseFields(
                 fieldWithPath("content.[].id").description("The user's unique identification"),
                 fieldWithPath("content.[].username").description("Username of the user"),
-                fieldWithPath("content.[].username").description("password of the user"),
+                fieldWithPath("content.[].password").description("password of the user"),
                 fieldWithPath("content.[].roles").type("string list").description("List of roles assigned to this user"),
                 fieldWithPath("content.[].authorities").type("string list").description("List of authorities given to ths user")
         );

@@ -1,4 +1,6 @@
 [source,options="nowrap"]
 ----
-{"status":"AUTHENTICATED"}
+{
+  "status" : "AUTHENTICATED"
+}
 ----

@@ -8,7 +8,10 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 25
+Content-Length: 39
 
-{"id":"1","value":"1234"}
+{
+  "id" : "1",
+  "value" : "1234"
+}
 ----
