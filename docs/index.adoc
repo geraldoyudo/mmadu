@@ -17,6 +17,15 @@ management, authentication, domain management and so on.
 * Api for creating and updating user information created.
 * Api for authenticating username and password information has been created.
 
+=== v.1.0.0
+* Domain and user management API was introduced
+* Token security for domain and user management API was introduced.
+
+=== v.1.1.0
+* User management API redesigned and made user friendly
+* Bug fixes
+
+
 == Getting Started
 
 Mmadu service uses MongoDB for storing user information. By default, it uses the
