@@ -2,6 +2,7 @@ package com.mmadu.service.documentation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.AppUser;
@@ -14,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
@@ -30,7 +33,10 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
 @RunWith(SpringRunner.class)
-@Import(MongoInitializationConfig.class)
+@Import({
+        MongoInitializationConfig.class,
+        AbstractDocumentation.SerializationConfig.class
+})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class AbstractDocumentation {
     public static final String ROOT_DOC_FOLDER = "../docs/apis/snippets";
@@ -118,5 +124,13 @@ public abstract class AbstractDocumentation {
         domain.setName(DOMAIN_NAME);
         domain.setId(USER_DOMAIN_ID);
         return domain;
+    }
+
+    @Configuration
+    public static class SerializationConfig{
+        @Bean
+        public ObjectMapper objectMapper(){
+            return new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        }
     }
 }

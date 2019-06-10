@@ -1,7 +1,0 @@
-[source,http,options="nowrap"]
-----
-GET /appUsers/search/findByDomainId?domainId=test-app HTTP/1.1
-domain-auth-token: 1234
-Host: localhost:8080
-
-----
