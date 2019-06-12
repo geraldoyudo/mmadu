@@ -15,26 +15,32 @@ matrix:
     - language: java
       dist: trusty
       before_install: 
-      -  cd mmadu-user-service
-      - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
-      - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
+        - cd mmadu-user-service
+        - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
+        - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
       install: mvn clean
       script: mvn package --settings ../maven-settings-travis.xml
       if: branch != master
     - language: java
+      if: branch = master
+      sudo: false
       dist: trusty
       services:
         - docker
       before_install:
+        - curl https://cli-assets.heroku.com/install.sh | sh
         - cd mmadu-user-service
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - cat ../heroku-auth.txt >> ~/.netrc
+        - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
+        - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
         - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
         - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
       install: mvn clean
       script: 
         - mvn package -DskipTests --settings ../maven-settings-travis.xml
         - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
-      if: branch = master
+        - cd ../docker/heroku-test && heroku container:login && heroku container:push web --app mmadu-user-service && heroku container:release web --app mmadu-user-service
       deploy:
         - provider: releases
           api_key: $GITHUB_OAUTH_TOKEN
