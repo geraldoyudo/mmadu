@@ -9,3 +9,22 @@ matrix:
       sudo: false
       before_install: cd docs
       script: bundle exec rake deploy
+      if: branch = master
+    - language: java
+      before_install: cd mmadu-user-service
+      install: mvn clean
+      script: mvn test
+    - language: java
+      before_install: cd mmadu-user-service
+      install: mvn clean
+      script: mvn package -DskipTests
+      if: branch = master
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        file_glob: true
+        file:
+          - "target/mmadu-user-service-*"
+        skip_cleanup: true
+        on:
+          tags: true
