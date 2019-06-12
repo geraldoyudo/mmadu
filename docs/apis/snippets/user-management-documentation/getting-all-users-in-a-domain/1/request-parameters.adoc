@@ -1,7 +1,0 @@
-|===
-|Parameter|Description
-
-|`+domainId+`
-|The domain id of the user
-
-|===

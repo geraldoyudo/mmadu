@@ -9,7 +9,7 @@
 |`+String+`
 |Username of the user
 
-|`+content.[].username+`
+|`+content.[].password+`
 |`+String+`
 |password of the user
 

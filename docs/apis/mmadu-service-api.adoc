@@ -41,6 +41,10 @@ A post request authenticates a user on a domain.
 
 include::{snippets}/authentication-documentation/authentication/1/request-fields.adoc[]
 
+
+==== Path Parameters
+include::{snippets}/authentication-documentation/authentication/1/path-parameters.adoc[]
+
 Example:
 
 include::{snippets}/authentication-documentation/authentication/1/http-request.adoc[]
@@ -301,21 +305,23 @@ This API returns a HTTP 204 NO CONTENT response.
 
 ==== AppUsers
 
-An AppUser contains user information for a specific user. A user should have a username, password,
-id, and a domain id. Other properties can be stored in the "properties" property of the user.
+An AppUser contains user information for a specific user. A user could have a username, password, roles,
+authorities and any other properties that the client deems fit.
 
 
 ==== Creating A User
 
 A POST request will create a user.
 
-===== Request Fields
+===== Fixed Request Fields
 
 include::{snippets}/user-management-documentation/create-user/1/request-fields.adoc[]
 
 Example:
 
 include::{snippets}/user-management-documentation/create-user/1/http-request.adoc[]
+
+As seen in the example,  you can also add custom properties like the "color" property.
 
 
 ===== Response Fields
@@ -338,7 +344,7 @@ include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-re
 
 ===== Response Fields
 
-This API returns an AppUser with these fields:
+This API returns an AppUser with these fields as well as custom fields provided by the client:
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/response-fields.adoc[]
 
@@ -346,9 +352,18 @@ Example:
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-response.adoc[]
 
-==== Getting All Users Across Domains
+As you can see, this user has two extra properties: `favourite-color` and  `country`.
+
+
+==== Getting All Users In a Domain
 
 A GET request will get all users regardless of domains.
+
+===== Request Parameters
+
+The request includes page information to request for particular sets in the list.
+
+include::{snippets}/user-management-documentation/getting-all-users/1/request-parameters.adoc[]
 
 Example:
 
@@ -357,7 +372,9 @@ include::{snippets}/user-management-documentation/getting-all-users/1/http-reque
 
 ===== Response Fields
 
-This API returns a list of all users with these fields:
+This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.
 
 include::{snippets}/user-management-documentation/getting-all-users/1/response-fields.adoc[]
 
@@ -388,7 +405,8 @@ include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-r
 
 ==== Updating A User with an ID
 
-A PATCH request will update a user with an ID.
+A PUT request will update a user with an ID. Not, this api will completely overwrite the properties of the
+existing user. There are no partial updates.
 
 ===== Path Parameters
 
@@ -407,32 +425,13 @@ Example:
 
 include::{snippets}/user-management-documentation/updating-user-properties/1/http-response.adoc[]
 
-==== Getting All Users In A Domain
-
-A GET request will get all users in a domain.
-
-===== Request Parameters
-
-include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/request-parameters.adoc[]
-
-Example:
-
-include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-request.adoc[]
-
-
-===== Response Fields
-
-This API returns a list of all users with these fields:
-
-include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/user-management-documentation/getting-all-users-in-a-domain/1/http-response.adoc[]
-
 ==== Getting A User with a username and domain id
 
 A GET request will get a user with the specified username and domain id.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/path-parameters.adoc[]
 
 ===== Request Parameters
 
@@ -445,7 +444,7 @@ include::{snippets}/user-management-documentation/getting-a-user-by-username-and
 
 ===== Response Fields
 
-This API returns an AppUser with these fields:
+This API returns an AppUser with the fields below and other custom fields provided by the domain client.
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/response-fields.adoc[]
 
