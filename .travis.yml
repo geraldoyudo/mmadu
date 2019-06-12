@@ -1,3 +1,5 @@
+jdk:
+  - oraclejdk8
 env:
   global:
     secure: ZV/8VQbzEiNgdxa5GLJEZirnrC08gghudcIgfyMQqavD5aM171MWyAPBBsiikm7xzKQ6bKCViLNZbGQ3v6slNXxkG0XpgZz6xh2HrviQCNfVGbnI1WEdD4bX9VqastvayIdoyVy9l1jFNrULJxUIRglLFZpoyl7N2jHIuLjeyqt+aMO3hen9oSLfivIGUJ9bdNPsgdVFxigtNxa9Uz6baKN92eRWv/me0xhx2tmPg5hVzC0GUmy5GsSJSdodhjzWP74fzNd/zJfd2LJB5Q6rl0oH4RcKLk96f84bKiXaDqgBaG5t3y0B54giIPUtGdBiAEulWRUoe+GHl0OF6JwXFB8KpXulSHSjjkdNnLK3cccyI650B+WIow9XLf9h4RnvDCEXUURFTYPvMeXyCL0x8c64UEFR/uBmuMpanpigzrukbYEEa579AtTp7zqP/nysaCOrn+uvWX8aZqri21vyTR8ZVf6ILtuYKnbezjpDIXecFOVuj6JPhIw3LG536za67zUrCf60/jj5Z90mVsIiMPIpmgfJIn+9TLBmECrYTNjVqEUbhkgGvQvB/kJ06bYhCvWdG5Z+9BZPF7k1BF4hMNnwTW753m7FFdkM6m2ILSrpUSgpqd0GrOog0/dqNLd6BpZNasTzxkoumPl3aQmFF+loTWVIylpHoAuVAKdLoKA=
@@ -11,20 +13,34 @@ matrix:
       script: bundle exec rake deploy
       if: branch = master
     - language: java
-      before_install: cd mmadu-user-service
+      dist: trusty
+      before_install: 
+      -  cd mmadu-user-service
+      - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
+      - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
       install: mvn clean
-      script: mvn test
+      script: mvn package --settings ../maven-settings-travis.xml
+      if: branch != master
     - language: java
-      before_install: cd mmadu-user-service
+      dist: trusty
+      services:
+        - docker
+      before_install:
+        - cd mmadu-user-service
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
+        - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
       install: mvn clean
-      script: mvn package -DskipTests
+      script: 
+        - mvn package -DskipTests --settings ../maven-settings-travis.xml
+        - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
       if: branch = master
       deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        file_glob: true
-        file:
-          - "target/mmadu-user-service-*"
-        skip_cleanup: true
-        on:
-          tags: true
+        - provider: releases
+          api_key: $GITHUB_OAUTH_TOKEN
+          file_glob: true
+          file:
+            - "target/mmadu-user-service-*"
+          skip_cleanup: true
+          on:
+            tags: true
