@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http GET 'http://localhost:8080/domains/test-app/users/search?page=0&size=10&query=country+equals+%27Nigeria%27+and+favorite-color+equals+%27blue%27' \
+    'domain-auth-token:1234'
+----

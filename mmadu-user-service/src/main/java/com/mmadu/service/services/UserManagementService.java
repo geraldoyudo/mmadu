@@ -17,4 +17,6 @@ public interface UserManagementService {
     void updateUser(String domainId, String externalId, UserView userView);
 
     UserView getUserByDomainIdAndUsername(String domainId, String username);
+
+    Page<UserView> queryUsers(String domainId, String query, Pageable pageable);
 }

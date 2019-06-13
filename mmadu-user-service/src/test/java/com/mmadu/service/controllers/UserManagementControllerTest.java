@@ -229,4 +229,25 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
                 .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
     }
+
+    @Test
+    public void givenUserListWhenQueryUsersReturnUserPage() throws Exception {
+        PageImpl<UserView> page = new PageImpl<>(createUserViewList());
+        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
+        String query = "color equals 'red'";
+        doReturn(page).when(userManagementService).queryUsers(eq(DOMAIN_ID), eq(query),
+                pageableCaptor.capture());
+        mockMvc.perform(get("/domains/{domainId}/users/search", DOMAIN_ID)
+                .param("page", "2")
+                .param("size", "10")
+                .param("query", query)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content.length()", equalTo(5)))
+                .andExpect(jsonPath("totalPages", equalTo(1)))
+                .andExpect(jsonPath("totalElements", equalTo(5)));
+        Pageable p = pageableCaptor.getValue();
+        collector.checkThat(p.getPageNumber(), equalTo(2));
+        collector.checkThat(p.getPageSize(), equalTo(10));
+    }
 }

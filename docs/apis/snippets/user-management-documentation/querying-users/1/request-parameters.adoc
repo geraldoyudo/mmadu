@@ -1,0 +1,13 @@
+|===
+|Parameter|Description
+
+|`+query+`
+|The query search string. Use any of your custom properties for this search including username
+
+|`+page+`
+|page number to request
+
+|`+size+`
+|maximum number of items in page
+
+|===

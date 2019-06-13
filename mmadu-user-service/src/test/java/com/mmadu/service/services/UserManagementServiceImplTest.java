@@ -22,10 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
@@ -288,5 +290,54 @@ public class UserManagementServiceImplTest {
         collector.checkThat(updatedAppUser.getRoles(), equalTo(asList("member")));
         collector.checkThat(updatedAppUser.getAuthorities(), equalTo(asList("sign-card")));
         collector.checkThat(updatedAppUser.getProperties(), equalTo(Maps.newHashMap("color", "white")));
+    }
+
+    @Test
+    public void givenQueryAndDomainIdWhenQueryUsersShouldAddDomainIdToQuery(){
+        String query = "nationality equals 'nigerian'";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo(query + " and domainId equals '1234'"));
+    }
+
+    @Test
+    public void givenQueryWithIdAndDomainIdWhenQueryUsersShouldTranslateIdToExternalId(){
+        String query = "nationality equals 'id-nigerian' and id equals '13234434'";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("nationality equals 'id-nigerian' " +
+                "and externalId equals '13234434' " +
+                "and domainId equals '1234'"));
+    }
+
+    @Test
+    public void givenEmptyQueryAndDomainIdWhenQueryUsersShouldQueryAllInDomain(){
+        String query = "";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
+    }
+
+    @Test
+    public void givenNullQueryAndDomainIdWhenQueryUsersShouldQueryAllInDomain(){
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, null, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
     }
 }
