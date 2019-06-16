@@ -11,9 +11,12 @@ import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.Collections;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -120,5 +123,22 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
         return appUserRepository.findByUsernameAndDomainId(username, domainId)
                 .orElseThrow(UserNotFoundException::new).userView();
+    }
+
+    @Override
+    public Page<UserView> queryUsers(String domainId, String query, Pageable pageable) {
+        if (!appDomainRepository.existsById(domainId)) {
+            throw new DomainNotFoundException();
+        }
+        String domainClause = String.format("domainId equals '%s'", domainId);
+        String resultantQuery = query;
+        if(StringUtils.isEmpty(resultantQuery)){
+            resultantQuery = domainClause;
+        }else {
+            resultantQuery = resultantQuery.replaceAll(" id ", " externalId ") + " and " + domainClause;
+        }
+        Page<UserView> userViewPage = appUserRepository.queryForUsers(resultantQuery, pageable)
+                .map(AppUser::userView);
+        return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
     }
 }

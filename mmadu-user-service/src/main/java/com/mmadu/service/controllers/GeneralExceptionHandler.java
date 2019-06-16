@@ -1,5 +1,7 @@
 package com.mmadu.service.controllers;
 
+import com.geraldoyudo.kweeri.core.converters.QueryNotSupportedException;
+import com.geraldoyudo.kweeri.core.mapping.QueryProcessingException;
 import com.mmadu.service.exceptions.*;
 import com.mmadu.service.models.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -43,5 +45,26 @@ public class GeneralExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleUnauthorizedException() {
         return new ErrorResponse("225", "Unauthorized");
+    }
+
+    @ExceptionHandler({
+            QueryNotSupportedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleQueryNotSupported(QueryNotSupportedException ex) {
+        return new ErrorResponse("230", ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            QueryProcessingException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleQueryProcessingException(QueryProcessingException ex) {
+        return new ErrorResponse("235", ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleGeneralError(Exception ex) {
+        return new ErrorResponse("300", "Unexpected error");
     }
 }

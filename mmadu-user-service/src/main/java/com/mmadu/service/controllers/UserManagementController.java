@@ -52,4 +52,11 @@ public class UserManagementController {
                                        @RequestParam("username") String username) {
         return userManagementService.getUserByDomainIdAndUsername(domainId, username);
     }
+
+    @GetMapping("/search")
+    public Page<UserView> queryUsers(@PathVariable("domainId") String domainId,
+                                     @RequestParam("query") String query,
+                                     Pageable p) {
+        return userManagementService.queryUsers(domainId, query, p);
+    }
 }

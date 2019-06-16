@@ -155,4 +155,25 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                         )
                 ));
     }
+
+    @Test
+    public void queryingUsers() throws Exception {
+        List<AppUser> appUserList = createMultipleUsers(3);
+        appUserRepository.saveAll(appUserList);
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search", USER_DOMAIN_ID)
+                .param("page", "0")
+                .param("size", "10")
+                .param("query", "country equals 'Nigeria' and favorite-color equals 'blue'")
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+        )
+                .andExpect(status().isOk())
+                .andDo(document(DOCUMENTATION_NAME,
+                        requestParameters(
+                                parameterWithName("query").description("The query search string. " +
+                                        "Use any of your custom properties for this search including username"),
+                                parameterWithName("page").description("page number to request"),
+                                parameterWithName("size").description("maximum number of items in page")
+                        ),
+                        usersResponseFields()));
+    }
 }
