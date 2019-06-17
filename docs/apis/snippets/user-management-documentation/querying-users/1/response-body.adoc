@@ -26,9 +26,9 @@
     "country" : "Nigeria",
     "favourite-color" : "blue"
   } ],
-  "totalPages" : 1,
   "totalElements" : 3,
   "last" : true,
+  "totalPages" : 1,
   "size" : 10,
   "number" : 0,
   "sort" : {

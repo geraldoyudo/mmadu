@@ -135,12 +135,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
         }
-        String domainClause = String.format("domainId equals '%s'", domainId);
+        String domainClause = String.format("(domainId equals '%s')", domainId);
         String resultantQuery = query;
         if (StringUtils.isEmpty(resultantQuery)) {
             resultantQuery = domainClause;
         } else {
-            resultantQuery = resultantQuery.replaceAll(" id ", " externalId ") + " and " + domainClause;
+            resultantQuery = resultantQuery.replaceAll(" id ", " externalId ")
+                    .replaceAll("\\(id", "(externalId") .replaceAll("^id", "externalId")
+                    + " and " + domainClause;
         }
         return resultantQuery;
     }

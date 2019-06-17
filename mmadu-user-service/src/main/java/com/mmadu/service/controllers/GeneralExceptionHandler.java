@@ -6,6 +6,7 @@ import com.mmadu.service.exceptions.*;
 import com.mmadu.service.models.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -69,6 +70,13 @@ public class GeneralExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
         return new ErrorResponse("240", ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            HttpMessageNotReadableException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        return new ErrorResponse("245", ex.getMessage());
     }
 
     @ExceptionHandler({

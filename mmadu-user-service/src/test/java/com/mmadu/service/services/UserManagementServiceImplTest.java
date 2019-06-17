@@ -304,7 +304,7 @@ public class UserManagementServiceImplTest {
         userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
         verify(appUserRepository, times(1))
                 .queryForUsers(queryCaptor.capture(), any(Pageable.class));
-        assertThat(queryCaptor.getValue(), equalTo(query + " and domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo(query + " and (domainId equals '1234')"));
     }
 
     @Test
@@ -318,7 +318,7 @@ public class UserManagementServiceImplTest {
                 .queryForUsers(queryCaptor.capture(), any(Pageable.class));
         assertThat(queryCaptor.getValue(), equalTo("nationality equals 'id-nigerian' " +
                 "and externalId equals '13234434' " +
-                "and domainId equals '1234'"));
+                "and (domainId equals '1234')"));
     }
 
     @Test
@@ -330,7 +330,7 @@ public class UserManagementServiceImplTest {
         userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
         verify(appUserRepository, times(1))
                 .queryForUsers(queryCaptor.capture(), any(Pageable.class));
-        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
     }
 
     @Test
@@ -341,7 +341,7 @@ public class UserManagementServiceImplTest {
         userManagementService.queryUsers(DOMAIN_ID, null, PageRequest.of(0, 10));
         verify(appUserRepository, times(1))
                 .queryForUsers(queryCaptor.capture(), any(Pageable.class));
-        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
     }
 
     @Test
@@ -351,7 +351,7 @@ public class UserManagementServiceImplTest {
         userManagementService.patchUpdateUsers(DOMAIN_ID, query, testUpdateRequest());
         verify(appUserRepository, times(1))
                 .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
-        assertThat(queryCaptor.getValue(), equalTo(query + " and domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo(query + " and (domainId equals '1234')"));
     }
 
     @Test
@@ -363,7 +363,7 @@ public class UserManagementServiceImplTest {
                 .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
         assertThat(queryCaptor.getValue(), equalTo("nationality equals 'id-nigerian' " +
                 "and externalId equals '13234434' " +
-                "and domainId equals '1234'"));
+                "and (domainId equals '1234')"));
     }
 
     @Test
@@ -373,7 +373,7 @@ public class UserManagementServiceImplTest {
         userManagementService.patchUpdateUsers(DOMAIN_ID, query, testUpdateRequest());
         verify(appUserRepository, times(1))
                 .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
-        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
     }
 
     @Test
@@ -382,7 +382,7 @@ public class UserManagementServiceImplTest {
         userManagementService.patchUpdateUsers(DOMAIN_ID, null, testUpdateRequest());
         verify(appUserRepository, times(1))
                 .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
-        assertThat(queryCaptor.getValue(), equalTo("domainId equals '1234'"));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
     }
 
     private UpdateRequest testUpdateRequest() {

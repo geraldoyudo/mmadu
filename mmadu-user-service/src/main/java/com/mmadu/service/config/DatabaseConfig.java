@@ -20,7 +20,7 @@ public class DatabaseConfig {
         return new MongoQueryConverter() {
             @Override
             protected String transformProperty(String property) {
-                if (property.equals("username") || property.equals("domainId")) {
+                if (property.equals("username") || property.equals("domainId") || property.equals("externalId")) {
                     return property;
                 } else {
                     return "properties." + property;
@@ -30,7 +30,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public PatchOperationConverter patchOperationConverter(){
+    public PatchOperationConverter patchOperationConverter() {
         return new PatchOperationConverterImpl();
     }
 }

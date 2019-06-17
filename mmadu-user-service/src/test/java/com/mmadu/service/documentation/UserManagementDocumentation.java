@@ -169,7 +169,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search", USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .param("query", "country equals 'Nigeria' and favorite-color equals 'blue'")
+                .param("query", "(country equals 'Nigeria') and (favourite-color equals 'blue')")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
         )
                 .andExpect(status().isOk())
@@ -187,7 +187,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void updatingUsersByQuery() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         UserUpdateRequest request = new UserUpdateRequest();
-        request.setQuery("country equals 'Nigeria'");
+        request.setQuery("(country equals 'Nigeria')");
         request.setUpdates(asList(new UserPatch(PatchOperation.SET, "color", "green")));
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/domains/{domainId}/users", USER_DOMAIN_ID)
