@@ -22,6 +22,15 @@ matrix:
     install: mvn clean
     script: mvn package --settings ../maven-settings-travis.xml
     if: branch != master
+    deploy:
+    - provider: releases
+      api_key: "$GITHUB_OAUTH_TOKEN"
+      file_glob: true
+      file:
+      - target/mmadu-user-service-*
+      skip_cleanup: true
+      on:
+        tags: true
   - language: java
     jdk:
     - oraclejdk8
@@ -45,12 +54,3 @@ matrix:
     - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
     - cd ../docker/heroku-test && heroku container:login && heroku container:push
       web --app mmadu-user-service && heroku container:release web --app mmadu-user-service
-    deploy:
-    - provider: releases
-      api_key: "$GITHUB_OAUTH_TOKEN"
-      file_glob: true
-      file:
-      - target/mmadu-user-service-*
-      skip_cleanup: true
-      on:
-        tags: true
