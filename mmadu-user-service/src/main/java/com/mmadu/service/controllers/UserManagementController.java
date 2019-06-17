@@ -1,5 +1,7 @@
 package com.mmadu.service.controllers;
 
+import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.model.UserUpdateRequest;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +60,13 @@ public class UserManagementController {
                                      @RequestParam("query") String query,
                                      Pageable p) {
         return userManagementService.queryUsers(domainId, query, p);
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patchUpdateUsers(@RequestBody UserUpdateRequest request,
+                                 @PathVariable("domainId") String domainId) {
+        UpdateRequest updateRequest = new UpdateRequest(request.getUpdates());
+        userManagementService.patchUpdateUsers(domainId, request.getQuery(), updateRequest);
     }
 }

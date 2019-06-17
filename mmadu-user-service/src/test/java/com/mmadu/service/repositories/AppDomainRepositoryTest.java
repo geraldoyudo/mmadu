@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.mmadu.service.config.KweeriConfig;
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppDomain;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @DataMongoTest
 @RunWith(SpringRunner.class)
-@Import(KweeriConfig.class)
+@Import(DatabaseConfig.class)
 public class AppDomainRepositoryTest {
 
     private static final String DOMAIN_ID = "domain-id";

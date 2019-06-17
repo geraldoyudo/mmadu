@@ -1,6 +1,6 @@
 package com.mmadu.service.repositories;
 
-import com.mmadu.service.config.KweeriConfig;
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.databaselisteners.AppUserSaveListener;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.providers.PasswordHasher;
@@ -26,7 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
         AppUserSaveListener.class,
         AppUserPasswordHashUpdater.class,
         TestConfig.class,
-        KweeriConfig.class
+        DatabaseConfig.class
 })
 public class AppUserPasswordEncryptionTest {
     private static final String USER = "user";

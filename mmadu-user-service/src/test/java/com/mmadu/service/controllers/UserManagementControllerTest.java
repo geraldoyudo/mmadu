@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
+import com.mmadu.service.model.PatchOperation;
+import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.model.UserPatch;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
+import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -249,5 +253,36 @@ public class UserManagementControllerTest {
         Pageable p = pageableCaptor.getValue();
         collector.checkThat(p.getPageNumber(), equalTo(2));
         collector.checkThat(p.getPageSize(), equalTo(10));
+    }
+
+    @Test
+    public void givenUpdateRequestAndQueryWhenPatchUsersThenReturnNoContent() throws Exception {
+        String query = "color equals 'red'";
+        ArgumentCaptor<UpdateRequest> updateRequestArgumentCaptor = ArgumentCaptor.forClass(UpdateRequest.class);
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doNothing().when(userManagementService).patchUpdateUsers(eq(DOMAIN_ID), queryCaptor.capture(),
+                updateRequestArgumentCaptor.capture());
+        mockMvc.perform(patch("/domains/{domainId}/users", DOMAIN_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .content(updateRequest(query)
+                ))
+                .andExpect(status().isNoContent());
+        UpdateRequest updateRequest = updateRequestArgumentCaptor.getValue();
+        String actualQuery = queryCaptor.getValue();
+        collector.checkThat(actualQuery, equalTo(query));
+        collector.checkThat(updateRequest.getUpdates(),
+                equalTo(asList( new UserPatch(PatchOperation.SET, "color", "green"))));
+    }
+
+    private String updateRequest(String query) {
+        ObjectNode jsonNode =  objectMapper.createObjectNode();
+        jsonNode
+            .put("query", query)
+            .putArray("updates")
+            .addObject()
+                .put("operation", "SET")
+                .put("property", "color")
+                .put("value", "green");
+        return jsonNode.toString();
     }
 }

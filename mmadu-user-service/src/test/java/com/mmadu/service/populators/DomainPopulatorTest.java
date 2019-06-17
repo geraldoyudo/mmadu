@@ -8,11 +8,10 @@ import static org.hamcrest.CoreMatchers.is;
 
 
 import com.mmadu.service.config.DomainConfigurationList;
-import com.mmadu.service.config.KweeriConfig;
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.DomainConfiguration;
 import com.mmadu.service.models.DomainConfig;
-import com.mmadu.service.populators.DomainPopulator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.DomainConfigurationRepository;
 import java.util.Arrays;
@@ -32,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @Import({
         DomainPopulator.class,
-        KweeriConfig.class
+        DatabaseConfig.class
 })
 public class DomainPopulatorTest {
     @Rule
