@@ -4,6 +4,7 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
+import com.mmadu.service.model.UpdateRequest;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.models.PagedList;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
@@ -11,12 +12,9 @@ import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.Collections;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -99,10 +97,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public void updateUser(String domainId, String externalId, UserView userView) {
-        if(userView == null){
+        if (userView == null) {
             throw new IllegalArgumentException("user cannot be null");
         }
-        if(!appDomainRepository.existsById(domainId)){
+        if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
         }
         AppUser appUser = appUserRepository.findByDomainIdAndExternalId(domainId, externalId)
@@ -127,18 +125,35 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public Page<UserView> queryUsers(String domainId, String query, Pageable pageable) {
+        String resultantQuery = ensureQueryAndDomainParameters(domainId, query);
+        Page<UserView> userViewPage = appUserRepository.queryForUsers(resultantQuery, pageable)
+                .map(AppUser::userView);
+        return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
+    }
+
+    private String ensureQueryAndDomainParameters(String domainId, String query) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
         }
         String domainClause = String.format("domainId equals '%s'", domainId);
         String resultantQuery = query;
-        if(StringUtils.isEmpty(resultantQuery)){
+        if (StringUtils.isEmpty(resultantQuery)) {
             resultantQuery = domainClause;
-        }else {
+        } else {
             resultantQuery = resultantQuery.replaceAll(" id ", " externalId ") + " and " + domainClause;
         }
-        Page<UserView> userViewPage = appUserRepository.queryForUsers(resultantQuery, pageable)
-                .map(AppUser::userView);
-        return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
+        return resultantQuery;
+    }
+
+    @Override
+    public void patchUpdateUsers(String domainId, String query, UpdateRequest updateRequest) {
+        if (updateRequest == null) {
+            throw new IllegalArgumentException("Update request cannot be null");
+        }
+        if (updateRequest.getUpdates() == null || updateRequest.getUpdates().isEmpty()) {
+            throw new IllegalArgumentException("User patches cannot be empty");
+        }
+        String resultantQuery = ensureQueryAndDomainParameters(domainId, query);
+        appUserRepository.updateUsers(resultantQuery, updateRequest);
     }
 }

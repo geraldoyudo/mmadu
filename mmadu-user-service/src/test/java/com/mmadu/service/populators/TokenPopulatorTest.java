@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-import com.mmadu.service.config.KweeriConfig;
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.config.TokenConfigurationList;
 import com.mmadu.service.entities.AppToken;
 import com.mmadu.service.repositories.AppTokenRepository;
@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @Import({
         TokenPopulator.class,
-        KweeriConfig.class
+        DatabaseConfig.class
 })
 public class TokenPopulatorTest {
     @Rule

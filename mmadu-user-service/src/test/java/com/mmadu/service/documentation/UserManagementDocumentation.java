@@ -1,9 +1,13 @@
 package com.mmadu.service.documentation;
 
 import com.mmadu.service.entities.AppUser;
+import com.mmadu.service.model.PatchOperation;
+import com.mmadu.service.model.UserPatch;
+import com.mmadu.service.model.UserUpdateRequest;
 import com.mmadu.service.model.UserView;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -14,6 +18,8 @@ import java.util.List;
 import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static java.util.Arrays.asList;
 import static org.assertj.core.util.Maps.newHashMap;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -175,5 +181,23 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                                 parameterWithName("size").description("maximum number of items in page")
                         ),
                         usersResponseFields()));
+    }
+
+    @Test
+    public void updatingUsersByQuery() throws Exception {
+        List<AppUser> appUserList = createMultipleUsers(3);
+        UserUpdateRequest request = new UserUpdateRequest();
+        request.setQuery("country equals 'Nigeria'");
+        request.setUpdates(asList(new UserPatch(PatchOperation.SET, "color", "green")));
+        appUserRepository.saveAll(appUserList);
+        mockMvc.perform(RestDocumentationRequestBuilders.patch("/domains/{domainId}/users", USER_DOMAIN_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .content(objectMapper.writeValueAsString(request))
+        )
+                .andExpect(status().isNoContent());
+        assertThat(appUserRepository.queryForUsers("color equals 'green'",
+                PageRequest.of(0,10)).getTotalElements(),
+                equalTo(3L));
     }
 }

@@ -1,14 +1,19 @@
 package com.mmadu.service.repositories;
 
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 import com.geraldoyudo.kweeri.core.expression.Expression;
 import com.geraldoyudo.kweeri.mongo.MongoQueryConverter;
 import com.geraldoyudo.kweeri.mongo.MongoQuerySerializer;
-import com.mmadu.service.config.KweeriConfig;
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppUser;
+import com.mmadu.service.model.PatchOperation;
+import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.model.UserPatch;
 import com.mmadu.service.models.DomainIdObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +28,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @DataMongoTest
 @RunWith(SpringRunner.class)
-@Import(KweeriConfig.class)
+@Import(DatabaseConfig.class)
 public class AppUserRepositoryTest {
     @Autowired
     private AppUserRepository appUserRepository;
@@ -151,5 +158,27 @@ public class AppUserRepositoryTest {
                 "and username equals 'user' and 'domainId' equals 'test'", request);
         assertThat(appUsers.getContent().size(), equalTo(1));
         assertThat(appUsers.getTotalElements(), equalTo(1L));
+    }
+
+    @Test
+    public void updateUsers(){
+        AppUser user = createAppUser();
+        user.set("color", "red");
+        user.set("amount", 10);
+        user.set("list", new ArrayList<String>());
+        user.set("set", asList("one"));
+        appUserRepository.save(user);
+        UpdateRequest updateRequest = new UpdateRequest();
+        updateRequest.addUpdate(new UserPatch(PatchOperation.SET, "color", "blue"));
+        updateRequest.addUpdate(new UserPatch(PatchOperation.INCREMENT, "amount", 10));
+        updateRequest.addUpdate(new UserPatch(PatchOperation.ADD, "list", "one"));
+        updateRequest.addUpdate(new UserPatch(PatchOperation.REMOVE, "set", "one"));
+        appUserRepository.updateUsers("color equals 'red' " +
+                "and username equals 'user' and 'domainId' equals 'test'", updateRequest);
+        AppUser updatedUser = appUserRepository.findById(user.getId()).get();
+        assertThat(updatedUser.get("color").orElse(""), equalTo("blue"));
+        assertThat(updatedUser.get("amount").orElse(0), equalTo(20));
+        assertThat((List<String>) updatedUser.get("list").orElse(Collections.emptyList()), contains("one"));
+        assertThat(((List<String>) updatedUser.get("set").orElse(Collections.emptyList())).size(), equalTo(0));
     }
 }
