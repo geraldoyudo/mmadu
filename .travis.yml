@@ -1,52 +1,56 @@
-jdk:
-  - oraclejdk8
 env:
   global:
-    secure: ZV/8VQbzEiNgdxa5GLJEZirnrC08gghudcIgfyMQqavD5aM171MWyAPBBsiikm7xzKQ6bKCViLNZbGQ3v6slNXxkG0XpgZz6xh2HrviQCNfVGbnI1WEdD4bX9VqastvayIdoyVy9l1jFNrULJxUIRglLFZpoyl7N2jHIuLjeyqt+aMO3hen9oSLfivIGUJ9bdNPsgdVFxigtNxa9Uz6baKN92eRWv/me0xhx2tmPg5hVzC0GUmy5GsSJSdodhjzWP74fzNd/zJfd2LJB5Q6rl0oH4RcKLk96f84bKiXaDqgBaG5t3y0B54giIPUtGdBiAEulWRUoe+GHl0OF6JwXFB8KpXulSHSjjkdNnLK3cccyI650B+WIow9XLf9h4RnvDCEXUURFTYPvMeXyCL0x8c64UEFR/uBmuMpanpigzrukbYEEa579AtTp7zqP/nysaCOrn+uvWX8aZqri21vyTR8ZVf6ILtuYKnbezjpDIXecFOVuj6JPhIw3LG536za67zUrCf60/jj5Z90mVsIiMPIpmgfJIn+9TLBmECrYTNjVqEUbhkgGvQvB/kJ06bYhCvWdG5Z+9BZPF7k1BF4hMNnwTW753m7FFdkM6m2ILSrpUSgpqd0GrOog0/dqNLd6BpZNasTzxkoumPl3aQmFF+loTWVIylpHoAuVAKdLoKA=
+  - secure: gSA+9iDuxCl7IGsq6nkdX71Rppw9bsGYr3Aq5V2a3O0zDBQSw37bBKtm5E82UNOfxx5rwtv4ks8uDwHXcoHXP5c3k4gE4gPeKy8qmlmyuacWpXz1PjxCYPhI2Ubp/0xFVqeMRJsfEURvg85kD0Y7DF9y+U20Vo61LTi5nJk7XhnLu0rFCP68xPNajqiRNJ4141zihNtciU27xtlHEpwiNB4WmBQ/opm3d0rxw19/fGVSBbkk2VMufqqWgx0Ptd1QB5Bfl1CvEyFtJCLcFwj6JQXhgX7mDNB6AIxnT82LVlmj+gfMsWhPAhEJ1PpvnMPskZ2H00/dcGzLy4vx6YRT76ftUx2s8SvRGCX5ZMz8PF2+7dFBexHFaRxB+fM711pYh7F2EHqsvQ7qODU+RqLYTo0BAflu9rETi2UE6gp7Fl6dKc/lF41MUblRNFpaf7hR03F/IB8xkG9R0FiqlhFN7EhXkgbBddZG9E8VqAgiCjcKJ8AdsTJ1NmpmgvY4wGACS0GqZc/ypYpbO/3BZYSD0XGsWEbYV3/PpcH/WWthEblQgJGZ1RryNlDITNBMn/M7RacJSuuC5Y95ab32tdyAPxBKKa5QD9KAws3SxQnHI8630fMk9p1OqAF6RxY4Up0o8N7QzWtXzUCYpVCBPCdDgjNzMteupXP46BVB4BIZfX4=
 matrix:
   include:
-    - language: ruby
-      rvm:
-        - 2.2.0
-      sudo: false
-      before_install: cd docs
-      script: bundle exec rake deploy
-      if: branch = master
-    - language: java
-      dist: trusty
-      before_install: 
-        - cd mmadu-user-service
-        - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
-        - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
-      install: mvn clean
-      script: mvn package --settings ../maven-settings-travis.xml
-      if: branch != master
-    - language: java
-      if: branch = master
-      sudo: false
-      dist: trusty
-      services:
-        - docker
-      before_install:
-        - curl https://cli-assets.heroku.com/install.sh | sh
-        - cd mmadu-user-service
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - cat ../heroku-auth.txt >> ~/.netrc
-        - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
-        - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
-        - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
-        - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
-      install: mvn clean
-      script: 
-        - mvn package -DskipTests --settings ../maven-settings-travis.xml
-        - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
-        - cd ../docker/heroku-test && heroku container:login && heroku container:push web --app mmadu-user-service && heroku container:release web --app mmadu-user-service
-      deploy:
-        - provider: releases
-          api_key: $GITHUB_OAUTH_TOKEN
-          file_glob: true
-          file:
-            - "target/mmadu-user-service-*"
-          skip_cleanup: true
-          on:
-            tags: true
+  - language: ruby
+    dist: trusty
+    rvm:
+    - 2.2.0
+    sudo: false
+    before_install: cd docs
+    script: bundle exec rake deploy
+    if: branch = master
+  - language: java
+    jdk:
+    - oraclejdk8
+    dist: trusty
+    before_install:
+    - cd mmadu-user-service
+    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
+    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
+    install: mvn clean
+    script: mvn package --settings ../maven-settings-travis.xml
+    if: branch != master
+    deploy:
+    - provider: releases
+      api_key: "$GITHUB_OAUTH_TOKEN"
+      file_glob: true
+      file:
+      - target/mmadu-user-service-*
+      skip_cleanup: true
+      on:
+        tags: true
+  - language: java
+    jdk:
+    - oraclejdk8
+    if: branch = master
+    sudo: false
+    dist: trusty
+    services:
+    - docker
+    before_install:
+    - curl https://cli-assets.heroku.com/install.sh | sh
+    - cd mmadu-user-service
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - cat ../heroku-auth.txt >> ~/.netrc
+    - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
+    - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
+    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
+    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
+    install: mvn clean
+    script:
+    - mvn package -DskipTests --settings ../maven-settings-travis.xml
+    - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
+    - cd ../docker/heroku-test && heroku container:login && heroku container:push
+      web --app mmadu-user-service && heroku container:release web --app mmadu-user-service
