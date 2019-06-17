@@ -6,6 +6,7 @@ env:
 matrix:
   include:
     - language: ruby
+      dist: trusty
       rvm:
         - 2.2.0
       sudo: false
