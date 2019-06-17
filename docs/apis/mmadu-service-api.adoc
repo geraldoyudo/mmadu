@@ -452,6 +452,68 @@ Example:
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-response.adoc[]
 
+==== Querying Users
+
+A GET request can search for users by username, and other custom fields created by the client.
+
+NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+WARNING: Ensure to put individual criteria in parenthesis
+
+===== Request Parameters
+
+The request includes page information to request for particular sets in the list.
+
+include::{snippets}/user-management-documentation/querying-users/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/querying-users/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.
+
+include::{snippets}/user-management-documentation/querying-users/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/querying-users/1/http-response.adoc[]
+
+==== Partial User update
+
+A PATCH request can update users partially based on a query criteria
+
+NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+WARNING: Ensure to put individual criteria in parenthesis
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/path-parameters.adoc[]
+
+===== Request
+
+The PATCH request accepts a query string and an array of update operations.
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-request.adoc[]
+
+===== Response Fields
+
+The API returns 204 No content for a successful update.
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
+
+
 === Token Security
 
 Mmadu service uses token based security. Access to API can be done using admin and domain tokens.

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppToken;
 import com.mmadu.service.exceptions.TokenNotFoundException;
 import com.mmadu.service.repositories.AppTokenRepository;
@@ -27,7 +28,10 @@ import org.springframework.security.crypto.codec.Hex;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@Import(AppTokenServiceImpl.class)
+@Import({
+        AppTokenServiceImpl.class,
+        DatabaseConfig.class
+})
 @DataMongoTest
 public class AppTokenServiceImplTest {
     @Rule

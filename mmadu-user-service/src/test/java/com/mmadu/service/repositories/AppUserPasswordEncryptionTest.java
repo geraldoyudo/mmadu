@@ -1,13 +1,10 @@
 package com.mmadu.service.repositories;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.databaselisteners.AppUserSaveListener;
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.repositories.AppUserPasswordEncryptionTest.TestConfig;
 import com.mmadu.service.providers.PasswordHasher;
+import com.mmadu.service.repositories.AppUserPasswordEncryptionTest.TestConfig;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdater;
 import com.mmadu.service.utilities.TestPasswordHasher;
 import org.junit.Before;
@@ -19,9 +16,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @DataMongoTest
 @RunWith(SpringRunner.class)
-@Import({AppUserSaveListener.class, AppUserPasswordHashUpdater.class, TestConfig.class})
+@Import({
+        AppUserSaveListener.class,
+        AppUserPasswordHashUpdater.class,
+        TestConfig.class,
+        DatabaseConfig.class
+})
 public class AppUserPasswordEncryptionTest {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -35,7 +41,7 @@ public class AppUserPasswordEncryptionTest {
     private AppUser user;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         appUserRepository.deleteAll();
         user = new AppUser();
         user.setUsername(USER);
@@ -45,20 +51,20 @@ public class AppUserPasswordEncryptionTest {
     }
 
     @Test
-    public void passwordShouldHashOnSave(){
+    public void passwordShouldHashOnSave() {
         user = appUserRepository.save(user);
         assertThat(user.getPassword(), is(equalTo(HASHED_PASSWORD)));
     }
 
     @Test
-    public void retrievedUserShouldHaveHashedPassword(){
+    public void retrievedUserShouldHaveHashedPassword() {
         user = appUserRepository.save(user);
         assertThat(appUserRepository.findById(ID).get().getPassword(), is(equalTo(HASHED_PASSWORD)));
     }
 
     public static class TestConfig {
         @Bean
-        public PasswordHasher passwordHasher(){
+        public PasswordHasher passwordHasher() {
             return new TestPasswordHasher();
         }
     }

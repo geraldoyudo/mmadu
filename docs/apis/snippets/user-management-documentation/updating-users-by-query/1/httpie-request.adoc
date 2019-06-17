@@ -1,0 +1,13 @@
+[source,bash]
+----
+$ echo '{
+  "query" : "(country equals 'Nigeria')",
+  "updates" : [ {
+    "operation" : "SET",
+    "property" : "color",
+    "value" : "green"
+  } ]
+}' | http PATCH 'http://localhost:8080/domains/test-app/users' \
+    'Content-Type:application/json' \
+    'domain-auth-token:1234'
+----

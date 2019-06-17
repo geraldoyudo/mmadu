@@ -1,5 +1,7 @@
 package com.mmadu.service.controllers;
 
+import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.model.UserUpdateRequest;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +53,20 @@ public class UserManagementController {
     public UserView loadUserByUsername(@PathVariable("domainId") String domainId,
                                        @RequestParam("username") String username) {
         return userManagementService.getUserByDomainIdAndUsername(domainId, username);
+    }
+
+    @GetMapping("/search")
+    public Page<UserView> queryUsers(@PathVariable("domainId") String domainId,
+                                     @RequestParam("query") String query,
+                                     Pageable p) {
+        return userManagementService.queryUsers(domainId, query, p);
+    }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void patchUpdateUsers(@RequestBody UserUpdateRequest request,
+                                 @PathVariable("domainId") String domainId) {
+        UpdateRequest updateRequest = new UpdateRequest(request.getUpdates());
+        userManagementService.patchUpdateUsers(domainId, request.getQuery(), updateRequest);
     }
 }

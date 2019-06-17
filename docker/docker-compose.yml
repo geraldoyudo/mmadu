@@ -1,7 +1,7 @@
 version: '2'
 services:
   mmadu-user-service:
-    image: geraldoyudo/mmadu-user-service:1.1.0-RELEASE
+    image: geraldoyudo/mmadu-user-service:1.2.0-RELEASE
     environment:
       - mmadu.domain.encrypt-keys=${MMADU_DOMAIN_ENCRYPT_KEYS}
       - mmadu.security.master-key=${MMADU_SECURITY_MASTER_KEY}

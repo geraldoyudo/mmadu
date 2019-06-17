@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+query+`
+|`+String+`
+|The query criteria for updating users
+
+|`+updates.[].operation+`
+|`+String+`
+|The kind of update operation to make: (SET, INCREMENT, ADD, REMOVE
+
+|`+updates.[].property+`
+|`+String+`
+|The property to update
+
+|`+updates.[].value+`
+|`+String+`
+|The value used by the update operation
+
+|===

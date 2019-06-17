@@ -5,7 +5,7 @@
 
 	<groupId>com.mmadu</groupId>
 	<artifactId>mmadu-user-service</artifactId>
-	<version>1.1.0-RELEASE</version>
+	<version>1.2.0-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>mmadu-user-service</name>
@@ -89,6 +89,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.geraldoyudo.kweeri</groupId>
+			<artifactId>kweeri-mongo</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -118,6 +128,7 @@
 							<include>${project.build.finalName}.jar</include>
 						</resource>
 					</resources>
+					<serverId>docker-hub</serverId>
 				</configuration>
 			</plugin>
 		</plugins>

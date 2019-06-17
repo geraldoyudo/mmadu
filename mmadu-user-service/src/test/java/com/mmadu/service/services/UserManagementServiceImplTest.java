@@ -4,6 +4,9 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
+import com.mmadu.service.model.PatchOperation;
+import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.model.UserPatch;
 import com.mmadu.service.model.UserView;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
@@ -22,10 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
@@ -288,5 +293,115 @@ public class UserManagementServiceImplTest {
         collector.checkThat(updatedAppUser.getRoles(), equalTo(asList("member")));
         collector.checkThat(updatedAppUser.getAuthorities(), equalTo(asList("sign-card")));
         collector.checkThat(updatedAppUser.getProperties(), equalTo(Maps.newHashMap("color", "white")));
+    }
+
+    @Test
+    public void givenQueryAndDomainIdWhenQueryUsersShouldAddDomainIdToQuery() {
+        String query = "nationality equals 'nigerian'";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo(query + " and (domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenQueryWithIdAndDomainIdWhenQueryUsersShouldTranslateIdToExternalId() {
+        String query = "nationality equals 'id-nigerian' and id equals '13234434'";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("nationality equals 'id-nigerian' " +
+                "and externalId equals '13234434' " +
+                "and (domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenEmptyQueryAndDomainIdWhenQueryUsersShouldQueryAllInDomain() {
+        String query = "";
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, query, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenNullQueryAndDomainIdWhenQueryUsersShouldQueryAllInDomain() {
+        Page<AppUser> userPage = new PageImpl<>(Collections.emptyList());
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        doReturn(userPage).when(appUserRepository).queryForUsers(anyString(), any(Pageable.class));
+        userManagementService.queryUsers(DOMAIN_ID, null, PageRequest.of(0, 10));
+        verify(appUserRepository, times(1))
+                .queryForUsers(queryCaptor.capture(), any(Pageable.class));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenQueryAndDomainIdAndUpdateRequestWhenQueryUsersShouldAddDomainIdToQuery() {
+        String query = "nationality equals 'nigerian'";
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        userManagementService.patchUpdateUsers(DOMAIN_ID, query, testUpdateRequest());
+        verify(appUserRepository, times(1))
+                .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
+        assertThat(queryCaptor.getValue(), equalTo(query + " and (domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenQueryWithIdAndDomainIdAndUpdateRequestWhenQueryUsersShouldTranslateIdToExternalId() {
+        String query = "nationality equals 'id-nigerian' and id equals '13234434'";
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        userManagementService.patchUpdateUsers(DOMAIN_ID, query, testUpdateRequest());
+        verify(appUserRepository, times(1))
+                .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
+        assertThat(queryCaptor.getValue(), equalTo("nationality equals 'id-nigerian' " +
+                "and externalId equals '13234434' " +
+                "and (domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenEmptyQueryAndDomainIdAndUpdateRequestWhenQueryUsersShouldUpdateAllInDomain() {
+        String query = "";
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        userManagementService.patchUpdateUsers(DOMAIN_ID, query, testUpdateRequest());
+        verify(appUserRepository, times(1))
+                .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
+    }
+
+    @Test
+    public void givenNullQueryAndDomainIdAndUpdateRequestWhenQueryUsersShouldQueryAllInDomain() {
+        ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+        userManagementService.patchUpdateUsers(DOMAIN_ID, null, testUpdateRequest());
+        verify(appUserRepository, times(1))
+                .updateUsers(queryCaptor.capture(), any(UpdateRequest.class));
+        assertThat(queryCaptor.getValue(), equalTo("(domainId equals '1234')"));
+    }
+
+    private UpdateRequest testUpdateRequest() {
+        UpdateRequest request = new UpdateRequest();
+        request.addUpdate(new UserPatch(PatchOperation.SET, "property", "value"));
+        return request;
+    }
+
+    @Test
+    public void givenNullUpdateRequestWhenQueryUsersShouldThrowIllegalArgumentException() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Update request cannot be null");
+        userManagementService.patchUpdateUsers(DOMAIN_ID, "", null);
+    }
+
+    @Test
+    public void givenEmptyUpdateRequestWhenQueryUsersShouldThrowIllegalArgumentException() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("User patches cannot be empty");
+        userManagementService.patchUpdateUsers(DOMAIN_ID, "", new UpdateRequest());
     }
 }

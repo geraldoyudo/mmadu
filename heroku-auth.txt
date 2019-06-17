@@ -1,0 +1,6 @@
+machine api.heroku.com
+  login __HEROKU_EMAIL__
+  password __HEROKU_API_KEY__
+machine git.heroku.com
+  login __HEROKU_EMAIL__
+  password __HEROKU_API_KEY__

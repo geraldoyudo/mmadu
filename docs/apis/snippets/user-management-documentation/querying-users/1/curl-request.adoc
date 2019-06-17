@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/domains/test-app/users/search?page=0&size=10&query=%28country+equals+%27Nigeria%27%29+and+%28favorite-color+equals+%27blue%27%29' -i -X GET \
+    -H 'domain-auth-token: 1234'
+----
