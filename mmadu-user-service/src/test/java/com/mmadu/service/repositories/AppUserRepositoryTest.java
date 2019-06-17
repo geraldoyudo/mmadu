@@ -153,9 +153,14 @@ public class AppUserRepositoryTest {
         AppUser user = createAppUser();
         user.set("color", "red");
         appUserRepository.save(user);
+        AppUser user1 = createAppUser();
+        user1.set("color", "blue");
+        user1.setExternalId("new-ext");
+        user1.setUsername("new-user");
+        appUserRepository.save(user1);
         PageRequest request = PageRequest.of(0, 10);
-        Page<AppUser> appUsers = appUserRepository.queryForUsers("color equals 'red' " +
-                "and username equals 'user' and 'domainId' equals 'test'", request);
+        Page<AppUser> appUsers = appUserRepository.queryForUsers("(color equals 'red') " +
+                "and (username equals 'user') and ('domainId' equals 'test')", request);
         assertThat(appUsers.getContent().size(), equalTo(1));
         assertThat(appUsers.getTotalElements(), equalTo(1L));
     }
@@ -173,8 +178,8 @@ public class AppUserRepositoryTest {
         updateRequest.addUpdate(new UserPatch(PatchOperation.INCREMENT, "amount", 10));
         updateRequest.addUpdate(new UserPatch(PatchOperation.ADD, "list", "one"));
         updateRequest.addUpdate(new UserPatch(PatchOperation.REMOVE, "set", "one"));
-        appUserRepository.updateUsers("color equals 'red' " +
-                "and username equals 'user' and 'domainId' equals 'test'", updateRequest);
+        appUserRepository.updateUsers("(color equals 'red') " +
+                "and (username equals 'user') and ('domainId' equals 'test')", updateRequest);
         AppUser updatedUser = appUserRepository.findById(user.getId()).get();
         assertThat(updatedUser.get("color").orElse(""), equalTo("blue"));
         assertThat(updatedUser.get("amount").orElse(0), equalTo(20));

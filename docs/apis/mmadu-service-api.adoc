@@ -458,6 +458,8 @@ A GET request can search for users by username, and other custom fields created 
 
 NOTE: Query string can only support custom string, integer and boolean fields currently.
 
+WARNING: Ensure to put individual criteria in parenthesis
+
 ===== Request Parameters
 
 The request includes page information to request for particular sets in the list.
@@ -486,6 +488,8 @@ include::{snippets}/user-management-documentation/querying-users/1/http-response
 A PATCH request can update users partially based on a query criteria
 
 NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+WARNING: Ensure to put individual criteria in parenthesis
 
 ===== Path Parameters
 

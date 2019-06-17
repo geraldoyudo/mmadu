@@ -33,6 +33,7 @@ public class AppUserRepositoryCustomImpl implements AppUserRepositoryCustom {
     @Override
     public Page<AppUser> queryForUsers(String query, Pageable p) {
         String jsonString = queryConverter.convertExpressionToQuery(querySerializer.deSerialize(query));
+        verifyJson(jsonString);
         BasicQuery basicQuery = new BasicQuery(jsonString);
         basicQuery.with(p.getSort());
         basicQuery.with(p);
@@ -43,10 +44,18 @@ public class AppUserRepositoryCustomImpl implements AppUserRepositoryCustom {
                 () -> mongoTemplate.count(basicQuery, AppUser.class));
     }
 
+    private void verifyJson(String json){
+        if (json == null || json.equals("") || json.trim().replace(" ", "").equals("{}")){
+            throw new IllegalArgumentException("Could not read query, ensure criteria is covered by parenthesis" +
+                    " ie. (key equals 'value')");
+        }
+    }
+
     @Override
     public void updateUsers(String query, UpdateRequest updateRequest) {
         Update update = patchOperationConverter.convertPathUpdate(updateRequest);
         String jsonString = queryConverter.convertExpressionToQuery(querySerializer.deSerialize(query));
+        verifyJson(jsonString);
         BasicQuery basicQuery = new BasicQuery(jsonString);
         mongoTemplate.updateMulti(basicQuery, update, AppUser.class);
     }
