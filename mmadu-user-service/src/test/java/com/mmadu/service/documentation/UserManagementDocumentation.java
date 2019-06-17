@@ -195,7 +195,16 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .content(objectMapper.writeValueAsString(request))
         )
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("query").description("The query criteria for updating users"),
+                        fieldWithPath("updates.[].operation").description("The kind of update operation to make: " +
+                                "(SET, INCREMENT, ADD, REMOVE"),
+                        fieldWithPath("updates.[].property").description("The property to update"),
+                        fieldWithPath("updates.[].value").description("The value used by the update operation")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user")
+                )));
         assertThat(appUserRepository.queryForUsers("color equals 'green'",
                 PageRequest.of(0,10)).getTotalElements(),
                 equalTo(3L));

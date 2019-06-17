@@ -481,6 +481,34 @@ Example:
 
 include::{snippets}/user-management-documentation/querying-users/1/http-response.adoc[]
 
+==== Partial User update
+
+A PATCH request can update users partially based on a query criteria
+
+NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+===== Path Parameters
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/path-parameters.adoc[]
+
+===== Request
+
+The PATCH request accepts a query string and an array of update operations.
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-request.adoc[]
+
+===== Response Fields
+
+The API returns 204 No content for a successful update.
+
+Example:
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
+
 
 === Token Security
 
