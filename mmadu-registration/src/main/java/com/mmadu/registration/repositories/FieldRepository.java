@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface FieldRepository extends MongoRepository<Field, String> {
     List<Field> findByDomainId(@Param("domainId") String domainId);
+
+    List<Field> findByFieldTypeId(@Param("fieldTypeId") String fieldTypeId);
 }
