@@ -1,6 +1,7 @@
 package com.mmadu.registration.providers;
 
 import com.mmadu.registration.entities.Field;
+import com.mmadu.registration.entities.FieldType;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,10 +11,12 @@ import java.util.Optional;
 @Component
 public class ThymeleafFieldContextResolver implements FieldContextResolver {
     @Override
-    public Map<String, Object> resolveContext(Field field) {
+    public Map<String, Object> resolveContext(Field field, FieldType type) {
         Map<String, Object> context = new HashMap<>();
         context.put("field", field);
-        context.put("inputField", String.format("th:field=\"*{properties['__${'%s'}__']}\"", field.getProperty()));
+        context.put("type", type);
+        context.put("inputField", String.format("th:with=\"var_%s=${'%s'}\" th:field='*{properties[\"__${var_%s}__\"]}'",
+                field.getId(), field.getProperty(), field.getId()));
         context.put("inputStyle", String.format("th:style=\"'%s'\"",
                 Optional.ofNullable(field.getStyle()).orElse("")));
         return context;

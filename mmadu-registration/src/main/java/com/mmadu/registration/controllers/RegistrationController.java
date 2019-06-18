@@ -24,8 +24,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/{domainId}/register")
-    public void doRegister(@ModelAttribute UserForm user){
+    public String doRegister(@ModelAttribute UserForm user){
         log.info("User: {}", user);
+        return "redirect:https://google.com";
     }
 
     @GetMapping("/help")

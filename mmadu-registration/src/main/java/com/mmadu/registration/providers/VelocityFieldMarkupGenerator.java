@@ -27,7 +27,7 @@ public class VelocityFieldMarkupGenerator implements FieldMarkupGenerator {
     @Override
     public String resolveField(Field field, FieldType type) {
         StringWriter writer = new StringWriter();
-        velocityEngine.evaluate(new VelocityContext(fieldContextResolver.resolveContext(field)), writer,
+        velocityEngine.evaluate(new VelocityContext(fieldContextResolver.resolveContext(field, type)), writer,
                 "", type.getMarkup()
         );
         return writer.getBuffer().toString();
