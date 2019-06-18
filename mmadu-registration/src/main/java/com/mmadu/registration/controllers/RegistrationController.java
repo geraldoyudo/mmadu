@@ -10,8 +10,8 @@ public class RegistrationController {
 
     @GetMapping("/{domainId}/register")
     public String register(@PathVariable("domainId") String domainId, Model model) {
-        model.addAttribute("name", "World");
-        return "greeting";
+        model.addAttribute("domainId", domainId);
+        return "register";
     }
 
     @GetMapping("/help")
