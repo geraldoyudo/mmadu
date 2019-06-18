@@ -4,6 +4,9 @@ spring:
       base-path: /repo
 mmadu:
   home: ${user.home}/mmadu
+  domainKey: 2222
+  userService:
+    url: http://localhost:10080
   registration:
     home: ${mmadu.home}/registration
     templates: ${mmadu.registration.home}/templates
