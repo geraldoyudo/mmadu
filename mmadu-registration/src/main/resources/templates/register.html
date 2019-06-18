@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" action="#" th:action="@{'/' + ${domainId} + '/register'}" th:object="${user}" method="post">
+    <form class="form-signin" action="#" th:action="@{'/' + ${domainId} + '/register' + ${redirectUrl == null ? '': ('?redirectUrl=' + redirectUrl)}}" th:object="${user}" method="post">
         <h2 class="form-signin-heading">Register</h2>
         <div th:replace="'domain/register-' +${domainId}">
 

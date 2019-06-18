@@ -2,6 +2,7 @@ package com.mmadu.registration.utils;
 
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
+import com.mmadu.registration.entities.RegistrationProfile;
 
 public final class EntityUtils {
     public static final String DOMAIN_ID = "domain-1";
@@ -45,5 +46,13 @@ public final class EntityUtils {
         field.setProperty(property);
         field.setFieldTypeId(fieldTypeId);
         return field;
+    }
+
+    public static RegistrationProfile createRegistrationProfile(String id){
+        RegistrationProfile profile = new RegistrationProfile();
+        profile.setDomainId(DOMAIN_ID);
+        profile.setDefaultRedirectUrl("https://google.com");
+        profile.setId(id);
+        return profile;
     }
 }

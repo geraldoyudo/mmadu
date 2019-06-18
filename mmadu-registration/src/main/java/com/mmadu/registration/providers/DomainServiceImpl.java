@@ -1,6 +1,6 @@
 package com.mmadu.registration.providers;
 
-import com.mmadu.registration.repositories.FieldRepository;
+import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 @Component
 public class DomainServiceImpl implements DomainService {
     @Autowired
-    private FieldRepository fieldRepository;
+    private RegistrationProfileRepository registrationProfileRepository;
 
     @Override
     public List<String> getDomainIds() {
-        return fieldRepository.findAll()
+        return registrationProfileRepository.findAll()
                 .stream()
                 .map(field -> field.getDomainId())
                 .distinct()
@@ -23,6 +23,6 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public boolean domainExists(String domain) {
-        return !fieldRepository.findByDomainId(domain).isEmpty();
+        return !registrationProfileRepository.findByDomainId(domain).isPresent();
     }
 }

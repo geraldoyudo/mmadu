@@ -7,6 +7,11 @@ mmadu:
   registration:
     home: ${mmadu.home}/registration
     templates: ${mmadu.registration.home}/templates
+    profile-config:
+      profiles:
+        - id: 1
+          domainId: 1
+          defaultRedirectUrl: https://google.com
     field-type-config:
       field-types:
         - id: 1
