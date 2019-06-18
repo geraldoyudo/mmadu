@@ -7,3 +7,43 @@ mmadu:
   registration:
     home: ${mmadu.home}/registration
     templates: ${mmadu.registration.home}/templates
+    field-type-config:
+      field-types:
+        - id: 1
+          name: text
+          markup: "<p> $field.label: <input type='text' $inputField $inputStyle/> </p>"
+    field-config:
+      fields:
+        - id: 1
+          name: email
+          domainId: 1
+          placeholder: Email
+          property: email
+          fieldTypeId: 1
+          style: "color: #00ff00"
+          label: Email
+          order: 1
+        - id: 2
+          name: full-name
+          domainId: 1
+          placeholder: Full Name
+          property: fullName
+          fieldTypeId: 1
+          label: Full Name
+          order: 2
+        - id: 3
+          name: username
+          domainId: 1
+          placeholder: Username
+          property: username
+          fieldTypeId: 1
+          label: Username
+          order: 3
+        - id: 4
+          name: password
+          domainId: 1
+          placeholder: Password
+          property: password
+          fieldTypeId: 1
+          label: Password
+          order: 4

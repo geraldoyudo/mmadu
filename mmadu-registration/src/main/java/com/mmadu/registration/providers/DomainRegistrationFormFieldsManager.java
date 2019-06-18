@@ -27,12 +27,12 @@ public class DomainRegistrationFormFieldsManager {
     private FormFieldsGenerator formFieldsGenerator;
     private UnicastProcessor<RegistrationFieldModifiedEvent> processor = UnicastProcessor.create();
     private FluxSink<RegistrationFieldModifiedEvent> sink = processor.serialize().sink();
-    @Value("{mmadu.registration.templates}")
+    @Value("${mmadu.registration.templates}")
     public void setTemplatesFolder(String templatesFolder) {
         this.templatesFolder = templatesFolder;
     }
 
-    @Value("{mmadu.registration.fields-sample-time:5}")
+    @Value("${mmadu.registration.fields-sample-time:5}")
     public void setSampleTimeInSeconds(int sampleTimeInSeconds) {
         this.sampleTimeInSeconds = sampleTimeInSeconds;
     }

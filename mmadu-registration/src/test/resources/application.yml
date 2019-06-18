@@ -1,0 +1,9 @@
+spring:
+  data:
+    rest:
+      base-path: /repo
+mmadu:
+  home: ${user.home}/mmadu-test
+  registration:
+    home: ${mmadu.home}/registration
+    templates: ${mmadu.registration.home}/templates

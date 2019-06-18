@@ -25,6 +25,6 @@ public class VelocityFieldMarkupGeneratorTest {
     @Test
     public void testMarkupField() {
         String markup = fieldMarkupGenerator.resolveField(createField("1", ","), createFieldType("1"));
-        assertThat(markup, equalTo("<p> Name: <input type='text' th:field=\"*name\" th:style=\"background: 00ff\"/> />"));
+        assertThat(markup, equalTo("<p> Name: <input type='text' th:field=\"*{properties['__${'name'}__']}\" th:style=\"'background: 00ff'\"/> />"));
     }
 }

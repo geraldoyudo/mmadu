@@ -28,8 +28,8 @@ public class ThymeleafFieldContextResolverTest {
         field.setStyle("background: #00ff");
         Map<String,Object> contextMap = resolver.resolveContext(field);
         collector.checkThat(contextMap.get("field"), equalTo(field));
-        collector.checkThat(contextMap.get("inputField"), equalTo("th:field=\"*name\""));
-        collector.checkThat(contextMap.get("inputStyle"), equalTo("th:style=\"background: #00ff\""));
+        collector.checkThat(contextMap.get("inputField"), equalTo("th:field=\"*{properties['__${'name'}__']}\""));
+        collector.checkThat(contextMap.get("inputStyle"), equalTo("th:style=\"'background: #00ff'\""));
     }
 
 
