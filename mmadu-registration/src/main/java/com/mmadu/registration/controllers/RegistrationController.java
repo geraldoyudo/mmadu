@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class RegistrationController {
 
-    @GetMapping("{domainId}/register")
-    public String register(@PathVariable("domainId") String domainId) {
+    @GetMapping("/{domainId}/register")
+    public String register(@PathVariable("domainId") String domainId, Model model) {
+        model.addAttribute("name", "World");
         return "greeting";
     }
 
+    @GetMapping("/help")
+    public String help() {
+        return "domain/help";
+    }
 }

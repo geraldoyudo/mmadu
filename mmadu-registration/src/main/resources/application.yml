@@ -2,3 +2,7 @@ spring:
   data:
     rest:
       base-path: /repo
+mmadu:
+  registration:
+    home: ${user.home}/mmadu/registration
+    templates: ${mmadu.registration.home}/templates

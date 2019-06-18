@@ -10,7 +10,7 @@ public final class EntityUtils {
     }
 
     public static FieldType createFieldType(String id) {
-        return new FieldType(id, "text" + id, "<input type='text'/>");
+        return new FieldType(id, "text" + id, "<p> $field.label: <input type='text' $inputField $inputStyle/> />");
     }
 
     public static  Field createField(String id, String fieldTypeId) {
@@ -21,6 +21,8 @@ public final class EntityUtils {
         field.setPlaceholder("Name");
         field.setProperty("name");
         field.setFieldTypeId(fieldTypeId);
+        field.setLabel("Name");
+        field.setStyle("background: 00ff");
         return field;
     }
     public static  Field createField(String id, String name, String fieldTypeId) {
