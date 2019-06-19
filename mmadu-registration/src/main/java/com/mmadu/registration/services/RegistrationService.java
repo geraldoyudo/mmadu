@@ -4,5 +4,5 @@ import com.mmadu.registration.models.UserForm;
 
 public interface RegistrationService {
 
-    void registerUser(UserForm userForm);
+    void registerUser(String domainId, UserForm userForm);
 }

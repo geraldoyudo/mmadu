@@ -33,7 +33,7 @@ public class RegistrationController {
                              @ModelAttribute UserForm user,
                              @RequestParam(value = "redirectUrl", required = false) String redirectUrl) {
         RegistrationProfile profile = registrationProfileService.getProfileForDomain(domainId);
-        registrationService.registerUser(user);
+        registrationService.registerUser(domainId, user);
         if (StringUtils.isEmpty(redirectUrl))
             return "redirect:" + profile.getDefaultRedirectUrl();
         else
