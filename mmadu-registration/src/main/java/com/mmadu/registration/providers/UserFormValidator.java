@@ -1,19 +1,19 @@
 package com.mmadu.registration.providers;
 
-import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.models.UserForm;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.util.List;
 
 public class UserFormValidator implements Validator {
     private String domainId;
-    private List<Field> fieldList;
+    private List<Validator> fieldTypeValidatorList;
 
-    public UserFormValidator(String domainId, List<Field> fieldList) {
+    public UserFormValidator(String domainId, List<Validator> fieldTypeValidatorList) {
         this.domainId = domainId;
-        this.fieldList = fieldList;
+        this.fieldTypeValidatorList = fieldTypeValidatorList;
     }
 
     @Override
@@ -23,5 +23,11 @@ public class UserFormValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
+        ValidationUtils.rejectIfEmpty(errors, "properties['username']", "username.empty",
+                new Object[]{}, "username property cannot be empty");
+        UserForm form = (UserForm) o;
+        fieldTypeValidatorList.forEach(
+                validator -> validator.validate(form, errors)
+        );
     }
 }

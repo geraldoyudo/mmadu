@@ -3,7 +3,7 @@
 }
 .errorMessage {
     color: red;
+    font-size: xx-small;
 }
 .form-signin input {
-    width: 100%;
 }

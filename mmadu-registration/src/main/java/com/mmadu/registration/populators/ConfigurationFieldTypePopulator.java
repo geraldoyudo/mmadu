@@ -17,7 +17,6 @@ public class ConfigurationFieldTypePopulator implements Populator {
     @Override
     @PostConstruct
     public void populate() {
-        System.out.println("Post construct");
         if (fieldTypeRepository.count() > 0) {
             return;
         }

@@ -19,7 +19,8 @@ mmadu:
       field-types:
         - id: 1
           name: text
-          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' required autofocus $inputField $inputStyle $errorStyle ></p> $errorDisplay"
+          type: text
+          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $inputField $inputStyle $errorStyle >$errorDisplay</p>"
     field-config:
       fields:
         - id: 1
@@ -31,6 +32,7 @@ mmadu:
           style: "color: #00ff00"
           label: Email
           order: 1
+          required: true
         - id: 2
           name: full-name
           domainId: 1
@@ -39,6 +41,7 @@ mmadu:
           fieldTypeId: 1
           label: Full Name
           order: 2
+          required: true
         - id: 3
           name: username
           domainId: 1
@@ -47,6 +50,7 @@ mmadu:
           fieldTypeId: 1
           label: Username
           order: 3
+          required: true
         - id: 4
           name: password
           domainId: 1

@@ -23,4 +23,6 @@ public class FieldType {
     private String name;
     @NotEmpty
     private String markup;
+    private String fieldTypePattern;
+    private String type;
 }

@@ -34,4 +34,5 @@ public class Field {
     private String label;
     private int order;
     private String pattern;
+    boolean required;
 }
