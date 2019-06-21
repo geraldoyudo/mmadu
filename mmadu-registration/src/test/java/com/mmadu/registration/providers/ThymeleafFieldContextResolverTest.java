@@ -31,6 +31,8 @@ public class ThymeleafFieldContextResolverTest {
         collector.checkThat(contextMap.get("type"), equalTo(fieldType));
         collector.checkThat(contextMap.get("inputField"), equalTo("th:with=\"var_1=${'name'}\" th:field='*{properties[\"__${var_1}__\"]}'"));
         collector.checkThat(contextMap.get("inputStyle"), equalTo("th:style=\"'background: #00ff'\""));
+        collector.checkThat(contextMap.get("errorStyle"), equalTo("th:class=\"${#fields.hasErrors('properties[var_1]')}? fieldError\""));
+        collector.checkThat(contextMap.get("errorDisplay"), equalTo("<p class=\"errorMessage\"><ul><li th:each=\"err : ${#fields.errors('properties[var_1]')}\" th:text=\"${err}\" /></ul></p>"));
     }
 
 

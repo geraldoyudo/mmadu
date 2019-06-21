@@ -9,12 +9,10 @@ import org.springframework.util.FileCopyUtils;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.UnicastProcessor;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Duration;
 import java.util.List;
 
 import static com.mmadu.registration.models.RegistrationFieldModifiedEvent.ALL_DOMAIN;
@@ -27,6 +25,7 @@ public class DomainRegistrationFormFieldsManager {
     private FormFieldsGenerator formFieldsGenerator;
     private UnicastProcessor<RegistrationFieldModifiedEvent> processor = UnicastProcessor.create();
     private FluxSink<RegistrationFieldModifiedEvent> sink = processor.serialize().sink();
+
     @Value("${mmadu.registration.templates}")
     public void setTemplatesFolder(String templatesFolder) {
         this.templatesFolder = templatesFolder;
@@ -47,8 +46,7 @@ public class DomainRegistrationFormFieldsManager {
         this.formFieldsGenerator = formFieldsGenerator;
     }
 
-    @PostConstruct
-    public void init() throws Exception {
+    public void startMonitoring() throws Exception {
         generateFormFieldsForAllDomains();
         subscribeToEvent();
     }
@@ -63,7 +61,7 @@ public class DomainRegistrationFormFieldsManager {
         processor
                 .timestamp()
                 .distinctUntilChanged(tupule -> tupule.getT2().getDomain() +
-                        tupule.getT1()/ (sampleTimeInSeconds * 1000))
+                        tupule.getT1() / (sampleTimeInSeconds * 1000))
                 .map(tupule -> tupule.getT2())
                 .subscribe(this::handleEvent);
     }

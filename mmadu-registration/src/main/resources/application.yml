@@ -19,7 +19,7 @@ mmadu:
       field-types:
         - id: 1
           name: text
-          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' required autofocus $inputField $inputStyle ></p>"
+          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' required autofocus $inputField $inputStyle $errorStyle ></p> $errorDisplay"
     field-config:
       fields:
         - id: 1

@@ -23,12 +23,12 @@ import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
 @RunWith(SpringRunner.class)
 @Import(MmaduServiceClientImpl.class)
 @TestPropertySource(properties = {
-        "mmadu.userService.url=http://localhost:8089",
+        "mmadu.userService.url=http://localhost:19999",
         "mmadu.domainKey=12345"
 })
 public class MmaduServiceClientImplTest {
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089);
+    public WireMockRule wireMockRule = new WireMockRule(19999);
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 

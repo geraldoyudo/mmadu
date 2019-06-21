@@ -9,10 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationContext;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -55,7 +52,7 @@ public class DomainRegistrationFormFieldsManagerTest {
 
     @Test
     public void onStartUpManagerShouldGenerateAllFormFieldFragments() throws Exception {
-        formFieldsManager.init();
+        formFieldsManager.startMonitoring();
         assertThat(FileCopyUtils.copyToString(new FileReader(new File(file, "register-1.html"))),
                 equalTo("fields-1"));
         assertThat(FileCopyUtils.copyToString(new FileReader(new File(file, "register-2.html"))),

@@ -33,4 +33,5 @@ public class Field {
     @NotEmpty
     private String label;
     private int order;
+    private String pattern;
 }

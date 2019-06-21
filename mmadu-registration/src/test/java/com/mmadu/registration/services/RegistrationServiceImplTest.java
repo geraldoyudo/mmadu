@@ -3,6 +3,8 @@ package com.mmadu.registration.services;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.exceptions.UserFormValidationException;
 import com.mmadu.registration.models.UserForm;
+import com.mmadu.registration.models.UserModel;
+import com.mmadu.registration.providers.UserFormConverter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,10 +12,13 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
@@ -23,7 +28,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = RegistrationServiceImpl.class)
+@ContextConfiguration(classes = {
+        RegistrationServiceImpl.class,
+        RegistrationServiceImplTest.Config.class
+})
 public class RegistrationServiceImplTest {
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
@@ -85,5 +93,19 @@ public class RegistrationServiceImplTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("user form cannot be null");
         registrationService.registerUser(DOMAIN_ID, null);
+    }
+
+    @TestConfiguration
+    public static class Config {
+        @Bean
+        public UserFormConverter userFormConverter() {
+            return (domainId, userForm) -> {
+                Map<String, Object> returnValue = new HashMap<>();
+                userForm.getProperties().entrySet()
+                        .stream()
+                        .forEach(entry -> returnValue.put(entry.getKey(), entry.getValue()));
+                return new UserModel(returnValue);
+            };
+        }
     }
 }

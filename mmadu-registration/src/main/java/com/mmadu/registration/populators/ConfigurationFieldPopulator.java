@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class ConfigurationFieldPopulator {
+public class ConfigurationFieldPopulator implements Populator {
     @Autowired
     private FieldRepository fieldRepository;
     @Autowired
     private FieldsConfigurationList fieldsConfigurationList;
 
+    @Override
     @PostConstruct
     public void populate() {
         if (fieldRepository.count() > 0) {

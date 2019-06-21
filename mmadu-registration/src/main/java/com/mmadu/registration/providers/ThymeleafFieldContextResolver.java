@@ -19,6 +19,13 @@ public class ThymeleafFieldContextResolver implements FieldContextResolver {
                 field.getId(), field.getProperty(), field.getId()));
         context.put("inputStyle", String.format("th:style=\"'%s'\"",
                 Optional.ofNullable(field.getStyle()).orElse("")));
+        context.put("errorStyle", String.format(
+                "th:class=\"${#fields.hasErrors('properties[var_%s]')}? fieldError\"", field.getId()));
+        context.put("errorDisplay", String.format("<p class=\"errorMessage\">" +
+                "<ul>" +
+                    "<li th:each=\"err : ${#fields.errors('properties[var_%s]')}\" th:text=\"${err}\" />" +
+                "</ul>" +
+                "</p>", field.getId()));
         return context;
     }
 }

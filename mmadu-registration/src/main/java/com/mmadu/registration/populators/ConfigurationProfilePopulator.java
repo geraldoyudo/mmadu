@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class ConfigurationProfilePopulator {
+public class ConfigurationProfilePopulator implements Populator {
     @Autowired
     private RegistrationProfileRepository registrationProfileRepository;
     @Autowired
     private ProfileConfigurationList profileConfigurationList;
 
+    @Override
     @PostConstruct
     public void populate() {
         if (registrationProfileRepository.count() > 0) {

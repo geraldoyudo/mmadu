@@ -1,0 +1,9 @@
+.fieldError {
+    border-color: red;
+}
+.errorMessage {
+    color: red;
+}
+.form-signin input {
+    width: 100%;
+}

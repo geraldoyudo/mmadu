@@ -14,7 +14,7 @@ public final class EntityUtils {
         return new FieldType(id, "text" + id, "<p> $field.label: <input type='text' $inputField $inputStyle/> />");
     }
 
-    public static  Field createField(String id, String fieldTypeId) {
+    public static Field createField(String id, String fieldTypeId) {
         Field field = new Field();
         field.setDomainId(DOMAIN_ID);
         field.setId(id);
@@ -26,7 +26,8 @@ public final class EntityUtils {
         field.setStyle("background: 00ff");
         return field;
     }
-    public static  Field createField(String id, String name, String fieldTypeId) {
+
+    public static Field createField(String id, String name, String fieldTypeId) {
         Field field = new Field();
         field.setDomainId(DOMAIN_ID);
         field.setId(id);
@@ -37,7 +38,7 @@ public final class EntityUtils {
         return field;
     }
 
-    public static  Field createField(String id, String name, String property,  String fieldTypeId) {
+    public static Field createField(String id, String name, String property, String fieldTypeId) {
         Field field = new Field();
         field.setDomainId(DOMAIN_ID);
         field.setId(id);
@@ -48,9 +49,17 @@ public final class EntityUtils {
         return field;
     }
 
-    public static RegistrationProfile createRegistrationProfile(String id){
+    public static RegistrationProfile createRegistrationProfile(String id) {
         RegistrationProfile profile = new RegistrationProfile();
         profile.setDomainId(DOMAIN_ID);
+        profile.setDefaultRedirectUrl("https://google.com");
+        profile.setId(id);
+        return profile;
+    }
+
+    public static RegistrationProfile createRegistrationProfile(String id, String domainId) {
+        RegistrationProfile profile = new RegistrationProfile();
+        profile.setDomainId(domainId);
         profile.setDefaultRedirectUrl("https://google.com");
         profile.setId(id);
         return profile;
