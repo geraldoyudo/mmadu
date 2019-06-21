@@ -1,0 +1,72 @@
+spring:
+  data:
+    rest:
+      base-path: /repo
+mmadu:
+  home: ${user.home}/mmadu
+  domainKey: 2222
+  userService:
+    url: http://localhost:10080
+  registration:
+    home: ${mmadu.home}/registration
+    templates: ${mmadu.registration.home}/templates
+    profile-config:
+      profiles:
+        - id: 1
+          domainId: 1
+          defaultRedirectUrl: https://google.com
+          headerOne: My App
+          headerThree: Register
+          instruction: Fill all the fields to register
+          submitButtonTitle: GO!!
+    field-type-config:
+      field-types:
+        - id: 1
+          name: text
+          type: text
+          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+        - id: 2
+          name: email
+          type: text
+          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='email' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+        - id: 3
+          name: password
+          type: text
+          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='password' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+    field-config:
+      fields:
+        - id: 1
+          name: email
+          domainId: 1
+          placeholder: Email
+          property: email
+          fieldTypeId: 2
+          label: Email
+          order: 1
+          required: true
+        - id: 2
+          name: full-name
+          domainId: 1
+          placeholder: Full Name
+          property: fullName
+          fieldTypeId: 1
+          label: Full Name
+          order: 2
+          required: true
+        - id: 3
+          name: username
+          domainId: 1
+          placeholder: Username
+          property: username
+          fieldTypeId: 1
+          label: Username
+          order: 3
+          required: true
+        - id: 4
+          name: password
+          domainId: 1
+          placeholder: Password
+          property: password
+          fieldTypeId: 3
+          label: Password
+          order: 4

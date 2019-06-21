@@ -1,0 +1,3 @@
+#foreach($field in $fields )
+    $field
+#end
