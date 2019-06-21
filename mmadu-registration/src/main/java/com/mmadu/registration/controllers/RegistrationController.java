@@ -3,7 +3,6 @@ package com.mmadu.registration.controllers;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.exceptions.DomainNotFoundException;
 import com.mmadu.registration.models.UserForm;
-import com.mmadu.registration.providers.DomainService;
 import com.mmadu.registration.providers.UserFormValidatorFactory;
 import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.services.RegistrationService;
@@ -27,8 +26,6 @@ public class RegistrationController {
     private RegistrationService registrationService;
     @Autowired
     private UserFormValidatorFactory userFormValidatorFactory;
-    @Autowired
-    private DomainService domainService;
 
     @InitBinder("user")
     public void initBinder(@PathVariable("domainId") String domainId, WebDataBinder binder) {
