@@ -19,4 +19,9 @@ public class RegistrationProfile {
     private String defaultRedirectUrl;
     private List<String> defaultRoles;
     private List<String> defaultAuthorities;
+    private String headerOne;
+    private String headerTwo;
+    private String headerThree;
+    private String instruction;
+    private String submitButtonTitle;
 }

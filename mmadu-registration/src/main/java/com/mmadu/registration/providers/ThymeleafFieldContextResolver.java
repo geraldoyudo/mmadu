@@ -24,6 +24,7 @@ public class ThymeleafFieldContextResolver implements FieldContextResolver {
         context.put("errorDisplay", String.format(
                     "<div class=\"errorMessage\" th:each=\"err : ${#fields.errors('properties[%s]')}\" th:text=\"${err}\" ></div>"
                 , field.getProperty()));
+        context.put("required", field.isRequired()? "required": "");
         return context;
     }
 }

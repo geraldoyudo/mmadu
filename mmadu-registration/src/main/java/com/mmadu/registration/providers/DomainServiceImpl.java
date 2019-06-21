@@ -23,6 +23,6 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     public boolean domainExists(String domain) {
-        return !registrationProfileRepository.findByDomainId(domain).isPresent();
+        return registrationProfileRepository.findByDomainId(domain).isPresent();
     }
 }
