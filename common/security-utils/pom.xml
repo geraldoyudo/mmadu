@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mmadu</groupId>
-    <artifactId>encryption-utils</artifactId>
+    <artifactId>security-utils</artifactId>
     <version>1.2.1-SNAPSHOT</version>
 
     <name>encryption-utils</name>
-    <description>Encryption components for mmadu project</description>
+    <description>Encryption components for mmadu services</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -17,7 +17,6 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
 
     <dependencies>
         <dependency>
@@ -29,13 +28,16 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.60</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
     </dependencies>
 </project>

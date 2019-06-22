@@ -4,7 +4,7 @@ package com.mmadu.service.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
-import com.mmadu.service.providers.AuthenticationService;
+import com.mmadu.service.services.AuthenticationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

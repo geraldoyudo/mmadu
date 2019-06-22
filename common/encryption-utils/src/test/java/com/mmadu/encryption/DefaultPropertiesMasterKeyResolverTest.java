@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = MmaduSecurityAutoConfiguration.MainConfiguration.class)
+@ContextConfiguration(classes = MmaduEncryptionAutoConfiguration.MainConfiguration.class)
 @TestPropertySource(properties = {
         "mmadu.security.master-key=11111111111111111111111111111111",
         "mmadu.domain.encrypt-keys=true"

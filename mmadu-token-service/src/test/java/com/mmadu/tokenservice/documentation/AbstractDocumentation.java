@@ -38,6 +38,8 @@ public abstract class AbstractDocumentation {
 
     @Autowired
     private WebApplicationContext context;
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     protected MockMvc mockMvc;
 
