@@ -25,6 +25,7 @@ public class DomainRegistrationFormFieldsManager {
     private FormFieldsGenerator formFieldsGenerator;
     private UnicastProcessor<RegistrationFieldModifiedEvent> processor = UnicastProcessor.create();
     private FluxSink<RegistrationFieldModifiedEvent> sink = processor.serialize().sink();
+    private File templateDirectory;
 
     @Value("${mmadu.registration.templates}")
     public void setTemplatesFolder(String templatesFolder) {
@@ -47,6 +48,10 @@ public class DomainRegistrationFormFieldsManager {
     }
 
     public void startMonitoring() throws Exception {
+        templateDirectory = new File(templatesFolder + "/domain");
+        if (!templateDirectory.exists()) {
+            templateDirectory.mkdirs();
+        }
         generateFormFieldsForAllDomains();
         subscribeToEvent();
     }
@@ -82,7 +87,7 @@ public class DomainRegistrationFormFieldsManager {
     private void generateFormFieldsForDomain(String domainId) {
         String formFields = formFieldsGenerator.generateFormFieldsForDomain(domainId);
         try {
-            File file = new File(templatesFolder + "/domain/register-" + domainId + ".html");
+            File file = new File(templateDirectory,  "register-" + domainId + ".html");
             FileCopyUtils.copy(formFields, new PrintWriter(new FileOutputStream(file)));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
