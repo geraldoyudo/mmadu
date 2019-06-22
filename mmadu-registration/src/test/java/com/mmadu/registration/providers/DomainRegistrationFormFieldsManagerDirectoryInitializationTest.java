@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DomainRegistrationFormFieldsManagerTest {
+public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
     public static final String USER_HOME = System.getProperty("user.home");
     @Value("${mmadu.registration.templates}")
     private String templatesFolder;
