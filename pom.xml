@@ -12,6 +12,7 @@
     <description>User Management and Engagement tools</description>
 
     <modules>
+        <module>common</module>
         <module>mmadu-user-service</module>
         <module>mmadu-registration</module>
     </modules>
