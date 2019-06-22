@@ -21,10 +21,13 @@ public class MmaduSecurityAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(DomainTokenChecker.class)
     public DomainTokenChecker domainTokenChecker(
-            @Value("${mmadu.tokenService.url}") String tokenServiceUrl) {
+            @Value("${mmadu.tokenService.url}") String tokenServiceUrl,
+            @Value("${mmadu.domainKey}") String adminKey
+            ) {
         RemoteAppTokenServiceDomainTokenChecker tokenChecker =
                 new RemoteAppTokenServiceDomainTokenChecker();
         tokenChecker.setTokenServiceUrl(tokenServiceUrl);
+        tokenChecker.setAdminKey(adminKey);
         return tokenChecker;
     }
 

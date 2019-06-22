@@ -2,6 +2,7 @@ package com.mmadu.tokenservice.controllers;
 
 import com.mmadu.tokenservice.entities.AppToken;
 import com.mmadu.tokenservice.models.CheckTokenRequest;
+import com.mmadu.tokenservice.models.CheckTokenResult;
 import com.mmadu.tokenservice.services.AppTokenService;
 import com.mmadu.tokenservice.services.DomainConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class TokenController {
     }
 
     @PostMapping("/checkDomainToken")
-    public boolean checkToken(@RequestBody CheckTokenRequest request) {
-        return domainConfigurationService.tokenMatchesDomain(request.getTokenId(), request.getDomainId());
+    public CheckTokenResult checkToken(@RequestBody CheckTokenRequest request) {
+        boolean matches = domainConfigurationService.tokenMatchesDomain(request.getTokenId(), request.getDomainId());
+        CheckTokenResult result = new CheckTokenResult();
+        result.setMatches(matches);
+        return result;
     }
 }
