@@ -1,16 +1,6 @@
 package com.mmadu.service.providers;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
+import com.mmadu.encryption.KeyCipher;
 import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppToken;
 import com.mmadu.service.exceptions.TokenNotFoundException;
@@ -26,6 +16,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @Import({
@@ -51,7 +46,7 @@ public class AppTokenServiceImplTest {
     private AppTokenService appTokenService;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         appTokenRepository.deleteAll();
         doAnswer(invocationOnMock -> invocationOnMock.getArgument(0)).when(keyCipher).encrypt(anyString());
         doAnswer(invocationOnMock -> invocationOnMock.getArgument(0)).when(keyCipher).decrypt(anyString());
@@ -116,7 +111,7 @@ public class AppTokenServiceImplTest {
     }
 
     @Test
-    public void givenTokenIdExistsAndBlankTokenValueWhenMatchThenReturnTrue(){
+    public void givenTokenIdExistsAndBlankTokenValueWhenMatchThenReturnTrue() {
         when(tokenGenerator.generateToken()).thenReturn("");
         AppToken token = appTokenService.generateToken();
         assertThat(appTokenService.tokenMatches(token.getId(), "any-abritrary-value"), equalTo(true));

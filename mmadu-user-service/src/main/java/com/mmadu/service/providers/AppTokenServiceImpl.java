@@ -6,6 +6,7 @@ import com.mmadu.service.repositories.AppTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import com.mmadu.encryption.KeyCipher;
 
 @Component
 public class AppTokenServiceImpl implements AppTokenService {
