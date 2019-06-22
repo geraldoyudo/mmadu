@@ -52,6 +52,6 @@ matrix:
     install: mvn clean
     script:
     - mvn package --settings ./maven-settings-travis.xml
-    - mvn docker:build -DpushImageTag --settings ./maven-settings-travis.xml
+    - mvn docker:build -pl mmadu-user-service,mmadu-registration -DpushImageTag --settings ./maven-settings-travis.xml
     - cd ./docker/heroku-test/user-service && heroku container:login && heroku container:push web --app mmadu-user-service && heroku container:release web --app mmadu-user-service && cd ../../../
-    - cd ./docker/heroku-test/user-registration && heroku container:login && heroku container:push web --app mmadu-user-registration && heroku container:release web --app mmadu-user-registration && cd ../../../
+    - cd ./docker/heroku-test/registration && heroku container:login && heroku container:push web --app mmadu-registration && heroku container:release web --app mmadu-registration && cd ../../../
