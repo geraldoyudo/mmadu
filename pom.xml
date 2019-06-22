@@ -13,6 +13,7 @@
 
     <modules>
         <module>common</module>
+        <module>mmadu-token-service</module>
         <module>mmadu-user-service</module>
         <module>mmadu-registration</module>
     </modules>

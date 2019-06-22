@@ -2,6 +2,8 @@ spring:
   data:
     rest:
       base-path: /repo
+  main:
+    allow-bean-definition-overriding: true
 mmadu:
   home: ${user.home}/mmadu
   domainKey: 2222

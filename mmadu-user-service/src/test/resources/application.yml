@@ -25,3 +25,5 @@ spring:
     mongodb:
       database: mmadu_test
       host: localhost
+  main:
+    allow-bean-definition-overriding: true
