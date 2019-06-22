@@ -1,5 +1,6 @@
 package com.mmadu.tokenservice.controllers;
 
+import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
 import com.mmadu.tokenservice.models.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,12 @@ public class GeneralExceptionHandler {
         return new ErrorResponse("245", ex.getMessage());
     }
 
+    @ExceptionHandler(TokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleTokenNotFoundException() {
+        return new ErrorResponse("250", "token not found");
+    }
+
     @ExceptionHandler({
             Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -42,4 +49,5 @@ public class GeneralExceptionHandler {
         log.error("Unexpected error: {}", ex.getMessage(), ex);
         return new ErrorResponse("300", "Unexpected error");
     }
+
 }
