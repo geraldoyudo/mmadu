@@ -126,8 +126,6 @@ public class RegistrationControllerTest {
                 model().attribute("user", any(UserForm.class))
         ).andExpect(
                 model().attribute("domainId", equalTo(DOMAIN_ID))
-        ).andExpect(
-                model().attribute("errors", notNullValue())
         );
 
     }

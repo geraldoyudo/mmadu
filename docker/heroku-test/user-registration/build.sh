@@ -1,0 +1,1 @@
+docker build -t geraldoyudo/mmadu-registration-heroku-test:1.2.1-SNAPSHOT .

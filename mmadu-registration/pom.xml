@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mmadu</groupId>
     <artifactId>mmadu-registration</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
     <name>mmadu-registration</name>
     <description>User Registration Service</description>
 
@@ -83,6 +83,30 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>geraldoyudo/${project.name}</imageName>
+                    <baseImage>openjdk:8u212-jdk-alpine3.9</baseImage>
+                    <entryPoint>["java", "-jar", "./${project.build.finalName}.jar"]</entryPoint>
+                    <exposes>
+                        <expose>8080</expose>
+                    </exposes>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                    <serverId>docker-hub</serverId>
+                </configuration>
             </plugin>
         </plugins>
     </build>

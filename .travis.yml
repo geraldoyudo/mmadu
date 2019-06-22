@@ -4,6 +4,7 @@ env:
 matrix:
   include:
   - language: ruby
+    name: "Build Documentation"
     dist: trusty
     rvm:
     - 2.2.0
@@ -12,26 +13,27 @@ matrix:
     script: bundle exec rake deploy
     if: branch = master
   - language: java
+    name: "Run Tests"
     jdk:
     - oraclejdk8
     dist: trusty
     before_install:
-    - cd mmadu-user-service
-    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
-    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
+    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ./maven-settings-travis.xml
+    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ./maven-settings-travis.xml
     install: mvn clean
-    script: mvn package --settings ../maven-settings-travis.xml
+    script: mvn package --settings ./maven-settings-travis.xml
     if: branch != master
     deploy:
     - provider: releases
       api_key: "$GITHUB_OAUTH_TOKEN"
       file_glob: true
       file:
-      - target/mmadu-user-service-*
+      - mmadu-*/target/mmadu-*
       skip_cleanup: true
       on:
         tags: true
   - language: java
+    name: "Package Releases"
     jdk:
     - oraclejdk8
     if: branch = master
@@ -41,16 +43,15 @@ matrix:
     - docker
     before_install:
     - curl https://cli-assets.heroku.com/install.sh | sh
-    - cd mmadu-user-service
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - cat ../heroku-auth.txt >> ~/.netrc
+    - cat ./heroku-auth.txt >> ~/.netrc
     - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
     - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
-    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ../maven-settings-travis.xml
-    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ../maven-settings-travis.xml
+    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ./maven-settings-travis.xml
+    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ./maven-settings-travis.xml
     install: mvn clean
     script:
-    - mvn package -DskipTests --settings ../maven-settings-travis.xml
-    - mvn docker:build -DpushImageTag --settings ../maven-settings-travis.xml
-    - cd ../docker/heroku-test && heroku container:login && heroku container:push
-      web --app mmadu-user-service && heroku container:release web --app mmadu-user-service
+    - mvn package --settings ./maven-settings-travis.xml
+    - mvn docker:build -pl mmadu-user-service,mmadu-registration -DpushImageTag --settings ./maven-settings-travis.xml
+    - cd ./docker/heroku-test/user-service && heroku container:login && heroku container:push web --app mmadu-user-service && heroku container:release web --app mmadu-user-service && cd ../../../
+    - cd ./docker/heroku-test/registration && heroku container:login && heroku container:push web --app mmadu-registration && heroku container:release web --app mmadu-registration && cd ../../../

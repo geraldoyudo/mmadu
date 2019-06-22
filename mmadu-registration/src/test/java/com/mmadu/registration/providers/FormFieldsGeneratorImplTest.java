@@ -52,7 +52,7 @@ public class FormFieldsGeneratorImplTest {
 
     @Test
     public void generateFormFieldsForDomain() {
-        assertThat(formFieldsGenerator.generateFormFieldsForDomain(DOMAIN_ID),
-                equalTo("    <markup-name></markup-name>\r\n    <markup-class></markup-class>\r\n"));
+        assertThat(formFieldsGenerator.generateFormFieldsForDomain(DOMAIN_ID).replaceAll("\\s", ""),
+                equalTo("<markup-name></markup-name><markup-class></markup-class>"));
     }
 }

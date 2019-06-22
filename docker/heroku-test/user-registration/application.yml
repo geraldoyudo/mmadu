@@ -1,19 +1,15 @@
-spring:
-  data:
-    rest:
-      base-path: /repo
 mmadu:
   home: ${user.home}/mmadu
   domainKey: 2222
   userService:
-    url: http://localhost:10080
+    url: https://mmadu-user-service.herokuapp.com
   registration:
     home: ${mmadu.home}/registration
     templates: ${mmadu.registration.home}/templates
     profile-config:
       profiles:
         - id: 1
-          domainId: 0
+          domainId: 1
           defaultRedirectUrl: https://google.com
           headerOne: My App
           headerThree: Register
@@ -37,7 +33,7 @@ mmadu:
       fields:
         - id: 1
           name: email
-          domainId: 0
+          domainId: 1
           placeholder: Email
           property: email
           fieldTypeId: 2
@@ -46,7 +42,7 @@ mmadu:
           required: true
         - id: 2
           name: full-name
-          domainId: 0
+          domainId: 1
           placeholder: Full Name
           property: fullName
           fieldTypeId: 1
@@ -55,7 +51,7 @@ mmadu:
           required: true
         - id: 3
           name: username
-          domainId: 0
+          domainId: 1
           placeholder: Username
           property: username
           fieldTypeId: 1
@@ -64,9 +60,15 @@ mmadu:
           required: true
         - id: 4
           name: password
-          domainId: 0
+          domainId: 1
           placeholder: Password
           property: password
           fieldTypeId: 3
           label: Password
           order: 4
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://primedev:DWHti67pXtURNik@primedev-mongodb-orwwq.mongodb.net/mmadu_registration_db?retryWrites=true
+server:
+  port: ${PORT:8080}
