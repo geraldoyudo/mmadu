@@ -1,9 +1,9 @@
-package com.mmadu.service.providers;
-
-import static org.junit.Assert.*;
+package com.mmadu.tokenservice.providers;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class DefaultTokenGeneratorTest {
     private DefaultTokenGenerator tokenGenerator;

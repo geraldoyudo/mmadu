@@ -1,10 +1,10 @@
-package com.mmadu.service.providers;
+package com.mmadu.tokenservice.services;
 
 import com.mmadu.encryption.KeyCipher;
-import com.mmadu.service.config.DatabaseConfig;
-import com.mmadu.service.entities.AppToken;
-import com.mmadu.service.exceptions.TokenNotFoundException;
-import com.mmadu.service.repositories.AppTokenRepository;
+import com.mmadu.tokenservice.entities.AppToken;
+import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
+import com.mmadu.tokenservice.providers.TokenGenerator;
+import com.mmadu.tokenservice.repositories.AppTokenRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,8 +24,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @Import({
-        AppTokenServiceImpl.class,
-        DatabaseConfig.class
+        AppTokenServiceImpl.class
 })
 @DataMongoTest
 public class AppTokenServiceImplTest {
