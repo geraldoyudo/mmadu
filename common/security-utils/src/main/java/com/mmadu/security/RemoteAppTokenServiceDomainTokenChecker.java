@@ -23,7 +23,7 @@ public class RemoteAppTokenServiceDomainTokenChecker implements DomainTokenCheck
     public boolean checkIfTokenMatchesDomainToken(String token, String domainId) {
         CheckTokenRequest request = new CheckTokenRequest();
         request.setDomainId(domainId);
-        request.setTokenId(token);
+        request.setToken(token);
         HttpHeaders headers = new HttpHeaders();
         headers.set("domain-auth-token", adminKey);
         HttpEntity<CheckTokenRequest> entity = new HttpEntity<>(request, headers);

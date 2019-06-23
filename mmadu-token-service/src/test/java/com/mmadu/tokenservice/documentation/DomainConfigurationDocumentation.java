@@ -20,7 +20,7 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
 
     private static final String DOMAIN_CONFIG_ID = "12333";
     private static final String DOMAIN_ID_FOR_CONFIG = "1111111111";
-    private static final String USER_DOMAIN_ID = "0";
+    private static final String USER_DOMAIN_ID = "1";
 
     @Autowired
     private DomainConfigurationRepository domainConfigurationRepository;
@@ -87,9 +87,10 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
 
     @Test
     public void getDomainConfigurationByDomainID() throws Exception {
+        createAndSaveDomainConfiguration();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/search/findByDomainId")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
-                .param("domainId", USER_DOMAIN_ID)
+                .param("domainId", DOMAIN_ID_FOR_CONFIG)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, domainConfigurationResponseFields(),

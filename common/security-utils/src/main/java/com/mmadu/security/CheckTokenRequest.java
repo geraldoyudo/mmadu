@@ -2,7 +2,7 @@ package com.mmadu.security;
 
 public class CheckTokenRequest {
     private String domainId;
-    private String tokenId;
+    private String token;
 
     public String getDomainId() {
         return domainId;
@@ -12,11 +12,11 @@ public class CheckTokenRequest {
         this.domainId = domainId;
     }
 
-    public String getTokenId() {
-        return tokenId;
+    public String getToken() {
+        return token;
     }
 
-    public void setTokenId(String tokenId) {
-        this.tokenId = tokenId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

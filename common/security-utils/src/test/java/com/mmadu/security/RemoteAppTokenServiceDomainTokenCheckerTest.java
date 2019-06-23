@@ -35,7 +35,7 @@ public class RemoteAppTokenServiceDomainTokenCheckerTest {
     public void givenTokenMatchesThenReturnTrue() {
         stubFor(post(urlPathEqualTo("/token/checkDomainToken"))
                 .withRequestBody(matchingJsonPath(
-                        "$.tokenId", WireMock.equalTo(TOKEN_ID))
+                        "$.token", WireMock.equalTo(TOKEN_ID))
                 )
                 .withRequestBody(matchingJsonPath(
                         "$.domainId", WireMock.equalTo(DOMAIN_ID))
@@ -53,7 +53,7 @@ public class RemoteAppTokenServiceDomainTokenCheckerTest {
     public void givenTokenNotMatchesThenReturnFalse() {
         stubFor(post(urlPathEqualTo("/token/checkDomainToken"))
                 .withRequestBody(matchingJsonPath(
-                        "$.tokenId", WireMock.equalTo(TOKEN_ID))
+                        "$.token", WireMock.equalTo(TOKEN_ID))
                 )
                 .withRequestBody(matchingJsonPath(
                         "$.domainId", WireMock.equalTo(DOMAIN_ID))
