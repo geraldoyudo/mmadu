@@ -23,9 +23,9 @@ public class MmaduEncryptionAutoConfiguration {
     public static class MainConfiguration {
 
         @Bean
+        @ConditionalOnMissingBean(MasterKeyGenerator.class)
         public MasterKeyGenerator masterKeyGenerator(
-                @Value("${mmadu.security.encryption-seed:0}") int encryptionSeed
-        ) {
+                @Value("${mmadu.security.encryption-seed:0}") int encryptionSeed) {
             ThirtyTwoBitHexRandomMasterKeyGenerator generator = new ThirtyTwoBitHexRandomMasterKeyGenerator();
             generator.setSeed(encryptionSeed);
             return generator;
@@ -43,6 +43,7 @@ public class MmaduEncryptionAutoConfiguration {
         }
 
         @Bean
+        @ConditionalOnMissingBean(KeyCipher.class)
         public KeyCipher masterKeyCBCKeyCipher(MasterKeyResolver masterKeyResolver) {
             MasterKeyCBCKeyCipher cipher = new MasterKeyCBCKeyCipher();
             cipher.setMasterKeyResolver(masterKeyResolver);
