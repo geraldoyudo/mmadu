@@ -3,10 +3,11 @@ package com.mmadu.service.documentation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mmadu.security.DomainTokenChecker;
+import com.mmadu.security.TokenAuthenticationFilter;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -28,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -63,11 +66,15 @@ public abstract class AbstractDocumentation {
     protected AppUserRepository appUserRepository;
     @Autowired
     protected AppDomainRepository appDomainRepository;
+    @MockBean
+    protected DomainTokenChecker tokenChecker;
 
     protected MockMvc mockMvc;
 
     @Before
     public void initializeTest() {
+        doReturn(true).when(tokenChecker).checkIfTokenMatchesDomainToken(DOMAIN_TOKEN, USER_DOMAIN_ID);
+        doReturn(true).when(tokenChecker).checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(this.restDocumentation))
@@ -127,9 +134,9 @@ public abstract class AbstractDocumentation {
     }
 
     @Configuration
-    public static class SerializationConfig{
+    public static class SerializationConfig {
         @Bean
-        public ObjectMapper objectMapper(){
+        public ObjectMapper objectMapper() {
             return new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         }
     }

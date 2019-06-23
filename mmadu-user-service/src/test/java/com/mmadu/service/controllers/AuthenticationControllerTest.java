@@ -42,8 +42,7 @@ public class AuthenticationControllerTest {
 
         mockMvc.perform(post("/domains/{domainId}/authenticate", DOMAIN_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(
-                        AuthenticateRequest.builder().password("password").username("username").build())))
+                .content(mapper.writeValueAsString(new AuthenticateRequest("username", "password"))))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.status").value(AUTHENTICATED.name()));
     }
 }

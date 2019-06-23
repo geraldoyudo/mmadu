@@ -1,14 +1,14 @@
 package com.mmadu.service.config;
 
 import com.mmadu.security.EnabledWebSecurityConfiguration;
+import com.mmadu.security.MmaduSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @EnabledWebSecurityConfiguration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig implements MmaduSecurityConfigurer {
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()

@@ -1,15 +1,15 @@
 package com.mmadu.tokenservice.models;
 
 public class CheckTokenRequest {
-    private String tokenId;
+    private String token;
     private String domainId;
 
-    public String getTokenId() {
-        return tokenId;
+    public String getToken() {
+        return token;
     }
 
-    public void setTokenId(String tokenId) {
-        this.tokenId = tokenId;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getDomainId() {

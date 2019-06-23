@@ -32,8 +32,7 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
         this.mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authenticate", USER_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
             .contentType(MediaType.APPLICATION_JSON).content(objectToString(
-                                AuthenticateRequest.builder().username(USERNAME).password(USER_PASSWORD)
-                                .build()
+                                new AuthenticateRequest(USERNAME, USER_PASSWORD)
                         )
                 ))
                 .andExpect(status().isOk())

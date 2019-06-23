@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class MmaduSecurityAutoConfiguration {
@@ -31,17 +33,22 @@ public class MmaduSecurityAutoConfiguration {
         return tokenChecker;
     }
 
-    @Configuration
     @ConditionalOnProperty(name = "mmadu.domain.api-security-enabled", havingValue = "true", matchIfMissing = true)
-    public static class MainConfiguration extends WebSecurityConfigurerAdapter {
+    public static class MainSecurityConfiguration extends WebSecurityConfigurerAdapter {
         private DomainTokenChecker domainTokenChecker;
+        private List<MmaduSecurityConfigurer> securityConfigurers;
 
-        public MainConfiguration(DomainTokenChecker domainTokenChecker) {
+        public MainSecurityConfiguration(DomainTokenChecker domainTokenChecker,
+                                         List<MmaduSecurityConfigurer> securityConfigurers) {
             this.domainTokenChecker = domainTokenChecker;
+            this.securityConfigurers = securityConfigurers;
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            for(MmaduSecurityConfigurer configurer: securityConfigurers){
+                configurer.configure(http);
+            }
             http
                     .addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authenticationProvider(tokenAuthenticationProvider());

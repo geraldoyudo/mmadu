@@ -25,31 +25,6 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
         return domainTokenChecker.checkIfTokenMatchesDomainToken(token, domainId);
     }
 
-    /*
-    private boolean checkIfTokenMatchesDomainToken(String token, String domainId) {
-        if (appTokenService.tokenMatches(ADMIN_TOKEN_ID, token)) {
-            return true;
-        }
-        if (domainId.equals("admin")) {
-            return false;
-        }
-        try {
-            DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain(domainId);
-            String tokenId = configuration.getAuthenticationApiToken();
-            if (StringUtils.isEmpty(tokenId)) {
-                configuration = domainConfigurationService.getConfigurationForDomain(DomainConfigurationService.GLOBAL_DOMAIN_CONFIG);
-                tokenId = configuration.getAuthenticationApiToken();
-            }
-            return appTokenService.tokenMatches(tokenId, token);
-        } catch (Exception ex) {
-            logger.warn("An error occurred while evaluating permission: {}: {}. Rejecting permission.",
-                    ex.getClass().getName(), ex.getMessage());
-            return false;
-        }
-    }
-
-     */
-
     @Override
     public boolean hasPermission(Authentication authentication, Serializable serializable, String s, Object o) {
         return true;

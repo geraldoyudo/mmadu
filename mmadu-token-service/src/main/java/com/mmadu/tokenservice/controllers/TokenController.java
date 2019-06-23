@@ -33,7 +33,7 @@ public class TokenController {
 
     @PostMapping("/checkDomainToken")
     public CheckTokenResult checkToken(@RequestBody CheckTokenRequest request) {
-        boolean matches = domainConfigurationService.tokenMatchesDomain(request.getTokenId(), request.getDomainId());
+        boolean matches = domainConfigurationService.tokenMatchesDomain(request.getToken(), request.getDomainId());
         CheckTokenResult result = new CheckTokenResult();
         result.setMatches(matches);
         return result;

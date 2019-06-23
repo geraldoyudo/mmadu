@@ -17,7 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.ContentResultMatchers;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -107,7 +106,7 @@ public class TokenControllerTest {
         doReturn(true).when(domainConfigurationService).tokenMatchesDomain(tokenId, domainId);
         CheckTokenRequest request = new CheckTokenRequest();
         request.setDomainId(domainId);
-        request.setTokenId(tokenId);
+        request.setToken(tokenId);
         mockMvc.perform(
                 post("/token/checkDomainToken")
                 .content(objectMapper.writeValueAsString(request))
