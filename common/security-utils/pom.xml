@@ -8,7 +8,7 @@
     <artifactId>security-utils</artifactId>
     <version>1.2.1-SNAPSHOT</version>
 
-    <name>encryption-utils</name>
+    <name>security-utils</name>
     <description>Encryption components for mmadu services</description>
 
     <parent>
