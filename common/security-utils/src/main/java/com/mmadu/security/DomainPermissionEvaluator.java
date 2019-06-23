@@ -13,7 +13,6 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
 
     private DomainTokenChecker domainTokenChecker;
 
-
     public void setDomainTokenChecker(DomainTokenChecker domainTokenChecker) {
         this.domainTokenChecker = domainTokenChecker;
     }
@@ -22,6 +21,7 @@ public class DomainPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Object o, Object permissionObject) {
         String token = Optional.ofNullable((String) authentication.getPrincipal()).orElse("");
         String domainId = (String) permissionObject;
+        logger.trace("user token: {}, domain id: {}", token, domainId);
         return domainTokenChecker.checkIfTokenMatchesDomainToken(token, domainId);
     }
 

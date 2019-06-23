@@ -25,7 +25,7 @@ public class MmaduSecurityAutoConfiguration {
     public DomainTokenChecker domainTokenChecker(
             @Value("${mmadu.tokenService.url}") String tokenServiceUrl,
             @Value("${mmadu.domainKey}") String adminKey
-            ) {
+    ) {
         RemoteAppTokenServiceDomainTokenChecker tokenChecker =
                 new RemoteAppTokenServiceDomainTokenChecker();
         tokenChecker.setTokenServiceUrl(tokenServiceUrl);
@@ -46,7 +46,7 @@ public class MmaduSecurityAutoConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            for(MmaduSecurityConfigurer configurer: securityConfigurers){
+            for (MmaduSecurityConfigurer configurer : securityConfigurers) {
                 configurer.configure(http);
             }
             http

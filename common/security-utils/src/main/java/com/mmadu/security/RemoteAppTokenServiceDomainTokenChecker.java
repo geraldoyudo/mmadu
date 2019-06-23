@@ -21,17 +21,27 @@ public class RemoteAppTokenServiceDomainTokenChecker implements DomainTokenCheck
 
     @Override
     public boolean checkIfTokenMatchesDomainToken(String token, String domainId) {
-        CheckTokenRequest request = new CheckTokenRequest();
-        request.setDomainId(domainId);
-        request.setToken(token);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("domain-auth-token", adminKey);
+        CheckTokenRequest request = createTokenRequest(token, domainId);
+        HttpHeaders headers = getHeaders();
         HttpEntity<CheckTokenRequest> entity = new HttpEntity<>(request, headers);
         return restTemplate
                 .exchange(UriComponentsBuilder.fromHttpUrl(tokenServiceUrl)
                                 .path("/token/checkDomainToken")
                                 .build().toUriString(),
                         HttpMethod.POST, entity, CheckTokenResponse.class).getBody().isMatches();
+    }
+
+    private CheckTokenRequest createTokenRequest(String token, String domainId) {
+        CheckTokenRequest request = new CheckTokenRequest();
+        request.setDomainId(domainId);
+        request.setToken(token);
+        return request;
+    }
+
+    private HttpHeaders getHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("domain-auth-token", adminKey);
+        return headers;
     }
 
     private static class CheckTokenResponse {
@@ -43,6 +53,27 @@ public class RemoteAppTokenServiceDomainTokenChecker implements DomainTokenCheck
 
         public void setMatches(boolean matches) {
             this.matches = matches;
+        }
+    }
+
+    private static class CheckTokenRequest {
+        private String domainId;
+        private String token;
+
+        public String getDomainId() {
+            return domainId;
+        }
+
+        public void setDomainId(String domainId) {
+            this.domainId = domainId;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
         }
     }
 }

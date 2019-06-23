@@ -27,7 +27,7 @@ public class DomainPermissionEvaluatorTest {
     private final DomainPermissionEvaluator domainPermissionEvaluator = new DomainPermissionEvaluator();
 
     @Test
-    public void givenAdminTokenAndAdminPermissionWhenHasAdminPermissionReturnTrue() {
+    public void givenAdminTokenAndAdminPermissionWhenCheckTokenThenReturnTrue() {
         doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(TOKEN, "admin");
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
@@ -35,7 +35,7 @@ public class DomainPermissionEvaluatorTest {
     }
 
     @Test
-    public void givenNonAdminTokenAndAdminPermissionWhenHasAdminPermissionReturnFalse() {
+    public void givenNonAdminTokenAndAdminPermissionCheckTokenReturnFalse() {
         doReturn(false).when(domainTokenChecker).checkIfTokenMatchesDomainToken(TOKEN, "admin");
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
@@ -58,7 +58,7 @@ public class DomainPermissionEvaluatorTest {
     }
 
     @Test
-    public void givenNullTokenWhenHasAdminPermissionThenReturnFalse() {
+    public void givenNullTokenCheckTokenThenReturnFalse() {
         doReturn(null).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
                 equalTo(false));

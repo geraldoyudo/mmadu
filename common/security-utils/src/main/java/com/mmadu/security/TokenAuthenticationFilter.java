@@ -12,7 +12,7 @@ public class TokenAuthenticationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        // do nothing
     }
 
     @Override
@@ -21,15 +21,17 @@ public class TokenAuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String token = request.getHeader("domain-auth-token");
         if (!StringUtils.isEmpty(token)) {
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(token, ""));
+            SecurityContextHolder.getContext()
+                    .setAuthentication(new UsernamePasswordAuthenticationToken(token, ""));
         } else {
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("", ""));
+            SecurityContextHolder.getContext()
+                    .setAuthentication(new UsernamePasswordAuthenticationToken("", ""));
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
-
+        // do nothing
     }
 }
