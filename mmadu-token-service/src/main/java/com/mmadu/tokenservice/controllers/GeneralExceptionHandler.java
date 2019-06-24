@@ -49,5 +49,4 @@ public class GeneralExceptionHandler {
         log.error("Unexpected error: {}", ex.getMessage(), ex);
         return new ErrorResponse("300", "Unexpected error");
     }
-
 }

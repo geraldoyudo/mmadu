@@ -33,7 +33,8 @@ public class DomainConfigurationServiceImplTest {
     private DomainConfiguration domain1Configuration;
 
     @Captor
-    private final ArgumentCaptor<DomainConfiguration> appDomainConfigurationCaptor = ArgumentCaptor.forClass(DomainConfiguration.class);
+    private final ArgumentCaptor<DomainConfiguration> appDomainConfigurationCaptor =
+            ArgumentCaptor.forClass(DomainConfiguration.class);
 
     @Before
     public void setUp() {
@@ -77,7 +78,8 @@ public class DomainConfigurationServiceImplTest {
     public void givenNoGlobalDomainExistsWhenInitShouldCreateGlobalConfig() {
         domainConfigurationService.init();
 
-        verify(domainConfigurationRepository, times(1)).save(appDomainConfigurationCaptor.capture());
+        verify(domainConfigurationRepository, times(1))
+                .save(appDomainConfigurationCaptor.capture());
         DomainConfiguration domainConfiguration = appDomainConfigurationCaptor.getValue();
         assertThat(domainConfiguration.getId(), equalTo(GLOBAL_DOMAIN_CONFIG));
         assertThat(domainConfiguration.getDomainId(), isEmptyString());

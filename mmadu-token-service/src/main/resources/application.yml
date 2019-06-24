@@ -13,8 +13,8 @@ mmadu:
         value: 1234
       - id: admin-token
         value: 2222
-  domain-config:
-    domains:
+  domain-token-config:
+    domain-tokens:
       - id: 1
         domainId: 0
         authenticateApiToken: 0

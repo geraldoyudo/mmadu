@@ -2,7 +2,6 @@ package com.mmadu.tokenservice.services;
 
 import com.mmadu.tokenservice.entities.DomainConfiguration;
 import com.mmadu.tokenservice.exceptions.DomainConfigurationNotFoundException;
-import com.mmadu.tokenservice.repositories.AppTokenRepository;
 import com.mmadu.tokenservice.repositories.DomainConfigurationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

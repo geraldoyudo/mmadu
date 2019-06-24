@@ -30,7 +30,8 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     private ResponseFieldsSnippet tokenResponseFields() {
         return responseFields(
                 fieldWithPath("id").description("The token ID"),
-                fieldWithPath("value").description("The token value (Encrypted under master key if encryption is enabled)")
+                fieldWithPath("value")
+                        .description("The token value (Encrypted under master key if encryption is enabled)")
         );
     }
 

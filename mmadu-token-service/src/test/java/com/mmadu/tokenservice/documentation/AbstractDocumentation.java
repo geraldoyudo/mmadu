@@ -50,7 +50,8 @@ public abstract class AbstractDocumentation {
 
     @Before
     public void initializeTest() {
-        doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
+        doReturn(true).when(domainTokenChecker)
+                .checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(this.restDocumentation))

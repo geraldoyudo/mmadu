@@ -36,7 +36,8 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         fieldWithPath("id").description("The domain configuration ID"),
                         fieldWithPath("domainId").description("The domain ID"),
-                        fieldWithPath("authenticationApiToken").description("The api token ID used to secure this domain")
+                        fieldWithPath("authenticationApiToken")
+                                .description("The api token ID used to secure this domain")
                 )));
     }
 
@@ -51,7 +52,8 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
     @Test
     public void getDomainConfigurationByID() throws Exception {
         createAndSaveDomainConfiguration();
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/{domainConfigurationId}", DOMAIN_CONFIG_ID)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/{domainConfigurationId}",
+                DOMAIN_CONFIG_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
@@ -78,7 +80,8 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
 
     @Test
     public void getDefaultDomainConfiguration() throws Exception {
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/{domainConfigurationId}", "0")
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domainConfigurations/{domainConfigurationId}",
+                "0")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
@@ -104,11 +107,12 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
         createAndSaveDomainConfiguration();
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("authenticationApiToken", "2");
-        mockMvc.perform(RestDocumentationRequestBuilders.patch("/domainConfigurations/{domainConfigurationId}",
-                DOMAIN_CONFIG_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
-                .content(objectNode.toString())
-                .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/domainConfigurations/{domainConfigurationId}",
+                        DOMAIN_CONFIG_ID)
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .content(objectNode.toString())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
                         parameterFields()));
@@ -117,9 +121,10 @@ public class DomainConfigurationDocumentation extends AbstractDocumentation {
     @Test
     public void deleteDomainConfiguration() throws Exception {
         createAndSaveDomainConfiguration();
-        mockMvc.perform(RestDocumentationRequestBuilders.delete("/domainConfigurations/{domainConfigurationId}",
-                DOMAIN_CONFIG_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.delete("/domainConfigurations/{domainConfigurationId}",
+                        DOMAIN_CONFIG_ID)
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME, parameterFields()));

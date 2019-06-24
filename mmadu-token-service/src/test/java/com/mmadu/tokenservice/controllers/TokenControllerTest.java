@@ -24,7 +24,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = TokenController.class, secure = false)
@@ -40,6 +41,7 @@ public class TokenControllerTest {
     @MockBean
     private DomainConfigurationService domainConfigurationService;
     private ObjectMapper objectMapper = new ObjectMapper();
+
     @Before
     public void setUp() {
         doThrow(new TokenNotFoundException()).when(tokenService).getToken("invalid-id");
@@ -109,8 +111,8 @@ public class TokenControllerTest {
         request.setToken(tokenId);
         mockMvc.perform(
                 post("/token/checkDomainToken")
-                .content(objectMapper.writeValueAsString(request))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("matches", equalTo(true)));
