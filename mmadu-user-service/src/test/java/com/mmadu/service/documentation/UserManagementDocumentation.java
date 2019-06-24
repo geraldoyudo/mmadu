@@ -1,10 +1,10 @@
 package com.mmadu.service.documentation;
 
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.model.PatchOperation;
-import com.mmadu.service.model.UserPatch;
-import com.mmadu.service.model.UserUpdateRequest;
-import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.PatchOperation;
+import com.mmadu.service.models.UserPatch;
+import com.mmadu.service.models.UserUpdateRequest;
+import com.mmadu.service.models.UserView;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserManagementDocumentation extends AbstractDocumentation {
 
     @Before
-    public void setUp(){
+    public void setUp() {
         appUserRepository.deleteAll();
     }
 
@@ -44,7 +44,9 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
                         fieldWithPath("username").description("The user's username (must be unigue)"),
-                        fieldWithPath("id").description("The user's id (unique identifier used to reference user in your application)"),
+                        fieldWithPath("id")
+                                .description("The user's id " +
+                                        "(unique identifier used to reference user in your application)"),
                         fieldWithPath("password").description("The user's password"),
                         fieldWithPath("roles").description("The user's assigned roles"),
                         fieldWithPath("authorities").description("The user's granted authorities")
@@ -76,8 +78,10 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("content.[].id").description("The user's unique identification"),
                 fieldWithPath("content.[].username").description("Username of the user"),
                 fieldWithPath("content.[].password").description("password of the user"),
-                fieldWithPath("content.[].roles").type("string list").description("List of roles assigned to this user"),
-                fieldWithPath("content.[].authorities").type("string list").description("List of authorities given to ths user")
+                fieldWithPath("content.[].roles").type("string list")
+                        .description("List of roles assigned to this user"),
+                fieldWithPath("content.[].authorities").type("string list")
+                        .description("List of authorities given to ths user")
         );
     }
 
@@ -148,7 +152,8 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     public void gettingAUserByUsernameAndDomain() throws Exception {
         createAUserAndSave();
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load", USER_DOMAIN_ID)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load",
+                USER_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .param("username", USERNAME))
                 .andExpect(status().isOk())
@@ -166,7 +171,8 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void queryingUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search", USER_DOMAIN_ID)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search",
+                USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
                 .param("query", "(country equals 'Nigeria') and (favourite-color equals 'blue')")
@@ -206,7 +212,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                         parameterWithName("domainId").description("The domain id of the user")
                 )));
         assertThat(appUserRepository.queryForUsers("color equals 'green'",
-                PageRequest.of(0,10)).getTotalElements(),
+                PageRequest.of(0, 10)).getTotalElements(),
                 equalTo(3L));
     }
 }

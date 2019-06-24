@@ -1,23 +1,20 @@
 package com.mmadu.service.documentation;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppDomain;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DomainManagementDocumentation extends AbstractDocumentation {
 
@@ -29,14 +26,14 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(post("/appDomains")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                 .content(objectToString(createConstantDomain()))
-            ).andExpect(status().isCreated())
+        ).andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         fieldWithPath("name").description("The domain name"),
                         fieldWithPath("id").optional().description("ID of the domain (optional, auto-generated)")
                 )));
     }
 
-    private AppDomain createConstantDomain(){
+    private AppDomain createConstantDomain() {
         AppDomain domain = new AppDomain();
         domain.setName(DOMAIN_NAME);
         domain.setId(NEW_DOMAIN_ID);

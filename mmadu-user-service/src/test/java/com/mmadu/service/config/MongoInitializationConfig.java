@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Lazy;
 public class MongoInitializationConfig {
     @Bean
     @Lazy(false)
-    public MongoManager mongoManager(){
+    public MongoManager mongoManager() {
         return new MongoManager();
     }
 }

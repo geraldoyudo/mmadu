@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AppUserRepository extends MongoRepository<AppUser, String> , AppUserRepositoryCustom{
+public interface AppUserRepository extends MongoRepository<AppUser, String>, AppUserRepositoryCustom {
 
     boolean existsByUsernameAndDomainId(@Param("username") String username,
                                         @Param("domainId") String domain);

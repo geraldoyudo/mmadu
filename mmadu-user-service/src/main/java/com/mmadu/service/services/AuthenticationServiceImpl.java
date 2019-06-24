@@ -1,10 +1,5 @@
 package com.mmadu.service.services;
 
-import static com.mmadu.service.models.AuthenticationStatus.AUTHENTICATED;
-import static com.mmadu.service.models.AuthenticationStatus.DOMAIN_INVALID;
-import static com.mmadu.service.models.AuthenticationStatus.PASSWORD_INVALID;
-import static com.mmadu.service.models.AuthenticationStatus.USERNAME_INVALID;
-
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.models.AuthenticateResponse;
@@ -13,9 +8,12 @@ import com.mmadu.service.providers.NoOpPasswordHasher;
 import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+import static com.mmadu.service.models.AuthenticationStatus.*;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -42,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticateResponse authenticate(String domainId, AuthenticateRequest authRequest) {
 
-        if(!appDomainRepository.existsById(domainId)){
+        if (!appDomainRepository.existsById(domainId)) {
             return createAuthenticateResponse(DOMAIN_INVALID);
         }
 

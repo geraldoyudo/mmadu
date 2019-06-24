@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mmadu.security.DomainTokenChecker;
-import com.mmadu.security.TokenAuthenticationFilter;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.AppUser;

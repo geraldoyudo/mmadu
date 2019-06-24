@@ -1,4 +1,4 @@
-package com.mmadu.service.model;
+package com.mmadu.service.models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -65,7 +65,7 @@ public class UserView {
         return properties;
     }
 
-    public Optional<Object> getProperty(String value){
+    public Optional<Object> getProperty(String value) {
         return Optional.ofNullable(properties.get(value));
     }
 
@@ -74,7 +74,7 @@ public class UserView {
     }
 
     public void setRoles(List<String> roles) {
-        if(roles != null) {
+        if (roles != null) {
             this.roles = roles;
         }
     }
@@ -84,7 +84,7 @@ public class UserView {
     }
 
     public void setAuthorities(List<String> authorities) {
-        if(authorities != null) {
+        if (authorities != null) {
             this.authorities = authorities;
         }
     }

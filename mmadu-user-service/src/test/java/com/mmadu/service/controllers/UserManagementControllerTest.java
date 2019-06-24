@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
-import com.mmadu.service.model.PatchOperation;
-import com.mmadu.service.model.UpdateRequest;
-import com.mmadu.service.model.UserPatch;
-import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.PatchOperation;
+import com.mmadu.service.models.UpdateRequest;
+import com.mmadu.service.models.UserPatch;
+import com.mmadu.service.models.UserView;
 import com.mmadu.service.services.UserManagementService;
-import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -28,14 +27,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -129,13 +126,13 @@ public class UserManagementControllerTest {
         collector.checkThat(p.getPageSize(), equalTo(10));
     }
 
-    private List<UserView> createUserViewList(){
+    private List<UserView> createUserViewList() {
         List<UserView> userViewList = new LinkedList<>();
-        for(int i=0; i< 5; ++i){
+        for (int i = 0; i < 5; ++i) {
             UserView userView = new UserView(
                     "id" + i,
-                    "user"+i,
-                    "password" +i,
+                    "user" + i,
+                    "password" + i,
                     asList("member"),
                     asList("view-profile"),
                     new HashMap<>()
@@ -167,12 +164,12 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("id", equalTo(userView.getId())))
                 .andExpect(jsonPath("username", equalTo(userView.getUsername())))
                 .andExpect(jsonPath("password", equalTo(userView.getPassword())))
-                .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
-                .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
+                .andExpect(jsonPath("roles", equalTo(userView.getRoles())))
+                .andExpect(jsonPath("authorities", equalTo(userView.getAuthorities())));
     }
 
     @Test
-    public void givenNoUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception{
+    public void givenNoUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
         doThrow(new UserNotFoundException()).when(userManagementService)
                 .deleteUserByDomainAndExternalId(DOMAIN_ID, USER_ID);
         mockMvc.perform(
@@ -182,7 +179,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception{
+    public void givenUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
         mockMvc.perform(
                 delete("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
         )
@@ -195,8 +192,8 @@ public class UserManagementControllerTest {
         doNothing().when(userManagementService).updateUser(eq(DOMAIN_ID), eq(USER_ID), userCaptor.capture());
         mockMvc.perform(
                 put("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .content(testUser())
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .content(testUser())
         )
                 .andExpect(status().isNoContent());
         UserView userView = userCaptor.getValue();
@@ -212,7 +209,7 @@ public class UserManagementControllerTest {
                 .when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
         mockMvc.perform(
                 get("/domains/{domainId}/users/load", DOMAIN_ID)
-                .param("username", USERNAME)
+                        .param("username", USERNAME)
         )
                 .andExpect(status().isNotFound());
     }
@@ -224,14 +221,14 @@ public class UserManagementControllerTest {
         doReturn(userView).when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
         mockMvc.perform(
                 get("/domains/{domainId}/users/load", DOMAIN_ID)
-                .param("username", USERNAME)
+                        .param("username", USERNAME)
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(userView.getId())))
                 .andExpect(jsonPath("username", equalTo(userView.getUsername())))
                 .andExpect(jsonPath("password", equalTo(userView.getPassword())))
-                .andExpect(jsonPath("roles" , equalTo(userView.getRoles())))
-                .andExpect(jsonPath("authorities" , equalTo(userView.getAuthorities())));
+                .andExpect(jsonPath("roles", equalTo(userView.getRoles())))
+                .andExpect(jsonPath("authorities", equalTo(userView.getAuthorities())));
     }
 
     @Test
@@ -271,15 +268,15 @@ public class UserManagementControllerTest {
         String actualQuery = queryCaptor.getValue();
         collector.checkThat(actualQuery, equalTo(query));
         collector.checkThat(updateRequest.getUpdates(),
-                equalTo(asList( new UserPatch(PatchOperation.SET, "color", "green"))));
+                equalTo(asList(new UserPatch(PatchOperation.SET, "color", "green"))));
     }
 
     private String updateRequest(String query) {
-        ObjectNode jsonNode =  objectMapper.createObjectNode();
+        ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode
-            .put("query", query)
-            .putArray("updates")
-            .addObject()
+                .put("query", query)
+                .putArray("updates")
+                .addObject()
                 .put("operation", "SET")
                 .put("property", "color")
                 .put("value", "green");

@@ -1,4 +1,4 @@
-package com.mmadu.service.model;
+package com.mmadu.service.models;
 
 import lombok.Data;
 

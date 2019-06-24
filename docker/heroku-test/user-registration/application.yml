@@ -1,6 +1,8 @@
 mmadu:
   home: ${user.home}/mmadu
   domainKey: 2222
+  tokenService:
+    url: https://mmadu-token-service.herokuapp.com
   userService:
     url: https://mmadu-user-service.herokuapp.com
   registration:

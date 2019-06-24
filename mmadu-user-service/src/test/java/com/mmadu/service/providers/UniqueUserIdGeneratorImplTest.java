@@ -17,7 +17,7 @@ public class UniqueUserIdGeneratorImplTest {
     private UniqueUserIdGenerator uniqueUserIdGenerator;
 
     @Test
-    public void generateUniqueId(){
+    public void generateUniqueId() {
         assertThat(uniqueUserIdGenerator.generateUniqueId(DOMAIN_ID), notNullValue());
     }
 }
