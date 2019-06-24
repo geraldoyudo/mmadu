@@ -67,7 +67,8 @@ public class DomainRegistrationFormFieldsManageTest {
         spyManager.subscribeToEvent();
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
         Thread.sleep(100);
-        verify(spyManager, times(1)).handleEvent(eq(new RegistrationFieldModifiedEvent("1")));
+        verify(spyManager, times(1))
+                .handleEvent(eq(new RegistrationFieldModifiedEvent("1")));
     }
 
     @Test
@@ -81,8 +82,10 @@ public class DomainRegistrationFormFieldsManageTest {
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("2"));
         Thread.sleep(100);
-        verify(spyManager, times(1)).handleEvent(eq(new RegistrationFieldModifiedEvent("1")));
-        verify(spyManager, times(1)).handleEvent(eq(new RegistrationFieldModifiedEvent("2")));
+        verify(spyManager, times(1))
+                .handleEvent(eq(new RegistrationFieldModifiedEvent("1")));
+        verify(spyManager, times(1))
+                .handleEvent(eq(new RegistrationFieldModifiedEvent("2")));
     }
 
     @AfterClass

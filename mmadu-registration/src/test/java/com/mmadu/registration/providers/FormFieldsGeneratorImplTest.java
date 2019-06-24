@@ -46,8 +46,10 @@ public class FormFieldsGeneratorImplTest {
         classField = createField("2", "class", "class", "1");
         doReturn(asList(nameField, classField)).when(fieldRepository).findByDomainId(DOMAIN_ID);
         doReturn(Optional.of(textFieldType)).when(fieldTypeRepository).findById("1");
-        doReturn("<markup-name></markup-name>").when(fieldMarkupGenerator).resolveField(nameField, textFieldType);
-        doReturn("<markup-class></markup-class>").when(fieldMarkupGenerator).resolveField(classField, textFieldType);
+        doReturn("<markup-name></markup-name>").when(fieldMarkupGenerator)
+                .resolveField(nameField, textFieldType);
+        doReturn("<markup-class></markup-class>").when(fieldMarkupGenerator)
+                .resolveField(classField, textFieldType);
     }
 
     @Test

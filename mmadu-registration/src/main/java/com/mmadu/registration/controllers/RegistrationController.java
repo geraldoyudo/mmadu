@@ -74,7 +74,7 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(DomainNotFoundException.class)
-    public String handleDomainNotFoundException(DomainNotFoundException ex) {
+    public String handleDomainNotFoundException() {
         return "redirect:/html/error-404.html";
     }
 

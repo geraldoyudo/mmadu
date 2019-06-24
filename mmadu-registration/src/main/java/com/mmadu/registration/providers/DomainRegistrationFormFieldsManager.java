@@ -1,5 +1,6 @@
 package com.mmadu.registration.providers;
 
+import com.mmadu.registration.exceptions.FormFieldsGenerationException;
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ public class DomainRegistrationFormFieldsManager {
     private int sampleTimeInSeconds = 5;
     private DomainService domainService;
     private FormFieldsGenerator formFieldsGenerator;
+
     private UnicastProcessor<RegistrationFieldModifiedEvent> processor = UnicastProcessor.create();
     private FluxSink<RegistrationFieldModifiedEvent> sink = processor.serialize().sink();
     private File templateDirectory;
@@ -62,6 +64,16 @@ public class DomainRegistrationFormFieldsManager {
                 .forEach(this::generateFormFieldsForDomain);
     }
 
+    private void generateFormFieldsForDomain(String domainId) {
+        String formFields = formFieldsGenerator.generateFormFieldsForDomain(domainId);
+        try {
+            File file = new File(templateDirectory, "register-" + domainId + ".html");
+            FileCopyUtils.copy(formFields, new PrintWriter(new FileOutputStream(file)));
+        } catch (IOException ex) {
+            throw new FormFieldsGenerationException("could not write form fields to file", ex);
+        }
+    }
+
     void subscribeToEvent() {
         processor
                 .timestamp()
@@ -81,16 +93,6 @@ public class DomainRegistrationFormFieldsManager {
             generateFormFieldsForAllDomains();
         } else {
             generateFormFieldsForDomain(event.getDomain());
-        }
-    }
-
-    private void generateFormFieldsForDomain(String domainId) {
-        String formFields = formFieldsGenerator.generateFormFieldsForDomain(domainId);
-        try {
-            File file = new File(templateDirectory,  "register-" + domainId + ".html");
-            FileCopyUtils.copy(formFields, new PrintWriter(new FileOutputStream(file)));
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
         }
     }
 }

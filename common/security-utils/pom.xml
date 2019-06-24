@@ -9,7 +9,7 @@
     <version>1.2.1-SNAPSHOT</version>
 
     <name>security-utils</name>
-    <description>Encryption components for mmadu services</description>
+    <description>Security components for mmadu services</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

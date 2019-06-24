@@ -10,7 +10,7 @@ import java.util.Properties;
 public class VelocityEngineConfig {
 
     @Bean
-    public VelocityEngine velocityEngine(){
+    public VelocityEngine velocityEngine() {
         Properties p = new Properties();
         p.setProperty("resource.loader", "class");
         p.setProperty("class.resource.loader.class",

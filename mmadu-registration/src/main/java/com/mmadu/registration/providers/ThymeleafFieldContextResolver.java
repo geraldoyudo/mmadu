@@ -10,21 +10,30 @@ import java.util.Optional;
 
 @Component
 public class ThymeleafFieldContextResolver implements FieldContextResolver {
+
+    public static final String INPUT_FIELD_TEMPLATE = "th:with=\"var_%s=${'%s'}\" " +
+            "th:field='*{properties[\"__${var_%s}__\"]}'";
+    public static final String INPUT_STYLE_TEMPLATE = "th:style=\"'%s'\"";
+    public static final String ERROR_STYLE_TEMPLATE = "th:classappend=\"${#fields.hasErrors('properties[%s]')}? " +
+            "fieldError\"";
+    public static final String ERROR_DISPLAY_TEMPLATE = "<div class=\"errorMessage\" " +
+            "th:each=\"err : ${#fields.errors('properties[%s]')}\" th:text=\"${err}\" ></div>";
+
     @Override
     public Map<String, Object> resolveContext(Field field, FieldType type) {
         Map<String, Object> context = new HashMap<>();
         context.put("field", field);
         context.put("type", type);
-        context.put("inputField", String.format("th:with=\"var_%s=${'%s'}\" th:field='*{properties[\"__${var_%s}__\"]}'",
+        context.put("inputField", String.format(INPUT_FIELD_TEMPLATE,
                 field.getId(), field.getProperty(), field.getId()));
-        context.put("inputStyle", String.format("th:style=\"'%s'\"",
+        context.put("inputStyle", String.format(INPUT_STYLE_TEMPLATE,
                 Optional.ofNullable(field.getStyle()).orElse("")));
         context.put("errorStyle", String.format(
-                "th:classappend=\"${#fields.hasErrors('properties[%s]')}? fieldError\"", field.getProperty()));
+                ERROR_STYLE_TEMPLATE, field.getProperty()));
         context.put("errorDisplay", String.format(
-                    "<div class=\"errorMessage\" th:each=\"err : ${#fields.errors('properties[%s]')}\" th:text=\"${err}\" ></div>"
+                ERROR_DISPLAY_TEMPLATE
                 , field.getProperty()));
-        context.put("required", field.isRequired()? "required": "");
+        context.put("required", field.isRequired() ? "required" : "");
         return context;
     }
 }

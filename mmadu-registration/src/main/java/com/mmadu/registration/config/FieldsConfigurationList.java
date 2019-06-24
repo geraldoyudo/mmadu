@@ -1,7 +1,6 @@
 package com.mmadu.registration.config;
 
 import com.mmadu.registration.entities.Field;
-import com.mmadu.registration.entities.FieldType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
