@@ -75,12 +75,12 @@ public class RegistrationController {
 
     @ExceptionHandler(DomainNotFoundException.class)
     public String handleDomainNotFoundException() {
-        return "redirect:/html/error-404.html";
+        return "error/404";
     }
 
     @ExceptionHandler(Exception.class)
-    public String handleOtherExceptions(Exception ex) {
-        log.error("unexpected error", ex);
-        return "redirect:/html/error-500.html";
+    public String handleGeneralException(Exception ex) {
+        log.error("Unexpected error", ex);
+        return "error/500";
     }
 }

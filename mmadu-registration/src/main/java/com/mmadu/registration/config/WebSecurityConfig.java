@@ -12,7 +12,7 @@ public class WebSecurityConfig implements MmaduSecurityConfigurer {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/css", "/html", "/*/register").permitAll()
+                .antMatchers("/css/**", "/html/**", "/*/register", "/error").permitAll()
                 .anyRequest().access("hasPermission('domain', 'admin')");
     }
 }
