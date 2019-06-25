@@ -12,7 +12,8 @@ import java.util.Collections;
 public class ThymeleafConfig {
 
     @Bean
-    public ITemplateResolver domainComponentsResolver(@Value("${mmadu.registration.templates}") String templatesFolder) {
+    public ITemplateResolver domainComponentsResolver(
+            @Value("${mmadu.registration.templates}") String templatesFolder) {
         SpringResourceTemplateResolver fileTemplateResolver = new SpringResourceTemplateResolver();
         fileTemplateResolver.setResolvablePatterns(Collections.singleton("domain/*"));
         fileTemplateResolver.setPrefix("file:" + templatesFolder + "/");

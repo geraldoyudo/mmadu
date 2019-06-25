@@ -4,9 +4,9 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
-import com.mmadu.service.model.UpdateRequest;
-import com.mmadu.service.model.UserView;
 import com.mmadu.service.models.PagedList;
+import com.mmadu.service.models.UpdateRequest;
+import com.mmadu.service.models.UserView;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
@@ -141,7 +141,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             resultantQuery = domainClause;
         } else {
             resultantQuery = resultantQuery.replaceAll(" id ", " externalId ")
-                    .replaceAll("\\(id", "(externalId") .replaceAll("^id", "externalId")
+                    .replaceAll("\\(id", "(externalId").replaceAll("^id", "externalId")
                     + " and " + domainClause;
         }
         return resultantQuery;

@@ -1,17 +1,14 @@
 package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.Field;
-import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.models.UserForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.MapBindingResult;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -30,7 +27,7 @@ public class FieldTypeValidatorTest {
     private FieldTypeValidator validator;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         validator = new FieldTypeValidator(fieldTypeConverter, field);
         doReturn(PROPERTY).when(field).getProperty();
     }

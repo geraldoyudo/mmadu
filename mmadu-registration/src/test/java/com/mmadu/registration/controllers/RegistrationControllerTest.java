@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.Errors;
@@ -24,7 +25,8 @@ import org.springframework.validation.Errors;
 import java.util.Arrays;
 
 import static com.mmadu.registration.utils.EntityUtils.createRegistrationProfile;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.any;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -34,7 +36,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(RegistrationController.class)
+@WebMvcTest(value = RegistrationController.class, secure = false)
+@TestPropertySource(properties = "mmadu.domain.api-security-enabled=false")
 public class RegistrationControllerTest {
     public static final String PROFILE_ID = "1";
     public static final String DOMAIN_ID = "1";
@@ -75,7 +78,8 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void whenGetRegisterApiCalledWithRedirectUrlShouldReturnRegisterPageWithRedirectUrlAttribute() throws Exception {
+    public void whenGetRegisterApiCalledWithRedirectUrlShouldReturnRegisterPageWithRedirectUrlAttribute()
+            throws Exception {
 
         mockMvc.perform(get("/{domainId}/register", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
@@ -103,11 +107,12 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void givenValidationErrorsWhenPostShouldReturnRegisterWithErrorAndOtherPreviousProperties() throws Exception {
-        String errorMessge = "error-message";
+    public void givenValidationErrorsWhenPostShouldReturnRegisterWithErrorAndOtherPreviousProperties()
+            throws Exception {
+        String errorMessage = "error-message";
         doAnswer(invocationOnMock -> {
             Errors errors = invocationOnMock.getArgument(1);
-            errors.reject(errorMessge);
+            errors.reject(errorMessage);
             return null;
         }).when(userFormValidator).validate(ArgumentMatchers.any(), ArgumentMatchers.any(Errors.class));
 
@@ -121,7 +126,7 @@ public class RegistrationControllerTest {
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                view().name("register" )
+                view().name("register")
         ).andExpect(
                 model().attribute("user", any(UserForm.class))
         ).andExpect(

@@ -1,7 +1,7 @@
 package com.mmadu.service.services;
 
-import com.mmadu.service.model.UpdateRequest;
-import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.UpdateRequest;
+import com.mmadu.service.models.UserView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

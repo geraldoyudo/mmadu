@@ -3,7 +3,7 @@ package com.mmadu.service.repositories;
 import com.geraldoyudo.kweeri.mongo.MongoQueryConverter;
 import com.geraldoyudo.kweeri.mongo.MongoQuerySerializer;
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.providers.PatchOperationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,8 +44,8 @@ public class AppUserRepositoryCustomImpl implements AppUserRepositoryCustom {
                 () -> mongoTemplate.count(basicQuery, AppUser.class));
     }
 
-    private void verifyJson(String json){
-        if (json == null || json.equals("") || json.trim().replace(" ", "").equals("{}")){
+    private void verifyJson(String json) {
+        if (json == null || json.equals("") || json.trim().replace(" ", "").equals("{}")) {
             throw new IllegalArgumentException("Could not read query, ensure criteria is covered by parenthesis" +
                     " ie. (key equals 'value')");
         }

@@ -1,15 +1,34 @@
 package com.mmadu.service.models;
 
-import lombok.Builder;
-import lombok.Data;
-
 import javax.validation.constraints.NotEmpty;
 
-@Data
-@Builder
 public class AuthenticateRequest {
     @NotEmpty
     private String username;
     @NotEmpty
     private String password;
+
+    public AuthenticateRequest() {
+    }
+
+    public AuthenticateRequest(@NotEmpty String username, @NotEmpty String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

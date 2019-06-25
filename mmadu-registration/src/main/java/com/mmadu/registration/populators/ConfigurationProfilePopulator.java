@@ -17,9 +17,8 @@ public class ConfigurationProfilePopulator implements Populator {
     @Override
     @PostConstruct
     public void populate() {
-        if (registrationProfileRepository.count() > 0) {
-            return;
+        if (registrationProfileRepository.count() == 0) {
+            registrationProfileRepository.saveAll(profileConfigurationList.getProfiles());
         }
-        registrationProfileRepository.saveAll(profileConfigurationList.getProfiles());
     }
 }

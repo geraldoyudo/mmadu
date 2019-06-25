@@ -1,10 +1,5 @@
 package com.mmadu.service.utilities;
 
-import static com.mmadu.service.utilities.TestPasswordHasher.HASH_PREFIX;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-
 import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdaterTest.TestConfig;
 import org.junit.Test;
@@ -13,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static com.mmadu.service.utilities.TestPasswordHasher.HASH_PREFIX;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {AppUserPasswordHashUpdater.class, TestConfig.class})
@@ -36,10 +36,10 @@ public class AppUserPasswordHashUpdaterTest {
                 is(equalTo(NEW_PASSWORD_HASH)));
     }
 
-    public static class TestConfig{
+    public static class TestConfig {
 
         @Bean
-        public PasswordHasher passwordHasher(){
+        public PasswordHasher passwordHasher() {
             return new TestPasswordHasher();
         }
     }

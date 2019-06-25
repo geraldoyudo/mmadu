@@ -16,16 +16,17 @@ public class VelocityTest {
     private static VelocityEngine engine;
 
     @BeforeClass
-    public static void setUpClass(){
+    public static void setUpClass() {
         Properties p = new Properties();
         p.setProperty("resource.loader", "class");
-        p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        p.setProperty("class.resource.loader.class",
+                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         engine = new VelocityEngine();
         engine.init(p);
     }
 
     @Test
-    public void getTemplate(){
+    public void getTemplate() {
         Template template = engine.getTemplate("templates/sample-template.vm");
         VelocityContext context = new VelocityContext();
         context.put("name", "World");

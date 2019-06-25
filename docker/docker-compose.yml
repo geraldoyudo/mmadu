@@ -7,21 +7,37 @@ services:
       - mmadu.security.master-key=${MMADU_SECURITY_MASTER_KEY}
       - mmadu.domain.api-security-enabled=${MMADU_DOMAIN_API_SECURITY_ENABLED}
       - spring.data.mongodb.host=${MONGODB_HOST}
+      - mmadu.tokenService.url=http://mmadu-token-service:8080
+      - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
+      - mmadu-token-service
   mmadu-registration:
     image: geraldoyudo/mmadu-registration:1.2.1-SNAPSHOT
     environment:
       - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
       - mmadu.userService.url=http://mmadu-user-service:8080
       - spring.data.mongodb.host=${MONGODB_HOST}
+      - mmadu.tokenService.url=http://mmadu-token-service:8080
     ports:
       - "8081:8080"
     depends_on:
       - mongodb
+      - mmadu-token-service
       - mmadu-user-service
+  mmadu-token-service:
+    image: geraldoyudo/mmadu-token-service:1.2.1-SNAPSHOT
+    environment:
+      - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
+      - mmadu.userService.url=http://mmadu-user-service:8080
+      - spring.data.mongodb.host=${MONGODB_HOST}
+      - mmadu.tokenService.url=http://localhost:8080
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:3.4.20-xenial
     ports:

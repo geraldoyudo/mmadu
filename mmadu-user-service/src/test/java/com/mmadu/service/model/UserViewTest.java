@@ -2,6 +2,7 @@ package com.mmadu.service.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmadu.service.models.UserView;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
@@ -31,7 +32,9 @@ public class UserViewTest {
 
     @Test
     public void testDeserialization() throws Exception {
-        UserView object = objectMapper.readValue("{\"username\":\"username\",\"password\":\"password\",\"roles\":[\"admin\"],\"authorities\":[\"manage-users\"],\"property\":\"one\"}",
+        UserView object = objectMapper
+                .readValue("{\"username\":\"username\",\"password\":\"password\"," +
+                                "\"roles\":[\"admin\"],\"authorities\":[\"manage-users\"],\"property\":\"one\"}",
                 UserView.class);
         assertThat(object.getPassword(), equalTo("password"));
         assertThat(object.getUsername(), equalTo("username"));

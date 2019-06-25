@@ -20,8 +20,10 @@ public class FieldValidatorFactory {
                 resolver.getConverterForType(type.getType())
                         .orElseThrow(() -> new IllegalArgumentException("Field type not supported"));
         try {
-            return new FieldTypeValidator(converterClass.getDeclaredConstructor(FieldType.class).newInstance(type), field);
-        } catch (NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException ex) {
+            return new FieldTypeValidator(converterClass.getDeclaredConstructor(FieldType.class).newInstance(type),
+                    field);
+        } catch (NoSuchMethodException | InstantiationException |
+                InvocationTargetException | IllegalAccessException ex) {
             throw new IllegalArgumentException("class type not supported. ensure class has the correct signature");
         }
     }
