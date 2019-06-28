@@ -7,4 +7,6 @@ public interface DomainConfigurationService {
     DomainConfiguration getConfigurationForDomain(String domainId);
 
     boolean tokenMatchesDomain(String token, String domainId);
+
+    void setAuthTokenForDomain(String tokenId, String domainId);
 }

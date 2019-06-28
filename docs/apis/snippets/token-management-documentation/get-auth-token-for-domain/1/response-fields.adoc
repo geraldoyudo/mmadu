@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+tokenId+`
+|`+String+`
+|The token ID
+
+|`+domainId+`
+|`+String+`
+|The domain ID
+
+|===

@@ -2,6 +2,8 @@ package com.mmadu.tokenservice.services;
 
 import com.mmadu.tokenservice.entities.DomainConfiguration;
 import com.mmadu.tokenservice.exceptions.DomainConfigurationNotFoundException;
+import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
+import com.mmadu.tokenservice.repositories.AppTokenRepository;
 import com.mmadu.tokenservice.repositories.DomainConfigurationRepository;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,10 +26,14 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class DomainConfigurationServiceImplTest {
 
+    private static final String TOKEN_ID = "1234";
+    private static final String DOMAIN_ID = "1111";
+
     private DomainConfigurationServiceImpl domainConfigurationService;
     @Mock
     private DomainConfigurationRepository domainConfigurationRepository;
-
+    @Mock
+    private AppTokenRepository appTokenRepository;
 
     private DomainConfiguration globalConfiguration;
     private DomainConfiguration domain1Configuration;
@@ -46,6 +52,7 @@ public class DomainConfigurationServiceImplTest {
         doReturn(false).when(domainConfigurationRepository).existsByDomainId("2");
         domainConfigurationService = new DomainConfigurationServiceImpl();
         domainConfigurationService.setDomainConfigurationRepository(domainConfigurationRepository);
+        domainConfigurationService.setAppTokenRepository(appTokenRepository);
     }
 
     private DomainConfiguration createConfig(String id, String domainId, String token) {
@@ -91,5 +98,23 @@ public class DomainConfigurationServiceImplTest {
         doReturn(true).when(domainConfigurationRepository).existsById(GLOBAL_DOMAIN_CONFIG);
         domainConfigurationService.init();
         verify(domainConfigurationRepository, times(0)).save(any(DomainConfiguration.class));
+    }
+
+    @Test(expected = TokenNotFoundException.class)
+    public void givenTokenIdNotExistsWhenSetDomainAuthTokenThrowTokenNotFoundException() {
+        doReturn(false).when(appTokenRepository).existsById(TOKEN_ID);
+        domainConfigurationService.setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
+    }
+
+    @Test
+    public void givenTokenIdAndDomainIdWhenSetDomainAuthTokenSaveNewDomainTokenConfiguration() {
+        doReturn(true).when(appTokenRepository).existsById(TOKEN_ID);
+        doReturn(new DomainConfiguration()).when(domainConfigurationRepository)
+                .save(any(DomainConfiguration.class));
+        domainConfigurationService.setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
+        verify(domainConfigurationRepository).save(appDomainConfigurationCaptor.capture());
+        DomainConfiguration configuration = appDomainConfigurationCaptor.getValue();
+        assertThat(configuration.getAuthenticationApiToken(), equalTo(TOKEN_ID));
+        assertThat(configuration.getDomainId(), equalTo(DOMAIN_ID));
     }
 }

@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "tokenId" : "1",
+  "domainId" : "1111111111"
+}' | http POST 'http://localhost:8080/token/setDomainAuthToken' \
+    'domain-auth-token:2222' \
+    'Content-Type:application/json'
+----

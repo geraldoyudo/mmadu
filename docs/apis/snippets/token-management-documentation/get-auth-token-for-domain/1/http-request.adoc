@@ -1,6 +1,6 @@
 [source,http,options="nowrap"]
 ----
-GET /domainConfigurations/0 HTTP/1.1
+GET /token/domainAuth/1111111111 HTTP/1.1
 domain-auth-token: 2222
 Host: localhost:8080
 

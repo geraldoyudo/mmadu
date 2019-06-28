@@ -2,16 +2,16 @@
 ----
 HTTP/1.1 200 OK
 Pragma: no-cache
+Content-Length: 53
 X-XSS-Protection: 1; mode=block
 Expires: 0
 X-Frame-Options: DENY
 X-Content-Type-Options: nosniff
-Content-Length: 39
 Content-Type: application/json;charset=UTF-8
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 
 {
-  "id" : "1",
-  "value" : "1234"
+  "tokenId" : "1",
+  "domainId" : "1111111111"
 }
 ----
