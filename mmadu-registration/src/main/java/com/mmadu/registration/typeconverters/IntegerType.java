@@ -1,6 +1,7 @@
 package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.FieldType;
+import org.springframework.util.StringUtils;
 
 import java.math.BigInteger;
 
@@ -18,7 +19,15 @@ public class IntegerType extends AbstractFieldTypeConverter {
     @Override
     public void validate(String text) throws FieldValidationException {
         try {
-            new BigInteger(text);
+            BigInteger integer = new BigInteger(text);
+            String min = fieldType.getMin();
+            if (!StringUtils.isEmpty(min) && integer.compareTo(new BigInteger(min)) < 0) {
+                throw new FieldValidationException("Value is less than minimum value");
+            }
+            String max = fieldType.getMax();
+            if (!StringUtils.isEmpty(max) && integer.compareTo(new BigInteger(max)) > 0) {
+                throw new FieldValidationException("Value is greater than minimum value");
+            }
         } catch (NumberFormatException ex) {
             throw new FieldValidationException(ex.getMessage());
         }

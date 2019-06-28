@@ -28,4 +28,6 @@ public class FieldType {
     private String style;
     private String script;
     private String css;
+    private String max;
+    private String min;
 }

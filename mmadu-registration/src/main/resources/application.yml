@@ -28,15 +28,38 @@ mmadu:
         - id: 1
           name: text
           type: text
-          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
         - id: 2
           name: email
           type: text
-          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='email' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='email' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
         - id: 3
           name: password
           type: text
-          markup: "<p><label for='$field.name' class='sr-only'>$field.label</label><input type='password' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay</p>"
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><div class='input-group' id='show_hide_password'><input class='form-control' id='$field.name' name='$field.name' placeholder='$field.placeholder' type='password' $required $inputField  $inputStyle $errorStyle> <div  class='input-group-addon'><a href><i class='fa fa-eye' aria-hidden='true'></i></a></div></div>"
+          classes: "form-group"
+          script: "$(document).ready(function() {$('#show_hide_password a').on('click', function(event) {event.preventDefault(); if($('#show_hide_password input').attr('type') == 'text'){$('#show_hide_password input').attr('type', 'password'); $('#show_hide_password i').addClass( 'fa-eye-slash' ); $('#show_hide_password i').removeClass( 'fa-eye' ); }else if($('#show_hide_password input').attr('type') == 'password'){$('#show_hide_password input').attr('type', 'text'); $('#show_hide_password i').removeClass( 'fa-eye-slash' ); $('#show_hide_password i').addClass( 'fa-eye' ); } }); });"
+          css: "#show_hide_password input {margin:0px;}"
+        - id: 4
+          name: integer
+          type: integer
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+        - id: 5
+          name: decimal
+          type: decimal
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' step='any' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+        - id: 6
+          name: date
+          type: date
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='date' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay"
+        - id: 7
+          name: time
+          type: time
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='time' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay"
+        - id: 8
+          name: datetime
+          type: datetime
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='datetime-local' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
     field-config:
       fields:
         - id: 1
@@ -74,3 +97,51 @@ mmadu:
           fieldTypeId: 3
           label: Password
           order: 4
+        - id: 5
+          name: age
+          domainId: 0
+          placeholder: Age
+          property: age
+          fieldTypeId: 4
+          label: Age
+          order: 5
+          min: 10
+          max: 100
+        - id: 6
+          name: amount
+          domainId: 0
+          placeholder: Amount
+          property: amount
+          fieldTypeId: 5
+          label: Amount
+          order: 6
+        - id: 7
+          name: birthday
+          domainId: 0
+          placeholder: Birthday
+          property: birthday
+          fieldTypeId: 6
+          label: Birthday
+          order: 7
+          min: 01/01/1990
+          max: 01/01/2022
+        - id: 8
+          name: openingTime
+          domainId: 0
+          placeholder: Opening Time
+          property: openingTime
+          fieldTypeId: 7
+          label: Opening Time
+          order: 8
+          min: 09:30
+          max: 22:30
+        - id: 9
+          name: deliveryDate
+          domainId: 0
+          placeholder: Delivery Date and Time
+          property: deliveryDate
+          fieldTypeId: 8
+          label: Delivery Date and Time
+          order: 9
+          min: 2011-08-19T13:45:00
+          max: 2020-08-19T13:45:00
