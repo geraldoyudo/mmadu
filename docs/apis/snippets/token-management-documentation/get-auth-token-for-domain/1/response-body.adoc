@@ -1,7 +1,7 @@
 [source,options="nowrap"]
 ----
 {
-  "tokenId" : null,
-  "domainId" : "0"
+  "tokenId" : "1",
+  "domainId" : "1111111111"
 }
 ----

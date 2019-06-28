@@ -1,5 +1,0 @@
-[source,bash]
-----
-$ curl 'http://localhost:8080/domainConfigurations/search/findByDomainId?domainId=test-app' -i -X GET \
-    -H 'domain-auth-token: 2222'
-----

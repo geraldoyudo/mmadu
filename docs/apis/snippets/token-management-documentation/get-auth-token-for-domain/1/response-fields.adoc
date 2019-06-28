@@ -2,7 +2,7 @@
 |Path|Type|Description
 
 |`+tokenId+`
-|`+Null+`
+|`+String+`
 |The token ID
 
 |`+domainId+`
