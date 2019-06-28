@@ -1,6 +1,8 @@
 package com.mmadu.tokenservice.documentation;
 
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.restdocs.request.PathParametersSnippet;
@@ -11,11 +13,13 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TokenManagementDocumentation extends AbstractDocumentation {
 
     private static final String TOKEN_ID = "1";
+    private static final String DOMAIN_ID_FOR_CONFIG = "1111111111";
 
     @Test
     public void generateToken() throws Exception {
@@ -55,5 +59,20 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, parameterFields(), tokenResponseFields()));
+    }
+
+    @Test
+    public void setAuthTokenForDomain() throws Exception {
+        mockMvc.perform(
+                post("/token/setDomainAuthToken")
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .content(
+                                objectMapper.createObjectNode()
+                                        .put("tokenId", TOKEN_ID)
+                                        .put("domainId", DOMAIN_ID_FOR_CONFIG)
+                                        .toString()
+                        )
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isNoContent());
     }
 }

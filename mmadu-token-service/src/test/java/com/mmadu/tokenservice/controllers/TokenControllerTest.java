@@ -20,8 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,6 +32,8 @@ public class TokenControllerTest {
 
     private static final String TOKEN_VALUE = "1234";
     private static final String REFRESHED_TOKEN_VALUE = "4321";
+    private static final String TOKEN_ID = "1234";
+    private static final String DOMAIN_ID = "1111";
     @Autowired
     private MockMvc mockMvc;
 
@@ -103,12 +104,11 @@ public class TokenControllerTest {
 
     @Test
     public void checkToken() throws Exception {
-        String tokenId = "1234";
-        String domainId = "1111";
-        doReturn(true).when(domainConfigurationService).tokenMatchesDomain(tokenId, domainId);
+
+        doReturn(true).when(domainConfigurationService).tokenMatchesDomain(TOKEN_ID, DOMAIN_ID);
         CheckTokenRequest request = new CheckTokenRequest();
-        request.setDomainId(domainId);
-        request.setToken(tokenId);
+        request.setDomainId(DOMAIN_ID);
+        request.setToken(TOKEN_ID);
         mockMvc.perform(
                 post("/token/checkDomainToken")
                         .content(objectMapper.writeValueAsString(request))
@@ -116,5 +116,20 @@ public class TokenControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("matches", equalTo(true)));
+    }
+
+    @Test
+    public void setDomainAuthenticationToken() throws Exception {
+        mockMvc.perform(
+                post("/token/setDomainAuthToken")
+                        .content(
+                                objectMapper.createObjectNode()
+                                        .put("tokenId", TOKEN_ID)
+                                        .put("domainId", DOMAIN_ID)
+                                        .toString()
+                        )
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        ).andExpect(status().isNoContent());
+        verify(domainConfigurationService, times(1)).setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
     }
 }

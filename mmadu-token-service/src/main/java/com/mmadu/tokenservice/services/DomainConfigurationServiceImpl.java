@@ -2,6 +2,8 @@ package com.mmadu.tokenservice.services;
 
 import com.mmadu.tokenservice.entities.DomainConfiguration;
 import com.mmadu.tokenservice.exceptions.DomainConfigurationNotFoundException;
+import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
+import com.mmadu.tokenservice.repositories.AppTokenRepository;
 import com.mmadu.tokenservice.repositories.DomainConfigurationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ public class DomainConfigurationServiceImpl implements DomainConfigurationServic
     public static final String GLOBAL_DOMAIN_CONFIG = "0";
     private DomainConfigurationRepository domainConfigurationRepository;
     private AppTokenService appTokenService;
+    private AppTokenRepository appTokenRepository;
 
     @Autowired
     public void setDomainConfigurationRepository(DomainConfigurationRepository domainConfigurationRepository) {
@@ -29,6 +32,11 @@ public class DomainConfigurationServiceImpl implements DomainConfigurationServic
     @Autowired
     public void setAppTokenService(AppTokenService appTokenService) {
         this.appTokenService = appTokenService;
+    }
+
+    @Autowired
+    public void setAppTokenRepository(AppTokenRepository appTokenRepository) {
+        this.appTokenRepository = appTokenRepository;
     }
 
     @Override
@@ -74,5 +82,16 @@ public class DomainConfigurationServiceImpl implements DomainConfigurationServic
                     ex.getClass().getName(), ex.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public void setAuthTokenForDomain(String tokenId, String domainId) {
+        if (!appTokenRepository.existsById(tokenId)) {
+            throw new TokenNotFoundException();
+        }
+        DomainConfiguration configuration = new DomainConfiguration();
+        configuration.setDomainId(domainId);
+        configuration.setAuthenticationApiToken(tokenId);
+        domainConfigurationRepository.save(configuration);
     }
 }

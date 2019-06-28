@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/token/setDomainAuthToken' -i -X POST \
+    -H 'domain-auth-token: 2222' \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "tokenId" : "1",
+  "domainId" : "1111111111"
+}'
+----
