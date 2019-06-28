@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 @Document
@@ -21,4 +23,8 @@ public class FieldType {
     private String markup;
     private String fieldTypePattern;
     private String type;
+    private String enclosingElement = "div";
+    private List<String> classes;
+    private String style;
+    private String script;
 }

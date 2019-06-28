@@ -48,3 +48,12 @@ body {
 }
 .form-signin input {
 }
+
+.toggle-password {
+    float: right;
+    margin-left: -50px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    padding-right: 30px;
+}
