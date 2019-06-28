@@ -3,6 +3,7 @@ package com.mmadu.tokenservice.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.tokenservice.entities.AppToken;
+import com.mmadu.tokenservice.entities.DomainConfiguration;
 import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
 import com.mmadu.tokenservice.models.CheckTokenRequest;
 import com.mmadu.tokenservice.services.AppTokenService;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -131,5 +133,25 @@ public class TokenControllerTest {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().isNoContent());
         verify(domainConfigurationService, times(1)).setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
+    }
+
+    @Test
+    public void getAuthenticationTokenForDomain() throws Exception {
+        doReturn(domainAuthTokenModel()).when(domainConfigurationService).getConfigurationForDomain(DOMAIN_ID);
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/token/domainAuth/{domainId}", DOMAIN_ID)
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("domainId", equalTo(DOMAIN_ID)))
+                .andExpect(jsonPath("tokenId", equalTo(TOKEN_ID)));
+        verify(domainConfigurationService, times(1)).getConfigurationForDomain(DOMAIN_ID);
+    }
+
+    private DomainConfiguration domainAuthTokenModel() {
+        DomainConfiguration model = new DomainConfiguration();
+        model.setDomainId(DOMAIN_ID);
+        model.setAuthenticationApiToken(TOKEN_ID);
+        model.setId("113");
+        return model;
     }
 }

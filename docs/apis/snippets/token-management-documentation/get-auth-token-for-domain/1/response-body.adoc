@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "tokenId" : null,
+  "domainId" : "0"
+}
+----

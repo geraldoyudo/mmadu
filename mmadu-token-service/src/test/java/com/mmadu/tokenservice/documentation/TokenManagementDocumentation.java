@@ -75,4 +75,20 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().isNoContent());
     }
+
+    @Test
+    public void getAuthTokenForDomain() throws Exception {
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/token/domainAuth/{domainId}",
+                DOMAIN_ID_FOR_CONFIG)
+                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        ).andExpect(status().isOk())
+                .andDo(document(DOCUMENTATION_NAME,
+                        pathParameters(
+                                parameterWithName("domainId").description("The domain ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("tokenId").description("The token ID"),
+                                fieldWithPath("domainId").description("The domain ID")
+                        )));
+    }
 }

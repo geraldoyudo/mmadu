@@ -1,6 +1,6 @@
 package com.mmadu.tokenservice.models;
 
-public class SetDomainAuthTokenRequest {
+public class DomainAuthTokenModel {
     private String tokenId;
     private String domainId;
 
