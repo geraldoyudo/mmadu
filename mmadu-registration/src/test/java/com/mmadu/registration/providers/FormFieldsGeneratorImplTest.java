@@ -42,6 +42,7 @@ public class FormFieldsGeneratorImplTest {
     @Before
     public void setUp() {
         textFieldType = createFieldType("1");
+        textFieldType.setScript("a-script");
         nameField = createField("1", "name", "name", "1");
         classField = createField("2", "class", "class", "1");
         doReturn(asList(nameField, classField)).when(fieldRepository).findByDomainId(DOMAIN_ID);
@@ -55,6 +56,6 @@ public class FormFieldsGeneratorImplTest {
     @Test
     public void generateFormFieldsForDomain() {
         assertThat(formFieldsGenerator.generateFormFieldsForDomain(DOMAIN_ID).replaceAll("\\s", ""),
-                equalTo("<markup-name></markup-name><markup-class></markup-class>"));
+                equalTo("<markup-name></markup-name><markup-class></markup-class><script>a-script</script>"));
     }
 }

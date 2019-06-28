@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,8 @@ public class FormFieldsGeneratorImpl implements FormFieldsGenerator {
         Map<String, String> fieldIdTypeMap = generateFieldIdMap(fields);
         Map<String, FieldType> fieldTypeMap = generateFieldTypeIdMap(fieldIdTypeMap);
         List<String> fieldMarkups = generateFieldMarkups(fields, fieldTypeMap);
-        VelocityContext context = createContextFromMarkups(fieldMarkups);
+        List<String> scripts = generateScripts(fieldTypeMap.values());
+        VelocityContext context = createContextFromMarkups(fieldMarkups, scripts);
         return generateStringOutputFromTemplateAndContext(context);
     }
 
@@ -82,9 +84,16 @@ public class FormFieldsGeneratorImpl implements FormFieldsGenerator {
         return output.getBuffer().toString();
     }
 
-    private VelocityContext createContextFromMarkups(List<String> fieldMarkups) {
+    private List<String> generateScripts(Collection<FieldType> types) {
+        return types.stream()
+                .map(type -> type.getScript())
+                .collect(Collectors.toList());
+    }
+
+    private VelocityContext createContextFromMarkups(List<String> fieldMarkups, List<String> scripts) {
         VelocityContext context = new VelocityContext();
         context.put("fields", fieldMarkups);
+        context.put("scripts", scripts);
         return context;
     }
 }

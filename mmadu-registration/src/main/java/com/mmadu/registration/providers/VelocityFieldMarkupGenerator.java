@@ -31,7 +31,7 @@ public class VelocityFieldMarkupGenerator implements FieldMarkupGenerator {
     @Override
     public String resolveField(Field field, FieldType type) {
         StringWriter writer = new StringWriter();
-        String enclosingTag = "<%s%s%s>%s</%s>";
+        String enclosingTag = "<%s%s%s>%s%s</%s>";
         velocityEngine.evaluate(new VelocityContext(fieldContextResolver.resolveContext(field, type)), writer,
                 "", type.getMarkup()
         );
@@ -42,10 +42,12 @@ public class VelocityFieldMarkupGenerator implements FieldMarkupGenerator {
         }
         String classes = convertToString(Optional.ofNullable(type.getClasses()).orElse(Collections.emptyList()));
         String style = type.getStyle();
+        String css = type.getCss();
         return String.format(enclosingTag,
                 enclosingElement,
                 StringUtils.isEmpty(classes)? "": String.format(" class='%s'", classes),
                 StringUtils.isEmpty(style)? "": String.format(" style='%s'", style),
+                StringUtils.isEmpty(css)? "": String.format("<style>%s</style>", css),
                 content,
                 enclosingElement
                 );

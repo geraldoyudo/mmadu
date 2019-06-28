@@ -37,8 +37,10 @@ public class VelocityFieldMarkupGeneratorTest {
         FieldType type = createFieldType("1");
         type.setClasses(asList("one", "two"));
         type.setStyle("color: red");
+        type.setCss("#inputButton {color:red}");
         String markup = fieldMarkupGenerator.resolveField(createField("1", ","), type);
         assertThat(markup, equalTo("<div class='one two' style='color: red'>" +
+                "<style>#inputButton {color:red}</style>" +
                 "<p> Name: <input type='text' th:with=\"var_1=${'name'}\" " +
                 "th:field='*{properties[\"__${var_1}__\"]}' th:style=\"'background: 00ff'\"/> /></div>"));
 

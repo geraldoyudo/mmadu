@@ -27,4 +27,5 @@ public class FieldType {
     private List<String> classes;
     private String style;
     private String script;
+    private String css;
 }
