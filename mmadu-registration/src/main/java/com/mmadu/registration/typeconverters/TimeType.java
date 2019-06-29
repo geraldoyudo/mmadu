@@ -1,6 +1,7 @@
 package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.FieldType;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,15 @@ public class TimeType extends AbstractFieldTypeConverter {
     @Override
     public void validate(String text) throws FieldValidationException {
         try {
-            LocalTime.parse(text, dateTimeFormatter);
+            LocalTime time = LocalTime.parse(text, dateTimeFormatter);
+            String min = fieldType.getMin();
+            if (!StringUtils.isEmpty(min) && time.isBefore(LocalTime.parse(min, dateTimeFormatter))) {
+                throw new FieldValidationException("Value is earlier than minimum time");
+            }
+            String max = fieldType.getMax();
+            if (!StringUtils.isEmpty(max) && time.isAfter(LocalTime.parse(max, dateTimeFormatter))) {
+                throw new FieldValidationException("Value is later than maximum time");
+            }
         } catch (Exception ex) {
             throw new FieldValidationException(ex.getMessage());
         }

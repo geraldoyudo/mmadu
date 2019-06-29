@@ -1,6 +1,7 @@
 package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.FieldType;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -39,9 +40,38 @@ public class DateTimeType extends AbstractFieldTypeConverter {
     @Override
     public void validate(String text) throws FieldValidationException {
         try {
-            parseDateTime(text);
+            Object dateTime = parseDateTime(text);
+            if (dateTime instanceof ZonedDateTime) {
+                validateZonedDateTime((ZonedDateTime) dateTime);
+            } else {
+                validateLocalDateTime((LocalDateTime) dateTime);
+            }
         } catch (Exception ex) {
             throw new FieldValidationException(ex.getMessage());
+        }
+    }
+
+    private void validateZonedDateTime(ZonedDateTime dateTime) throws FieldValidationException {
+        ZonedDateTime zonedDateTime = dateTime;
+        String min = fieldType.getMin();
+        if (!StringUtils.isEmpty(min) && zonedDateTime.isBefore(ZonedDateTime.parse(min, dateTimeFormatter))) {
+            throw new FieldValidationException("Value is earlier than minimum datetime");
+        }
+        String max = fieldType.getMax();
+        if (!StringUtils.isEmpty(max) && zonedDateTime.isAfter(ZonedDateTime.parse(max, dateTimeFormatter))) {
+            throw new FieldValidationException("Value is later than maximum datetime");
+        }
+    }
+
+    private void validateLocalDateTime(LocalDateTime dateTime) throws FieldValidationException {
+        LocalDateTime localDateTime = dateTime;
+        String min = fieldType.getMin();
+        if (!StringUtils.isEmpty(min) && localDateTime.isBefore(LocalDateTime.parse(min, dateTimeFormatter))) {
+            throw new FieldValidationException("Value is earlier than minimum datetime");
+        }
+        String max = fieldType.getMax();
+        if (!StringUtils.isEmpty(max) && localDateTime.isAfter(LocalDateTime.parse(max, dateTimeFormatter))) {
+            throw new FieldValidationException("Value is later than maximum datetime");
         }
     }
 }

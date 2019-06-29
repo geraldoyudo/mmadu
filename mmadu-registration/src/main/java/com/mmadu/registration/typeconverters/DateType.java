@@ -1,6 +1,7 @@
 package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.FieldType;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @DataFieldType(name = "date")
 public class DateType extends AbstractFieldTypeConverter {
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE;
 
     public DateType(FieldType fieldType) {
         super(fieldType);
@@ -31,7 +32,15 @@ public class DateType extends AbstractFieldTypeConverter {
     @Override
     public void validate(String text) throws FieldValidationException {
         try {
-            LocalDate.parse(text, dateTimeFormatter);
+            LocalDate date = LocalDate.parse(text, dateTimeFormatter);
+            String min = fieldType.getMin();
+            if (!StringUtils.isEmpty(min) && date.isBefore(LocalDate.parse(min, dateTimeFormatter))) {
+                throw new FieldValidationException("Value is earlier than minimum date");
+            }
+            String max = fieldType.getMax();
+            if (!StringUtils.isEmpty(max) && date.isAfter(LocalDate.parse(max, dateTimeFormatter))) {
+                throw new FieldValidationException("Value is later than maximum date");
+            }
         } catch (Exception ex) {
             throw new FieldValidationException(ex.getMessage());
         }
