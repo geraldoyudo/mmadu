@@ -10,47 +10,43 @@ import static com.mmadu.registration.typeconverters.FieldUtils.fieldTypeWithPatt
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-public class TimeTypeTest {
+public class DateTimeTest {
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
 
-    private TimeType timeType;
+    private DateTimeType dateTimeType;
 
     @Before
     public void setUp() {
-        FieldType fieldType = fieldTypeWithPattern("HH:mm:ss");
-        fieldType.setMin("10:00:00");
-        fieldType.setMax("20:00:00");
-        timeType = new TimeType(fieldType);
+        FieldType type = fieldTypeWithPattern("dd-MM-yyyy.HH:mm:ss");
+        type.setMin("01-01-2016.10:00:00");
+        type.setMax("01-01-2016.12:00:00");
+        dateTimeType = new DateTimeType(type);
     }
 
     @Test
     public void convertToObject() throws FieldConversionException {
-        Object time = timeType.convertToObject("12:01:02");
-        assertThat(time, notNullValue());
+        Object date = dateTimeType.convertToObject("01-01-2001.11:02:03");
+        assertThat(date, notNullValue());
     }
 
     @Test
     public void validate() throws FieldValidationException {
-        timeType.validate("12:01:02");
+        dateTimeType.validate("01-01-2016.11:00:00");
     }
 
-    @Test(expected = FieldValidationException.class)
-    public void wrongTimeShouldThrowError() throws FieldValidationException {
-        timeType.validate("12:01");
-    }
 
     @Test
     public void givenSmallTimeShouldThrowValidationException() throws Exception {
         expectedException.expect(FieldValidationException.class);
-        expectedException.expectMessage("Value is earlier than minimum time");
-        timeType.validate("09:00:00");
+        expectedException.expectMessage("Value is earlier than minimum datetime");
+        dateTimeType.validate("01-01-2016.01:00:00");
     }
 
     @Test
     public void givenLargeNumberShouldThrowValidationException() throws Exception {
         expectedException.expect(FieldValidationException.class);
-        expectedException.expectMessage("Value is later than maximum time");
-        timeType.validate("21:00:00");
+        expectedException.expectMessage("Value is later than maximum datetime");
+        dateTimeType.validate("01-02-2016.11:00:00");
     }
 }

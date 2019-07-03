@@ -8,11 +8,14 @@ import com.mmadu.registration.typeconverters.FieldValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static com.mmadu.registration.utils.RegistrationRequestFields.*;
 
 @Component
 public class UserFormValidatorFactory {
@@ -22,6 +25,8 @@ public class UserFormValidatorFactory {
     private FieldTypeRepository fieldTypeRepository;
     @Autowired
     private FieldValidatorFactory fieldValidatorFactory;
+    @Autowired
+    private HttpServletRequest request;
 
     public UserFormValidator createValidatorForDomain(String domainId) {
         List<Field> fieldList = fieldRepository.findByDomainId(domainId);
@@ -33,7 +38,11 @@ public class UserFormValidatorFactory {
         Map<String, FieldType> fieldTypeMap = new HashMap<>();
         StreamSupport.stream(fieldTypes.spliterator(), false)
                 .forEach(fieldType -> fieldTypeMap.put(fieldType.getId(), fieldType));
-
+        if (request != null) {
+            request.setAttribute(FIELD_TYPE_LIST, fieldTypes);
+            request.setAttribute(FIELD_LIST, fieldList);
+            request.setAttribute(FIELD_ID_TYPE_MAP, fieldTypeMap);
+        }
         return new UserFormValidator(domainId,
                 fieldList.stream()
                         .map(field ->

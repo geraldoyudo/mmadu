@@ -2,6 +2,7 @@ package com.mmadu.registration.services;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.mmadu.registration.config.SerializationConfig;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,10 +23,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
 
 @RunWith(SpringRunner.class)
-@Import(MmaduServiceClientImpl.class)
+@Import({
+        MmaduServiceClientImpl.class,
+        SerializationConfig.class
+})
 @TestPropertySource(properties = {
         "mmadu.userService.url=http://localhost:19999",
-        "mmadu.domainKey=12345"
+        "mmadu.domainKey=12345",
+        "spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false"
 })
 public class MmaduServiceClientImplTest {
     @Rule
@@ -50,13 +56,16 @@ public class MmaduServiceClientImplTest {
                 .withRequestBody(matchingJsonPath(
                         "$.password", WireMock.equalTo("password"))
                 )
+                .withRequestBody(matchingJsonPath(
+                        "$.date", WireMock.equalTo("1993-01-01")
+                ))
                 .withHeader("domain-auth-token", WireMock.equalTo(domainKey))
                 .willReturn(aResponse()
                         .withStatus(204)));
         Map<String, Object> userProperties = new HashMap<>();
         userProperties.put("username", "user");
         userProperties.put("password", "password");
-
+        userProperties.put("date", LocalDate.of(1993,1,1));
         mmaduUserServiceClient.addUsers(DOMAIN_ID, userProperties);
 
         verify(postRequestedFor(urlMatching("/domains/" + DOMAIN_ID + "/users"))
@@ -68,6 +77,9 @@ public class MmaduServiceClientImplTest {
                 .withRequestBody(matchingJsonPath(
                         "$.password", WireMock.equalTo("password"))
                 )
+                .withRequestBody(matchingJsonPath(
+                        "$.date", WireMock.equalTo("1993-01-01")
+                ))
         );
     }
 }
