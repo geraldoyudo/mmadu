@@ -4,6 +4,9 @@ spring:
       base-path: /repo
   main:
     allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
 mmadu:
   home: ${user.home}/mmadu
   domainKey: 2222
@@ -44,22 +47,32 @@ mmadu:
           name: integer
           type: integer
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+          min: 10
+          max: 100
         - id: 5
           name: decimal
           type: decimal
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' step='any' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+          min: 1
+          max: 1000
         - id: 6
           name: date
           type: date
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='date' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay"
+          min: 1990-01-01
+          max: 2022-01-01
         - id: 7
           name: time
           type: time
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='time' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay"
+          min: "09:30"
+          max: "22:30"
         - id: 8
           name: datetime
           type: datetime
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='datetime-local' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+          min: 2011-08-19T13:45:00
+          max: 2020-08-19T13:45:00
     field-config:
       fields:
         - id: 1
@@ -105,8 +118,6 @@ mmadu:
           fieldTypeId: 4
           label: Age
           order: 5
-          min: 10
-          max: 100
         - id: 6
           name: amount
           domainId: 0
@@ -123,8 +134,6 @@ mmadu:
           fieldTypeId: 6
           label: Birthday
           order: 7
-          min: 01/01/1990
-          max: 01/01/2022
         - id: 8
           name: openingTime
           domainId: 0
@@ -133,8 +142,6 @@ mmadu:
           fieldTypeId: 7
           label: Opening Time
           order: 8
-          min: 09:30
-          max: 22:30
         - id: 9
           name: deliveryDate
           domainId: 0
@@ -143,5 +150,3 @@ mmadu:
           fieldTypeId: 8
           label: Delivery Date and Time
           order: 9
-          min: 2011-08-19T13:45:00
-          max: 2020-08-19T13:45:00

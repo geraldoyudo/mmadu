@@ -3,6 +3,7 @@ package com.mmadu.registration.providers;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,10 @@ public class ThymeleafFieldContextResolver implements FieldContextResolver {
                 ERROR_DISPLAY_TEMPLATE
                 , field.getProperty()));
         context.put("required", field.isRequired() ? "required" : "");
+        context.put("maxValue", StringUtils.isEmpty(type.getMax()) ? "" :
+                String.format("max='%s'", type.getMax()));
+        context.put("minValue", StringUtils.isEmpty(type.getMin()) ? "" :
+                String.format("min='%s'", type.getMin()));
         return context;
     }
 }

@@ -26,6 +26,8 @@ public class ThymeleafFieldContextResolverTest {
         fieldType = createFieldType("1");
         field = createField("1", "1");
         field.setStyle("background: #00ff");
+        fieldType.setMax("10");
+        fieldType.setMin("0");
         Map<String, Object> contextMap = resolver.resolveContext(field, fieldType);
         collector.checkThat(contextMap.get("field"), equalTo(field));
         collector.checkThat(contextMap.get("type"), equalTo(fieldType));
@@ -38,6 +40,8 @@ public class ThymeleafFieldContextResolverTest {
         collector.checkThat(contextMap.get("errorDisplay"),
                 equalTo("<div class=\"errorMessage\" th:each=\"err : ${#fields.errors('properties[name]')}\" " +
                         "th:text=\"${err}\" ></div>"));
+        collector.checkThat(contextMap.get("minValue"), equalTo("min='0'"));
+        collector.checkThat(contextMap.get("maxValue"), equalTo("max='10'"));
     }
 
 

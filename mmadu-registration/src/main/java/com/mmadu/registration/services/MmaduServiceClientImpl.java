@@ -1,5 +1,6 @@
 package com.mmadu.registration.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class MmaduServiceClientImpl implements MmaduUserServiceClient {
     private String authKey;
     private String userServiceUrl;
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     @Value("${mmadu.domainKey}")
     public void setAuthKey(String authKey) {
@@ -24,6 +25,11 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
     @Value("${mmadu.userService.url}")
     public void setUserServiceUrl(String userServiceUrl) {
         this.userServiceUrl = userServiceUrl;
+    }
+
+    @Autowired
+    private void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     @Override

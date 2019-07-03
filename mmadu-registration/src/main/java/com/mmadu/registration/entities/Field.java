@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @Document
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
         @CompoundIndex(name = "domain_property", def = "{'domainId': 1, 'property': 1}", unique = true)
 })
 @EqualsAndHashCode
-public class Field {
+public class Field implements Serializable {
     private String id;
     @NotEmpty
     private String domainId;

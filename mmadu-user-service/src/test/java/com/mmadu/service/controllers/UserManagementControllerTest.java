@@ -24,6 +24,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -218,6 +220,7 @@ public class UserManagementControllerTest {
     public void givenUserWhenLoadUserByUsernameThenReturnUser() throws Exception {
         UserView userView = new UserView(USER_ID, "user", "password",
                 asList("admin"), asList("manage-users"), new HashMap<>());
+        userView.setProperty("birthday", LocalDate.of(1993, 1,1));
         doReturn(userView).when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
         mockMvc.perform(
                 get("/domains/{domainId}/users/load", DOMAIN_ID)
@@ -227,6 +230,7 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("id", equalTo(userView.getId())))
                 .andExpect(jsonPath("username", equalTo(userView.getUsername())))
                 .andExpect(jsonPath("password", equalTo(userView.getPassword())))
+                .andExpect(jsonPath("birthday", equalTo("1993-01-01")))
                 .andExpect(jsonPath("roles", equalTo(userView.getRoles())))
                 .andExpect(jsonPath("authorities", equalTo(userView.getAuthorities())));
     }
