@@ -16,6 +16,8 @@ v0.0.1, 2018-09-04
 
 === What is Mmadu?
 
+Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.
+
 Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
 a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
 care of registration work flows and exposes API's for authentication.
@@ -642,3 +644,27 @@ include::{snippets}/user-management-documentation/updating-users-by-query/1/http
 
 
 === Registration Service
+
+The registration service provides an api to access the registration page for a domain. The registration page
+generates a form from the configured fields and field types of a domain.
+
+==== Displaying the registration form
+
+The registration form can be accessed in the browser using the url:
+
+----
+http://[registration-host]:[registration-port]/[domain-id]/register
+----
+
+For example, accessing the default domain with the default configuration can be done
+by entering the url below on your browser.
+
+----
+http://localhost:1552/0/register
+----
+
+==== Customizing Registration Forms
+
+Registration forms for a domain can be customized by adding and removing fields and field types.
+The registration service ensures that form fields are created for each field.
+
