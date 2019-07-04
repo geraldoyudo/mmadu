@@ -1,7 +1,4 @@
 [source,options="nowrap"]
 ----
-{
-  "tokenId" : "1",
-  "domainId" : "1111111111"
-}
+{"tokenId":"1","domainId":"1111111111"}
 ----
