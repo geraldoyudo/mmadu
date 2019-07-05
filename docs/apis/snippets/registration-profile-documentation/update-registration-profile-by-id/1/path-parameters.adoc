@@ -1,0 +1,8 @@
+.+/repo/registrationProfiles/{profileId}+
+|===
+|Parameter|Description
+
+|`+profileId+`
+|The registration profile ID
+
+|===

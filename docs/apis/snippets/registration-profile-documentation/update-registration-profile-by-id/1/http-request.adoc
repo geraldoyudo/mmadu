@@ -2,10 +2,8 @@
 ----
 PATCH /repo/registrationProfiles/1 HTTP/1.1
 domain-auth-token: 2222
-Content-Length: 56
 Host: localhost:8080
+Content-Length: 48
 
-{
-  "defaultRedirectUrl" : "http://modified.app.com"
-}
+{"defaultRedirectUrl":"http://modified.app.com"}
 ----

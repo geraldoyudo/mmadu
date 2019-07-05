@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -96,6 +97,9 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                         document(DOCUMENTATION_NAME,
                                 relaxedResponseFields(
                                         registrationProfileFields()
+                                ),
+                                pathParameters(
+                                        parameterWithName("profileId").description("The registration profile ID")
                                 )
                         )
                 );
@@ -114,6 +118,9 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                         document(DOCUMENTATION_NAME,
                                 relaxedResponseFields(
                                         registrationProfileFields()
+                                ),
+                                requestParameters(
+                                        parameterWithName("domainId").description("Domain ID")
                                 )
                         )
                 );
@@ -134,7 +141,10 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                                         .toString()
                         )
         )
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, pathParameters(
+                        parameterWithName("profileId").description("The registration profile ID")
+                )));
         assertThat(registrationProfileRepository.findById(profile.getId()).get().getDefaultRedirectUrl(),
                 equalTo(modifiedRedirectUrl));
     }
@@ -147,7 +157,10 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                         profile.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, pathParameters(
+                        parameterWithName("profileId").description("The registration profile ID")
+                )));
         assertThat(registrationProfileRepository.existsById(profile.getId()), equalTo(false));
     }
 

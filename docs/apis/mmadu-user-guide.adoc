@@ -663,8 +663,105 @@ by entering the url below on your browser.
 http://localhost:1552/0/register
 ----
 
+The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
+this domain. To specify a url to redirect to, add the redirectUrl parameter
+
+----
+http://localhost:1552/0/register?redirectUrl=http://myapp.com
+----
 ==== Customizing Registration Forms
 
 Registration forms for a domain can be customized by adding and removing fields and field types.
 The registration service ensures that form fields are created for each field.
 
+==== Registration Profiles
+
+Each domain has a registration profile object that is used for configuring the applications behaviour during
+registration.
+
+NOTE: There can be only one registration profile for a domain.
+
+===== Creating a Registration Profile
+
+A POST Request will create a registration profile.
+
+====== Fixed Request Fields
+
+include::{snippets}/registration-profile-documentation/create-registration-profile/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/create-registration-profile/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Obtaining Registration Profile by Profile ID
+
+A GET Request will return a registration profile with its ID
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns the registration profile with the following fields:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-response.adoc[]
+
+
+===== Updating Registration Profile by ID
+
+A PATCH Request will update a registration profile. The example below updates the defaultRegistrationUrl property.
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-response.adoc[]
+
+
+===== Deleting a Registration Profile by ID
+
+A DELETE request will delete a registration profile.
+
+WARNING: Deleting a registration profile will remote all fields associated with the profile and a registration page
+for that domain will be unavailable.
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-response.adoc[]
