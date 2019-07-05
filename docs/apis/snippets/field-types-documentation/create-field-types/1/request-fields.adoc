@@ -1,0 +1,52 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Field Type ID
+
+|`+fieldTypePattern+`
+|`+String+`
+|Allowed string pattern for field type
+
+|`+min+`
+|`+String+`
+|Minimum value for field type
+
+|`+max+`
+|`+String+`
+|Maximum value for field type
+
+|`+style+`
+|`+Null+`
+|Style applied to all fields of the type
+
+|`+type+`
+|`+String+`
+|Data type of to field type (integer, date, time, datetime, string, decimal)
+
+|`+css+`
+|`+String+`
+|css for all fields with this type (can be overriden by field css)
+
+|`+script+`
+|`+String+`
+|Script for field
+
+|`+classes+`
+|`+Array+`
+|css classes for field
+
+|`+markup+`
+|`+String+`
+|HTML markup for field type
+
+|`+name+`
+|`+String+`
+|The field type name
+
+|`+enclosingElement+`
+|`+String+`
+|The element enclosing the field
+
+|===

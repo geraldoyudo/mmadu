@@ -1,0 +1,53 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Content-Length: 1170
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  "_embedded" : {
+    "fieldTypes" : [ {
+      "name" : "Age",
+      "markup" : "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "fieldTypePattern" : "",
+      "type" : "integer",
+      "enclosingElement" : "div",
+      "classes" : [ "form-control" ],
+      "style" : null,
+      "script" : "",
+      "css" : "",
+      "max" : "100",
+      "min" : "10",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/repo/fieldTypes/1"
+        },
+        "fieldType" : {
+          "href" : "http://localhost:8080/repo/fieldTypes/1"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/repo/fieldTypes{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/repo/profile/fieldTypes"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 1,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----
