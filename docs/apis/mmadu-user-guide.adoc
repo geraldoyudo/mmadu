@@ -134,7 +134,27 @@ To find out more about how to consume the service API, please see <<API>>
 
 == Architecture
 
-coming soon.
+Mmadu is built using a service oriented architecture. It is designed in such a manner that you utilize functionalities
+by deploying the adequate services.
+
+The core service is the user management service which handles authentication, user and domain management. The token service
+is used by all other services for token authentication.
+
+Currently, mmadu has the following services:
+
+
+|===
+|Service |Description
+
+|Token Service
+|Service for managing and checking tokens and permissions.
+
+|User management Service
+|Manages domain authentication as well as administration of domains and users.
+
+|Registration Service
+|Provides a dynamic registration form for each domain. Exposes API endpoints to configure registration form fields.
+|===
 
 == API
 
@@ -771,7 +791,7 @@ include::{snippets}/registration-profile-documentation/delete-registration-profi
 Field type objects specify the properties of a field type in the registration form. You can create a field type that
 can be used by fields in a registration form.
 
-See <<Defining Markup for fields>> for more information on how to customize field types.
+See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize field types.
 
 ==== Creating a field Type
 
@@ -879,7 +899,7 @@ Fields contain information used in rendering each field in a registration form. 
 of their field types in order to render an adequate representation of the field. Fields also specify the user property
 that the input field is bound to. Fields can override and extend certain properties of the field types.
 
-See <<Defining Markup for fields>> for more information on how to customize fields.
+See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize fields.
 
 ==== Creating a field
 
@@ -984,6 +1004,50 @@ Example:
 
 include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
 
+[#defining-markup-for-fields]
 ==== Defining Markup for Fields
 
-Coming Soon
+You define how you want your registration fields by configuring fields and field types. The markup property in
+the field type is used to define the markup of that specific field type. An age field type markup can be defined
+as shown:
+
+[source,html]
+----
+<label for='$field.name' class='sr-only'>$field.label</label>
+<input type='number' id='$field.name' name='$field.name' class='form-control'
+placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >
+$errorDisplay"
+----
+
+Mmadu registration service uses apache velocity to generate markup for fields. It provies the following in
+the template context for use in defining fields. You reference context objects by adding the `$` prefix. For example,
+the `$field.name` returns the name property in the field object.
+
+|===
+|Object Name |Description
+
+|field
+|The field object
+
+|type
+|The field type object
+
+|inputField
+|Input attribute and value that marks an element as a model input
+
+|inputStyle
+|style attribute, any element with this property will have the field type style property appended to that element
+
+|errorStyle
+|style attribute, any element with this property will have the style appended with the error style when the field contains errors
+
+|errorDisplay
+|HTML markup for displaying field errors
+
+|maxValue
+|max attribute, any element with this will have the max attribute set to the max value of the field type
+
+|minValue
+|min attribute, any element with this will have the min attribute set to the min value of the field type
+|===
+
