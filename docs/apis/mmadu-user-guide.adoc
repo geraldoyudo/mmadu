@@ -765,3 +765,225 @@ This API returns a HTTP 204 NO CONTENT response.
 Example:
 
 include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-response.adoc[]
+
+==== Field Types
+
+Field type objects specify the properties of a field type in the registration form. You can create a field type that
+can be used by fields in a registration form.
+
+See <<Defining Markup for fields>> for more information on how to customize field types.
+
+==== Creating a field Type
+
+A POST request will create a field type
+
+====== Request Fields
+
+include::{snippets}/field-types-documentation/create-field-types/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/create-field-types/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Getting a field type with an ID
+
+A GET request will get a field type with an ID.
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a FieldType object with these fields:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-response.adoc[]
+
+===== Getting All Field Types
+
+A GET request will get all field types.
+
+Example:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a list of all field types with these fields:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/http-response.adoc[]
+
+===== Updating A Field Type
+
+A PATCH request will update a field type
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-response.adoc[]
+
+===== Removing A Field Type
+
+A DELETE request will remove a field type.
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-response.adoc[]
+
+
+==== Fields
+
+Fields contain information used in rendering each field in a registration form. Fields utilize properties
+of their field types in order to render an adequate representation of the field. Fields also specify the user property
+that the input field is bound to. Fields can override and extend certain properties of the field types.
+
+See <<Defining Markup for fields>> for more information on how to customize fields.
+
+==== Creating a field
+
+A POST request will create a field
+
+====== Request Fields
+
+include::{snippets}/fields-documentation/create-fields/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/create-fields/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Getting a field type with an ID
+
+A GET request will get a field with an ID.
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/get-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a Field object with these fields:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/http-response.adoc[]
+
+===== Getting All Fields in Domain
+
+A GET request will get all fields in a domain.
+
+====== Request Parameters
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a list of all fields with these properties:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/http-response.adoc[]
+
+===== Updating A Field
+
+A PATCH request will update a field
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
+
+===== Removing A Field
+
+A DELETE request will remove a field.
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
+
+==== Defining Markup for Fields
+
+Coming Soon

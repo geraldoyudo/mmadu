@@ -82,7 +82,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getFieldById() throws Exception {
+    public void getFieldTypeById() throws Exception {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes/{fieldTypeId}",
