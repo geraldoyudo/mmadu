@@ -1,0 +1,16 @@
+[source,options="nowrap"]
+----
+{
+  "id" : "1",
+  "domainId" : "1",
+  "name" : "username",
+  "placeholder" : "Enter Username",
+  "property" : "username",
+  "fieldTypeId" : "1",
+  "style" : "",
+  "label" : "Username",
+  "order" : 1,
+  "pattern" : "",
+  "required" : true
+}
+----

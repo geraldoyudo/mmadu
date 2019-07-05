@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"placeholder":"Enter a Username"}' | http PATCH 'http://localhost:8080/repo/fields/1' \
+    'domain-auth-token:2222'
+----

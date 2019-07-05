@@ -1,0 +1,44 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.fields.[].pattern+`
+|`+String+`
+|Allowed string pattern for field
+
+|`+_embedded.fields.[].style+`
+|`+String+`
+|css style for input element in field
+
+|`+_embedded.fields.[].label+`
+|`+String+`
+|Input field label
+
+|`+_embedded.fields.[].placeholder+`
+|`+String+`
+|input field placeholder
+
+|`+_embedded.fields.[].fieldTypeId+`
+|`+String+`
+|Id of the field's type
+
+|`+_embedded.fields.[].property+`
+|`+String+`
+|User property that the field will set
+
+|`+_embedded.fields.[].order+`
+|`+Number+`
+|Order of the field in Layout
+
+|`+_embedded.fields.[].required+`
+|`+Boolean+`
+|If the field input is required or not
+
+|`+_embedded.fields.[].name+`
+|`+String+`
+|the form name of the field
+
+|`+_embedded.fields.[].domainId+`
+|`+String+`
+|the ID of the domain
+
+|===
