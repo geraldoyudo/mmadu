@@ -1,0 +1,20 @@
+[source,http,options="nowrap"]
+----
+POST /repo/registrationProfiles HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 358
+Host: localhost:8080
+
+{
+  "id" : "1",
+  "domainId" : "0",
+  "defaultRedirectUrl" : "http://my.app.com/home",
+  "defaultRoles" : [ "member" ],
+  "defaultAuthorities" : [ "view-list" ],
+  "headerOne" : "My App",
+  "headerTwo" : "Register",
+  "headerThree" : "Fill all required fields",
+  "instruction" : "Ensure that all fields are filled",
+  "submitButtonTitle" : "Go"
+}
+----

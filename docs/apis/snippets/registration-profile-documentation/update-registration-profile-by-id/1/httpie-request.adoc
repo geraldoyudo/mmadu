@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ echo '{
+  "defaultRedirectUrl" : "http://modified.app.com"
+}' | http PATCH 'http://localhost:8080/repo/registrationProfiles/1' \
+    'domain-auth-token:2222'
+----

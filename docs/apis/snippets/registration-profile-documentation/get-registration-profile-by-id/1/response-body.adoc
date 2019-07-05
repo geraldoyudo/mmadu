@@ -1,0 +1,22 @@
+[source,options="nowrap"]
+----
+{
+  "domainId" : "0",
+  "defaultRedirectUrl" : "http://my.app.com/home",
+  "defaultRoles" : [ "member" ],
+  "defaultAuthorities" : [ "view-list" ],
+  "headerOne" : "My App",
+  "headerTwo" : "Register",
+  "headerThree" : "Fill all required fields",
+  "instruction" : "Ensure that all fields are filled",
+  "submitButtonTitle" : "Go",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/repo/registrationProfiles/1"
+    },
+    "registrationProfile" : {
+      "href" : "http://localhost:8080/repo/registrationProfiles/1"
+    }
+  }
+}
+----
