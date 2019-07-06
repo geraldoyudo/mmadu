@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/repo/registrationProfiles/1' -i -X PATCH \
+    -H 'domain-auth-token: 2222' \
+    -d '{"defaultRedirectUrl":"http://modified.app.com"}'
+----

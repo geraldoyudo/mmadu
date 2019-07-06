@@ -1,0 +1,18 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/repo/fields' -i -X POST \
+    -H 'domain-auth-token: 2222' \
+    -d '{
+  "id" : "1",
+  "domainId" : "1",
+  "name" : "username",
+  "placeholder" : "Enter Username",
+  "property" : "username",
+  "fieldTypeId" : "1",
+  "style" : "",
+  "label" : "Username",
+  "order" : 1,
+  "pattern" : "",
+  "required" : true
+}'
+----

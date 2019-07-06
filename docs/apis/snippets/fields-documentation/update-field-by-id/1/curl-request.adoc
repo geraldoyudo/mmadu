@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/repo/fields/1' -i -X PATCH \
+    -H 'domain-auth-token: 2222' \
+    -d '{"placeholder":"Enter a Username"}'
+----

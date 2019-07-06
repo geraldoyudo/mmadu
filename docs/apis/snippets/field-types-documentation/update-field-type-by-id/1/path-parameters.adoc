@@ -1,0 +1,8 @@
+.+/repo/fieldTypes/{fieldTypeId}+
+|===
+|Parameter|Description
+
+|`+fieldTypeId+`
+|The field type ID
+
+|===

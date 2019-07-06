@@ -8,8 +8,7 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.restdocs.request.PathParametersSnippet;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -64,7 +63,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     @Test
     public void setAuthTokenForDomain() throws Exception {
         mockMvc.perform(
-                post("/token/setDomainAuthToken")
+                RestDocumentationRequestBuilders.post("/token/setDomainAuthToken")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
@@ -73,7 +72,13 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
                                         .toString()
                         )
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        ).andExpect(status().isNoContent());
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME,
+                        requestFields(
+                        fieldWithPath("tokenId").description("The id of the token"),
+                        fieldWithPath("domainId").description("The domain id")
+                )));
     }
 
     @Test

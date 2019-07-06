@@ -1,13 +1,10 @@
 [source,http,options="nowrap"]
 ----
 POST /token/setDomainAuthToken HTTP/1.1
-Content-Length: 53
 domain-auth-token: 2222
+Content-Length: 39
 Content-Type: application/json
 Host: localhost:8080
 
-{
-  "tokenId" : "1",
-  "domainId" : "1111111111"
-}
+{"tokenId":"1","domainId":"1111111111"}
 ----

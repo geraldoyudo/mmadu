@@ -1,0 +1,33 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 414
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  "domainId" : "1",
+  "name" : "username",
+  "placeholder" : "Enter Username",
+  "property" : "username",
+  "fieldTypeId" : "1",
+  "style" : "",
+  "label" : "Username",
+  "order" : 1,
+  "pattern" : "",
+  "required" : true,
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/repo/fields/1"
+    },
+    "field" : {
+      "href" : "http://localhost:8080/repo/fields/1"
+    }
+  }
+}
+----

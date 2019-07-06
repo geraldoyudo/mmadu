@@ -1,0 +1,9 @@
+[source,http,options="nowrap"]
+----
+PATCH /repo/fieldTypes/1 HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 19
+Host: localhost:8080
+
+{"name":"New Type"}
+----
