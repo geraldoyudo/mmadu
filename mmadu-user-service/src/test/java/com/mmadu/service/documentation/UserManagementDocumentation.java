@@ -37,13 +37,14 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     public void createUser() throws Exception {
         UserView user = new UserView("user", "password",
                 asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
+        user.setId("123");
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
-                        fieldWithPath("username").description("The user's username (must be unigue)"),
+                        fieldWithPath("username").description("The user's username (must be unique)"),
                         fieldWithPath("id")
                                 .description("The user's id " +
                                         "(unique identifier used to reference user in your application)"),

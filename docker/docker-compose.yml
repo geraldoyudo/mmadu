@@ -1,7 +1,7 @@
 version: '2'
 services:
   mmadu-user-service:
-    image: geraldoyudo/mmadu-user-service:1.2.1-SNAPSHOT
+    image: geraldoyudo/mmadu-user-service:1.3.0-RELEASE
     environment:
       - mmadu.domain.encrypt-keys=${MMADU_DOMAIN_ENCRYPT_KEYS}
       - mmadu.security.master-key=${MMADU_SECURITY_MASTER_KEY}
@@ -15,7 +15,7 @@ services:
       - mongodb
       - mmadu-token-service
   mmadu-registration:
-    image: geraldoyudo/mmadu-registration:1.2.1-SNAPSHOT
+    image: geraldoyudo/mmadu-registration:1.3.0-RELEASE
     environment:
       - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
       - mmadu.userService.url=http://mmadu-user-service:8080
@@ -28,7 +28,7 @@ services:
       - mmadu-token-service
       - mmadu-user-service
   mmadu-token-service:
-    image: geraldoyudo/mmadu-token-service:1.2.1-SNAPSHOT
+    image: geraldoyudo/mmadu-token-service:1.3.0-RELEASE
     environment:
       - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
       - mmadu.userService.url=http://mmadu-user-service:8080

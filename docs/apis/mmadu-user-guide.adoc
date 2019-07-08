@@ -11,6 +11,7 @@ v0.0.1, 2018-09-04
 :permalink: /:title/
 :page-layout: api
 :snippets: snippets
+:version: master
 
 == Overview
 
@@ -20,7 +21,7 @@ Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.
 
 Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
 a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
-care of registration work flows and exposes API's for authentication.
+care of registration work flows and exposes APIs for authentication.
 
 With Mmadu, you can have a dedicated system for managing users across all your applications.
 
@@ -29,12 +30,12 @@ With Mmadu, you can have a dedicated system for managing users across all your a
 ==== User Authentication
 
 By calling an API, you can authenticate users of your application with Mmmadu. By passing a username
-and password (can be encrypted) the rest api can determine whether the username/password combination is correct,
-has correct username, or has incorrect password. You can integrate this rest api with a lot of web application frameworks.
+and (encrypted) password, the rest api can determine whether the username/password combination is correct.
+This provides a basic method of integration with web security frameworks.
 
 ==== Domain Management
 
-By creating an managing domains, you can logically separate users. Users in a domain are used for only one application.
+By creating an managing domains, you can logically separate users. Users in a domain are typically used for one application.
 My storing users in multiple domains, you can use a single mmadu installation to
 manage users across multiple applications.
 
@@ -44,13 +45,13 @@ The user service provides basic CRUD operations to help you manage and query you
 
 ==== Token Management
 
-Mmadu utilizes tokens to secure its API's. You can create tokens that can only access one domain or utilize the admin token
+Mmadu utilizes tokens to secure its APIs. You can create tokens that grant access to one domain or utilize the admin token
 which has access to all domains.
 
 ==== User Registration
 
 Mmadu provides the web logic for registering users. With configured fields and field types, the registration api generates
-dynamic and configurable registration forms that the client can use.
+dynamic and configurable registration forms that domain users fill to be registered in an application.
 
 === What's New
 
@@ -102,17 +103,19 @@ mmadu is using docker.
 ----
 mkdir mmadu && cd mmadu
 ----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/docker-compose.yml[docker compose file]
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
 +
 [source,sh]
+[subs="attributes"]
 ----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/docker-compose.yml
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
 ----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/.env[default environment file]
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
 +
 [source,sh]
+[subs="attributes"]
 ----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/.env
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
 ----
 . Make the necessary modifications to suite your configuration (you can use it as is)
 . Start the services
@@ -128,14 +131,16 @@ The docker compose installation comes pre-configured with default settings. You 
 the default admin token 2222. The user management service, registration service and token service are
 at ports 15551, 15552 and 15553 respectively.
 
+NOTE: Do not use default settings for configuration on production.
+
 ===== Using the services
 
 To find out more about how to consume the service API, please see <<API>>
 
 == Architecture
 
-Mmadu is built using a service oriented architecture. It is designed in such a manner that you utilize functionalities
-by deploying the adequate services.
+Mmadu is built using a service oriented architecture. Each basic functionality is encapsulated
+in an independent service.
 
 The core service is the user management service which handles authentication, user and domain management. The token service
 is used by all other services for token authentication.
@@ -162,13 +167,14 @@ Currently, mmadu has the following services:
 
 If token security is enabled, you will need a token to access the api.
 
-Simply set the domain-auth-token header to the value of the token. For more information on tokens, see token management.
+Simply set the domain-auth-token header to the value of the token. For more information on tokens, see <<token-service, token management>>.
 
 ==== Permissions
 
-Some tokens have admin permissions, while others have domain permissions. Admin tokens can access all parts of the API,
+A token has admin permissions, while others have domain permissions. The admin token can access all parts of the API,
 while domain tokens can only access parts of the api that returns resources pertaining to the domain.
 
+[#token-service]
 === Token Service
 
 Mmadu service uses token based security. Access to API can be done using admin and domain tokens. The default
@@ -264,7 +270,7 @@ include::{snippets}/token-management-documentation/reset-token/1/http-response.a
 
 ==== Setting a Domain Token
 
-A POST request will assign a token to a domain.
+A POST request will set a domain's token.
 
 ===== Request Fields
 
@@ -284,7 +290,7 @@ include::{snippets}/token-management-documentation/set-auth-token-for-domain/1/h
 
 ==== Getting the token associated to a Domain
 
-A GET request will get a token associated with a domain.
+A GET request will get a domain's token.
 
 ===== Path Parameters
 
@@ -308,7 +314,7 @@ include::{snippets}/token-management-documentation/get-auth-token-for-domain/1/h
 
 === User Management Service
 
-The user management service provides API for authentication and user management. The default port for
+The user management service provides APIs for authentication and user management. The default port for
 the user management service is 15551
 
 ==== Authentication
@@ -793,7 +799,7 @@ can be used by fields in a registration form.
 
 See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize field types.
 
-==== Creating a field Type
+===== Creating a field Type
 
 A POST request will create a field type
 
@@ -901,7 +907,7 @@ that the input field is bound to. Fields can override and extend certain propert
 
 See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize fields.
 
-==== Creating a field
+===== Creating a field
 
 A POST request will create a field
 

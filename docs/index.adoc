@@ -5,6 +5,7 @@
 :icons: font
 :page-root: 
 :imagesrootdir: {page-root}/images
+:version: master
 
 == Introduction
 
@@ -24,17 +25,19 @@ To run Mmadu User service, take the following steps:
 ----
 mkdir mmadu && cd mmadu
 ----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/docker-compose.yml[docker compose file]
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
 +
 [source,sh]
+[subs="attributes"]
 ----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/docker-compose.yml
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
 ----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/.env[default environment file]
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
 +
 [source,sh]
+[subs="attributes"]
 ----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/develop/docker/.env
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
 ----
 . Make the necessary modifications to suite your configuration (you can use it as is)
 . Start the services
