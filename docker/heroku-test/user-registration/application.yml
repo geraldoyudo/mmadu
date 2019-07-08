@@ -11,7 +11,7 @@ mmadu:
     profile-config:
       profiles:
         - id: 1
-          domainId: 1
+          domainId: 0
           defaultRedirectUrl: https://google.com
           headerOne: My App
           headerThree: Register
@@ -35,7 +35,7 @@ mmadu:
       fields:
         - id: 1
           name: email
-          domainId: 1
+          domainId: 0
           placeholder: Email
           property: email
           fieldTypeId: 2
@@ -44,7 +44,7 @@ mmadu:
           required: true
         - id: 2
           name: full-name
-          domainId: 1
+          domainId: 0
           placeholder: Full Name
           property: fullName
           fieldTypeId: 1
@@ -53,7 +53,7 @@ mmadu:
           required: true
         - id: 3
           name: username
-          domainId: 1
+          domainId: 0
           placeholder: Username
           property: username
           fieldTypeId: 1
@@ -62,7 +62,7 @@ mmadu:
           required: true
         - id: 4
           name: password
-          domainId: 1
+          domainId: 0
           placeholder: Password
           property: password
           fieldTypeId: 3
