@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mmadu</groupId>
     <artifactId>mmadu-token-service</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.3.0-RELEASE</version>
     <name>mmadu-token-service</name>
     <description>Token Service for Mmadu Tools</description>
 
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.mmadu</groupId>
             <artifactId>encryption-utils</artifactId>
-            <version>1.2.1-SNAPSHOT</version>
+            <version>1.3.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.mmadu</groupId>
             <artifactId>security-utils</artifactId>
-            <version>1.2.1-SNAPSHOT</version>
+            <version>1.3.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>

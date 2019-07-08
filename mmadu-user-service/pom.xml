@@ -5,7 +5,7 @@
 
 	<groupId>com.mmadu</groupId>
 	<artifactId>mmadu-user-service</artifactId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.3.0-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>mmadu-user-service</name>
@@ -98,12 +98,12 @@
 		<dependency>
 			<groupId>com.mmadu</groupId>
 			<artifactId>encryption-utils</artifactId>
-			<version>1.2.1-SNAPSHOT</version>
+			<version>1.3.0-RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mmadu</groupId>
 			<artifactId>security-utils</artifactId>
-			<version>1.2.1-SNAPSHOT</version>
+			<version>1.3.0-RELEASE</version>
 		</dependency>
 	</dependencies>
 

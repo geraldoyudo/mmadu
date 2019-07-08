@@ -1,1 +1,1 @@
-docker build -t geraldoyudo/mmadu-token-service-heroku-test:1.2.1-SNAPSHOT .
+docker build -t geraldoyudo/mmadu-token-service-heroku-test:1.3.0-RELEASE .

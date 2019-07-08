@@ -1,14 +1,6 @@
 [source,bash]
 ----
-$ echo '{
-  "id" : "123453432",
-  "username" : "changed-username",
-  "password" : "changed-password",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "favourite-colour" : "blue",
-  "country" : "Nigeria"
-}' | http PUT 'http://localhost:8080/domains/test-app/users/123453432' \
+$ echo '{"id":"123453432","username":"changed-username","password":"changed-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}' | http PUT 'http://localhost:8080/domains/test-app/users/123453432' \
     'Content-Type:application/json' \
     'domain-auth-token:1234'
 ----

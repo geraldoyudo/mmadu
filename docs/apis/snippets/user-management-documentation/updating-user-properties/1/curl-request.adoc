@@ -3,13 +3,5 @@
 $ curl 'http://localhost:8080/domains/test-app/users/123453432' -i -X PUT \
     -H 'Content-Type: application/json' \
     -H 'domain-auth-token: 1234' \
-    -d '{
-  "id" : "123453432",
-  "username" : "changed-username",
-  "password" : "changed-password",
-  "roles" : [ "admin-role" ],
-  "authorities" : [ "admin" ],
-  "favourite-colour" : "blue",
-  "country" : "Nigeria"
-}'
+    -d '{"id":"123453432","username":"changed-username","password":"changed-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}'
 ----

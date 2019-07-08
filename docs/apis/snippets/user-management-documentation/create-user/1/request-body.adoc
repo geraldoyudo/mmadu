@@ -1,11 +1,4 @@
 [source,options="nowrap"]
 ----
-{
-  "id" : null,
-  "username" : "user",
-  "password" : "password",
-  "roles" : [ "admin" ],
-  "authorities" : [ "manage-users" ],
-  "color" : "blue"
-}
+{"id":"123","username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}
 ----
