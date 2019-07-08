@@ -16,7 +16,7 @@ public class ThymeleafConfig {
             @Value("${mmadu.registration.templates}") String templatesFolder) {
         SpringResourceTemplateResolver fileTemplateResolver = new SpringResourceTemplateResolver();
         fileTemplateResolver.setResolvablePatterns(Collections.singleton("domain/*"));
-        fileTemplateResolver.setPrefix("file:" + templatesFolder + "/");
+        fileTemplateResolver.setPrefix("file:/" + templatesFolder + "/");
         fileTemplateResolver.setSuffix(".html");
         fileTemplateResolver.setCacheable(false);
         return fileTemplateResolver;
