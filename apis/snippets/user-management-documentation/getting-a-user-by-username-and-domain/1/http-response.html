@@ -45,24 +45,16 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
+X-XSS-Protection: 1; mode=block
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 207
+X-Content-Type-Options: nosniff
+Content-Length: 159
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 
-{
-  &quot;id&quot; : &quot;123453432&quot;,
-  &quot;username&quot; : &quot;test-user&quot;,
-  &quot;password&quot; : &quot;my-password&quot;,
-  &quot;roles&quot; : [ &quot;admin-role&quot; ],
-  &quot;authorities&quot; : [ &quot;admin&quot; ],
-  &quot;favourite-colour&quot; : &quot;blue&quot;,
-  &quot;country&quot; : &quot;Nigeria&quot;
-}</code></pre>
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user&quot;,&quot;password&quot;:&quot;my-password&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
 </div>
 </div>
 

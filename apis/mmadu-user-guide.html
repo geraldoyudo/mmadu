@@ -1,0 +1,3792 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmadu User Guide</title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="../css/foundation.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/coderay.css">
+    <link rel="stylesheet" href="../css/asciidoctor.css">
+</head>
+<body>
+
+
+<!-- Nav Bar -->
+
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+            <h1>
+                <a href="../">Mmadu Documentation</a>
+            </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <h1>Mmadu User Guide</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#overview">1. Overview</a>
+<ul class="sectlevel2">
+<li><a href="#what_is_mmadu">1.1. What is Mmadu?</a></li>
+<li><a href="#features">1.2. Features</a></li>
+<li><a href="#whats_new">1.3. What&#8217;s New</a></li>
+<li><a href="#getting_started">1.4. Getting Started</a></li>
+</ul>
+</li>
+<li><a href="#architecture">2. Architecture</a></li>
+<li><a href="#api">3. API</a>
+<ul class="sectlevel2">
+<li><a href="#security">3.1. Security</a></li>
+<li><a href="#token-service">3.2. Token Service</a></li>
+<li><a href="#user_management_service">3.3. User Management Service</a></li>
+<li><a href="#registration_service">3.4. Registration Service</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="overview">1. Overview</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="what_is_mmadu">1.1. What is Mmadu?</h3>
+<div class="paragraph">
+<p>Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.</p>
+</div>
+<div class="paragraph">
+<p>Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
+a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
+care of registration work flows and exposes APIs for authentication.</p>
+</div>
+<div class="paragraph">
+<p>With Mmadu, you can have a dedicated system for managing users across all your applications.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features">1.2. Features</h3>
+<div class="sect3">
+<h4 id="user_authentication">1.2.1. User Authentication</h4>
+<div class="paragraph">
+<p>By calling an API, you can authenticate users of your application with Mmmadu. By passing a username
+and (encrypted) password, the rest api can determine whether the username/password combination is correct.
+This provides a basic method of integration with web security frameworks.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_management">1.2.2. Domain Management</h4>
+<div class="paragraph">
+<p>By creating an managing domains, you can logically separate users. Users in a domain are typically used for one application.
+My storing users in multiple domains, you can use a single mmadu installation to
+manage users across multiple applications.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_management">1.2.3. User Management</h4>
+<div class="paragraph">
+<p>The user service provides basic CRUD operations to help you manage and query your users.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="token_management">1.2.4. Token Management</h4>
+<div class="paragraph">
+<p>Mmadu utilizes tokens to secure its APIs. You can create tokens that grant access to one domain or utilize the admin token
+which has access to all domains.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_registration">1.2.5. User Registration</h4>
+<div class="paragraph">
+<p>Mmadu provides the web logic for registering users. With configured fields and field types, the registration api generates
+dynamic and configurable registration forms that domain users fill to be registered in an application.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="whats_new">1.3. What&#8217;s New</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Version</th>
+<th class="tableblock halign-left valign-top">Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1.3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Introduced user registration</p>
+<p class="tableblock">- Added docker installation features</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- User management API redesigned and made user friendly</p>
+<p class="tableblock">- Bug fixes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1.0.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Domain and user management API was introduced</p>
+<p class="tableblock">- Token security for domain and user management API was introduced.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v0.0.1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">- Api for creating and updating user information created.</p>
+<p class="tableblock">- Api for authenticating username and password information has been created.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="getting_started">1.4. Getting Started</h3>
+<div class="paragraph">
+<p>Mmadu can be installed in a number of ways since it is built and distributed with jar files. The easiest way to install
+mmadu is using docker.</p>
+</div>
+<div class="sect3">
+<h4 id="getting_started_with_docker">1.4.1. Getting Started with Docker</h4>
+<div class="sect4">
+<h5 id="requirements">Requirements</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Docker</p>
+</li>
+<li>
+<p>Docker Compose</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="installation">Installation</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a folder (we will use mmadu as the created folder)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">mkdir mmadu &amp;&amp; cd mmadu</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml">docker compose file</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env">default environment file</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Make the necessary modifications to suite your configuration (you can use it as is)</p>
+</li>
+<li>
+<p>Start the services</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">docker-compose up</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="using_the_default_settings">Using the default settings</h5>
+<div class="paragraph">
+<p>The docker compose installation comes pre-configured with default settings. You can access the api from each service using
+the default admin token 2222. The user management service, registration service and token service are
+at ports 15551, 15552 and 15553 respectively.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Do not use default settings for configuration on production.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="using_the_services">Using the services</h5>
+<div class="paragraph">
+<p>To find out more about how to consume the service API, please see <a href="#api">API</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="architecture">2. Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mmadu is built using a service oriented architecture. Each basic functionality is encapsulated
+in an independent service.</p>
+</div>
+<div class="paragraph">
+<p>The core service is the user management service which handles authentication, user and domain management. The token service
+is used by all other services for token authentication.</p>
+</div>
+<div class="paragraph">
+<p>Currently, mmadu has the following services:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Service</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Token Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service for managing and checking tokens and permissions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User management Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages domain authentication as well as administration of domains and users.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides a dynamic registration form for each domain. Exposes API endpoints to configure registration form fields.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="api">3. API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="security">3.1. Security</h3>
+<div class="paragraph">
+<p>If token security is enabled, you will need a token to access the api.</p>
+</div>
+<div class="paragraph">
+<p>Simply set the domain-auth-token header to the value of the token. For more information on tokens, see <a href="#token-service">token management</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="permissions">3.1.1. Permissions</h4>
+<div class="paragraph">
+<p>A token has admin permissions, while others have domain permissions. The admin token can access all parts of the API,
+while domain tokens can only access parts of the api that returns resources pertaining to the domain.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="token-service">3.2. Token Service</h3>
+<div class="paragraph">
+<p>Mmadu service uses token based security. Access to API can be done using admin and domain tokens. The default
+port for the token service is 15553</p>
+</div>
+<div class="sect3">
+<h4 id="admin_token">3.2.1. Admin Token</h4>
+<div class="paragraph">
+<p>An admin token is automatically created with an id "admin-token". This token will grant you access
+to all resources in the API.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_tokens">3.2.2. Domain Tokens</h4>
+<div class="paragraph">
+<p>Domain tokens are created and assigned to a domain configuration. Every domain can have one domain token.
+Multiple domains can share a domain token. Domain token grants the API user access to user resources for that domain.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="token_encryption">3.2.3. Token Encryption</h4>
+<div class="paragraph">
+<p>If encryption is enabled, the token values will be encrypted before storing in the database. It uses an AES CBC cipher to
+encrypt token values.</p>
+</div>
+<div class="paragraph">
+<p>Encryption can be enabled by setting the environment property <code>mmadu.domain.encrypt-keys</code> to <code>true</code>.</p>
+</div>
+<div class="paragraph">
+<p>Token values are encrypted under the master-key.</p>
+</div>
+<div class="sect4">
+<h5 id="changing_the_encryption_master_key">Changing the Encryption Master Key</h5>
+<div class="paragraph">
+<p>To change the encryption master key, set the environment property <code>mmadu.security.master-key</code> to the desired value.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generating_a_token">3.2.4. Generating a Token</h4>
+<div class="paragraph">
+<p>A GET request will create a new token and return the token value. If token encryption is enabled, the token value returned is
+encrypted.</p>
+</div>
+<div class="sect4">
+<h5 id="request">Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /token/generate HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns the newly generated token</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token value (Encrypted under master key if encryption is enabled)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Length: 314
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;id&quot; : &quot;5d1dd7316fc6c30f1c2fa625&quot;,
+  &quot;value&quot; : &quot;2613ec6bcf71f75a1f02f5ddb44092c800ea97417ee78724f2e043eb19f53c8a870f00cde4fb798434aaa0d130dd76285b4dfc57b6eb7bd62eca82763a773dfc2f5d9468ef90a88c23db432a6077377aaaaff8cce4e954ddd9206e2ee7f6c73a8e3d06e4957d461657b87857a1e2c8ea1bc7d3064531fb9cef7fb0f1a65cd95e&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieving_a_token">3.2.5. Retrieving a Token</h4>
+<div class="paragraph">
+<p>A GET request will get a token with the ID.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /token/retrieve/{tokenId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tokenId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /token/retrieve/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_2">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns an AppUser with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token value (Encrypted under master key if encryption is enabled)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Length: 39
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;value&quot; : &quot;1234&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="resetting_a_token">3.2.6. Resetting a Token</h4>
+<div class="paragraph">
+<p>A GET request will generate a new token value for the token.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_2">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /token/reset/{tokenId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tokenId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /token/reset/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_3">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a token with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token value (Encrypted under master key if encryption is enabled)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Length: 291
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;value&quot; : &quot;4ae568b84d271d8c34c5146fefbf46a47614d33b212a9525985eb895a70e2cb186a3c6bddd062088430ce6c9a8bb458798edb1cedb2067c82dd3c5ed4a9b5664ba1742181d7d12a32703fcc12b43da2ed495a34f5c2fd6d365a0d0ec668f49a8c4994b10600441e43c61a59204c70542cad0c6f992fd1aeb2b44a7f8b2136db3&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="setting_a_domain_token">3.2.7. Setting a Domain Token</h4>
+<div class="paragraph">
+<p>A POST request will set a domain&#8217;s token.</p>
+</div>
+<div class="sect4">
+<h5 id="request_fields">Request Fields</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tokenId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The id of the token</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /token/setDomainAuthToken HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 39
+Content-Type: application/json
+Host: localhost:8080
+
+{&quot;tokenId&quot;:&quot;1&quot;,&quot;domainId&quot;:&quot;1111111111&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_4">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a 204 no content response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="getting_the_token_associated_to_a_domain">3.2.8. Getting the token associated to a Domain</h4>
+<div class="paragraph">
+<p>A GET request will get a domain&#8217;s token.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_3">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /token/domainAuth/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /token/domainAuth/1111111111 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_5">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a token with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tokenId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+Content-Length: 53
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;tokenId&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;1111111111&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user_management_service">3.3. User Management Service</h3>
+<div class="paragraph">
+<p>The user management service provides APIs for authentication and user management. The default port for
+the user management service is 15551</p>
+</div>
+<div class="sect3">
+<h4 id="authentication">3.3.1. Authentication</h4>
+<div class="paragraph">
+<p>Using the rest api, you can authenticate users given a username and
+password.</p>
+</div>
+<div class="paragraph">
+<p>A post request authenticates a user on a domain.</p>
+</div>
+<div class="sect4">
+<h5 id="request_fields_2">Request Fields</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s password</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_4">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /domains/{domainId}/authenticate</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user authentication domain id</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/authenticate HTTP/1.1
+Content-Type: application/json
+domain-auth-token: 1234
+Host: localhost:8080
+Content-Length: 63
+
+{
+  &quot;username&quot; : &quot;test-user&quot;,
+  &quot;password&quot; : &quot;my-password&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_6">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a JSON response with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authentication status. One of the following: AUTHENTICATED, USERNAME_INVALID, PASSWORD_INVALID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 34
+
+{
+  &quot;status&quot; : &quot;AUTHENTICATED&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="managing_domains">3.3.2. Managing Domains</h4>
+<div class="paragraph">
+<p>A client application references users in one domain. A domain is referenced by a domain id. Applications
+can share the same user base by using the same domain id.</p>
+</div>
+<div class="sect4">
+<h5 id="security_2">Security</h5>
+<div class="paragraph">
+<p>If token security is enabled, the domain api can be accessed with the admin token.</p>
+</div>
+<div class="paragraph">
+<p>Token security is enabled by default. To disable, set the environment property <code>mmadu.domain.api-security-enabled</code>
+to <code>false</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="creating_a_domain">Creating A domain</h5>
+<div class="paragraph">
+<p>A POST request will create a domain</p>
+</div>
+<div class="sect5">
+<h6 id="request_fields_3">Request Fields</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID of the domain (optional, auto-generated)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /appDomains HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080
+Content-Length: 51
+
+{
+  &quot;id&quot; : &quot;00111111&quot;,
+  &quot;name&quot; : &quot;new-domain&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_7">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_a_domain_with_an_id">Getting a domain with an ID</h5>
+<div class="paragraph">
+<p>A GET request will get a domain with an ID.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_5">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /appDomains/00111111 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_8">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns an AppDomain with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain item resource links</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 223
+
+{
+  &quot;name&quot; : &quot;new-domain&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/00111111&quot;
+    },
+    &quot;appDomain&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/00111111&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_all_domains">Getting All Domains</h5>
+<div class="paragraph">
+<p>A GET request will get all domains.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /appDomains HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_9">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a list of all domains with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.appDomains.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the domain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.appDomains.[]._links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain item resource links</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource links</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page information</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/hal+json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1421
+
+{
+  &quot;_embedded&quot; : {
+    &quot;appDomains&quot; : [ {
+      &quot;name&quot; : &quot;global-config&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/0&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/0&quot;
+        }
+      }
+    }, {
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1&quot;
+        }
+      }
+    }, {
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
+        }
+      }
+    }, {
+      &quot;name&quot; : &quot;Test domain For Config&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1111111111&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1111111111&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains{?page,size,sort}&quot;,
+      &quot;templated&quot; : true
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/profile/appDomains&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 4,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updating_a_domain_with_an_id">Updating A Domain with an ID</h5>
+<div class="paragraph">
+<p>A PATCH request will update a domain with an ID.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_6">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /appDomains/00111111 HTTP/1.1
+Content-Type: application/json
+domain-auth-token: 2222
+Host: localhost:8080
+Content-Length: 23
+
+{&quot;name&quot;:&quot;changed-name&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_10">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="removing_a_domain">Removing A Domain</h5>
+<div class="paragraph">
+<p>A DELETE request will remove a domain with an ID.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_7">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /appDomains/00111111 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_11">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="users">3.3.3. Users</h4>
+<div class="paragraph">
+<p>This contains user information for a specific user. A user could have a username, password, roles,
+authorities and any other properties that the client deems fit.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="creating_a_user">3.3.4. Creating A User</h4>
+<div class="paragraph">
+<p>A POST request will create a user.</p>
+</div>
+<div class="sect4">
+<h5 id="fixed_request_fields">Fixed Request Fields</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s username (must be unique)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id (unique identifier used to reference user in your application)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s assigned roles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s granted authorities</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/users HTTP/1.1
+Content-Length: 116
+Content-Type: application/json
+domain-auth-token: 1234
+Host: localhost:8080
+
+{&quot;id&quot;:&quot;123&quot;,&quot;username&quot;:&quot;user&quot;,&quot;password&quot;:&quot;password&quot;,&quot;roles&quot;:[&quot;admin&quot;],&quot;authorities&quot;:[&quot;manage-users&quot;],&quot;color&quot;:&quot;blue&quot;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As seen in the example,  you can also add custom properties like the "color" property.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_12">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="getting_a_user_with_an_id">3.3.5. Getting A User with an ID</h4>
+<div class="paragraph">
+<p>A GET request will get a user with an ID.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_8">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/123453432 HTTP/1.1
+domain-auth-token: 1234
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_13">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns an AppUser with these fields as well as custom fields provided by the client:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Length: 159
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user&quot;,&quot;password&quot;:&quot;my-password&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, this user has two extra properties: <code>favourite-color</code> and  <code>country</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="getting_all_users_in_a_domain">3.3.6. Getting All Users In a Domain</h4>
+<div class="paragraph">
+<p>A GET request will get all users regardless of domains.</p>
+</div>
+<div class="sect4">
+<h5 id="request_parameters">Request Parameters</h5>
+<div class="paragraph">
+<p>The request includes page information to request for particular sets in the list.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">page number to request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum number of items in page</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users?page=0&amp;size=10 HTTP/1.1
+domain-auth-token: 1234
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_14">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s unique identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 663
+
+{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalElements&quot;:3,&quot;last&quot;:true,&quot;totalPages&quot;:1,&quot;size&quot;:10,&quot;number&quot;:0,&quot;numberOfElements&quot;:3,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true,&quot;empty&quot;:true},&quot;first&quot;:true,&quot;empty&quot;:false}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing_a_user_with_an_id">3.3.7. Removing A User with an ID</h4>
+<div class="paragraph">
+<p>A DELETE request will remove a user with an ID.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_9">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /domains/test-app/users/123453432 HTTP/1.1
+domain-auth-token: 1234
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_15">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="updating_a_user_with_an_id">3.3.8. Updating A User with an ID</h4>
+<div class="paragraph">
+<p>A PUT request will update a user with an ID. Not, this api will completely overwrite the properties of the
+existing user. There are no partial updates.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_10">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PUT /domains/test-app/users/123453432 HTTP/1.1
+Content-Length: 171
+Content-Type: application/json
+domain-auth-token: 1234
+Host: localhost:8080
+
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;changed-username&quot;,&quot;password&quot;:&quot;changed-password&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_16">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="getting_a_user_with_a_username_and_domain_id">3.3.9. Getting A User with a username and domain id</h4>
+<div class="paragraph">
+<p>A GET request will get a user with the specified username and domain id.</p>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_11">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. /domains/{domainId}/users/load</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="request_parameters_2">Request Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/load?username=test-user HTTP/1.1
+domain-auth-token: 1234
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_17">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns an AppUser with the fields below and other custom fields provided by the domain client.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Length: 159
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user&quot;,&quot;password&quot;:&quot;my-password&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="querying_users">3.3.10. Querying Users</h4>
+<div class="paragraph">
+<p>A GET request can search for users by username, and other custom fields created by the client.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Query string can only support custom string, integer and boolean fields currently.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Ensure to put individual criteria in parenthesis
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="request_parameters_3">Request Parameters</h5>
+<div class="paragraph">
+<p>The request includes page information to request for particular sets in the list.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The query search string. Use any of your custom properties for this search including username</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">page number to request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum number of items in page</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/search?page=0&amp;size=10&amp;query=%28country+equals+%27Nigeria%27%29+and+%28favourite-color+equals+%27blue%27%29 HTTP/1.1
+domain-auth-token: 1234
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_18">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s unique identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 663
+
+{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[&quot;admin-role&quot;],&quot;authorities&quot;:[&quot;admin&quot;],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalElements&quot;:3,&quot;last&quot;:true,&quot;totalPages&quot;:1,&quot;size&quot;:10,&quot;number&quot;:0,&quot;numberOfElements&quot;:3,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true,&quot;empty&quot;:true},&quot;first&quot;:true,&quot;empty&quot;:false}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="partial_user_update">3.3.11. Partial User update</h4>
+<div class="paragraph">
+<p>A PATCH request can update users partially based on a query criteria</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Query string can only support custom string, integer and boolean fields currently.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Ensure to put individual criteria in parenthesis
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="path_parameters_12">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. /domains/{domainId}/users</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="request_2">Request</h5>
+<div class="paragraph">
+<p>The PATCH request accepts a query string and an array of update operations.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The query criteria for updating users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].operation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The kind of update operation to make: (SET, INCREMENT, ADD, REMOVE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The property to update</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value used by the update operation</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /domains/test-app/users HTTP/1.1
+Content-Length: 105
+Content-Type: application/json
+domain-auth-token: 1234
+Host: localhost:8080
+
+{&quot;query&quot;:&quot;(country equals 'Nigeria')&quot;,&quot;updates&quot;:[{&quot;operation&quot;:&quot;SET&quot;,&quot;property&quot;:&quot;color&quot;,&quot;value&quot;:&quot;green&quot;}]}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_19">Response Fields</h5>
+<div class="paragraph">
+<p>The API returns 204 No content for a successful update.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="registration_service">3.4. Registration Service</h3>
+<div class="paragraph">
+<p>The registration service provides an api to access the registration page for a domain. The registration page
+generates a form from the configured fields and field types of a domain.</p>
+</div>
+<div class="sect3">
+<h4 id="displaying_the_registration_form">3.4.1. Displaying the registration form</h4>
+<div class="paragraph">
+<p>The registration form can be accessed in the browser using the url:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://[registration-host]:[registration-port]/[domain-id]/register</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, accessing the default domain with the default configuration can be done
+by entering the url below on your browser.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:1552/0/register</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
+this domain. To specify a url to redirect to, add the redirectUrl parameter</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:1552/0/register?redirectUrl=http://myapp.com</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="customizing_registration_forms">3.4.2. Customizing Registration Forms</h4>
+<div class="paragraph">
+<p>Registration forms for a domain can be customized by adding and removing fields and field types.
+The registration service ensures that form fields are created for each field.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="registration_profiles">3.4.3. Registration Profiles</h4>
+<div class="paragraph">
+<p>Each domain has a registration profile object that is used for configuring the applications behaviour during
+registration.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There can be only one registration profile for a domain.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="creating_a_registration_profile">Creating a Registration Profile</h5>
+<div class="paragraph">
+<p>A POST Request will create a registration profile.</p>
+</div>
+<div class="sect5">
+<h6 id="fixed_request_fields_2">Fixed Request Fields</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration profile ID (auto generated if absent)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roles assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerOne</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main registration page title - h1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerTwo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secondary registration page title - h2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerThree</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tertiary registration page title - h3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>instruction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction message for registering users displayed at the top of the form</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>submitButtonTitle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Submit button text</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/registrationProfiles HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 358
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;0&quot;,
+  &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
+  &quot;defaultRoles&quot; : [ &quot;member&quot; ],
+  &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;headerOne&quot; : &quot;My App&quot;,
+  &quot;headerTwo&quot; : &quot;Register&quot;,
+  &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
+  &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
+  &quot;submitButtonTitle&quot; : &quot;Go&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_20">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="obtaining_registration_profile_by_profile_id">Obtaining Registration Profile by Profile ID</h5>
+<div class="paragraph">
+<p>A GET Request will return a registration profile with its ID</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_13">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/registrationProfiles/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="response_fields_21">Response Fields</h5>
+<div class="paragraph">
+<p>This API returns the registration profile with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration profile ID (auto generated if absent)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roles assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerOne</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main registration page title - h1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerTwo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secondary registration page title - h2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerThree</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tertiary registration page title - h3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>instruction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction message for registering users displayed at the top of the form</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>submitButtonTitle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Submit button text</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 563
+
+{
+  &quot;domainId&quot; : &quot;0&quot;,
+  &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
+  &quot;defaultRoles&quot; : [ &quot;member&quot; ],
+  &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;headerOne&quot; : &quot;My App&quot;,
+  &quot;headerTwo&quot; : &quot;Register&quot;,
+  &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
+  &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
+  &quot;submitButtonTitle&quot; : &quot;Go&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+    },
+    &quot;registrationProfile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updating_registration_profile_by_id">Updating Registration Profile by ID</h5>
+<div class="paragraph">
+<p>A PATCH Request will update a registration profile. The example below updates the defaultRegistrationUrl property.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_14">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/registrationProfiles/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080
+Content-Length: 48
+
+{&quot;defaultRedirectUrl&quot;:&quot;http://modified.app.com&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_22">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="deleting_a_registration_profile_by_id">Deleting a Registration Profile by ID</h5>
+<div class="paragraph">
+<p>A DELETE request will delete a registration profile.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Deleting a registration profile will remote all fields associated with the profile and a registration page
+for that domain will be unavailable.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_15">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/registrationProfiles/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_23">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_types">3.4.4. Field Types</h4>
+<div class="paragraph">
+<p>Field type objects specify the properties of a field type in the registration form. You can create a field type that
+can be used by fields in a registration form.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize field types.</p>
+</div>
+<div class="sect4">
+<h5 id="creating_a_field_type">Creating a field Type</h5>
+<div class="paragraph">
+<p>A POST request will create a field type</p>
+</div>
+<div class="sect5">
+<h6 id="request_fields_4">Request Fields</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field Type ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Style applied to all fields of the type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fieldTypes HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080
+Content-Length: 521
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;Age&quot;,
+  &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+  &quot;fieldTypePattern&quot; : &quot;&quot;,
+  &quot;type&quot; : &quot;integer&quot;,
+  &quot;enclosingElement&quot; : &quot;div&quot;,
+  &quot;classes&quot; : [ &quot;form-control&quot; ],
+  &quot;style&quot; : null,
+  &quot;script&quot; : &quot;&quot;,
+  &quot;css&quot; : &quot;&quot;,
+  &quot;max&quot; : &quot;100&quot;,
+  &quot;min&quot; : &quot;10&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_24">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_a_field_type_with_an_id">Getting a field type with an ID</h5>
+<div class="paragraph">
+<p>A GET request will get a field type with an ID.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_16">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_25">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a FieldType object with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field Type ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Style applied to all fields of the type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 696
+
+{
+  &quot;name&quot; : &quot;Age&quot;,
+  &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+  &quot;fieldTypePattern&quot; : &quot;&quot;,
+  &quot;type&quot; : &quot;integer&quot;,
+  &quot;enclosingElement&quot; : &quot;div&quot;,
+  &quot;classes&quot; : [ &quot;form-control&quot; ],
+  &quot;style&quot; : null,
+  &quot;script&quot; : &quot;&quot;,
+  &quot;css&quot; : &quot;&quot;,
+  &quot;max&quot; : &quot;100&quot;,
+  &quot;min&quot; : &quot;10&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+    },
+    &quot;fieldType&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_all_field_types">Getting All Field Types</h5>
+<div class="paragraph">
+<p>A GET request will get all field types.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_26">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a list of all field types with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Content-Length: 1170
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;_embedded&quot; : {
+    &quot;fieldTypes&quot; : [ {
+      &quot;name&quot; : &quot;Age&quot;,
+      &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+      &quot;fieldTypePattern&quot; : &quot;&quot;,
+      &quot;type&quot; : &quot;integer&quot;,
+      &quot;enclosingElement&quot; : &quot;div&quot;,
+      &quot;classes&quot; : [ &quot;form-control&quot; ],
+      &quot;style&quot; : null,
+      &quot;script&quot; : &quot;&quot;,
+      &quot;css&quot; : &quot;&quot;,
+      &quot;max&quot; : &quot;100&quot;,
+      &quot;min&quot; : &quot;10&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+        },
+        &quot;fieldType&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes{?page,size,sort}&quot;,
+      &quot;templated&quot; : true
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/profile/fieldTypes&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 1,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updating_a_field_type">Updating A Field Type</h5>
+<div class="paragraph">
+<p>A PATCH request will update a field type</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_17">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 17. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fieldTypes/1 HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 19
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;New Type&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_27">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="removing_a_field_type">Removing A Field Type</h5>
+<div class="paragraph">
+<p>A DELETE request will remove a field type.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_18">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 18. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/fieldTypes/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_28">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fields">3.4.5. Fields</h4>
+<div class="paragraph">
+<p>Fields contain information used in rendering each field in a registration form. Fields utilize properties
+of their field types in order to render an adequate representation of the field. Fields also specify the user property
+that the input field is bound to. Fields can override and extend certain properties of the field types.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize fields.</p>
+</div>
+<div class="sect4">
+<h5 id="creating_a_field">Creating a field</h5>
+<div class="paragraph">
+<p>A POST request will create a field</p>
+</div>
+<div class="sect5">
+<h6 id="request_fields_5">Request Fields</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fields HTTP/1.1
+Content-Length: 251
+domain-auth-token: 2222
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;username&quot;,
+  &quot;placeholder&quot; : &quot;Enter Username&quot;,
+  &quot;property&quot; : &quot;username&quot;,
+  &quot;fieldTypeId&quot; : &quot;1&quot;,
+  &quot;style&quot; : &quot;&quot;,
+  &quot;label&quot; : &quot;Username&quot;,
+  &quot;order&quot; : 1,
+  &quot;pattern&quot; : &quot;&quot;,
+  &quot;required&quot; : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_29">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_a_field_type_with_an_id_2">Getting a field type with an ID</h5>
+<div class="paragraph">
+<p>A GET request will get a field with an ID.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_19">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 19. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_30">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a Field object with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Content-Length: 414
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;username&quot;,
+  &quot;placeholder&quot; : &quot;Enter Username&quot;,
+  &quot;property&quot; : &quot;username&quot;,
+  &quot;fieldTypeId&quot; : &quot;1&quot;,
+  &quot;style&quot; : &quot;&quot;,
+  &quot;label&quot; : &quot;Username&quot;,
+  &quot;order&quot; : 1,
+  &quot;pattern&quot; : &quot;&quot;,
+  &quot;required&quot; : true,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+    },
+    &quot;field&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="getting_all_fields_in_domain">Getting All Fields in Domain</h5>
+<div class="paragraph">
+<p>A GET request will get all fields in a domain.</p>
+</div>
+<div class="sect5">
+<h6 id="request_parameters_4">Request Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the request</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/search/findByDomainId?domainId=1 HTTP/1.1
+domain-auth-token: 2222
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_31">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a list of all fields with these properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 658
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+{
+  &quot;_embedded&quot; : {
+    &quot;fields&quot; : [ {
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;username&quot;,
+      &quot;placeholder&quot; : &quot;Enter Username&quot;,
+      &quot;property&quot; : &quot;username&quot;,
+      &quot;fieldTypeId&quot; : &quot;1&quot;,
+      &quot;style&quot; : &quot;&quot;,
+      &quot;label&quot; : &quot;Username&quot;,
+      &quot;order&quot; : 1,
+      &quot;pattern&quot; : &quot;&quot;,
+      &quot;required&quot; : true,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+        },
+        &quot;field&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/search/findByDomainId&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="updating_a_field">Updating A Field</h5>
+<div class="paragraph">
+<p>A PATCH request will update a field</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_20">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 20. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 34
+Host: localhost:8080
+
+{&quot;placeholder&quot;:&quot;Enter a Username&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_32">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="removing_a_field">Removing A Field</h5>
+<div class="paragraph">
+<p>A DELETE request will remove a field.</p>
+</div>
+<div class="sect5">
+<h6 id="path_parameters_21">Path Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 21. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
+domain-auth-token: 2222
+Content-Length: 34
+Host: localhost:8080
+
+{&quot;placeholder&quot;:&quot;Enter a Username&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="response_fields_33">Response Fields</h6>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="defining-markup-for-fields">3.4.6. Defining Markup for Fields</h4>
+<div class="paragraph">
+<p>You define how you want your registration fields by configuring fields and field types. The markup property in
+the field type is used to define the markup of that specific field type. An age field type markup can be defined
+as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;label</span> <span class="attribute-name">for</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">sr-only</span><span class="delimiter">'</span></span><span class="tag">&gt;</span>$field.label<span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">number</span><span class="delimiter">'</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">form-control</span><span class="delimiter">'</span></span>
+<span class="attribute-name">placeholder</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.placeholder</span><span class="delimiter">'</span></span> <span class="error">$</span><span class="attribute-name">maxValue</span> <span class="error">$</span><span class="attribute-name">minValue</span> <span class="attribute-name">autofocus</span> <span class="error">$</span><span class="attribute-name">required</span> <span class="error">$</span><span class="attribute-name">inputField</span> <span class="error">$</span><span class="attribute-name">inputStyle</span> <span class="error">$</span><span class="attribute-name">errorStyle</span> <span class="tag">&gt;</span>
+$errorDisplay&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mmadu registration service uses apache velocity to generate markup for fields. It provies the following in
+the template context for use in defining fields. You reference context objects by adding the <code>$</code> prefix. For example,
+the <code>$field.name</code> returns the name property in the field object.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Object Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field object</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type object</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inputField</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input attribute and value that marks an element as a model input</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inputStyle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">style attribute, any element with this property will have the field type style property appended to that element</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorStyle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">style attribute, any element with this property will have the style appended with the error style when the field contains errors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorDisplay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for displaying field errors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max attribute, any element with this will have the max attribute set to the max value of the field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min attribute, any element with this will have the min attribute set to the min value of the field type</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-12 columns">
+                <p>Footer</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="../js/vendor/jquery.js"></script>
+<script src="../js/foundation.min.js"></script>
+<script src="../js/vendor/modernizr.js"></script>
+<script src="../js/toc.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

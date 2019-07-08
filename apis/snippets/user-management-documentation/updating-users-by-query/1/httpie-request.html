@@ -44,14 +44,7 @@
 
         <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ echo '{
-  &quot;query&quot; : &quot;(country equals 'Nigeria')&quot;,
-  &quot;updates&quot; : [ {
-    &quot;operation&quot; : &quot;SET&quot;,
-    &quot;property&quot; : &quot;color&quot;,
-    &quot;value&quot; : &quot;green&quot;
-  } ]
-}' | http PATCH 'http://localhost:8080/domains/test-app/users' \
+<pre class="CodeRay highlight"><code data-lang="bash">$ echo '{&quot;query&quot;:&quot;(country equals 'Nigeria')&quot;,&quot;updates&quot;:[{&quot;operation&quot;:&quot;SET&quot;,&quot;property&quot;:&quot;color&quot;,&quot;value&quot;:&quot;green&quot;}]}' | http PATCH 'http://localhost:8080/domains/test-app/users' \
     'Content-Type:application/json' \
     'domain-auth-token:1234'</code></pre>
 </div>

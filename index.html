@@ -47,52 +47,7 @@
 <h2 id="introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mmadu is basically a user management service. Mmadu takes care of routine operations like user
-management, authentication, domain management and so on.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="whats_new">What&#8217;s New</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="v_0_0_1">v.0.0.1</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Api for creating and updating user information created.</p>
-</li>
-<li>
-<p>Api for authenticating username and password information has been created.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="v_1_0_0">v.1.0.0</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Domain and user management API was introduced</p>
-</li>
-<li>
-<p>Token security for domain and user management API was introduced.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="v_1_1_0">v.1.1.0</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>User management API redesigned and made user friendly</p>
-</li>
-<li>
-<p>Bug fixes</p>
-</li>
-</ul>
-</div>
+<p>Mmadu is a set of tools and services that helps developers manage their application users.</p>
 </div>
 </div>
 </div>
@@ -100,8 +55,7 @@ management, authentication, domain management and so on.</p>
 <h2 id="getting_started">Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mmadu service uses MongoDB for storing user information. By default, it uses the
-default mongo connections to create the database.</p>
+<p>Mmadu can be easily started with docker compose.</p>
 </div>
 <div class="sect2">
 <h3 id="steps_to_run_mmadu_user_service">Steps to Run Mmadu User Service</h3>
@@ -111,30 +65,50 @@ default mongo connections to create the database.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Pull the code from <a href="https://github.com/geraldoyudo/mmadu">GitHub</a></p>
-</li>
-<li>
-<p>Ensure that MongoDB is running.</p>
-</li>
-<li>
-<p>Open terminal and execute the following</p>
-</li>
-</ol>
-</div>
+<p>Create a folder (we will use mmadu as the created folder)</p>
 <div class="listingblock">
 <div class="content">
-<pre>cd mmadu-user-service
-mvn spring-boot:run</pre>
+<pre class="CodeRay highlight"><code data-lang="sh">mkdir mmadu &amp;&amp; cd mmadu</code></pre>
 </div>
+</div>
+</li>
+<li>
+<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml">docker compose file</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env">default environment file</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Make the necessary modifications to suite your configuration (you can use it as is)</p>
+</li>
+<li>
+<p>Start the services</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sh">docker-compose up</code></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api_documentation">API Documentation</h2>
+<h2 id="user_guide">User Guide</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Check <a href="https://geraldoyudo.github.io/mmadu/apis/mmadu-service-api">here</a> for the API Documentation.</p>
+<p>Check <a href="https://geraldoyudo.github.io/mmadu/apis/mmadu-user-guide">here</a> for the user guide</p>
 </div>
 </div>
 </div>
