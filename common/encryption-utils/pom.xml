@@ -6,7 +6,7 @@
 
     <groupId>com.mmadu</groupId>
     <artifactId>encryption-utils</artifactId>
-    <version>1.3.0-RELEASE</version>
+    <version>1.3.1-SNAPSHOT</version>
 
     <name>encryption-utils</name>
     <description>Encryption components for mmadu project</description>

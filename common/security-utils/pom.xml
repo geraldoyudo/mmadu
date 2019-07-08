@@ -6,7 +6,7 @@
 
     <groupId>com.mmadu</groupId>
     <artifactId>security-utils</artifactId>
-    <version>1.3.0-RELEASE</version>
+    <version>1.3.1-SNAPSHOT</version>
 
     <name>security-utils</name>
     <description>Security components for mmadu services</description>

@@ -1,1 +1,1 @@
-docker run --name heroku-mmadu-registration -p 8080:8080 geraldoyudo/mmadu-registration-heroku-test:1.3.0-RELEASE
+docker run --name heroku-mmadu-registration -p 8080:8080 geraldoyudo/mmadu-registration-heroku-test:1.3.1-SNAPSHOT
