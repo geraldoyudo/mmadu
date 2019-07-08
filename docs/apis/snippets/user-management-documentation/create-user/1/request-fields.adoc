@@ -3,10 +3,10 @@
 
 |`+username+`
 |`+String+`
-|The user's username (must be unigue)
+|The user's username (must be unique)
 
 |`+id+`
-|`+Null+`
+|`+String+`
 |The user's id (unique identifier used to reference user in your application)
 
 |`+password+`

@@ -1,27 +1,21 @@
 mmadu:
   security:
     master-key: 11111111111111111111111111111111
+  tokenService:
+    url: http://localhost:10082
+  domainKey: 2222
   domain-config:
     domains:
       - id: 0
         name: global-config
-        authenticationApiToken: 0
       - id: 1
         name: test
-        authenticationApiToken: 1
       - id: test-app
         name: test-domain
-        authenticationApiToken: 1
-  token-config:
-    tokens:
-      - id: 0
-        value: 1111
-      - id: 1
-        value: 1234
-      - id: admin-token
-        value: 2222
 spring:
   data:
     mongodb:
       database: mmadu_test
       host: localhost
+  main:
+    allow-bean-definition-overriding: true

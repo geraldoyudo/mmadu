@@ -1,12 +1,7 @@
 package com.mmadu.service.integration;
 
-import static com.mmadu.service.models.AuthenticationStatus.AUTHENTICATED;
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmadu.security.DomainTokenChecker;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.models.AuthenticateRequest;
@@ -17,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
@@ -26,6 +21,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static com.mmadu.service.models.AuthenticationStatus.AUTHENTICATED;
+import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -42,6 +44,8 @@ public class AuthenticationApiDomainTokenSecurityIT {
     @Autowired
     private AppUserRepository appUserRepository;
     private ObjectMapper mapper = new ObjectMapper();
+    @MockBean
+    private DomainTokenChecker domainTokenChecker;
 
     @Before
     public void setUp() {
@@ -54,8 +58,8 @@ public class AuthenticationApiDomainTokenSecurityIT {
     public void givenNoDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
         this.mockMvc.perform(post("/domains/{domainId}/authenticate", DOMAIN_ID)
                 .contentType(MediaType.APPLICATION_JSON).content(
-                mapper.writeValueAsString(
-                        AuthenticateRequest.builder().username("user").password("password").build())))
+                        mapper.writeValueAsString(
+                                new AuthenticateRequest("user", "password"))))
                 .andExpect(status().isForbidden());
     }
 
@@ -66,20 +70,21 @@ public class AuthenticationApiDomainTokenSecurityIT {
                         .header(DOMAIN_AUTH_TOKEN_FIELD, "33333")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
-                                AuthenticateRequest.builder().username("user").password("password")
-                                        .build()))).andExpect(status().isForbidden());
+                                new AuthenticateRequest("user", "password"))))
+                .andExpect(status().isForbidden());
     }
 
     @Test
     public void givenCorrectDomainTokenHeaderWhenAuthenticateShouldReturnAuthorized() throws Exception {
+        doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(getToken(), DOMAIN_ID);
         createAppUser();
         this.mockMvc.perform(
                 post("/domains/{domainId}/authenticate", DOMAIN_ID)
                         .header(DOMAIN_AUTH_TOKEN_FIELD, getToken()).contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
-                                AuthenticateRequest.builder().username("user").password("password")
-                                        .build()))).andExpect(status().isOk())
-                                        .andExpect(jsonPath("$.status").value(AUTHENTICATED.name()));
+                                new AuthenticateRequest("user", "password")
+                        ))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(AUTHENTICATED.name()));
     }
 
     private void createAppUser() {
@@ -91,7 +96,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
         appUserRepository.save(user);
     }
 
-    protected String getToken(){
+    protected String getToken() {
         return TOKEN;
     }
 }

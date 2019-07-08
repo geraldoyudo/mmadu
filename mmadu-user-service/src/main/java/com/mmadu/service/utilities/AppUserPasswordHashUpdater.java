@@ -13,10 +13,10 @@ public class AppUserPasswordHashUpdater {
         this.passwordHasher = passwordHasher;
     }
 
-    public String updatePasswordHash(String password){
-        if(passwordHasher.isEncoded(password)){
+    public String updatePasswordHash(String password) {
+        if (passwordHasher.isEncoded(password)) {
             return password;
-        }else {
+        } else {
             return passwordHasher.hashPassword(password);
         }
     }

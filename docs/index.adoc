@@ -5,44 +5,48 @@
 :icons: font
 :page-root: 
 :imagesrootdir: {page-root}/images
+:version: master
 
 == Introduction
 
-Mmadu is basically a user management service. Mmadu takes care of routine operations like user
-management, authentication, domain management and so on.
-
-== What's New
-
-=== v.0.0.1
-* Api for creating and updating user information created.
-* Api for authenticating username and password information has been created.
-
-=== v.1.0.0
-* Domain and user management API was introduced
-* Token security for domain and user management API was introduced.
-
-=== v.1.1.0
-* User management API redesigned and made user friendly
-* Bug fixes
-
+Mmadu is a set of tools and services that helps developers manage their application users.
 
 == Getting Started
 
-Mmadu service uses MongoDB for storing user information. By default, it uses the
-default mongo connections to create the database.
+Mmadu can be easily started with docker compose.
 
 === Steps to Run Mmadu User Service
+
 To run Mmadu User service, take the following steps:
 
-. Pull the code from https://github.com/geraldoyudo/mmadu[GitHub]
-. Ensure that MongoDB is running.
-. Open terminal and execute the following
-
+. Create a folder (we will use mmadu as the created folder)
++
+[source,sh]
 ----
-cd mmadu-user-service
-mvn spring-boot:run
+mkdir mmadu && cd mmadu
+----
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
++
+[source,sh]
+[subs="attributes"]
+----
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
+----
+. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
++
+[source,sh]
+[subs="attributes"]
+----
+wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
+----
+. Make the necessary modifications to suite your configuration (you can use it as is)
+. Start the services
++
+[source,sh]
+----
+docker-compose up
 ----
 
-== API Documentation 
+== User Guide
 
-Check https://geraldoyudo.github.io/mmadu/apis/mmadu-service-api[here] for the API Documentation.
+Check https://geraldoyudo.github.io/mmadu/apis/mmadu-user-guide[here] for the user guide

@@ -1,5 +1,0 @@
-[source,bash]
-----
-$ http GET 'http://localhost:8080/domainConfigurations/search/findByDomainId?domainId=test-app' \
-    'domain-auth-token:2222'
-----

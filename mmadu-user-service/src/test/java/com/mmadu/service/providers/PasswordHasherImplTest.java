@@ -45,7 +45,8 @@ public class PasswordHasherImplTest {
 
     @Test
     public void shouldBeAbleToDetectEncodedPasswords(){
-        collector.checkThat(passwordHasher.isEncoded("$2a$10$UixxZEWO2E3XXQ97.j/EhugzjntruK4N3JvbejnmyA2gNOsNUF1my"),
+        collector.checkThat(passwordHasher
+                        .isEncoded("$2a$10$UixxZEWO2E3XXQ97.j/EhugzjntruK4N3JvbejnmyA2gNOsNUF1my"),
                 is(true));
     }
 }

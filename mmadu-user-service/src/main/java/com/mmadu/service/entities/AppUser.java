@@ -1,6 +1,6 @@
 package com.mmadu.service.entities;
 
-import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.UserView;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;

@@ -1,11 +1,4 @@
 [source,options="nowrap"]
 ----
-{
-  "query" : "(country equals 'Nigeria')",
-  "updates" : [ {
-    "operation" : "SET",
-    "property" : "color",
-    "value" : "green"
-  } ]
-}
+{"query":"(country equals 'Nigeria')","updates":[{"operation":"SET","property":"color","value":"green"}]}
 ----

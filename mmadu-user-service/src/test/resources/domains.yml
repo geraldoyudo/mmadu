@@ -1,8 +1,5 @@
 mmadu:
   domain-config:
-    name: test
     domains:
       - id: 1234
         name: test
-        tokenEncryptionKey: 12345
-

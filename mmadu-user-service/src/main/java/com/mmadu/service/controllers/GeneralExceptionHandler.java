@@ -44,8 +44,7 @@ public class GeneralExceptionHandler {
         return new ErrorResponse("220", ex.getMessage());
     }
 
-    @ExceptionHandler({DomainAuthenticationException.class, InvalidDomainCredentialsException.class,
-            TokenNotFoundException.class})
+    @ExceptionHandler({DomainAuthenticationException.class, InvalidDomainCredentialsException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleUnauthorizedException() {
         return new ErrorResponse("225", "Unauthorized");

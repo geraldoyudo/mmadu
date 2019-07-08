@@ -5,21 +5,10 @@ mmadu:
     domains:
       - id: 0
         name: global-config
-        authenticationApiToken: 0
       - id: 1
         name: test
-        authenticationApiToken: 1
       - id: test-app
         name: test-domain
-        authenticationApiToken: 1
-  token-config:
-    tokens:
-      - id: 0
-        value: 59ddca09f5174247443d6b28014cea9affd2d4afba44c72ae0e08a0133bdc357bba1c67b04791d9183ab16773aa4ced6
-      - id: 1
-        value: 0276622ac0bc68c4ba86d8799dd36b34fa9acdd2af54c8c92a13797db513af914c70dde82c1ddbafe0cf67c498f9ef9f
-      - id: admin-token
-        value: 234145d2c2ef7be872ef125a43264bfecab4145ea7ab25126893844f1946d7bd3a8f957203d0d2204059d0ca0d1e0ad6
 spring:
   data:
     mongodb:

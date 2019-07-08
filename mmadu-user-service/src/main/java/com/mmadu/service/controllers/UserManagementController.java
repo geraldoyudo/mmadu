@@ -1,8 +1,8 @@
 package com.mmadu.service.controllers;
 
-import com.mmadu.service.model.UpdateRequest;
-import com.mmadu.service.model.UserUpdateRequest;
-import com.mmadu.service.model.UserView;
+import com.mmadu.service.models.UpdateRequest;
+import com.mmadu.service.models.UserUpdateRequest;
+import com.mmadu.service.models.UserView;
 import com.mmadu.service.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

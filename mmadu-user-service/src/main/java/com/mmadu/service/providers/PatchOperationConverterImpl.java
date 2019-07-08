@@ -1,7 +1,7 @@
 package com.mmadu.service.providers;
 
-import com.mmadu.service.model.PatchOperation;
-import com.mmadu.service.model.UpdateRequest;
+import com.mmadu.service.models.PatchOperation;
+import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.providers.patchproviders.*;
 import org.springframework.data.mongodb.core.query.Update;
 

@@ -1,0 +1,8 @@
+.+/token/domainAuth/{domainId}+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain ID
+
+|===

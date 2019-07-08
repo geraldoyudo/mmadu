@@ -1,0 +1,48 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Field ID
+
+|`+pattern+`
+|`+String+`
+|Allowed string pattern for field
+
+|`+style+`
+|`+String+`
+|css style for input element in field
+
+|`+label+`
+|`+String+`
+|Input field label
+
+|`+placeholder+`
+|`+String+`
+|input field placeholder
+
+|`+fieldTypeId+`
+|`+String+`
+|Id of the field's type
+
+|`+property+`
+|`+String+`
+|User property that the field will set
+
+|`+order+`
+|`+Number+`
+|Order of the field in Layout
+
+|`+required+`
+|`+Boolean+`
+|If the field input is required or not
+
+|`+name+`
+|`+String+`
+|the form name of the field
+
+|`+domainId+`
+|`+String+`
+|the ID of the domain
+
+|===

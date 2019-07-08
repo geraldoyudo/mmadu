@@ -1,20 +1,15 @@
 package com.mmadu.service.repositories;
 
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-
 import com.geraldoyudo.kweeri.core.expression.Expression;
 import com.geraldoyudo.kweeri.mongo.MongoQueryConverter;
 import com.geraldoyudo.kweeri.mongo.MongoQuerySerializer;
 import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppUser;
-import com.mmadu.service.model.PatchOperation;
-import com.mmadu.service.model.UpdateRequest;
-import com.mmadu.service.model.UserPatch;
 import com.mmadu.service.models.DomainIdObject;
+import com.mmadu.service.models.PatchOperation;
+import com.mmadu.service.models.UpdateRequest;
+import com.mmadu.service.models.UserPatch;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +27,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+
 @DataMongoTest
 @RunWith(SpringRunner.class)
 @Import(DatabaseConfig.class)
@@ -43,12 +43,12 @@ public class AppUserRepositoryTest {
     private MongoTemplate mongoTemplate;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         appUserRepository.deleteAll();
     }
 
     @Test
-    public void createAndRetrieveAppUser(){
+    public void createAndRetrieveAppUser() {
         AppUser user = new AppUser();
         user.setUsername("user");
         user.setPassword("password");
@@ -59,7 +59,7 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    public void findByUserNameAndDomain(){
+    public void findByUserNameAndDomain() {
         initializeAppUser();
         AppUser user = appUserRepository.findByUsernameAndDomainId("user", "test").get();
         assertThat(user, notNullValue());
@@ -80,28 +80,28 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    public void findDomainIdForUser(){
+    public void findDomainIdForUser() {
         AppUser appUser = initializeAppUser();
         DomainIdObject domainId = appUserRepository.findDomainIdForUser(appUser.getId()).get();
         assertThat(domainId.getDomainId(), equalTo(appUser.getDomainId()));
     }
 
     @Test
-    public void existsByUserNameAndDomain(){
+    public void existsByUserNameAndDomain() {
         initializeAppUser();
         boolean exists = appUserRepository.existsByUsernameAndDomainId("user", "test");
         assertThat(exists, is(true));
     }
 
     @Test
-    public void existsByExternalId(){
+    public void existsByExternalId() {
         initializeAppUser();
         boolean exists = appUserRepository.existsByExternalIdAndDomainId("ext-id", "test");
         assertThat(exists, is(true));
     }
 
     @Test(expected = DuplicateKeyException.class)
-    public void whenAddTwoUsersWithSameExternalIdThrowException(){
+    public void whenAddTwoUsersWithSameExternalIdThrowException() {
         AppUser appUser1 = createAppUser();
         AppUser appUser2 = createAppUser();
         appUser2.setUsername("user-2");
@@ -110,7 +110,7 @@ public class AppUserRepositoryTest {
     }
 
     @Test(expected = DuplicateKeyException.class)
-    public void whenAddTwoUsersWithSameUsernameThrowException(){
+    public void whenAddTwoUsersWithSameUsernameThrowException() {
         AppUser appUser1 = createAppUser();
         AppUser appUser2 = createAppUser();
         appUser2.setExternalId("ext-id-232");
@@ -119,18 +119,18 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    public void findByDomainAndExternalId(){
+    public void findByDomainAndExternalId() {
         initializeAppUser();
         AppUser user = appUserRepository.findByDomainIdAndExternalId("test", "ext-id").get();
         assertThat(user, notNullValue());
     }
 
     @Test
-    public void testQueriesWithBasicQuery(){
+    public void testQueriesWithBasicQuery() {
         AppUser user = createAppUser();
         user.set("color", "red");
         appUserRepository.save(user);
-        MongoQueryConverter converter = new MongoQueryConverter(){
+        MongoQueryConverter converter = new MongoQueryConverter() {
             @Override
             protected String transformProperty(String property) {
                 if (!property.equals("username")) {
@@ -149,7 +149,7 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    public void queryUsers(){
+    public void queryUsers() {
         AppUser user = createAppUser();
         user.set("color", "red");
         appUserRepository.save(user);
@@ -166,7 +166,7 @@ public class AppUserRepositoryTest {
     }
 
     @Test
-    public void updateUsers(){
+    public void updateUsers() {
         AppUser user = createAppUser();
         user.set("color", "red");
         user.set("amount", 10);

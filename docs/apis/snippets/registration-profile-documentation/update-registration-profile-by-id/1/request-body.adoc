@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"defaultRedirectUrl":"http://modified.app.com"}
+----

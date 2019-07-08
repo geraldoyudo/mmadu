@@ -1,5 +1,0 @@
-[source,bash]
-----
-$ http GET 'http://localhost:8080/domainConfigurations/0' \
-    'domain-auth-token:2222'
-----

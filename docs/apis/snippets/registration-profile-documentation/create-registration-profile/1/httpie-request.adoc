@@ -1,0 +1,16 @@
+[source,bash]
+----
+$ echo '{
+  "id" : "1",
+  "domainId" : "0",
+  "defaultRedirectUrl" : "http://my.app.com/home",
+  "defaultRoles" : [ "member" ],
+  "defaultAuthorities" : [ "view-list" ],
+  "headerOne" : "My App",
+  "headerTwo" : "Register",
+  "headerThree" : "Fill all required fields",
+  "instruction" : "Ensure that all fields are filled",
+  "submitButtonTitle" : "Go"
+}' | http POST 'http://localhost:8080/repo/registrationProfiles' \
+    'domain-auth-token:2222'
+----

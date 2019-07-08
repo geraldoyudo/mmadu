@@ -1,0 +1,11 @@
+#foreach($field in $fields )
+    $field
+#end
+
+#foreach($fieldScript in $scripts )
+    #if ($fieldScript)
+        <script>
+            $fieldScript
+        </script>
+    #end
+#end

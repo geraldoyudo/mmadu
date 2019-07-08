@@ -1,0 +1,16 @@
+mmadu:
+  security:
+    master-key: 11111111111111111111111111111111
+  domainKey: 2222
+  tokenService:
+    url: https://mmadu-token-service.herokuapp.com
+  domain-config:
+    domains:
+      - id: 0
+        name: sample-domain
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://primedev:DWHti67pXtURNik@primedev-mongodb-orwwq.mongodb.net/mmadu_db?retryWrites=true
+server:
+  port: ${PORT:8080}

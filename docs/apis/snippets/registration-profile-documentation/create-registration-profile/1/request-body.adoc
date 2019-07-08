@@ -1,0 +1,15 @@
+[source,options="nowrap"]
+----
+{
+  "id" : "1",
+  "domainId" : "0",
+  "defaultRedirectUrl" : "http://my.app.com/home",
+  "defaultRoles" : [ "member" ],
+  "defaultAuthorities" : [ "view-list" ],
+  "headerOne" : "My App",
+  "headerTwo" : "Register",
+  "headerThree" : "Fill all required fields",
+  "instruction" : "Ensure that all fields are filled",
+  "submitButtonTitle" : "Go"
+}
+----

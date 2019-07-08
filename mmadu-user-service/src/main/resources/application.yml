@@ -1,6 +1,9 @@
 mmadu:
   security:
     master-key: 11111111111111111111111111111111
+  tokenService:
+    url: http://localhost:10082
+  domainKey: 2222
   domain-config:
     domains:
       - id: 0
@@ -17,3 +20,5 @@ spring:
     mongodb:
       database: mmadu_db
       host: localhost
+  main:
+    allow-bean-definition-overriding: true

@@ -1,0 +1,44 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.fieldTypes.[].fieldTypePattern+`
+|`+String+`
+|Allowed string pattern for field type
+
+|`+_embedded.fieldTypes.[].min+`
+|`+String+`
+|Minimum value for field type
+
+|`+_embedded.fieldTypes.[].max+`
+|`+String+`
+|Maximum value for field type
+
+|`+_embedded.fieldTypes.[].type+`
+|`+String+`
+|Data type of to field type (integer, date, time, datetime, string, decimal)
+
+|`+_embedded.fieldTypes.[].css+`
+|`+String+`
+|css for all fields with this type (can be overriden by field css)
+
+|`+_embedded.fieldTypes.[].script+`
+|`+String+`
+|Script for field
+
+|`+_embedded.fieldTypes.[].classes+`
+|`+Array+`
+|css classes for field
+
+|`+_embedded.fieldTypes.[].markup+`
+|`+String+`
+|HTML markup for field type
+
+|`+_embedded.fieldTypes.[].name+`
+|`+String+`
+|The field type name
+
+|`+_embedded.fieldTypes.[].enclosingElement+`
+|`+String+`
+|The element enclosing the field
+
+|===

@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/repo/registrationProfiles/search/findByDomainId?domainId=0' -i -X GET \
+    -H 'domain-auth-token: 2222'
+----

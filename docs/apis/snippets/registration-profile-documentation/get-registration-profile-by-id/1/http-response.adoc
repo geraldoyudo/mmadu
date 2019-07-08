@@ -1,0 +1,32 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Pragma: no-cache
+X-XSS-Protection: 1; mode=block
+Expires: 0
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Content-Type: application/hal+json;charset=UTF-8
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 563
+
+{
+  "domainId" : "0",
+  "defaultRedirectUrl" : "http://my.app.com/home",
+  "defaultRoles" : [ "member" ],
+  "defaultAuthorities" : [ "view-list" ],
+  "headerOne" : "My App",
+  "headerTwo" : "Register",
+  "headerThree" : "Fill all required fields",
+  "instruction" : "Ensure that all fields are filled",
+  "submitButtonTitle" : "Go",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/repo/registrationProfiles/1"
+    },
+    "registrationProfile" : {
+      "href" : "http://localhost:8080/repo/registrationProfiles/1"
+    }
+  }
+}
+----
