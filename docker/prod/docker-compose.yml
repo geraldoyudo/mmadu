@@ -1,0 +1,36 @@
+version: '2'
+services:
+  mmadu-user-service:
+    image: geraldoyudo/mmadu-user-service:1.3.1-SNAPSHOT
+    environment:
+      - mmadu.domain.encrypt-keys=${MMADU_DOMAIN_ENCRYPT_KEYS}
+      - mmadu.security.master-key=${MMADU_SECURITY_MASTER_KEY}
+      - mmadu.domain.api-security-enabled=${MMADU_DOMAIN_API_SECURITY_ENABLED}
+      - spring.data.mongodb.uri=${MONGODB_URI}
+      - mmadu.tokenService.url=http://mmadu-token-service:8080
+      - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
+    ports:
+      - "15551:8080"
+    depends_on:
+      - mmadu-token-service
+  mmadu-registration:
+    image: geraldoyudo/mmadu-registration:1.3.1-SNAPSHOT
+    environment:
+      - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
+      - mmadu.userService.url=http://mmadu-user-service:8080
+      - spring.data.mongodb.uri=${MONGODB_URI}
+      - mmadu.tokenService.url=http://mmadu-token-service:8080
+    ports:
+      - "15552:8080"
+    depends_on:
+      - mmadu-token-service
+      - mmadu-user-service
+  mmadu-token-service:
+    image: geraldoyudo/mmadu-token-service:1.3.1-SNAPSHOT
+    environment:
+      - mmadu.domainKey=${MMADU_ADMIN_TOKEN}
+      - mmadu.userService.url=http://mmadu-user-service:8080
+      - spring.data.mongodb.uri=${MONGODB_uri}
+      - mmadu.tokenService.url=http://localhost:8080
+    ports:
+      - "15553:8080"
