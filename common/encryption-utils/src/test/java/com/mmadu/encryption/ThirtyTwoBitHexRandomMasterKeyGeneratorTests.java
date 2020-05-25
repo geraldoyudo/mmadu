@@ -1,21 +1,18 @@
 package com.mmadu.encryption;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ThirtyTwoBitHexRandomMasterKeyGeneratorTests {
 
-    @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
-
     private ThirtyTwoBitHexRandomMasterKeyGenerator masterKeyGenerator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         masterKeyGenerator = new ThirtyTwoBitHexRandomMasterKeyGenerator();
         masterKeyGenerator.setSeed(System.currentTimeMillis());
@@ -26,7 +23,10 @@ public class ThirtyTwoBitHexRandomMasterKeyGeneratorTests {
     public void testGeneratedMasterKey() {
         String masterKey = masterKeyGenerator.generateMasterKey();
         assertThat(masterKey, notNullValue());
-        errorCollector.checkThat(masterKey.matches("[0-9a-f]+"), is(true));
-        errorCollector.checkThat(masterKey.length(), is(equalTo(64)));
+
+        assertAll(
+                () -> assertThat(masterKey.matches("[0-9a-f]+"), is(true)),
+                () -> assertThat(masterKey.length(), is(equalTo(64)))
+        );
     }
 }
