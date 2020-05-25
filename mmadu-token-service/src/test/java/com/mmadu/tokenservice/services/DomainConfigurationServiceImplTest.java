@@ -1,18 +1,16 @@
 package com.mmadu.tokenservice.services;
 
 import com.mmadu.tokenservice.entities.DomainConfiguration;
-import com.mmadu.tokenservice.exceptions.DomainConfigurationNotFoundException;
 import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
 import com.mmadu.tokenservice.repositories.AppTokenRepository;
 import com.mmadu.tokenservice.repositories.DomainConfigurationRepository;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -20,10 +18,12 @@ import static com.mmadu.tokenservice.services.DomainConfigurationServiceImpl.GLO
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DomainConfigurationServiceImplTest {
 
     private static final String TOKEN_ID = "1234";
@@ -42,17 +42,27 @@ public class DomainConfigurationServiceImplTest {
     private final ArgumentCaptor<DomainConfiguration> appDomainConfigurationCaptor =
             ArgumentCaptor.forClass(DomainConfiguration.class);
 
-    @Before
-    public void setUp() {
-        globalConfiguration = createConfig("global", "0", "1234");
-        domain1Configuration = createConfig("domain-1", "domain-1", "4321");
-        doReturn(Optional.of(globalConfiguration)).when(domainConfigurationRepository).findByDomainId("0");
-        doReturn(Optional.of(domain1Configuration)).when(domainConfigurationRepository).findByDomainId("1");
-        doReturn(true).when(domainConfigurationRepository).existsByDomainId("1");
-        doReturn(false).when(domainConfigurationRepository).existsByDomainId("2");
+    @BeforeEach
+    void setUp() {
         domainConfigurationService = new DomainConfigurationServiceImpl();
         domainConfigurationService.setDomainConfigurationRepository(domainConfigurationRepository);
         domainConfigurationService.setAppTokenRepository(appTokenRepository);
+    }
+
+    private void stubDomain1Query() {
+        domain1Configuration = createConfig("domain-1", "domain-1", "4321");
+        doReturn(Optional.of(domain1Configuration)).when(domainConfigurationRepository).findByDomainId("1");
+        doReturn(true).when(domainConfigurationRepository).existsByDomainId("1");
+    }
+
+    private void stubDomain2Query() {
+        stubGlobalConfig();
+        doReturn(false).when(domainConfigurationRepository).existsByDomainId("2");
+    }
+
+    private void stubGlobalConfig() {
+        globalConfiguration = createConfig("global", "0", "1234");
+        doReturn(Optional.of(globalConfiguration)).when(domainConfigurationRepository).findByDomainId("0");
     }
 
     private DomainConfiguration createConfig(String id, String domainId, String token) {
@@ -64,25 +74,22 @@ public class DomainConfigurationServiceImplTest {
     }
 
     @Test
-    public void whenConfigurationEntryIsPresentGetDomainConfigurationShouldReturnCorrectConfig() {
+    void whenConfigurationEntryIsPresentGetDomainConfigurationShouldReturnCorrectConfig() {
+        stubDomain1Query();
         DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain("1");
         assertThat(configuration.getId(), equalTo("domain-1"));
     }
 
     @Test
-    public void whenConfigurationEntryIsNotPresentGetDomainConfigurationShouldReturnGlobalConfig() {
+    void whenConfigurationEntryIsNotPresentGetDomainConfigurationShouldReturnGlobalConfig() {
+        stubDomain2Query();
         DomainConfiguration configuration = domainConfigurationService.getConfigurationForDomain("2");
         assertThat(configuration.getId(), equalTo("global"));
     }
 
-    @Ignore("functionality obsolete")
-    @Test(expected = DomainConfigurationNotFoundException.class)
-    public void givenDomainNotPresentWhenGetDomainConfigurationShouldThrowException() {
-        domainConfigurationService.getConfigurationForDomain("3");
-    }
 
     @Test
-    public void givenNoGlobalDomainExistsWhenInitShouldCreateGlobalConfig() {
+    void givenNoGlobalDomainExistsWhenInitShouldCreateGlobalConfig() {
         domainConfigurationService.init();
 
         verify(domainConfigurationRepository, times(1))
@@ -94,27 +101,31 @@ public class DomainConfigurationServiceImplTest {
     }
 
     @Test
-    public void givenGlobalDomainExistsWhenInitShouldDoNothing() {
+    void givenGlobalDomainExistsWhenInitShouldDoNothing() {
         doReturn(true).when(domainConfigurationRepository).existsById(GLOBAL_DOMAIN_CONFIG);
         domainConfigurationService.init();
         verify(domainConfigurationRepository, times(0)).save(any(DomainConfiguration.class));
     }
 
-    @Test(expected = TokenNotFoundException.class)
-    public void givenTokenIdNotExistsWhenSetDomainAuthTokenThrowTokenNotFoundException() {
+    @Test
+    void givenTokenIdNotExistsWhenSetDomainAuthTokenThrowTokenNotFoundException() {
         doReturn(false).when(appTokenRepository).existsById(TOKEN_ID);
-        domainConfigurationService.setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
+        assertThrows(TokenNotFoundException.class,
+                () -> domainConfigurationService.setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID)
+        );
     }
 
     @Test
-    public void givenTokenIdAndDomainIdWhenSetDomainAuthTokenSaveNewDomainTokenConfiguration() {
+    void givenTokenIdAndDomainIdWhenSetDomainAuthTokenSaveNewDomainTokenConfiguration() {
         doReturn(true).when(appTokenRepository).existsById(TOKEN_ID);
         doReturn(new DomainConfiguration()).when(domainConfigurationRepository)
                 .save(any(DomainConfiguration.class));
         domainConfigurationService.setAuthTokenForDomain(TOKEN_ID, DOMAIN_ID);
         verify(domainConfigurationRepository).save(appDomainConfigurationCaptor.capture());
         DomainConfiguration configuration = appDomainConfigurationCaptor.getValue();
-        assertThat(configuration.getAuthenticationApiToken(), equalTo(TOKEN_ID));
-        assertThat(configuration.getDomainId(), equalTo(DOMAIN_ID));
+        assertAll(
+                () -> assertThat(configuration.getAuthenticationApiToken(), equalTo(TOKEN_ID)),
+                () -> assertThat(configuration.getDomainId(), equalTo(DOMAIN_ID))
+        );
     }
 }

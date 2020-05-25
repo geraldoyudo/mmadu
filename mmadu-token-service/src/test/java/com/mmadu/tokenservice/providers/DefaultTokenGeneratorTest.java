@@ -1,22 +1,22 @@
 package com.mmadu.tokenservice.providers;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DefaultTokenGeneratorTest {
     private DefaultTokenGenerator tokenGenerator;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         tokenGenerator = new DefaultTokenGenerator();
         tokenGenerator.setSeed(0);
         tokenGenerator.initialize();
     }
 
     @Test
-    public void generateToken() {
+    void generateToken() {
         String token = tokenGenerator.generateToken();
         assertEquals(token, "60b420bb3851d9d47acb933dbe70399bf6c92da33af01d4fb770e98c0325f41d" +
                 "3ebaf8986da712c82bcd4d554bf0b54023c29b624de9ef9c2f931efc580f9afb081b12e107b1e805f2b" +

@@ -3,19 +3,18 @@ package com.mmadu.tokenservice.documentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mmadu.security.DomainTokenChecker;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -25,22 +24,17 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
-@RunWith(SpringRunner.class)
 @Import({
         AbstractDocumentation.SerializationConfig.class
 })
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 public abstract class AbstractDocumentation {
     public static final String ROOT_DOC_FOLDER = "../docs/apis/snippets";
     public static final String DOCUMENTATION_NAME = "{class-name}/{method-name}/{step}/";
     public final String ADMIN_TOKEN = "2222";
     public static final String DOMAIN_AUTH_TOKEN_FIELD = "domain-auth-token";
 
-    @Rule
-    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(ROOT_DOC_FOLDER);
-
-    @Autowired
-    private WebApplicationContext context;
     @Autowired
     protected ObjectMapper objectMapper;
     @MockBean
@@ -48,13 +42,14 @@ public abstract class AbstractDocumentation {
 
     protected MockMvc mockMvc;
 
-    @Before
-    public void initializeTest() {
+    @BeforeEach
+    void initializeDocumentation(WebApplicationContext webApplicationContext,
+                                 RestDocumentationContextProvider restDocumentation) {
         doReturn(true).when(domainTokenChecker)
                 .checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
-                .apply(documentationConfiguration(this.restDocumentation))
+                .apply(documentationConfiguration(restDocumentation))
                 .alwaysDo(document(DOCUMENTATION_NAME,
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()))).build();
