@@ -1,38 +1,33 @@
 package com.mmadu.security;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.hamcrest.CoreMatchers;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RemoteAppTokenServiceDomainTokenCheckerTest {
+@ExtendWith(WiremockExtension.class)
+class RemoteAppTokenServiceDomainTokenCheckerTest {
     private static final String ADMIN_KEY = "3333";
     public static final String TOKEN_ID = "1234";
     public static final String DOMAIN_ID = "1111";
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(19998);
-    @Rule
-    public ErrorCollector collector = new ErrorCollector();
 
     private RemoteAppTokenServiceDomainTokenChecker tokenChecker = new RemoteAppTokenServiceDomainTokenChecker();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         tokenChecker.setTokenServiceUrl("http://localhost:19998");
         tokenChecker.setAdminKey(ADMIN_KEY);
     }
 
     @Test
-    public void givenTokenMatchesThenReturnTrue() {
+    void givenTokenMatchesThenReturnTrue() {
         mockCheckDomainApiToReturn("{\"matches\": true}");
         assertThat(tokenChecker.checkIfTokenMatchesDomainToken(TOKEN_ID, DOMAIN_ID), CoreMatchers.is(true));
     }
@@ -53,7 +48,7 @@ public class RemoteAppTokenServiceDomainTokenCheckerTest {
     }
 
     @Test
-    public void givenTokenNotMatchesThenReturnFalse() {
+    void givenTokenNotMatchesThenReturnFalse() {
         mockCheckDomainApiToReturn("{\"matches\": false}");
         assertThat(tokenChecker.checkIfTokenMatchesDomainToken(TOKEN_ID, DOMAIN_ID), CoreMatchers.is(false));
     }

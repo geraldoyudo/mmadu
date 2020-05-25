@@ -1,18 +1,19 @@
 package com.mmadu.security;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DomainPermissionEvaluatorTest {
+@ExtendWith(MockitoExtension.class)
+class DomainPermissionEvaluatorTest {
 
     private static final String TOKEN = new String(new byte[128]);
     private static final String DOMAIN_ID = "domain-one";
@@ -27,7 +28,7 @@ public class DomainPermissionEvaluatorTest {
     private final DomainPermissionEvaluator domainPermissionEvaluator = new DomainPermissionEvaluator();
 
     @Test
-    public void givenAdminTokenAndAdminPermissionWhenCheckTokenThenReturnTrue() {
+    void givenAdminTokenAndAdminPermissionWhenCheckTokenThenReturnTrue() {
         doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(TOKEN, "admin");
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
@@ -35,7 +36,7 @@ public class DomainPermissionEvaluatorTest {
     }
 
     @Test
-    public void givenNonAdminTokenAndAdminPermissionCheckTokenReturnFalse() {
+    void givenNonAdminTokenAndAdminPermissionCheckTokenReturnFalse() {
         doReturn(false).when(domainTokenChecker).checkIfTokenMatchesDomainToken(TOKEN, "admin");
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
@@ -43,7 +44,7 @@ public class DomainPermissionEvaluatorTest {
     }
 
     @Test
-    public void givenDomainTokenAndDomainPermissionWhenHasDomainPermissionReturnTrue() {
+    void givenDomainTokenAndDomainPermissionWhenHasDomainPermissionReturnTrue() {
         doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(TOKEN, DOMAIN_ID);
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, DOMAIN_ID),
@@ -51,21 +52,21 @@ public class DomainPermissionEvaluatorTest {
     }
 
     @Test
-    public void givenNotDomainTokenAndDomainPermissionWhenHasDomainPermissionReturnFalse() {
+    void givenNotDomainTokenAndDomainPermissionWhenHasDomainPermissionReturnFalse() {
         doReturn(TOKEN).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, DOMAIN_ID),
                 equalTo(false));
     }
 
     @Test
-    public void givenNullTokenCheckTokenThenReturnFalse() {
+    void givenNullTokenCheckTokenThenReturnFalse() {
         doReturn(null).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, "admin"),
                 equalTo(false));
     }
 
     @Test
-    public void givenNullTokenWhenHasDomainPermissionThenReturnFalse() {
+    void givenNullTokenWhenHasDomainPermissionThenReturnFalse() {
         doReturn(null).when(authentication).getPrincipal();
         assertThat(domainPermissionEvaluator.hasPermission(authentication, DOMAIN, DOMAIN_ID),
                 equalTo(false));
