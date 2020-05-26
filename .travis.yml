@@ -15,7 +15,7 @@ matrix:
   - language: java
     name: "Run Tests"
     jdk:
-    - oraclejdk8
+    - oraclejdk14
     dist: trusty
     before_install:
     - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ./maven-settings-travis.xml
@@ -35,7 +35,7 @@ matrix:
   - language: java
     name: "Package Releases"
     jdk:
-    - oraclejdk8
+    - oraclejdk14
     if: branch = master
     sudo: false
     dist: trusty
@@ -47,12 +47,10 @@ matrix:
     - cat ./heroku-auth.txt >> ~/.netrc
     - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
     - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
-    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ./maven-settings-travis.xml
-    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ./maven-settings-travis.xml
     install: mvn clean
     script:
-    - mvn package --settings ./maven-settings-travis.xml
-    - mvn docker:build -pl mmadu-token-service,mmadu-user-service,mmadu-registration -DpushImageTag --settings ./maven-settings-travis.xml
-    - cd ./docker/heroku-test/token-service && heroku container:login && heroku container:push web --app mmadu-token-service && heroku container:release web --app mmadu-token-service && cd ../../../
-    - cd ./docker/heroku-test/user-service && heroku container:login && heroku container:push web --app mmadu-user-service && heroku container:release web --app mmadu-user-service && cd ../../../
-    - cd ./docker/heroku-test/user-registration && heroku container:login && heroku container:push web --app mmadu-registration && heroku container:release web --app mmadu-registration && cd ../../../
+    - mvn package
+    - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
+    - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
+    - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
+    - cd ./docker/heroku-test/user-registration && heroku container:login && ./build.sh && heroku container:release web --app mmadu-registration && cd ../../../

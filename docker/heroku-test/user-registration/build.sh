@@ -1,1 +1,2 @@
-docker build -t geraldoyudo/mmadu-registration-heroku-test:1.3.1-SNAPSHOT .
+docker tag geraldoyudo/mmadu-registration:2.0.0-SNAPSHOT registry.heroku.com/mmadu-registration/web
+docker push registry.heroku.com/mmadu-registration/web

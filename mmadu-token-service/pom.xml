@@ -18,6 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>14</java.version>
+        <spring-boot.build-image.imageName>geraldoyudo/${project.artifactId}:${project.version}</spring-boot.build-image.imageName>
     </properties>
 
     <dependencies>
