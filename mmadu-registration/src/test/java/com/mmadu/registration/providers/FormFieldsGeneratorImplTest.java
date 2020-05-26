@@ -5,13 +5,14 @@ import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.FieldTypeRepository;
 import com.mmadu.registration.utils.VelocityEngineConfig;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -22,7 +23,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = FormFieldsGeneratorImpl.class)
 @Import(VelocityEngineConfig.class)
 public class FormFieldsGeneratorImplTest {
@@ -39,8 +40,8 @@ public class FormFieldsGeneratorImplTest {
     @Autowired
     private FormFieldsGenerator formFieldsGenerator;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         textFieldType = createFieldType("1");
         textFieldType.setScript("a-script");
         nameField = createField("1", "name", "name", "1");
@@ -54,7 +55,7 @@ public class FormFieldsGeneratorImplTest {
     }
 
     @Test
-    public void generateFormFieldsForDomain() {
+    void generateFormFieldsForDomain() {
         assertThat(formFieldsGenerator.generateFormFieldsForDomain(DOMAIN_ID).replaceAll("\\s", ""),
                 equalTo("<markup-name></markup-name><markup-class></markup-class><script>a-script</script>"));
     }

@@ -5,10 +5,8 @@ import com.mmadu.registration.exceptions.UserFormValidationException;
 import com.mmadu.registration.models.UserForm;
 import com.mmadu.registration.models.UserModel;
 import com.mmadu.registration.providers.UserFormConverter;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +23,16 @@ import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         RegistrationServiceImpl.class,
         RegistrationServiceImplTest.Config.class
 })
 public class RegistrationServiceImplTest {
-    @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
     @MockBean
     private RegistrationProfileService registrationProfileService;
     @Autowired
@@ -48,9 +46,9 @@ public class RegistrationServiceImplTest {
     public void givenUserNameAbsentWhenRegisterUserThenThrowUserFormValidationException() {
         UserForm userForm = new UserForm();
         userForm.set("password", "password");
-        expectedException.expectMessage("username cannot be empty");
-        expectedException.expect(UserFormValidationException.class);
-        registrationService.registerUser(DOMAIN_ID, userForm);
+        Exception ex = assertThrows(UserFormValidationException.class,
+                () -> registrationService.registerUser(DOMAIN_ID, userForm));
+        assertEquals("username cannot be empty", ex.getMessage());
     }
 
     @Test
@@ -90,9 +88,9 @@ public class RegistrationServiceImplTest {
 
     @Test
     public void givenNullUserFormThrowIllegalArgumentException() {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("user form cannot be null");
-        registrationService.registerUser(DOMAIN_ID, null);
+        Exception ex = assertThrows(IllegalArgumentException.class,
+                () -> registrationService.registerUser(DOMAIN_ID, null));
+        assertEquals("user form cannot be null", ex.getMessage());
     }
 
     @TestConfiguration

@@ -3,7 +3,7 @@ package com.mmadu.registration.documentation;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.providers.DomainRegistrationFormFieldsManager;
 import com.mmadu.registration.repositories.FieldTypeRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -30,7 +30,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     private DomainRegistrationFormFieldsManager domainRegistrationFormFieldsManager;
 
     @Test
-    public void createFieldTypes() throws Exception {
+    void createFieldTypes() throws Exception {
         FieldType fieldType = createNewFieldType();
         mockMvc.perform(
                 post("/repo/fieldTypes")
@@ -82,7 +82,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getFieldTypeById() throws Exception {
+    void getFieldTypeById() throws Exception {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes/{fieldTypeId}",
@@ -103,7 +103,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getAllFieldTypes() throws Exception {
+    void getAllFieldTypes() throws Exception {
         fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes")
@@ -135,7 +135,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updateFieldTypeById() throws Exception {
+    void updateFieldTypeById() throws Exception {
         final String modifiedName = "New Type";
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
@@ -156,7 +156,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deleteFieldTypeById() throws Exception {
+    void deleteFieldTypeById() throws Exception {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())

@@ -3,8 +3,8 @@ package com.mmadu.registration.velocity;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.StringWriter;
 import java.util.Properties;
@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class VelocityTest {
     private static VelocityEngine engine;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         Properties p = new Properties();
         p.setProperty("resource.loader", "class");

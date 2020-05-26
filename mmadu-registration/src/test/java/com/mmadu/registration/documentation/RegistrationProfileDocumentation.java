@@ -2,8 +2,8 @@ package com.mmadu.registration.documentation;
 
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.repositories.RegistrationProfileRepository;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
@@ -24,13 +24,13 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
     @Autowired
     private RegistrationProfileRepository registrationProfileRepository;
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         registrationProfileRepository.deleteAll();
     }
 
     @Test
-    public void createRegistrationProfile() throws Exception {
+    void createRegistrationProfile() throws Exception {
         RegistrationProfile profile = createNewRegistrationProfile();
         mockMvc.perform(
                 post("/repo/registrationProfiles")
@@ -85,7 +85,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getRegistrationProfileById() throws Exception {
+    void getRegistrationProfileById() throws Exception {
         RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/{profileId}",
@@ -106,7 +106,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getRegistrationProfileForDomainId() throws Exception {
+    void getRegistrationProfileForDomainId() throws Exception {
         RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/search/findByDomainId")
@@ -127,7 +127,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updateRegistrationProfileById() throws Exception {
+    void updateRegistrationProfileById() throws Exception {
         final String modifiedRedirectUrl = "http://modified.app.com";
 
         RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
@@ -150,7 +150,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deleteRegistrationProfileById() throws Exception {
+    void deleteRegistrationProfileById() throws Exception {
         RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/registrationProfiles/{profileId}",

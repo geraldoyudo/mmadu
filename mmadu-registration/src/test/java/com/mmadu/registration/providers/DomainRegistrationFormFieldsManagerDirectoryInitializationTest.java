@@ -1,13 +1,13 @@
 package com.mmadu.registration.providers;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.FileCopyUtils;
 
@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
     public static final String USER_HOME = System.getProperty("user.home");
     @Value("${mmadu.registration.templates}")
@@ -34,27 +34,27 @@ public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
 
     private static File file;
 
-    @BeforeClass
-    public static void setUpClass() {
+    @BeforeAll
+    static void setUpClass() {
         file = new File(USER_HOME + "/mmadu-test/templates/domain");
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         formFieldsManager.setTemplatesFolder(USER_HOME + "/mmadu-test/templates");
         doReturn(asList("1")).when(domainService).getDomainIds();
         doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
     }
 
     @Test
-    public void onStartUpManagerShouldCreateNestedFolders() throws Exception {
+    void onStartUpManagerShouldCreateNestedFolders() throws Exception {
         formFieldsManager.startMonitoring();
         assertThat(FileCopyUtils.copyToString(new FileReader(new File(file, "register-1.html"))),
                 equalTo("fields-1"));
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @AfterAll
+    static void tearDown() {
         File file = new File(System.getProperty("user.home") + "/mmadu-test");
         file.delete();
     }

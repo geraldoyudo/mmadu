@@ -1,6 +1,6 @@
 package com.mmadu.registration.typeconverters;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,7 +12,7 @@ public class FieldTypeConverterResolverTest {
     }
 
     @Test
-    public void getConverterForType() {
+    void getConverterForType() {
         assertThat(fieldTypeConverterResolver.getConverterForType("datetime").get(), equalTo(DateTimeType.class));
     }
 }

@@ -3,17 +3,16 @@ package com.mmadu.registration.services;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.mmadu.registration.config.SerializationConfig;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
-import org.junit.runner.RunWith;
+import com.mmadu.registration.utils.WiremockExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,22 +21,20 @@ import java.util.Map;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
 
-@RunWith(SpringRunner.class)
+@ExtendWith({
+        SpringExtension.class,
+        WiremockExtension.class
+})
 @Import({
         MmaduServiceClientImpl.class,
         SerializationConfig.class
 })
 @TestPropertySource(properties = {
-        "mmadu.userService.url=http://localhost:19999",
+        "mmadu.userService.url=http://localhost:19998",
         "mmadu.domainKey=12345",
         "spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false"
 })
 public class MmaduServiceClientImplTest {
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(19999);
-    @Rule
-    public ErrorCollector collector = new ErrorCollector();
-
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
