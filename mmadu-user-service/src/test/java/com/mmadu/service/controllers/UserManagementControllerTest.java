@@ -9,43 +9,42 @@ import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserView;
 import com.mmadu.service.services.UserManagementService;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = UserManagementController.class, secure = false)
-public class UserManagementControllerTest {
+@WebMvcTest(value = UserManagementController.class,
+        excludeAutoConfiguration = {
+                SecurityAutoConfiguration.class,
+                SecurityFilterAutoConfiguration.class
+        })
+class UserManagementControllerTest {
     public static final String USER_ID = "13423";
     public static final String USERNAME = "test-user";
-    @Rule
-    public final ErrorCollector collector = new ErrorCollector();
-
     public static final String BAD_ARGUMENT_CODE = "215";
     public static final String FIELD_ERROR_CODE = "code";
     public static final String FIELD_ERROR_MESSAGE = "message";
@@ -61,7 +60,7 @@ public class UserManagementControllerTest {
     private static final String DOMAIN_ID = "1234";
 
     @Test
-    public void createUser() throws Exception {
+    void createUser() throws Exception {
         mockMvc.perform(
                 post("/domains/{domainId}/users", DOMAIN_ID)
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +80,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenBadArgmentWhenCreateUserReturn400BadRequest() throws Exception {
+    void givenBadArgmentWhenCreateUserReturn400BadRequest() throws Exception {
         String errorMessage = "invalid user";
         doThrow(new IllegalArgumentException(errorMessage)).when(userManagementService)
                 .createUser(anyString(), any(UserView.class));
@@ -97,7 +96,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenDuplicateWhenCreateWhenCreateUserReturnDuplicateException() throws Exception {
+    void givenDuplicateWhenCreateWhenCreateUserReturnDuplicateException() throws Exception {
         String errorMessage = "user already exists";
         doThrow(new DuplicationException(errorMessage)).when(userManagementService)
                 .createUser(anyString(), any(UserView.class));
@@ -111,7 +110,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserListWhenGetAllUsersReturnUserPage() throws Exception {
+    void givenUserListWhenGetAllUsersReturnUserPage() throws Exception {
         PageImpl<UserView> page = new PageImpl<>(createUserViewList());
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
         doReturn(page).when(userManagementService).getAllUsers(eq(DOMAIN_ID), pageableCaptor.capture());
@@ -124,8 +123,10 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("totalPages", equalTo(1)))
                 .andExpect(jsonPath("totalElements", equalTo(5)));
         Pageable p = pageableCaptor.getValue();
-        collector.checkThat(p.getPageNumber(), equalTo(2));
-        collector.checkThat(p.getPageSize(), equalTo(10));
+        assertAll(
+                () -> assertThat(p.getPageNumber(), equalTo(2)),
+                () -> assertThat(p.getPageSize(), equalTo(10))
+        );
     }
 
     private List<UserView> createUserViewList() {
@@ -145,7 +146,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenNoUserWhenGetUserByExternalIdThenReturn404Response() throws Exception {
+    void givenNoUserWhenGetUserByExternalIdThenReturn404Response() throws Exception {
         doThrow(new UserNotFoundException())
                 .when(userManagementService).getUserByDomainIdAndExternalId(DOMAIN_ID, USER_ID);
         mockMvc.perform(
@@ -155,7 +156,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserWhenGetUserByExternalIdThenReturnUser() throws Exception {
+    void givenUserWhenGetUserByExternalIdThenReturnUser() throws Exception {
         UserView userView = new UserView(USER_ID, "user", "password",
                 asList("admin"), asList("manage-users"), new HashMap<>());
         doReturn(userView).when(userManagementService).getUserByDomainIdAndExternalId(DOMAIN_ID, USER_ID);
@@ -171,7 +172,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenNoUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
+    void givenNoUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
         doThrow(new UserNotFoundException()).when(userManagementService)
                 .deleteUserByDomainAndExternalId(DOMAIN_ID, USER_ID);
         mockMvc.perform(
@@ -181,7 +182,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
+    void givenUserWhenDeleteAUserByDomainAndExternalIdThenReturn404NotFound() throws Exception {
         mockMvc.perform(
                 delete("/domains/{domainId}/users/{userId}", DOMAIN_ID, USER_ID)
         )
@@ -189,7 +190,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserWhenUpdateAllUserPropertiesThenReturnNoContent() throws Exception {
+    void givenUserWhenUpdateAllUserPropertiesThenReturnNoContent() throws Exception {
         ArgumentCaptor<UserView> userCaptor = ArgumentCaptor.forClass(UserView.class);
         doNothing().when(userManagementService).updateUser(eq(DOMAIN_ID), eq(USER_ID), userCaptor.capture());
         mockMvc.perform(
@@ -199,14 +200,16 @@ public class UserManagementControllerTest {
         )
                 .andExpect(status().isNoContent());
         UserView userView = userCaptor.getValue();
-        collector.checkThat(userView.getUsername(), equalTo("test-user"));
-        collector.checkThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian"));
-        collector.checkThat(userView.getRoles(), equalTo(asList("admin")));
-        collector.checkThat(userView.getAuthorities(), equalTo(asList("manage-users")));
+        assertAll(
+                () -> assertThat(userView.getUsername(), equalTo("test-user")),
+                () -> assertThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian")),
+                () -> assertThat(userView.getRoles(), equalTo(asList("admin"))),
+                () -> assertThat(userView.getAuthorities(), equalTo(asList("manage-users")))
+        );
     }
 
     @Test
-    public void givenNoUserWhenLoadUserByUsernameThenReturn404Response() throws Exception {
+    void givenNoUserWhenLoadUserByUsernameThenReturn404Response() throws Exception {
         doThrow(new UserNotFoundException())
                 .when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
         mockMvc.perform(
@@ -217,10 +220,10 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserWhenLoadUserByUsernameThenReturnUser() throws Exception {
+    void givenUserWhenLoadUserByUsernameThenReturnUser() throws Exception {
         UserView userView = new UserView(USER_ID, "user", "password",
                 asList("admin"), asList("manage-users"), new HashMap<>());
-        userView.setProperty("birthday", LocalDate.of(1993, 1,1));
+        userView.setProperty("birthday", LocalDate.of(1993, 1, 1));
         doReturn(userView).when(userManagementService).getUserByDomainIdAndUsername(DOMAIN_ID, USERNAME);
         mockMvc.perform(
                 get("/domains/{domainId}/users/load", DOMAIN_ID)
@@ -236,7 +239,7 @@ public class UserManagementControllerTest {
     }
 
     @Test
-    public void givenUserListWhenQueryUsersReturnUserPage() throws Exception {
+    void givenUserListWhenQueryUsersReturnUserPage() throws Exception {
         PageImpl<UserView> page = new PageImpl<>(createUserViewList());
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
         String query = "color equals 'red'";
@@ -252,12 +255,14 @@ public class UserManagementControllerTest {
                 .andExpect(jsonPath("totalPages", equalTo(1)))
                 .andExpect(jsonPath("totalElements", equalTo(5)));
         Pageable p = pageableCaptor.getValue();
-        collector.checkThat(p.getPageNumber(), equalTo(2));
-        collector.checkThat(p.getPageSize(), equalTo(10));
+        assertAll(
+                () -> assertThat(p.getPageNumber(), equalTo(2)),
+                () -> assertThat(p.getPageSize(), equalTo(10))
+        );
     }
 
     @Test
-    public void givenUpdateRequestAndQueryWhenPatchUsersThenReturnNoContent() throws Exception {
+    void givenUpdateRequestAndQueryWhenPatchUsersThenReturnNoContent() throws Exception {
         String query = "color equals 'red'";
         ArgumentCaptor<UpdateRequest> updateRequestArgumentCaptor = ArgumentCaptor.forClass(UpdateRequest.class);
         ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
@@ -270,9 +275,11 @@ public class UserManagementControllerTest {
                 .andExpect(status().isNoContent());
         UpdateRequest updateRequest = updateRequestArgumentCaptor.getValue();
         String actualQuery = queryCaptor.getValue();
-        collector.checkThat(actualQuery, equalTo(query));
-        collector.checkThat(updateRequest.getUpdates(),
-                equalTo(asList(new UserPatch(PatchOperation.SET, "color", "green"))));
+        assertAll(
+                () -> assertThat(actualQuery, equalTo(query)),
+                () -> assertThat(updateRequest.getUpdates(),
+                        equalTo(asList(new UserPatch(PatchOperation.SET, "color", "green"))))
+        );
     }
 
     private String updateRequest(String query) {

@@ -1,7 +1,7 @@
 package com.mmadu.service.entities;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -19,8 +19,8 @@ public class AppUserTest {
     private static final String ADMIN = "admin";
     private AppUser appUser;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         appUser = new AppUser();
         appUser.setPassword(PASSWORD);
         appUser.setUsername(USER);
@@ -32,37 +32,37 @@ public class AppUserTest {
     }
 
     @Test
-    public void getPassword() {
+    void getPassword() {
         assertThat(appUser.getPassword(), equalTo("password"));
     }
 
     @Test
-    public void getUsername() {
+    void getUsername() {
         assertThat(appUser.getUsername(), equalTo(USER));
     }
 
     @Test
-    public void getID() {
+    void getID() {
         assertThat(appUser.getId(), equalTo(TEST_ID));
     }
 
     @Test
-    public void getDomainId() {
+    void getDomainId() {
         assertThat(appUser.getDomainId(), equalTo(DOMAIN_ID));
     }
 
     @Test
-    public void getCountryCustomProperty() {
+    void getCountryCustomProperty() {
         assertThat(appUser.get(PROPERTY_COUNTRY).get(), equalTo(NIGERIA));
     }
 
     @Test
-    public void getAuthorities() {
+    void getAuthorities() {
         assertThat(appUser.getAuthorities(), hasItem(ADMIN_AUTH));
     }
 
     @Test
-    public void getRoles() {
+    void getRoles() {
         assertThat(appUser.getRoles(), hasItem(ADMIN));
     }
 }
