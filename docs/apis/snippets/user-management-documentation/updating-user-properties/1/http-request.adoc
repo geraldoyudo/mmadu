@@ -1,9 +1,9 @@
 [source,http,options="nowrap"]
 ----
 PUT /domains/test-app/users/123453432 HTTP/1.1
-Content-Length: 171
 Content-Type: application/json
 domain-auth-token: 1234
+Content-Length: 171
 Host: localhost:8080
 
 {"id":"123453432","username":"changed-username","password":"changed-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}

@@ -1,9 +1,9 @@
 [source,http,options="nowrap"]
 ----
 POST /domains/test-app/users HTTP/1.1
-Content-Length: 116
 Content-Type: application/json
 domain-auth-token: 1234
+Content-Length: 116
 Host: localhost:8080
 
 {"id":"123","username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}

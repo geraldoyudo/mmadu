@@ -26,8 +26,7 @@
   },
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/repo/fieldTypes{?page,size,sort}",
-      "templated" : true
+      "href" : "http://localhost:8080/repo/fieldTypes"
     },
     "profile" : {
       "href" : "http://localhost:8080/repo/profile/fieldTypes"
