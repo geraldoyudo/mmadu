@@ -33,7 +33,7 @@ matrix:
     name: "Package Releases"
     jdk:
     - oraclejdk14
-    if: branch = master
+    if: branch = develop
     sudo: false
     dist: trusty
     services:

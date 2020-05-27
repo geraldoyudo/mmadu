@@ -1,6 +1,6 @@
 = Mmadu User Guide
 Oyudo Gerald <gerald.oyudo@gmail.com>
-v1.3.1, 2019-07-08
+v2.0.0, 2019-07-08
 :toc:
 :sectnums:
 :showtitle:
