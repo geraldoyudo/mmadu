@@ -30,7 +30,7 @@ matrix:
       on:
         tags: true
   - language: java
-    name: "Package Releases"
+    name: "Deploy to Heroku Test Environment"
     jdk:
     - oraclejdk14
     if: branch = develop
@@ -51,3 +51,20 @@ matrix:
     - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
     - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
     - cd ./docker/heroku-test/user-registration && heroku container:login && ./build.sh && heroku container:release web --app mmadu-registration && cd ../../../
+  - language: java
+    name: "Package Releases"
+    jdk:
+      - oraclejdk14
+    if: branch = master
+    sudo: false
+    dist: trusty
+    services:
+      - docker
+    before_install:
+      - curl https://cli-assets.heroku.com/install.sh | sh
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    install: mvn clean
+    script:
+      - mvn install
+      - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
+      - cd ./docker/prod && ./release.sh cd ../../
