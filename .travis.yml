@@ -17,11 +17,8 @@ matrix:
     jdk:
     - oraclejdk14
     dist: trusty
-    before_install:
-    - sed -i "s/__USERNAME__/$DOCKER_USERNAME/g" ./maven-settings-travis.xml
-    - sed -i "s/__PASSWORD__/$DOCKER_PASSWORD/g" ./maven-settings-travis.xml
     install: mvn clean
-    script: mvn package --settings ./maven-settings-travis.xml
+    script: mvn install
     if: branch != master
     deploy:
     - provider: releases
@@ -49,7 +46,7 @@ matrix:
     - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
     install: mvn clean
     script:
-    - mvn package
+    - mvn install
     - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
     - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
     - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
