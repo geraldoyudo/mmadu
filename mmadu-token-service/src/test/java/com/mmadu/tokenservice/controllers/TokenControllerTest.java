@@ -8,16 +8,17 @@ import com.mmadu.tokenservice.exceptions.TokenNotFoundException;
 import com.mmadu.tokenservice.models.CheckTokenRequest;
 import com.mmadu.tokenservice.services.AppTokenService;
 import com.mmadu.tokenservice.services.DomainConfigurationService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -28,9 +29,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = TokenController.class, secure = false)
-public class TokenControllerTest {
+@WebMvcTest(value = TokenController.class, excludeAutoConfiguration = {
+        SecurityAutoConfiguration.class,
+        SecurityFilterAutoConfiguration.class
+})
+class TokenControllerTest {
 
     private static final String TOKEN_VALUE = "1234";
     private static final String REFRESHED_TOKEN_VALUE = "4321";
@@ -45,14 +48,14 @@ public class TokenControllerTest {
     private DomainConfigurationService domainConfigurationService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         doThrow(new TokenNotFoundException()).when(tokenService).getToken("invalid-id");
         doThrow(new TokenNotFoundException()).when(tokenService).resetToken("invalid-id");
     }
 
     @Test
-    public void generateToken() throws Exception {
+    void generateToken() throws Exception {
         doReturn(newAppToken("1", TOKEN_VALUE)).when(tokenService).generateToken();
         mockMvc.perform(get("/token/generate"))
                 .andExpect(status().isOk())
@@ -68,7 +71,7 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void getToken() throws Exception {
+    void getToken() throws Exception {
         saveTokenWithId("1");
         mockMvc.perform(get("/token/retrieve/1"))
                 .andExpect(status().isOk())
@@ -77,7 +80,7 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void getTokenWithInvalidId() throws Exception {
+    void getTokenWithInvalidId() throws Exception {
         mockMvc.perform(get("/token/retrieve/invalid-id"))
                 .andExpect(status().isNotFound());
     }
@@ -89,7 +92,7 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void resetToken() throws Exception {
+    void resetToken() throws Exception {
         AppToken token = saveTokenWithId("1");
         doReturn(newAppToken("1", REFRESHED_TOKEN_VALUE)).when(tokenService).resetToken("1");
         mockMvc.perform(get("/token/reset/1"))
@@ -99,13 +102,13 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void resetTokenWithInvalidId() throws Exception {
+    void resetTokenWithInvalidId() throws Exception {
         mockMvc.perform(get("/token/reset/invalid-id"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void checkToken() throws Exception {
+    void checkToken() throws Exception {
 
         doReturn(true).when(domainConfigurationService).tokenMatchesDomain(TOKEN_ID, DOMAIN_ID);
         CheckTokenRequest request = new CheckTokenRequest();
@@ -121,7 +124,7 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void setDomainAuthenticationToken() throws Exception {
+    void setDomainAuthenticationToken() throws Exception {
         mockMvc.perform(
                 post("/token/setDomainAuthToken")
                         .content(
@@ -136,7 +139,7 @@ public class TokenControllerTest {
     }
 
     @Test
-    public void getAuthenticationTokenForDomain() throws Exception {
+    void getAuthenticationTokenForDomain() throws Exception {
         doReturn(domainAuthTokenModel()).when(domainConfigurationService).getConfigurationForDomain(DOMAIN_ID);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/token/domainAuth/{domainId}", DOMAIN_ID)

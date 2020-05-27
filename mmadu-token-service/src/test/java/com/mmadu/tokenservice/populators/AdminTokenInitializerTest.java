@@ -1,18 +1,18 @@
 package com.mmadu.tokenservice.populators;
 
 import com.mmadu.tokenservice.services.AppTokenService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.mmadu.tokenservice.utilities.DomainAuthenticationConstants.ADMIN_TOKEN_ID;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
-public class AdminTokenInitializerTest {
+@ExtendWith(MockitoExtension.class)
+class AdminTokenInitializerTest {
 
     @Mock
     private AppTokenService appTokenService;
@@ -21,7 +21,7 @@ public class AdminTokenInitializerTest {
     private AdminTokenInitializer adminTokenInitializer = new AdminTokenInitializer();
 
     @Test
-    public void initializeAdminToken() {
+    void initializeAdminToken() {
         adminTokenInitializer.initializeAdminToken();
 
         verify(appTokenService, times(1)).generateToken(ADMIN_TOKEN_ID);

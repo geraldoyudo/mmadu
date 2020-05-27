@@ -3,7 +3,7 @@ package com.mmadu.registration.documentation;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.providers.DomainRegistrationFormFieldsManager;
 import com.mmadu.registration.repositories.FieldRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;

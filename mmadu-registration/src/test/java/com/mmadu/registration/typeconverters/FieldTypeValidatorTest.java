@@ -2,20 +2,22 @@ package com.mmadu.registration.typeconverters;
 
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.models.UserForm;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class FieldTypeValidatorTest {
     private static final String PROPERTY = "name";
     public static final String PROPERTY_VALUE = "propy";
@@ -26,14 +28,14 @@ public class FieldTypeValidatorTest {
     private Field field;
     private FieldTypeValidator validator;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         validator = new FieldTypeValidator(fieldTypeConverter, field);
         doReturn(PROPERTY).when(field).getProperty();
     }
 
     @Test
-    public void ifRequiredAndFieldNotPresentShouldRegisterError() {
+    void ifRequiredAndFieldNotPresentShouldRegisterError() {
         doReturn(true).when(field).isRequired();
         UserForm userForm = new UserForm();
         Errors errors = new BeanPropertyBindingResult(userForm, "user");
@@ -42,7 +44,7 @@ public class FieldTypeValidatorTest {
     }
 
     @Test
-    public void ifRequiredAndFieldPresentShouldNotRegisterError() {
+    void ifRequiredAndFieldPresentShouldNotRegisterError() {
         doReturn(true).when(field).isRequired();
         UserForm userForm = new UserForm();
         userForm.set(PROPERTY, "propy");
@@ -52,7 +54,7 @@ public class FieldTypeValidatorTest {
     }
 
     @Test
-    public void ifFieldPresentAndInvalidItShouldHaveErrors() throws Exception {
+    void ifFieldPresentAndInvalidItShouldHaveErrors() throws Exception {
         doReturn(true).when(field).isRequired();
         UserForm userForm = new UserForm();
         userForm.set(PROPERTY, PROPERTY_VALUE);

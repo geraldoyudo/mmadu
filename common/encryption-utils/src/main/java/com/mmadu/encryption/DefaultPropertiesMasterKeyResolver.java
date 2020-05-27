@@ -23,8 +23,6 @@ public class DefaultPropertiesMasterKeyResolver implements MasterKeyResolver {
     }
 
     private String generateMasterKey() {
-        String masterKey = masterKeyGenerator.generateMasterKey();
-        System.out.println("Generated master key: " + masterKey);
-        return masterKey;
+        return masterKeyGenerator.generateMasterKey();
     }
 }

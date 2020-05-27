@@ -1,6 +1,6 @@
 package com.mmadu.tokenservice.documentation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -12,7 +12,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TokenManagementDocumentation extends AbstractDocumentation {
@@ -21,7 +20,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     private static final String DOMAIN_ID_FOR_CONFIG = "1111111111";
 
     @Test
-    public void generateToken() throws Exception {
+    void generateToken() throws Exception {
         mockMvc.perform(get("/token/generate")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
@@ -39,7 +38,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void retrieveToken() throws Exception {
+    void retrieveToken() throws Exception {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/token/retrieve/{tokenId}", TOKEN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
@@ -53,7 +52,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void resetToken() throws Exception {
+    void resetToken() throws Exception {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/token/reset/{tokenId}", TOKEN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
@@ -61,7 +60,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void setAuthTokenForDomain() throws Exception {
+    void setAuthTokenForDomain() throws Exception {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/token/setDomainAuthToken")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -82,7 +81,7 @@ public class TokenManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getAuthTokenForDomain() throws Exception {
+    void getAuthTokenForDomain() throws Exception {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/token/domainAuth/{domainId}",
                 DOMAIN_ID_FOR_CONFIG)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)

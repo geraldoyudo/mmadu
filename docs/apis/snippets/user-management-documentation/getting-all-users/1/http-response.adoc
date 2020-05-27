@@ -1,14 +1,14 @@
 [source,http,options="nowrap"]
 ----
 HTTP/1.1 200 OK
-Pragma: no-cache
+Content-Type: application/json
+X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Content-Type: application/json;charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Content-Length: 663
 
-{"content":[{"id":"123453432","username":"test-user0","password":"my-password0","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user1","password":"my-password1","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user2","password":"my-password2","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"}],"totalElements":3,"last":true,"totalPages":1,"size":10,"number":0,"numberOfElements":3,"sort":{"sorted":false,"unsorted":true,"empty":true},"first":true,"empty":false}
+{"content":[{"id":"123453432","username":"test-user0","password":"my-password0","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user1","password":"my-password1","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user2","password":"my-password2","roles":["admin-role"],"authorities":["admin"],"country":"Nigeria","favourite-color":"blue"}],"totalElements":3,"totalPages":1,"last":true,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false,"empty":true},"first":true,"numberOfElements":3,"empty":false}
 ----

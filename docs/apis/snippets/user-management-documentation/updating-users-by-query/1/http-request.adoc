@@ -1,9 +1,9 @@
 [source,http,options="nowrap"]
 ----
 PATCH /domains/test-app/users HTTP/1.1
-Content-Length: 105
 Content-Type: application/json
 domain-auth-token: 1234
+Content-Length: 105
 Host: localhost:8080
 
 {"query":"(country equals 'Nigeria')","updates":[{"operation":"SET","property":"color","value":"green"}]}

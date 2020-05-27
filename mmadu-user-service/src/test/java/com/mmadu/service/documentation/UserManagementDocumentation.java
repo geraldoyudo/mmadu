@@ -5,8 +5,8 @@ import com.mmadu.service.models.PatchOperation;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserUpdateRequest;
 import com.mmadu.service.models.UserView;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,13 +28,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserManagementDocumentation extends AbstractDocumentation {
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         appUserRepository.deleteAll();
     }
 
     @Test
-    public void createUser() throws Exception {
+    void createUser() throws Exception {
         UserView user = new UserView("user", "password",
                 asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
         user.setId("123");
@@ -57,7 +57,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAllUsers() throws Exception {
+    void gettingAllUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
@@ -87,7 +87,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAUserById() throws Exception {
+    void gettingAUserById() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
@@ -117,7 +117,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deletingAUserById() throws Exception {
+    void deletingAUserById() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
@@ -132,7 +132,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updatingUserProperties() throws Exception {
+    void updatingUserProperties() throws Exception {
         createAUserAndSave();
         UserView userView = appUserRepository.findById(TEST_USER_ID).get().userView();
         userView.setUsername("changed-username");
@@ -151,7 +151,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAUserByUsernameAndDomain() throws Exception {
+    void gettingAUserByUsernameAndDomain() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load",
                 USER_DOMAIN_ID)
@@ -169,7 +169,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void queryingUsers() throws Exception {
+    void queryingUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search",
@@ -191,7 +191,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updatingUsersByQuery() throws Exception {
+    void updatingUsersByQuery() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         UserUpdateRequest request = new UserUpdateRequest();
         request.setQuery("(country equals 'Nigeria')");

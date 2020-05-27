@@ -9,16 +9,16 @@ import com.mmadu.registration.services.RegistrationService;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.Errors;
 
@@ -35,8 +35,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = RegistrationController.class, secure = false)
+@WebMvcTest(value = RegistrationController.class, excludeAutoConfiguration = {
+        SecurityAutoConfiguration.class,
+        SecurityFilterAutoConfiguration.class
+})
 @TestPropertySource(properties = "mmadu.domain.api-security-enabled=false")
 public class RegistrationControllerTest {
     public static final String PROFILE_ID = "1";
@@ -55,7 +57,7 @@ public class RegistrationControllerTest {
 
     private RegistrationProfile profile = createRegistrationProfile(PROFILE_ID, DOMAIN_ID);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         doReturn(profile).when(registrationProfileService).getProfileForDomain(DOMAIN_ID);
         doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomain(anyString());

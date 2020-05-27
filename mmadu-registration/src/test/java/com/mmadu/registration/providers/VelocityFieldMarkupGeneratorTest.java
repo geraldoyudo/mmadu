@@ -2,19 +2,19 @@ package com.mmadu.registration.providers;
 
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.utils.VelocityEngineConfig;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.mmadu.registration.utils.EntityUtils.createField;
 import static com.mmadu.registration.utils.EntityUtils.createFieldType;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         VelocityFieldMarkupGenerator.class,
         ThymeleafFieldContextResolver.class,
@@ -25,7 +25,7 @@ public class VelocityFieldMarkupGeneratorTest {
     private FieldMarkupGenerator fieldMarkupGenerator;
 
     @Test
-    public void testMarkupField() {
+    void testMarkupField() {
         String markup = fieldMarkupGenerator.resolveField(createField("1", ","), createFieldType("1"));
         assertThat(markup, equalTo("<div><p> Name: <input type='text' th:with=\"var_1=${'name'}\" " +
                 "th:field='*{properties[\"__${var_1}__\"]}' th:style=\"'background: 00ff'\"/> /></div>"));
@@ -33,7 +33,7 @@ public class VelocityFieldMarkupGeneratorTest {
     }
 
     @Test
-    public void givenClassesAndStylesWhenResolveFieldShouldAddAppropriately() {
+    void givenClassesAndStylesWhenResolveFieldShouldAddAppropriately() {
         FieldType type = createFieldType("1");
         type.setClasses(asList("one", "two"));
         type.setStyle("color: red");

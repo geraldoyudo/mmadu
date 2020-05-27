@@ -6,9 +6,8 @@ import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.models.AuthenticateRequest;
 import com.mmadu.service.repositories.AppUserRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -29,17 +28,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(MongoInitializationConfig.class)
 @TestPropertySource(properties = "mmadu.domain.api-security-enabled=true")
-public class AuthenticationApiDomainTokenSecurityIT {
+class AuthenticationApiDomainTokenSecurityIT {
 
     private static final String TOKEN = "1234";
     public static final String DOMAIN_ID = "1";
 
-    @Autowired
-    private WebApplicationContext context;
     protected MockMvc mockMvc;
     @Autowired
     private AppUserRepository appUserRepository;
@@ -47,15 +43,15 @@ public class AuthenticationApiDomainTokenSecurityIT {
     @MockBean
     private DomainTokenChecker domainTokenChecker;
 
-    @Before
-    public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+    @BeforeEach
+    void setUp(WebApplicationContext context) {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
     }
 
     @Test
-    public void givenNoDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
+    void givenNoDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
         this.mockMvc.perform(post("/domains/{domainId}/authenticate", DOMAIN_ID)
                 .contentType(MediaType.APPLICATION_JSON).content(
                         mapper.writeValueAsString(
@@ -64,7 +60,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
     }
 
     @Test
-    public void givenWrongDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
+    void givenWrongDomainTokenHeaderWhenAuthenticateShouldReturnUnAuthorized() throws Exception {
         this.mockMvc.perform(
                 post("/domains/{domainId}/authenticate", DOMAIN_ID)
                         .header(DOMAIN_AUTH_TOKEN_FIELD, "33333")
@@ -75,7 +71,7 @@ public class AuthenticationApiDomainTokenSecurityIT {
     }
 
     @Test
-    public void givenCorrectDomainTokenHeaderWhenAuthenticateShouldReturnAuthorized() throws Exception {
+    void givenCorrectDomainTokenHeaderWhenAuthenticateShouldReturnAuthorized() throws Exception {
         doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(getToken(), DOMAIN_ID);
         createAppUser();
         this.mockMvc.perform(

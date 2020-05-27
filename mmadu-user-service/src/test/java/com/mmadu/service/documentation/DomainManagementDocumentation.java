@@ -2,7 +2,7 @@ package com.mmadu.service.documentation;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppDomain;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
@@ -22,7 +22,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     private static final String NEW_DOMAIN_ID = "00111111";
 
     @Test
-    public void createADomain() throws Exception {
+    void createADomain() throws Exception {
         mockMvc.perform(post("/appDomains")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                 .content(objectToString(createConstantDomain()))
@@ -41,7 +41,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAllDomains() throws Exception {
+    void gettingAllDomains() throws Exception {
         mockMvc.perform(get("/appDomains")
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         )
@@ -60,7 +60,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getADomainById() throws Exception {
+    void getADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -84,7 +84,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deletingADomainById() throws Exception {
+    void deletingADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/appDomains/{domainId}", NEW_DOMAIN_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -97,7 +97,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updatingADomain() throws Exception {
+    void updatingADomain() throws Exception {
         createAndSaveDomain();
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("name", "changed-name");
