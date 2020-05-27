@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>com.geraldoyudo.kweeri</groupId>
 			<artifactId>kweeri-mongo</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mmadu</groupId>
