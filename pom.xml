@@ -16,6 +16,6 @@
         <module>mmadu-token-service</module>
         <module>mmadu-user-service</module>
         <module>mmadu-registration</module>
-        <module>mmadu-oauth2-service</module>
+        <module>mmadu-identity</module>
     </modules>
 </project>

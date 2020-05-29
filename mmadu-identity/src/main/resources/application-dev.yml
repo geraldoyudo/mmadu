@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: mmadu_db
+      host: localhost
