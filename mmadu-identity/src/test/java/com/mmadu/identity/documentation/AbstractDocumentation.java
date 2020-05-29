@@ -2,6 +2,8 @@ package com.mmadu.identity.documentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mmadu.identity.models.users.Domain;
+import com.mmadu.identity.providers.users.DomainService;
 import com.mmadu.security.DomainTokenChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -31,6 +35,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 public abstract class AbstractDocumentation {
     public static final String ROOT_DOC_FOLDER = "../docs/apis/snippets";
     public static final String DOCUMENTATION_NAME = "{class-name}/{method-name}/{step}/";
+    public static final String DOMAIN_ID = "1";
     public final String ADMIN_TOKEN = "2222";
     public static final String DOMAIN_AUTH_TOKEN_FIELD = "domain-auth-token";
 
@@ -38,6 +43,8 @@ public abstract class AbstractDocumentation {
     protected ObjectMapper objectMapper;
     @MockBean
     private DomainTokenChecker domainTokenChecker;
+    @MockBean
+    private DomainService domainService;
 
     protected MockMvc mockMvc;
 
@@ -46,6 +53,8 @@ public abstract class AbstractDocumentation {
                         RestDocumentationContextProvider restDocumentation) {
         doReturn(true).when(domainTokenChecker)
                 .checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
+        doReturn(Optional.of(new Domain("new-domain")))
+                .when(domainService).findById(DOMAIN_ID);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(restDocumentation))

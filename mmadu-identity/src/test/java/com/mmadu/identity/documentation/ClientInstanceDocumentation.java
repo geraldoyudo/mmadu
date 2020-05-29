@@ -72,7 +72,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 .put("clientType", "CONFIDENTIAL")
                 .put("clientProfile", "web_app")
                 .put("tlsEnabled", true)
-                .put("domainId", "1");
+                .put("domainId", DOMAIN_ID);
         node.putArray("redirectionUris")
                 .add("https://myapp.com/callback")
                 .add("https://localhost:8080/callback");

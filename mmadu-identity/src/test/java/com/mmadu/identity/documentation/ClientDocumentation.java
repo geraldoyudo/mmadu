@@ -49,7 +49,7 @@ public class ClientDocumentation extends AbstractDocumentation {
                 .put("logoUrl", "http://an.email.com/favicon")
                 .put("applicationUrl", "http://an.email.com")
                 .put("code", "A12345")
-                .put("domainId", "1");
+                .put("domainId", DOMAIN_ID);
         node.putArray("tags")
                 .add("email")
                 .add("communications");
