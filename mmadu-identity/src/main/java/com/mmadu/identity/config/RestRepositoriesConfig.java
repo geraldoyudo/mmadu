@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
+import com.mmadu.identity.entities.Client;
 import com.mmadu.identity.entities.ClientCredentials;
+import com.mmadu.identity.entities.ClientInstance;
+import com.mmadu.identity.entities.DomainConfiguration;
 import com.mmadu.identity.utils.ClientCredentialsDeserializer;
 import com.mmadu.identity.utils.ClientCredentialsSerializer;
 import com.mmadu.identity.validators.ClientInstanceValidator;
@@ -13,6 +16,7 @@ import com.mmadu.identity.validators.HasDomainValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.Validator;
@@ -37,6 +41,13 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
     private ClientInstanceValidator clientInstanceValidator;
     @Autowired
     private HasDomainValidator hasDomainValidator;
+
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+        config.exposeIdsFor(
+                Client.class, ClientInstance.class, DomainConfiguration.class
+        );
+    }
 
     @Override
     public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {

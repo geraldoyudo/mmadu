@@ -10,6 +10,7 @@ public class WebSecurityConfig implements MmaduSecurityConfigurer {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .anyRequest().access("hasPermission('domain', 'admin')");
     }
