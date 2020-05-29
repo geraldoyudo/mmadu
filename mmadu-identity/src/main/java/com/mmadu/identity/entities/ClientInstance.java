@@ -21,7 +21,6 @@ public class ClientInstance implements HasDomain {
     @Id
     private String id;
     private String clientId;
-    @NotEmpty(message = "client type cannot be empty")
     private ClientType clientType = ClientType.CONFIDENTIAL;
     @NotEmpty(message = "client profile cannot be empty")
     private String clientProfile = ClientProfileUtils.WEB_APP;
