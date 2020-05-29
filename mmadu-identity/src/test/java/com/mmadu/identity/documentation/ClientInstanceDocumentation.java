@@ -53,7 +53,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    void givenValidNewClientInstanceRequestWhenCreateClientInstanceThenReturn201() throws Exception {
+    void createNewClientInstance() throws Exception {
         mockMvc.perform(
                 post("/repo/clientInstances")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)

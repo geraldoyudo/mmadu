@@ -29,7 +29,7 @@ public class ClientDocumentation extends AbstractDocumentation {
     private ClientRepository clientRepository;
 
     @Test
-    void givenValidNewClientRequestWhenCreateClientThenReturn201() throws Exception {
+    void createNewClient() throws Exception {
         mockMvc.perform(
                 post("/repo/clients")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
