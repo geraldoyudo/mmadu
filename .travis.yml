@@ -11,7 +11,9 @@ matrix:
     sudo: false
     before_install: cd docs
     script: bundle exec rake deploy
-    if: branch = master
+    branches:
+      only:
+        - master
   - language: java
     name: "Run Tests"
     jdk:
@@ -19,7 +21,9 @@ matrix:
     dist: trusty
     install: mvn clean
     script: mvn install
-    if: branch != master
+    branches:
+      except:
+        - master
     deploy:
     - provider: releases
       api_key: "$GITHUB_OAUTH_TOKEN"
@@ -33,7 +37,9 @@ matrix:
     name: "Deploy to Heroku Test Environment"
     jdk:
     - oraclejdk14
-    if: branch = develop
+    branches:
+      only:
+        - develop
     sudo: false
     dist: trusty
     services:
@@ -56,7 +62,9 @@ matrix:
     name: "Package Releases"
     jdk:
       - oraclejdk14
-    if: branch = master
+    branches:
+      only:
+        - master
     sudo: false
     dist: trusty
     services:
