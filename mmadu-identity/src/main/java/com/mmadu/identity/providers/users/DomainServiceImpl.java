@@ -12,9 +12,13 @@ import java.util.Optional;
 
 @Component
 public class DomainServiceImpl implements DomainService {
+    private WebClient userServiceClient;
+
     @Autowired
     @Qualifier("userService")
-    private WebClient userServiceClient;
+    public void setUserServiceClient(WebClient userServiceClient) {
+        this.userServiceClient = userServiceClient;
+    }
 
     @Override
     @Cacheable("domains")

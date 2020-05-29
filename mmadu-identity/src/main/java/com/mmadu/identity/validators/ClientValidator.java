@@ -16,6 +16,6 @@ public class ClientValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        log.info("Validating {}", o);
+        log.trace("Validating Client {}", o);
     }
 }
