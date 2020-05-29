@@ -1,8 +1,9 @@
 package com.mmadu.identity.providers.users;
 
 import com.mmadu.identity.models.users.Domain;
-import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 public interface DomainService {
-    Mono<Domain> findById(String id);
+    Optional<Domain> findById(String id);
 }

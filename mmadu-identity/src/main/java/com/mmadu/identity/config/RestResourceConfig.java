@@ -15,7 +15,7 @@ public class RestResourceConfig {
 
     @Bean
     @Qualifier("userService")
-    public WebClient userServiceClient(@Value("${mmadu.userService}") String userServiceUrl,
+    public WebClient userServiceClient(@Value("${mmadu.userService.url}") String userServiceUrl,
                                        @Value("${mmadu.domainKey}") String domainKey) {
         return WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
