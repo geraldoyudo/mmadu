@@ -5,6 +5,7 @@ import com.geraldoyudo.kweeri.core.mapping.QueryProcessingException;
 import com.mmadu.service.exceptions.*;
 import com.mmadu.service.models.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -30,6 +31,13 @@ public class GeneralExceptionHandler {
         return new ErrorResponse("210", "user not found");
     }
 
+    @ExceptionHandler({
+            ResourceNotFoundException.class
+    })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundException() {
+        return new ErrorResponse("211", "resource not found");
+    }
     @ExceptionHandler({
             IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)

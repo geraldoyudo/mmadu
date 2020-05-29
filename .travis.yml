@@ -1,70 +1,71 @@
 env:
   global:
-  - secure: gSA+9iDuxCl7IGsq6nkdX71Rppw9bsGYr3Aq5V2a3O0zDBQSw37bBKtm5E82UNOfxx5rwtv4ks8uDwHXcoHXP5c3k4gE4gPeKy8qmlmyuacWpXz1PjxCYPhI2Ubp/0xFVqeMRJsfEURvg85kD0Y7DF9y+U20Vo61LTi5nJk7XhnLu0rFCP68xPNajqiRNJ4141zihNtciU27xtlHEpwiNB4WmBQ/opm3d0rxw19/fGVSBbkk2VMufqqWgx0Ptd1QB5Bfl1CvEyFtJCLcFwj6JQXhgX7mDNB6AIxnT82LVlmj+gfMsWhPAhEJ1PpvnMPskZ2H00/dcGzLy4vx6YRT76ftUx2s8SvRGCX5ZMz8PF2+7dFBexHFaRxB+fM711pYh7F2EHqsvQ7qODU+RqLYTo0BAflu9rETi2UE6gp7Fl6dKc/lF41MUblRNFpaf7hR03F/IB8xkG9R0FiqlhFN7EhXkgbBddZG9E8VqAgiCjcKJ8AdsTJ1NmpmgvY4wGACS0GqZc/ypYpbO/3BZYSD0XGsWEbYV3/PpcH/WWthEblQgJGZ1RryNlDITNBMn/M7RacJSuuC5Y95ab32tdyAPxBKKa5QD9KAws3SxQnHI8630fMk9p1OqAF6RxY4Up0o8N7QzWtXzUCYpVCBPCdDgjNzMteupXP46BVB4BIZfX4=
+    - secure: gSA+9iDuxCl7IGsq6nkdX71Rppw9bsGYr3Aq5V2a3O0zDBQSw37bBKtm5E82UNOfxx5rwtv4ks8uDwHXcoHXP5c3k4gE4gPeKy8qmlmyuacWpXz1PjxCYPhI2Ubp/0xFVqeMRJsfEURvg85kD0Y7DF9y+U20Vo61LTi5nJk7XhnLu0rFCP68xPNajqiRNJ4141zihNtciU27xtlHEpwiNB4WmBQ/opm3d0rxw19/fGVSBbkk2VMufqqWgx0Ptd1QB5Bfl1CvEyFtJCLcFwj6JQXhgX7mDNB6AIxnT82LVlmj+gfMsWhPAhEJ1PpvnMPskZ2H00/dcGzLy4vx6YRT76ftUx2s8SvRGCX5ZMz8PF2+7dFBexHFaRxB+fM711pYh7F2EHqsvQ7qODU+RqLYTo0BAflu9rETi2UE6gp7Fl6dKc/lF41MUblRNFpaf7hR03F/IB8xkG9R0FiqlhFN7EhXkgbBddZG9E8VqAgiCjcKJ8AdsTJ1NmpmgvY4wGACS0GqZc/ypYpbO/3BZYSD0XGsWEbYV3/PpcH/WWthEblQgJGZ1RryNlDITNBMn/M7RacJSuuC5Y95ab32tdyAPxBKKa5QD9KAws3SxQnHI8630fMk9p1OqAF6RxY4Up0o8N7QzWtXzUCYpVCBPCdDgjNzMteupXP46BVB4BIZfX4=
 matrix:
   include:
-  - language: ruby
-    name: "Build Documentation"
-    dist: trusty
-    rvm:
-    - 2.2.0
-    sudo: false
-    before_install: cd docs
-    script: bundle exec rake deploy
-    if: branch = master
-  - language: java
-    name: "Run Tests"
-    jdk:
-    - oraclejdk14
-    dist: trusty
-    install: mvn clean
-    script: mvn install
-    if: branch != master
-    deploy:
-    - provider: releases
-      api_key: "$GITHUB_OAUTH_TOKEN"
-      file_glob: true
-      file:
-      - mmadu-*/target/mmadu-*
-      skip_cleanup: true
-      on:
-        tags: true
-  - language: java
-    name: "Deploy to Heroku Test Environment"
-    jdk:
-    - oraclejdk14
-    if: branch = develop
-    sudo: false
-    dist: trusty
-    services:
-    - docker
-    before_install:
-    - curl https://cli-assets.heroku.com/install.sh | sh
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - cat ./heroku-auth.txt >> ~/.netrc
-    - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
-    - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
-    install: mvn clean
-    script:
-    - mvn install
-    - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
-    - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
-    - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
-    - cd ./docker/heroku-test/user-registration && heroku container:login && ./build.sh && heroku container:release web --app mmadu-registration && cd ../../../
-  - language: java
-    name: "Package Releases"
-    jdk:
-      - oraclejdk14
-    if: branch = master
-    sudo: false
-    dist: trusty
-    services:
-      - docker
-    before_install:
-      - curl https://cli-assets.heroku.com/install.sh | sh
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    install: mvn clean
-    script:
-      - mvn install
-      - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
-      - cd ./docker/prod && ./release.sh cd ../../
+    - language: ruby
+      name: "Build Documentation"
+      dist: trusty
+      rvm:
+        - 2.2.0
+      sudo: false
+      before_install: cd docs
+      script: bundle exec rake deploy
+      if: branch = master && type = push
+    - language: java
+      name: "Run Tests"
+      jdk:
+        - oraclejdk14
+      dist: trusty
+      install: mvn clean
+      script: mvn install
+      if: branch != master
+      deploy:
+        - provider: releases
+          api_key: "$GITHUB_OAUTH_TOKEN"
+          file_glob: true
+          file:
+            - mmadu-*/target/mmadu-*
+          skip_cleanup: true
+          on:
+            tags: true
+    - language: java
+      name: "Deploy to Heroku Test Environment"
+      jdk:
+        - oraclejdk14
+      if: branch = develop AND type = push
+      sudo: false
+      dist: trusty
+      services:
+        - docker
+      before_install:
+        - curl https://cli-assets.heroku.com/install.sh | sh
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - cat ./heroku-auth.txt >> ~/.netrc
+        - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
+        - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
+      install: mvn clean
+      script:
+        - mvn install
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration,mmadu-identity -DskipTests
+        - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
+        - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
+        - cd ./docker/heroku-test/user-registration && heroku container:login && ./build.sh && heroku container:release web --app mmadu-registration && cd ../../../
+        - cd ./docker/heroku-test/identity && heroku container:login && ./build.sh && heroku container:release web --app mmadu-identity && cd ../../../
+    - language: java
+      name: "Package Releases"
+      jdk:
+        - oraclejdk14
+      if: branch = master AND type = push
+      sudo: false
+      dist: trusty
+      services:
+        - docker
+      before_install:
+        - curl https://cli-assets.heroku.com/install.sh | sh
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      install: mvn clean
+      script:
+        - mvn install
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
+        - cd ./docker/prod && ./release.sh cd ../../

@@ -1,0 +1,11 @@
+spring:
+  data:
+    rest:
+      base-path: /repo
+
+mmadu:
+  domainKey: 2222
+  tokenService:
+    url: http://localhost:10082
+  userService:
+    url: http://localhost:10080
