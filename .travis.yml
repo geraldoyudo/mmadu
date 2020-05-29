@@ -18,7 +18,7 @@ matrix:
         - oraclejdk14
       dist: trusty
       install: mvn clean
-      script: mvn install
+      script: mvn -q install
       if: branch != master
       deploy:
         - provider: releases
@@ -44,9 +44,9 @@ matrix:
         - cat ./heroku-auth.txt >> ~/.netrc
         - sed -i "s/__HEROKU_EMAIL__/$HEROKU_EMAIL/g" ~/.netrc
         - sed -i "s/__HEROKU_API_KEY__/$HEROKU_API_KEY/g" ~/.netrc
-      install: mvn clean
+      install: mvn -q clean
       script:
-        - mvn install
+        - mvn -q install
         - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration,mmadu-identity -DskipTests
         - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
         - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
@@ -64,8 +64,8 @@ matrix:
       before_install:
         - curl https://cli-assets.heroku.com/install.sh | sh
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      install: mvn clean
+      install: mvn -q clean
       script:
-        - mvn install
+        - mvn -q install
         - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
         - cd ./docker/prod && ./release.sh cd ../../
