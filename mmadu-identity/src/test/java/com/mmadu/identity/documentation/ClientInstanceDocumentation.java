@@ -1,0 +1,232 @@
+package com.mmadu.identity.documentation;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mmadu.identity.entities.Client;
+import com.mmadu.identity.entities.ClientInstance;
+import com.mmadu.identity.entities.ClientSecretCredentials;
+import com.mmadu.identity.entities.ClientType;
+import com.mmadu.identity.repositories.ClientInstanceRepository;
+import com.mmadu.identity.repositories.ClientRepository;
+import com.mmadu.identity.utils.ClientProfileUtils;
+import com.mmadu.identity.utils.GrantTypeUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.request.ParameterDescriptor;
+
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class ClientInstanceDocumentation extends AbstractDocumentation {
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private ClientInstanceRepository clientInstanceRepository;
+    private Client client;
+
+    @BeforeEach
+    void setUpClient() {
+        client = new Client();
+        client.setApplicationUrl("https://myapp.com");
+        client.setCategory("test");
+        client.setCode("1234");
+        client.setDomainId("1");
+        client.setName("test");
+        client.setTags(Collections.singletonList("tags"));
+        client.setLogoUrl("https://logo.url/favicon");
+        client = clientRepository.save(client);
+    }
+
+    @Test
+    void givenValidNewClientInstanceRequestWhenCreateClientInstanceThenReturn201() throws Exception {
+        mockMvc.perform(
+                post("/repo/clientInstances")
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .content(newClientInstanceRequest())
+        ).andExpect(status().isCreated())
+                .andDo(
+                        document(DOCUMENTATION_NAME, requestFields(
+                                clientInstanceFields()
+                        ))
+                );
+    }
+
+    private String newClientInstanceRequest() {
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("clientId", client.getId())
+                .put("clientType", "CONFIDENTIAL")
+                .put("clientProfile", "web_app")
+                .put("tlsEnabled", true)
+                .put("domainId", "1");
+        node.putArray("redirectionUris")
+                .add("https://myapp.com/callback")
+                .add("https://localhost:8080/callback");
+        node.putArray("allowedHosts")
+                .add("localhost")
+                .add("teamapt.com")
+                .add("32.32.182.34");
+        node.putArray("supportedGrantTypes")
+                .add("authentication_code")
+                .add("client_credentials");
+        ObjectNode credentialsNode = node.putObject("credentials")
+                .put("type", "secret")
+                .put("secret", "1234");
+        return node.toPrettyString();
+    }
+
+    private static List<FieldDescriptor> clientInstanceFields() {
+        return asList(
+                fieldWithPath("id").type("string").optional().description("Client ID"),
+                fieldWithPath("clientId").description("The client ID"),
+                fieldWithPath("clientType").description("Either CONFIDENTIAL or PUBLIC").optional(),
+                fieldWithPath("clientProfile").description("Client profile category: either web_app, user_agent_app, or native_app, custom profiles may be used."),
+                fieldWithPath("credentials").type(JsonFieldType.VARIES).description("Client credentials").optional(),
+                fieldWithPath("identifier").type(JsonFieldType.STRING).description("The client's generated identifier used for authorization and authentication"),
+                fieldWithPath("allowedHosts").type(JsonFieldType.ARRAY).description("The host names to be used with this client"),
+                fieldWithPath("redirectionUris").type(JsonFieldType.ARRAY).description("The redirection urls permitted to be used with this client"),
+                fieldWithPath("supportedGrantTypes").type(JsonFieldType.ARRAY).description("The grant types these clients are permitted to use"),
+                fieldWithPath("tlsEnabled").type(JsonFieldType.BOOLEAN).description("Whether TLS should be made compulsory"),
+                fieldWithPath("domainId").description("the ID of the domain"),
+                fieldWithPath("credentials.type").description("The client's credential type (for now, `secret`)"),
+                fieldWithPath("credentials.secret").description("The client secret (if credential type is `secret`)").optional()
+        );
+    }
+
+    @Test
+    void getClientInstanceById() throws Exception {
+        ClientInstance instance = newClientInstance();
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        ).andExpect(status().isOk())
+                .andDo(
+                        document(DOCUMENTATION_NAME, pathParameters(
+                                clientInstanceIdParameter()
+                        ), relaxedResponseFields(
+                                clientInstanceFields()
+                        ))
+                );
+    }
+
+    private ClientInstance newClientInstance() {
+        ClientInstance instance = new ClientInstance();
+        instance.setClientId(client.getId());
+        instance.setClientType(ClientType.CONFIDENTIAL);
+        instance.setClientProfile(ClientProfileUtils.WEB_APP);
+        instance.setCredentials(new ClientSecretCredentials("1234"));
+        instance.setIdentifier("1111");
+        instance.setRedirectionUris(List.of("https://redirect.com/callback", "https://localhost:832/callback"));
+        instance.setAllowedHosts(List.of("192.168.99.100"));
+        instance.setTlsEnabled(true);
+        instance.setSupportedGrantTypes(List.of(GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.CLIENT_CREDENTIALS));
+        instance.setDomainId("1");
+        return clientInstanceRepository.save(instance);
+    }
+
+    private ParameterDescriptor clientInstanceIdParameter() {
+        return parameterWithName("clientInstanceId").description("The client instance ID");
+    }
+
+    @Test
+    public void getClientInstancesByDomain() throws Exception {
+        ClientInstance instance = newClientInstance();
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/repo/clientInstances/search/findByDomainId")
+                        .param("domainId", instance.getDomainId())
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        ).andExpect(status().isOk())
+                .andDo(
+                        document(DOCUMENTATION_NAME, requestParameters(
+                                parameterWithName("domainId").description("Domain ID of the client instance")
+                        ), relaxedResponseFields(
+                                clientInstanceListFields()
+                        ))
+                );
+    }
+
+    private static List<FieldDescriptor> clientInstanceListFields() {
+        return asList(
+                fieldWithPath("_embedded.clientInstances.[].id").description("The client instance id"),
+                fieldWithPath("_embedded.clientInstances.[].domainId").description("the client instance domain id"),
+                fieldWithPath("_embedded.clientInstances.[].clientType").description("The client instance type"),
+                fieldWithPath("_embedded.clientInstances.[].clientProfile").description("The client instance profile"),
+                fieldWithPath("_embedded.clientInstances.[].identifier").description("The client's identifier (used for authentication and authorization)"),
+                fieldWithPath("_embedded.clientInstances.[].redirectionUris").description("The client's allowed redirection uris"),
+                fieldWithPath("_embedded.clientInstances.[].allowedHosts").description("The client's allowed hosts"),
+                fieldWithPath("_embedded.clientInstances.[].tlsEnabled").description("If client is must use TLS or not"),
+                fieldWithPath("_embedded.clientInstances.[].credentials.type").optional().description("The client's credential type (for now, `secret`)"),
+                fieldWithPath("_embedded.clientInstances.[].credentials.secret").optional().description("The client secret (if credential type is `secret`)").optional()
+        );
+    }
+
+    @Test
+    public void getClientInstancesByDomainAndClient() throws Exception {
+        ClientInstance instance = newClientInstance();
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/repo/clientInstances/search/findByDomainIdAndClientId")
+                        .param("domainId", instance.getDomainId())
+                        .param("clientId", instance.getClientId())
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        ).andExpect(status().isOk())
+                .andDo(
+                        document(DOCUMENTATION_NAME, requestParameters(
+                                parameterWithName("domainId").description("Domain ID of the client instance"),
+                                parameterWithName("clientId").description("The client's ID")
+                        ), relaxedResponseFields(
+                                clientInstanceListFields()
+                        ))
+                );
+    }
+
+
+    @Test
+    public void updateClientInstanceById() throws Exception {
+        final boolean tlsEnabled = false;
+        ClientInstance instance = newClientInstance();
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .content(
+                                objectMapper.createObjectNode()
+                                        .put("tlsEnabled", tlsEnabled)
+                                        .toString()
+                        )
+        ).andExpect(status().isNoContent())
+                .andDo(
+                        document(DOCUMENTATION_NAME, pathParameters(
+                                clientInstanceIdParameter()
+                        ))
+                );
+        assertThat(clientInstanceRepository.findById(instance.getId()).get().isTlsEnabled(), equalTo(tlsEnabled));
+    }
+
+    @Test
+    public void deleteClientById() throws Exception {
+        ClientInstance instance = newClientInstance();
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.delete("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+        ).andExpect(status().isNoContent())
+                .andDo(
+                        document(DOCUMENTATION_NAME, pathParameters(
+                                clientInstanceIdParameter()
+                        ))
+                );
+        assertThat(clientInstanceRepository.existsById(instance.getId()), equalTo(false));
+    }
+}

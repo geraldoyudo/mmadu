@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Document
@@ -23,7 +24,7 @@ public class ClientInstance implements HasDomain {
     private String clientProfile = ClientProfileUtils.WEB_APP;
     private ClientCredentials credentials;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String identifier;
+    private String identifier = UUID.randomUUID().toString();
     private List<String> redirectionUris = Collections.emptyList();
     private List<String> allowedHosts = Collections.emptyList();
     private boolean tlsEnabled = true;

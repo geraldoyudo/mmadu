@@ -71,7 +71,7 @@ public class ClientDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    void givenClientWhenGetClientByIdThenReturnClient() throws Exception {
+    void getClientById() throws Exception {
         Client client = newClient();
         client = clientRepository.save(client);
         mockMvc.perform(
