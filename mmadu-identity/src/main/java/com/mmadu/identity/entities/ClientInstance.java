@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +21,11 @@ public class ClientInstance implements HasDomain {
     @Id
     private String id;
     private String clientId;
+    @NotEmpty(message = "client type cannot be empty")
     private ClientType clientType = ClientType.CONFIDENTIAL;
+    @NotEmpty(message = "client profile cannot be empty")
     private String clientProfile = ClientProfileUtils.WEB_APP;
+    @Valid
     private ClientCredentials credentials;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String identifier = UUID.randomUUID().toString();
