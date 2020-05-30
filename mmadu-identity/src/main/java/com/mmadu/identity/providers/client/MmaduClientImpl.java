@@ -29,4 +29,9 @@ public class MmaduClientImpl implements MmaduClient {
     public List<String> getAuthorities() {
         return Collections.emptyList();
     }
+
+    @Override
+    public List<String> getRedirectUris() {
+        return clientInstance.getRedirectionUris();
+    }
 }

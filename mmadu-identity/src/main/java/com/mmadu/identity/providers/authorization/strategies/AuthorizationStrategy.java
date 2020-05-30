@@ -8,4 +8,8 @@ public interface AuthorizationStrategy {
     boolean apply(AuthorizationRequest request, AuthorizationResponse response);
 
     void authorize(AuthorizationRequest request, AuthorizationResponse response, AuthorizationContext context);
+
+    default boolean isGrantType() {
+        return true;
+    }
 }

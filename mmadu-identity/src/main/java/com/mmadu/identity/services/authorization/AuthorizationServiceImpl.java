@@ -44,6 +44,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 break;
             }
         }
+        if (strategiesToApply.stream().filter(AuthorizationStrategy::isGrantType).findFirst().isEmpty()) {
+            context.set("cannotBeProcessed", true);
+        }
         session.setAttribute("authorizationContext", context);
         return resultProcessor.processResult(context.getResult());
     }

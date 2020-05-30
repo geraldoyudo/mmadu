@@ -21,6 +21,7 @@ public class AuthorizationContext {
 
     public void fail(AuthorizationError error) {
         result.setComplete(true);
+        error.setState(result.getState());
         result.setError(error);
     }
 
@@ -29,11 +30,13 @@ public class AuthorizationContext {
     }
 
     public void succeed(String redirectUri, RedirectData data) {
+        this.result.setComplete(true);
         this.result.setRedirectUri(redirectUri);
         this.result.setData(data);
     }
 
     public void succeed(RedirectData data) {
+        this.result.setComplete(true);
         this.result.setData(data);
     }
 

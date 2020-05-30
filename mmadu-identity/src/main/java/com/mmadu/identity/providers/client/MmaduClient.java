@@ -8,4 +8,6 @@ public interface MmaduClient {
     String getClientIdentifier();
 
     List<String> getAuthorities();
+
+    List<String> getRedirectUris();
 }
