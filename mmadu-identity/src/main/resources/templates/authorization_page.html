@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Authorization Page</title>
+</head>
+<body>
+<div th:if="${param.error}">
+    Invalid input.
+</div>
+
+<form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}">
+    <div><input type="submit" value="Authorize"/></div>
+</form>
+
+</body>
+</html>
