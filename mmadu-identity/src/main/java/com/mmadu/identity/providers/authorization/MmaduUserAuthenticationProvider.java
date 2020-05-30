@@ -1,5 +1,7 @@
 package com.mmadu.identity.providers.authorization;
 
+import com.mmadu.identity.models.users.MmaduUser;
+import com.mmadu.identity.providers.users.MmaduUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,23 +18,37 @@ import java.util.Optional;
 @Component
 @Qualifier("mmaduUser")
 public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
     private HttpServletRequest httpRequest;
+    private MmaduUserService mmaduUserService;
+
+    @Autowired
+    public void setHttpRequest(HttpServletRequest httpRequest) {
+        this.httpRequest = httpRequest;
+    }
+
+    @Autowired
+    public void setMmaduUserService(MmaduUserService mmaduUserService) {
+        this.mmaduUserService = mmaduUserService;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        if(authentication instanceof MmaduUserAuthenticationToken){
+            return authentication;
+        }
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
         String domain = (String) Optional.ofNullable(httpRequest.getAttribute("domain")).orElse("0");
-        if(username.equals("gerald")){
-            return new MmaduUserAuthenticationToken(username, password, domain);
-        } else {
-            throw new UsernameNotFoundException("username not found");
-        }
+
+        mmaduUserService.authenticate(domain, username, password);
+        MmaduUser user = mmaduUserService.loadUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username not found"));
+        return new MmaduUserAuthenticationToken(user, "", domain);
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
+        return UsernamePasswordAuthenticationToken.class.equals(aClass) ||
+                MmaduUserAuthenticationToken.class.equals(aClass);
     }
 }

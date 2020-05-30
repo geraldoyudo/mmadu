@@ -9,6 +9,7 @@ import java.util.Optional;
 public class AuthorizationContext {
     private Map<String, Object> context = new HashMap<>();
     private AuthorizationResult result = new AuthorizationResult();
+    private Object authorizer;
 
     public <T> Optional<T> get(String key) {
         return Optional.ofNullable(context.get(key))
@@ -46,5 +47,13 @@ public class AuthorizationContext {
 
     public void setState(String state){
         result.setState(state);
+    }
+
+    public void setAuthorizer(Object authorizer) {
+        this.authorizer = authorizer;
+    }
+
+    public Object getAuthorizer() {
+        return authorizer;
     }
 }

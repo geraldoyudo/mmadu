@@ -3,6 +3,7 @@ package com.mmadu.identity.services.authorization;
 import com.mmadu.identity.models.authorization.AuthorizationContext;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
+import com.mmadu.identity.models.users.MmaduUser;
 import com.mmadu.identity.providers.authorization.AuthorizationResultProcessor;
 import com.mmadu.identity.providers.authorization.strategies.AuthorizationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private List<AuthorizationStrategy> strategies;
     private AuthorizationResultProcessor resultProcessor;
     private HttpSession session;
+    private MmaduUser mmaduUser;
 
     @Autowired(required = false)
     public void setStrategies(List<AuthorizationStrategy> strategies) {
@@ -29,6 +31,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Autowired
+    public void setMmaduUser(MmaduUser mmaduUser) {
+        this.mmaduUser = mmaduUser;
+    }
+
+    @Autowired
     public void setSession(HttpSession session) {
         this.session = session;
     }
@@ -36,6 +43,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String processAuthorization(AuthorizationRequest request, AuthorizationResponse response) {
         AuthorizationContext context = new AuthorizationContext();
+        context.setAuthorizer(mmaduUser);
         List<AuthorizationStrategy> strategiesToApply = strategies.stream()
                 .filter(s -> s.apply(request, response)).collect(Collectors.toList());
         for (AuthorizationStrategy strategy : strategiesToApply) {
