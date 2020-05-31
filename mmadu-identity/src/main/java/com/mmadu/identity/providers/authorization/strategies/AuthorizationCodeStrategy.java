@@ -16,6 +16,7 @@ import com.mmadu.identity.providers.users.DomainConfigurationService;
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
@@ -25,6 +26,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @Component
+@Order(100)
 public class AuthorizationCodeStrategy implements AuthorizationStrategy {
     private static final String RESPONSE_TYPE = "code";
 

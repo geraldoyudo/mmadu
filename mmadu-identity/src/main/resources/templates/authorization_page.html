@@ -10,6 +10,9 @@
 </div>
 
 <form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}">
+    <p>
+        Authorize: <input type="checkbox" th:field="*{authorize}" />
+    </p>
     <div><input type="submit" value="Authorize"/></div>
 </form>
 

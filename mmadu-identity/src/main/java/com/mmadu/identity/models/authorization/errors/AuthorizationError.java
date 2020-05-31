@@ -19,10 +19,10 @@ public class AuthorizationError {
 
     public Map<String, String> toParams() {
         Map<String, String> params = new HashMap<>();
-        params.put("error", error);
-        putIfPresent("error_description", errorDescription, params);
-        putIfPresent("error_uri", errorUri, params);
-        putIfPresent("state", state, params);
+        params.put("error", getError());
+        putIfPresent("error_description", getErrorDescription(), params);
+        putIfPresent("error_uri", getErrorUri(), params);
+        putIfPresent("state", getState(), params);
         return params;
     }
 
