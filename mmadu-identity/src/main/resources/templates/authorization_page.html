@@ -24,8 +24,8 @@
                 th:field="*{scopes}">
 
             <option th:each="scope: ${availableScopes}"
-                    th:value="${scope}"
-                    th:text="${scope}"></option>
+                    th:value="${scope.code}"
+                    th:text="${scope.description}"></option>
 
         </select>
     </div>

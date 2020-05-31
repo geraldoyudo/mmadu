@@ -1,7 +1,11 @@
 package com.mmadu.identity.controllers.authorization;
 
+import com.mmadu.identity.entities.Scope;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
+import com.mmadu.identity.providers.client.MmaduClient;
+import com.mmadu.identity.providers.client.MmaduClientService;
+import com.mmadu.identity.providers.users.ScopeService;
 import com.mmadu.identity.services.authorization.AuthorizationService;
 import com.mmadu.identity.utils.StringListUtils;
 import com.mmadu.identity.validators.authorization.AuthorizationRequestValidator;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -26,6 +31,8 @@ public class AuthorizationController {
     private AuthorizationRequestValidator authorizationRequestValidator;
     private AuthorizationResponseValidator authorizationResponseValidator;
     private AuthorizationService authorizationService;
+    private ScopeService scopeService;
+    private MmaduClientService mmaduClientService;
 
     @Autowired
     public void setAuthorizationRequestValidator(AuthorizationRequestValidator authorizationRequestValidator) {
@@ -42,6 +49,16 @@ public class AuthorizationController {
         this.authorizationService = authorizationService;
     }
 
+    @Autowired
+    public void setScopeService(ScopeService scopeService) {
+        this.scopeService = scopeService;
+    }
+
+    @Autowired
+    public void setMmaduClientService(MmaduClientService mmaduClientService) {
+        this.mmaduClientService = mmaduClientService;
+    }
+
     @InitBinder("authorizationRequest")
     void bindAuthorizationRequest(WebDataBinder binder) {
         binder.addValidators(authorizationRequestValidator);
@@ -53,11 +70,18 @@ public class AuthorizationController {
     }
 
     @ModelAttribute("availableScopes")
-    public List<String> getScopes(AuthorizationRequest request) {
-        if(StringUtils.isEmpty(request.getScope())){
+    public List<Scope> addScopesToModel(AuthorizationRequest request) {
+        if (request.getClient_id() == null) {
             return Collections.emptyList();
-        } else{
-            return StringListUtils.toList(request.getScope());
+        }
+        Optional<MmaduClient> client = mmaduClientService.loadClientByIdentifier(request.getClient_id());
+        if (client.isEmpty() && StringUtils.isEmpty(request.getScope())) {
+            return Collections.emptyList();
+        } else {
+            return scopeService.getAllScopeInfo(
+                    client.get().getDomainId(),
+                    StringListUtils.toList(request.getScope())
+            );
         }
     }
 
