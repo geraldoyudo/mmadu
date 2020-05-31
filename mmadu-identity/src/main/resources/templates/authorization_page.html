@@ -2,38 +2,132 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 >
 <head>
-    <title>Authorization Page</title>
+    <title>Spring Security Example </title>
+    <style type="text/css">
+        body {
+            background: #fff url("https://photos-6.dropbox.com/t/2/AAC_bdqR8LMkjEe-HPIf4K1DhtseMLRHPklBSzJSuzglvA/12/5714737/jpeg/1024x768/3/1418346000/0/2/bkg-blur.jpg/CLHm3AIgASgBKAI/b7RrveA2022yJyfO9RyRvv7LjJQESukGHssHUxVThzw") no-repeat center center fixed;
+            background-size: cover;
+            font-family: "Roboto";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            z-index: -1;
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fff;
+            /* IE Fallback */
+
+            background: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            height: 100%;
+        }
+
+        .form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: #A44B38;
+            width: 285px;
+            margin: -140px 0 0 -182px;
+            padding: 40px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .form h2 {
+            margin: 0 0 20px;
+            line-height: 1;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        .form input {
+            outline: none;
+            display: block;
+            width: 100%;
+            margin: 0 0 20px;
+            padding: 10px 15px;
+            border: 1px solid #A44B38;
+            color: #A44B38;
+            font-family: "Roboto";
+            box-sizing: border-box;
+            font-size: 14px;
+            font-wieght: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: 0.2s linear;
+        }
+
+        .form inputinput:focus {
+            color: #333;
+            border: 1px solid #fff;
+        }
+
+        .form button {
+            cursor: pointer;
+            background: #fff;
+            width: 100%;
+            padding: 10px 15px;
+            border: 0;
+            color: #A44B38;
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form button:hover {
+            background: #fff;
+        }
+
+        .error,
+        .valid {
+            display: none;
+        }
+
+        [type="checkbox"]
+        {
+            vertical-align:middle;
+        }
+        label,#checkid{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid input.
-</div>
+<section class="form animated flipInX">
+    <h2 style="margin:auto">An application wants to access your account</h2>
 
-<form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}">
-    <p>
-        Application wants to access your account
-    </p>
+    <form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}" class="loginbox">
 
-    <div th:if="${not #lists.isEmpty(availableScopes)}">
-        <p>
-            Select scopes to approve
-        </p>
+        <div th:if="${not #lists.isEmpty(availableScopes)}">
+            <p style="color: #ffffff;">
+                Select scopes to approve
+            </p>
 
-        <select id="scopeSelection"
-                multiple="multiple"
-                th:field="*{scopes}">
+            <select id="scopeSelection"
+                    multiple="multiple"
+                    th:field="*{scopes}">
 
-            <option th:each="scope: ${availableScopes}"
-                    th:value="${scope.code}"
-                    th:text="${scope.description}"></option>
+                <option th:each="scope: ${availableScopes}"
+                        th:value="${scope.code}"
+                        th:text="${scope.name + ': ' + scope.description}"></option>
 
-        </select>
-    </div>
-    <p>
-        Authorize: <input type="checkbox" th:field="*{authorize}"/>
-    </p>
-    <div><input type="submit" value="Authorize"/></div>
-</form>
+            </select>
+        </div>
+        <span>
+            <input id="checkid" type="checkbox" th:field="*{authorize}"/>
+            <label for="checkid"  style="word-wrap:break-word; color: #ffffff;">I want to authorize this application</label>
+        </span>
+        <div><input type="submit" value="Confirm"/></div>
+    </form>
+</section>
+<script>
 
+</script>
 </body>
 </html>
