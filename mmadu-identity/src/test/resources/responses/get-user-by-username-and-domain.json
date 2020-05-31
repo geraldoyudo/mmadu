@@ -1,0 +1,20 @@
+{
+  "externalId": "0c76dbb1c4234404be8b1b051937de77",
+  "username": "test",
+  "password": "password",
+  "domainId": "1",
+  "roles": ["admin"],
+  "authorities": ["edit"],
+  "properties": {
+    "fullName": "XXXX",
+    "email": "changedxxxx@mail.com"
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:10080/appUsers/5ecb9debf6f285000300eb53"
+    },
+    "appUser": {
+      "href": "http://localhost:10080/appUsers/5ecb9debf6f285000300eb53"
+    }
+  }
+}

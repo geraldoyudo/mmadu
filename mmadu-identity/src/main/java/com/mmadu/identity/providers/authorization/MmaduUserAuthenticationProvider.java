@@ -41,7 +41,7 @@ public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
         String domain = (String) Optional.ofNullable(httpRequest.getAttribute("domain")).orElse("0");
 
         mmaduUserService.authenticate(domain, username, password);
-        MmaduUser user = mmaduUserService.loadUserByUsername(username)
+        MmaduUser user = mmaduUserService.loadUserByUsernameAndDomainId(username, domain)
                 .orElseThrow(() -> new UsernameNotFoundException("username not found"));
         return new MmaduUserAuthenticationToken(user, "", domain);
     }

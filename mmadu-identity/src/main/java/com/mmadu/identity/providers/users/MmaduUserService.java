@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface MmaduUserService {
 
-    Optional<MmaduUser> loadUserByUsername(String username);
+    Optional<MmaduUser> loadUserByUsernameAndDomainId(String username, String domainId);
 
     void authenticate(String domainId, String username, String password);
 }
