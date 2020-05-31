@@ -72,6 +72,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setClientInstanceId(clientInstance.getId());
         grantAuthorization.setClientId(clientInstance.getClientId());
         grantAuthorization.setDomainId(authorizer.getDomainId());
+        grantAuthorization.setUserId(authorizer.getId());
         grantAuthorization.setScopes(toList(request.getScope()));
         AuthorizationCodeGrantData grantData = new AuthorizationCodeGrantData();
         grantData.setCode(authorizationCodeGenerator.generateAuthorizationCodeAsDomain(authorizer.getDomainId()));
