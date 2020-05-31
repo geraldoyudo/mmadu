@@ -3,17 +3,21 @@ package com.mmadu.identity.controllers.authorization;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.services.authorization.AuthorizationService;
+import com.mmadu.identity.utils.StringListUtils;
 import com.mmadu.identity.validators.authorization.AuthorizationRequestValidator;
 import com.mmadu.identity.validators.authorization.AuthorizationResponseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -46,6 +50,15 @@ public class AuthorizationController {
     @InitBinder("authorizationResponse")
     void bindAuthorizationResponse(WebDataBinder binder) {
         binder.addValidators(authorizationResponseValidator);
+    }
+
+    @ModelAttribute("availableScopes")
+    public List<String> getScopes(AuthorizationRequest request) {
+        if(StringUtils.isEmpty(request.getScope())){
+            return Collections.emptyList();
+        } else{
+            return StringListUtils.toList(request.getScope());
+        }
     }
 
     @GetMapping

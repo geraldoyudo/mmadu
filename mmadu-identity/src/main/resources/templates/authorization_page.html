@@ -11,7 +11,26 @@
 
 <form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}">
     <p>
-        Authorize: <input type="checkbox" th:field="*{authorize}" />
+        Application wants to access your account
+    </p>
+
+    <div th:if="${not #lists.isEmpty(availableScopes)}">
+        <p>
+            Select scopes to approve
+        </p>
+
+        <select id="scopeSelection"
+                multiple="multiple"
+                th:field="*{scopes}">
+
+            <option th:each="scope: ${availableScopes}"
+                    th:value="${scope}"
+                    th:text="${scope}"></option>
+
+        </select>
+    </div>
+    <p>
+        Authorize: <input type="checkbox" th:field="*{authorize}"/>
     </p>
     <div><input type="submit" value="Authorize"/></div>
 </form>

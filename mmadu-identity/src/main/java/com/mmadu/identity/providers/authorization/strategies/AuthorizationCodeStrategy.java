@@ -20,10 +20,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.Arrays.asList;
 
 @Component
 @Order(100)
@@ -75,7 +71,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setClientId(clientInstance.getClientId());
         grantAuthorization.setDomainId(authorizer.getDomainId());
         grantAuthorization.setUserId(authorizer.getId());
-        grantAuthorization.setScopes(toList(request.getScope()));
+        grantAuthorization.setScopes(response.getScopes());
         AuthorizationCodeGrantData grantData = new AuthorizationCodeGrantData();
         grantData.setCode(authorizationCodeGenerator.generateAuthorizationCodeAsDomain(authorizer.getDomainId()));
         grantData.setCodeExpiryTime(ZonedDateTime.now().plusSeconds(configuration.getGrantCodeTTLSeconds()));
@@ -85,14 +81,5 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         data.setState(request.getState());
         grantAuthorizationRepository.save(grantAuthorization);
         context.succeed(data);
-    }
-
-    private static List<String> toList(String string){
-        if(string == null || string.isEmpty()){
-            return Collections.emptyList();
-        }
-        String[] tokens = string.trim().replaceAll(" +", " ")
-                .split(" ");
-        return asList(tokens);
     }
 }
