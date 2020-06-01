@@ -12,7 +12,7 @@ import java.util.Map;
 @Data
 @Document
 @EqualsAndHashCode
-public class DomainConfiguration implements HasDomain {
+public class DomainIdentityConfiguration implements HasDomain {
     @Id
     private String id;
     @Indexed(unique = true)

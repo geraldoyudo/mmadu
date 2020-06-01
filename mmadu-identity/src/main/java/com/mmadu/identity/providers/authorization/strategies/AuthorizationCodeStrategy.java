@@ -2,7 +2,7 @@ package com.mmadu.identity.providers.authorization.strategies;
 
 import com.mmadu.identity.entities.AuthorizationCodeGrantData;
 import com.mmadu.identity.entities.ClientInstance;
-import com.mmadu.identity.entities.DomainConfiguration;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.exceptions.DomainNotFoundException;
@@ -12,7 +12,7 @@ import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.models.users.MmaduUser;
 import com.mmadu.identity.providers.authorization.code.DomainAuthorizationCodeGenerator;
-import com.mmadu.identity.providers.users.DomainConfigurationService;
+import com.mmadu.identity.providers.users.DomainIdentityConfigurationService;
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
     private ClientInstanceRepository clientInstanceRepository;
     private DomainAuthorizationCodeGenerator authorizationCodeGenerator;
     private GrantAuthorizationRepository grantAuthorizationRepository;
-    private DomainConfigurationService domainConfigurationService;
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
 
     @Autowired
     public void setAuthorizationCodeGenerator(DomainAuthorizationCodeGenerator authorizationCodeGenerator) {
@@ -47,8 +47,8 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
     }
 
     @Autowired
-    public void setDomainConfigurationService(DomainConfigurationService domainConfigurationService) {
-        this.domainConfigurationService = domainConfigurationService;
+    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
+        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
             throw new IllegalStateException("invalid authorization");
         }
         MmaduUser authorizer = (MmaduUser) context.getAuthorizer();
-        DomainConfiguration configuration = domainConfigurationService.findByDomainId(authorizer.getDomainId())
+        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(authorizer.getDomainId())
                 .orElseThrow(() -> new DomainNotFoundException("domain not found"));
         ClientInstance clientInstance = clientInstanceRepository.findByIdentifier(request.getClient_id())
                 .orElseThrow(() -> new ClientInstanceNotFoundException("client instance not found"));

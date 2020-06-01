@@ -31,5 +31,6 @@ public class GrantAuthorization {
     private boolean active;
     private ZonedDateTime revokedTime;
     private List<String> scopes;
+    private String redirectUri;
     private GrantData data;
 }

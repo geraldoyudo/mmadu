@@ -2,7 +2,7 @@ package com.mmadu.identity.config;
 
 import com.mmadu.identity.entities.Client;
 import com.mmadu.identity.entities.ClientInstance;
-import com.mmadu.identity.entities.DomainConfiguration;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.validators.ClientInstanceValidator;
 import com.mmadu.identity.validators.ClientValidator;
 import com.mmadu.identity.validators.HasDomainValidator;
@@ -34,7 +34,7 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(
-                Client.class, ClientInstance.class, DomainConfiguration.class
+                Client.class, ClientInstance.class, DomainIdentityConfiguration.class
         );
     }
 

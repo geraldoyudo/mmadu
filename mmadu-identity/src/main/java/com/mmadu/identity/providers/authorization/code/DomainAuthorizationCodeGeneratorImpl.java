@@ -1,8 +1,8 @@
 package com.mmadu.identity.providers.authorization.code;
 
-import com.mmadu.identity.entities.DomainConfiguration;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.exceptions.DomainNotFoundException;
-import com.mmadu.identity.providers.users.DomainConfigurationService;
+import com.mmadu.identity.providers.users.DomainIdentityConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class DomainAuthorizationCodeGeneratorImpl implements DomainAuthorizationCodeGenerator {
     private Map<String, AuthorizationCodeGenerationProvider> providerMap = Collections.emptyMap();
-    private DomainConfigurationService domainConfigurationService;
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
 
     @Autowired(required = false)
     public void setProviders(List<AuthorizationCodeGenerationProvider> providers) {
@@ -24,13 +24,13 @@ public class DomainAuthorizationCodeGeneratorImpl implements DomainAuthorization
     }
 
     @Autowired
-    public void setDomainConfigurationService(DomainConfigurationService domainConfigurationService) {
-        this.domainConfigurationService = domainConfigurationService;
+    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
+        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
     }
 
     @Override
     public String generateAuthorizationCodeAsDomain(String domainId) {
-        DomainConfiguration configuration = domainConfigurationService.findByDomainId(domainId)
+        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(domainId)
                 .orElseThrow(() -> new DomainNotFoundException("domain not found"));
         return Optional.ofNullable(providerMap.get(configuration.getGrantCodeType()))
                 .orElseThrow(() -> new IllegalStateException("Grant code type not configured for domain"))
