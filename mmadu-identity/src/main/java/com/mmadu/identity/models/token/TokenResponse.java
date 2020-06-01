@@ -1,14 +1,11 @@
 package com.mmadu.identity.models.token;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TokenResponse {
     @JsonProperty("access_token")
     private String accessToken;
@@ -16,7 +13,6 @@ public class TokenResponse {
     private String tokenType;
     @JsonProperty("expires_in")
     private ZonedDateTime expiresIn;
-    private Map<String, Object> properties = new LinkedHashMap<>();
 
     public String getAccessToken() {
         return accessToken;
@@ -42,18 +38,4 @@ public class TokenResponse {
         this.expiresIn = expiresIn;
     }
 
-    @JsonAnySetter
-    public void setProperty(String key, Object value) {
-        this.properties.put(key, value);
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getProperties() {
-        return properties;
-    }
-
-    public <T> Optional<T> getProperty(String value) {
-        return Optional.ofNullable(properties.get(value))
-                .map(v -> (T) v);
-    }
 }
