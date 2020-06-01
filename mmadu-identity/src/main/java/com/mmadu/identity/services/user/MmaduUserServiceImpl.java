@@ -1,7 +1,7 @@
-package com.mmadu.identity.providers.users;
+package com.mmadu.identity.services.user;
 
-import com.mmadu.identity.models.users.MmaduUser;
-import com.mmadu.identity.models.users.MmaduUserImpl;
+import com.mmadu.identity.models.user.MmaduUser;
+import com.mmadu.identity.models.user.MmaduUserImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;

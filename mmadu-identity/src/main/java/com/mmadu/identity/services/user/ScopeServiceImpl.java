@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.users;
+package com.mmadu.identity.services.user;
 
 import com.mmadu.identity.entities.Scope;
 import com.mmadu.identity.repositories.ScopeRepository;

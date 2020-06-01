@@ -1,6 +1,6 @@
-package com.mmadu.identity.providers.users;
+package com.mmadu.identity.services.domain;
 
-import com.mmadu.identity.models.users.Domain;
+import com.mmadu.identity.models.domain.Domain;
 
 import java.util.Optional;
 

@@ -2,8 +2,8 @@ package com.mmadu.identity.documentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mmadu.identity.models.users.Domain;
-import com.mmadu.identity.providers.users.DomainService;
+import com.mmadu.identity.models.domain.Domain;
+import com.mmadu.identity.services.domain.DomainService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

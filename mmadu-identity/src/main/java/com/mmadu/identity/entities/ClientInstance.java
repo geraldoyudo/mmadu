@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -34,4 +36,8 @@ public class ClientInstance implements HasDomain {
     private List<String> supportedGrantTypes = Collections.singletonList(GrantTypeUtils.AUTHORIZATION_CODE);
     @NotEmpty(message = "domainId cannot be empty")
     private String domainId;
+    @NotNull(message = "resources is required")
+    @Size(min = 1, message = "at least one resource is required")
+    private List<String> resources;
+    private List<String> authorities;
 }

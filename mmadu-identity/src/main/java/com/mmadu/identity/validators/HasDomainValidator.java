@@ -1,7 +1,7 @@
 package com.mmadu.identity.validators;
 
 import com.mmadu.identity.entities.HasDomain;
-import com.mmadu.identity.providers.users.DomainService;
+import com.mmadu.identity.services.domain.DomainService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

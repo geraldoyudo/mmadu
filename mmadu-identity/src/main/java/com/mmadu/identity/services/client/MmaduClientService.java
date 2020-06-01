@@ -1,4 +1,6 @@
-package com.mmadu.identity.providers.client;
+package com.mmadu.identity.services.client;
+
+import com.mmadu.identity.models.client.MmaduClient;
 
 import java.util.Optional;
 

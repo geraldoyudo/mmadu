@@ -2,7 +2,7 @@ package com.mmadu.identity.providers.authorization.code;
 
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.exceptions.DomainNotFoundException;
-import com.mmadu.identity.providers.users.DomainIdentityConfigurationService;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

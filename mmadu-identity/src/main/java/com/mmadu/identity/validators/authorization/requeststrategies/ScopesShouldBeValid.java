@@ -1,9 +1,9 @@
 package com.mmadu.identity.validators.authorization.requeststrategies;
 
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
-import com.mmadu.identity.providers.client.MmaduClient;
-import com.mmadu.identity.providers.client.MmaduClientService;
-import com.mmadu.identity.providers.users.ScopeService;
+import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.services.client.MmaduClientService;
+import com.mmadu.identity.services.user.ScopeService;
 import com.mmadu.identity.utils.StringListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;

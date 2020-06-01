@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.users;
+package com.mmadu.identity.services.domain;
 
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.repositories.DomainIdentityConfigurationRepository;

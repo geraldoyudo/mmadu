@@ -1,4 +1,4 @@
-package com.mmadu.identity.models.users;
+package com.mmadu.identity.models.user;
 
 import java.util.List;
 

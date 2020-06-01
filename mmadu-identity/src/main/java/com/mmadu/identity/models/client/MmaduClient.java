@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.client;
+package com.mmadu.identity.models.client;
 
 import java.util.List;
 

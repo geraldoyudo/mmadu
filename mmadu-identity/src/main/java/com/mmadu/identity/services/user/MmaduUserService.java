@@ -1,6 +1,6 @@
-package com.mmadu.identity.providers.users;
+package com.mmadu.identity.services.user;
 
-import com.mmadu.identity.models.users.MmaduUser;
+import com.mmadu.identity.models.user.MmaduUser;
 
 import java.util.Optional;
 

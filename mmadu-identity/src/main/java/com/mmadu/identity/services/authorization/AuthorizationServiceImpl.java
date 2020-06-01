@@ -3,7 +3,7 @@ package com.mmadu.identity.services.authorization;
 import com.mmadu.identity.models.authorization.AuthorizationContext;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
-import com.mmadu.identity.models.users.MmaduUser;
+import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.authorization.AuthorizationResultProcessor;
 import com.mmadu.identity.providers.authorization.strategies.AuthorizationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;

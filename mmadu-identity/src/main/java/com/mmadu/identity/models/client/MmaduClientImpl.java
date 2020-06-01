@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.client;
+package com.mmadu.identity.models.client;
 
 import com.mmadu.identity.entities.Client;
 import com.mmadu.identity.entities.ClientInstance;

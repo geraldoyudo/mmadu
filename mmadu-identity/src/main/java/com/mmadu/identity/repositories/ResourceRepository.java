@@ -10,4 +10,7 @@ public interface ResourceRepository extends MongoRepository<Resource, String> {
 
     Optional<Resource> findByDomainIdAndIdentifier(@Param("domainId") String domainId,
                                                    @Param("identifier") String identifier);
+
+    boolean existsByDomainIdAndIdentifier(@Param("domainId") String domainId,
+                                          @Param("identifier") String identifier);
 }

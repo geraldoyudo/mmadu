@@ -1,7 +1,7 @@
 package com.mmadu.identity.providers.authorization;
 
-import com.mmadu.identity.providers.client.MmaduClient;
-import com.mmadu.identity.providers.client.MmaduClientService;
+import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.services.client.MmaduClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

@@ -1,7 +1,7 @@
 package com.mmadu.identity.providers.authorization;
 
-import com.mmadu.identity.models.users.MmaduUser;
-import com.mmadu.identity.providers.users.MmaduUserService;
+import com.mmadu.identity.models.user.MmaduUser;
+import com.mmadu.identity.services.user.MmaduUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;

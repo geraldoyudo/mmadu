@@ -1,6 +1,6 @@
 package com.mmadu.identity.config;
 
-import com.mmadu.identity.models.users.MmaduUser;
+import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.authorization.ClientDomainPopulatorFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

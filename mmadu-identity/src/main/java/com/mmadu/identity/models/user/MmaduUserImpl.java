@@ -1,4 +1,4 @@
-package com.mmadu.identity.models.users;
+package com.mmadu.identity.models.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
