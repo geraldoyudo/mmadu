@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities;
 
+import com.mmadu.identity.entities.token.TokenCredentials;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;

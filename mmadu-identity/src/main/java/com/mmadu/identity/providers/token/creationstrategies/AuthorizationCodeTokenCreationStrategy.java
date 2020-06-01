@@ -30,7 +30,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
     @Override
     public TokenResponse getToken(TokenRequest request, MmaduClient client) {
         GrantAuthorization authorization = grantAuthorizationRepository.findByAuthorizationCode(request.getCode())
-                .orElseThrow(this::invalidCodeError);
+                .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidCodeError);
 
         if (!(authorization.getData() instanceof AuthorizationCodeGrantData)) {
             throw invalidGrantData();
@@ -55,15 +55,15 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
         return null;
     }
 
-    private TokenException invalidCodeError() {
+    private static TokenException invalidCodeError() {
         return new TokenException(new InvalidRequest("code.invalid", ""));
     }
 
-    private TokenException redirectUriIsRequired() {
+    private static TokenException redirectUriIsRequired() {
         return new TokenException(new InvalidRequest("redirect_uri.required", ""));
     }
 
-    private TokenException invalidGrantData() {
+    private static TokenException invalidGrantData() {
         return new TokenException(new InvalidRequest("grant_data.invalid", ""));
     }
 }

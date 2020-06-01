@@ -1,4 +1,4 @@
-package com.mmadu.identity.entities;
+package com.mmadu.identity.entities.token;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
