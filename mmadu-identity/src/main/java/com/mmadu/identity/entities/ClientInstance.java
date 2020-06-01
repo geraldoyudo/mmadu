@@ -1,6 +1,5 @@
 package com.mmadu.identity.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import lombok.Data;
@@ -39,4 +38,5 @@ public class ClientInstance implements HasDomain {
     @Size(min = 1, message = "at least one resource is required")
     private List<String> resources = Collections.emptyList();
     private List<String> authorities = Collections.emptyList();
+    private boolean issueRefreshTokens = true;
 }

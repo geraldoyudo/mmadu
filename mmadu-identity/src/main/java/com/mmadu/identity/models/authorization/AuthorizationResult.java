@@ -11,4 +11,5 @@ public class AuthorizationResult {
     private String redirectUri;
     private String intermediatePage;
     private String state;
+    private boolean redirectUriSpecified;
 }

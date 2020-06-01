@@ -1,8 +1,11 @@
 package com.mmadu.identity.controllers.token;
 
+import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
+import com.mmadu.identity.models.token.error.InvalidRequest;
 import com.mmadu.identity.models.token.error.TokenError;
+import com.mmadu.identity.services.TokenService;
 import com.mmadu.identity.validators.token.TokenRequestValidator;
 import com.mmadu.identity.validators.token.ValidationErrorProcessor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import javax.validation.Valid;
 public class TokenController {
     private TokenRequestValidator tokenRequestValidator;
     private ValidationErrorProcessor validationErrorProcessor;
+    private TokenService tokenService;
 
     @Autowired
     public void setTokenRequestValidator(TokenRequestValidator tokenRequestValidator) {
@@ -32,6 +36,11 @@ public class TokenController {
         this.validationErrorProcessor = validationErrorProcessor;
     }
 
+    @Autowired
+    public void setTokenService(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
+
     @InitBinder
     public void registerValidators(WebDataBinder binder) {
         binder.addValidators(tokenRequestValidator);
@@ -40,13 +49,25 @@ public class TokenController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public TokenResponse getToken(@Valid TokenRequest request) {
-        log.info("Processing token request {}", request);
-        return new TokenResponse();
+        log.debug("Processing token request {}", request);
+        return tokenService.getToken(request);
     }
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public TokenError handleValidationErrors(BindException ex) {
         return validationErrorProcessor.processError(ex);
+    }
+
+    @ExceptionHandler(TokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public TokenError handleTokenException(TokenException ex) {
+        return ex.getTokenError();
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public TokenError handleGeneralExceptions(Exception ex) {
+        return new InvalidRequest(ex.getMessage(), "");
     }
 }

@@ -47,4 +47,21 @@ class GrantAuthorizationRepositoryTest {
         authorization = grantAuthorizationRepository.save(authorization);
         assertTrue(grantAuthorizationRepository.findById(authorization.getId()).get().getData() instanceof ClientCredentialsGrantData);
     }
+
+    @Test
+    void testGrantAuthorizationQuery() {
+        GrantAuthorization authorization = new GrantAuthorization();
+        authorization.setClientInstanceId("2382938");
+        AuthorizationCodeGrantData data = new AuthorizationCodeGrantData();
+        data.setCode("232983");
+        data.setCodeExpiryTime(ZonedDateTime.now());
+        authorization.setData(data);
+        grantAuthorizationRepository.save(authorization);
+        GrantAuthorization received = grantAuthorizationRepository.findByAuthorizationCode(data.getCode()).get();
+        AuthorizationCodeGrantData receivedData = (AuthorizationCodeGrantData) received.getData();
+        assertAll(
+                () -> assertEquals(data.getCode(), receivedData.getCode()),
+                () -> assertEquals(0, Duration.between(data.getCodeExpiryTime(), receivedData.getCodeExpiryTime()).toMinutes())
+        );
+    }
 }

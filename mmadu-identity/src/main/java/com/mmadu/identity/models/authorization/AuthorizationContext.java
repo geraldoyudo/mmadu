@@ -28,6 +28,12 @@ public class AuthorizationContext {
 
     public void setRedirectUri(String redirectUri) {
         this.result.setRedirectUri(redirectUri);
+        this.result.setRedirectUriSpecified(true);
+    }
+
+    public void setRedirectUri(String redirectUri, boolean specified) {
+        this.result.setRedirectUri(redirectUri);
+        this.result.setRedirectUriSpecified(specified);
     }
 
     public void succeed(String redirectUri, RedirectData data) {

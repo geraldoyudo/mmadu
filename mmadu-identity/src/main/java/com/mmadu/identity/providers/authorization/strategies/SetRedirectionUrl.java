@@ -41,9 +41,9 @@ public class SetRedirectionUrl implements AuthorizationStrategy {
             if (redirectUris.size() != 1) {
                 throw new AuthorizationException("multiple redirect uris are configured, ensure redirect_uri key is present");
             }
-            context.setRedirectUri(redirectUris.get(0));
+            context.setRedirectUri(redirectUris.get(0), false);
         } else {
-            context.setRedirectUri(redirectUri);
+            context.setRedirectUri(redirectUri, true);
         }
     }
 }

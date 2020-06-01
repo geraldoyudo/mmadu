@@ -2,9 +2,13 @@ package com.mmadu.identity.models.token;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.ZonedDateTime;
 
+@Data
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TokenResponse {
     @JsonProperty("access_token")
@@ -13,29 +17,7 @@ public class TokenResponse {
     private String tokenType;
     @JsonProperty("expires_in")
     private ZonedDateTime expiresIn;
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    public ZonedDateTime getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(ZonedDateTime expiresIn) {
-        this.expiresIn = expiresIn;
-    }
+    @JsonProperty("refresh_token")
+    private String refreshToken;
 
 }

@@ -20,4 +20,5 @@ public class DomainIdentityConfiguration implements HasDomain {
     private String grantCodeType = AlphaNumericCodeGenerator.TYPE;
     private Map<String, Object> grantCodeTypeProperties;
     private Long grantCodeTTLSeconds = 600L;
+    private boolean refreshTokenEnabled = true;
 }

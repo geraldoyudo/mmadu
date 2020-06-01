@@ -34,4 +34,5 @@ public class GrantAuthorization {
     private List<String> scopes;
     private String redirectUri;
     private GrantData data;
+    private boolean redirectUriSpecified;
 }
