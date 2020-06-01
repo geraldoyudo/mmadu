@@ -8,12 +8,13 @@ import com.mmadu.identity.validators.token.strategies.authentication.ClientToken
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class ClientTokenRequestAuthenticatorImpl implements ClientTokenRequestAuthenticator {
-    private List<ClientTokenRequestAuthenticationStrategy> strategies;
+    private List<ClientTokenRequestAuthenticationStrategy> strategies = Collections.emptyList();
 
     @Autowired(required = false)
     public void setStrategies(List<ClientTokenRequestAuthenticationStrategy> strategies) {

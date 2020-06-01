@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
 public class TokenRequestValidator implements Validator {
-    private List<TokenRequestValidationStrategy> strategies;
+    private List<TokenRequestValidationStrategy> strategies = Collections.emptyList();
 
     @Autowired(required = false)
     public void setStrategies(List<TokenRequestValidationStrategy> strategies) {
