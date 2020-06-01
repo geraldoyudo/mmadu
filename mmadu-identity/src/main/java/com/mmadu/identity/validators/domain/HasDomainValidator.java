@@ -1,4 +1,4 @@
-package com.mmadu.identity.validators;
+package com.mmadu.identity.validators.domain;
 
 import com.mmadu.identity.entities.HasDomain;
 import com.mmadu.identity.services.domain.DomainService;

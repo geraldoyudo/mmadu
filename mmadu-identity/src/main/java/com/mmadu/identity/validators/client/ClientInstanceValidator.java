@@ -1,8 +1,8 @@
-package com.mmadu.identity.validators;
+package com.mmadu.identity.validators.client;
 
 import com.mmadu.identity.entities.ClientInstance;
 import com.mmadu.identity.repositories.ClientRepository;
-import com.mmadu.identity.validators.clientinstancestrategies.ClientInstanceValidatingStrategy;
+import com.mmadu.identity.validators.client.instancestrategies.ClientInstanceValidatingStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.mmadu.identity.validators;
+package com.mmadu.identity.validators.client;
 
 import com.mmadu.identity.entities.Client;
 import lombok.extern.slf4j.Slf4j;

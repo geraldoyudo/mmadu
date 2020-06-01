@@ -15,4 +15,6 @@ import java.io.Serializable;
 public interface ClientCredentials extends Serializable {
 
     String getType();
+
+    boolean matches(Object credential);
 }

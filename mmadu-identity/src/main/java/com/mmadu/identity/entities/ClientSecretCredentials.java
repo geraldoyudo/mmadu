@@ -19,4 +19,12 @@ public class ClientSecretCredentials implements ClientCredentials {
     public String getType() {
         return "secret";
     }
+
+    @Override
+    public boolean matches(Object credential) {
+        if (credential instanceof String) {
+            return secret.equals(credential);
+        }
+        return false;
+    }
 }

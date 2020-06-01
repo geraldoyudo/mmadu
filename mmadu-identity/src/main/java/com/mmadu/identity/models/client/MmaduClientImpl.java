@@ -1,7 +1,10 @@
 package com.mmadu.identity.models.client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mmadu.identity.entities.Client;
+import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientInstance;
+import com.mmadu.identity.entities.ClientType;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,5 +36,16 @@ public class MmaduClientImpl implements MmaduClient {
     @Override
     public List<String> getRedirectUris() {
         return clientInstance.getRedirectionUris();
+    }
+
+    @Override
+    public ClientType getClientType() {
+        return clientInstance.getClientType();
+    }
+
+    @Override
+    @JsonIgnore
+    public ClientCredentials getCredentials() {
+        return clientInstance.getCredentials();
     }
 }

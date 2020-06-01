@@ -1,4 +1,4 @@
-package com.mmadu.identity.validators.clientinstancestrategies;
+package com.mmadu.identity.validators.client.instancestrategies;
 
 import com.mmadu.identity.entities.ClientInstance;
 import org.springframework.validation.Errors;
