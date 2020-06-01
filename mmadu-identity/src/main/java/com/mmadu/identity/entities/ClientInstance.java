@@ -38,6 +38,6 @@ public class ClientInstance implements HasDomain {
     private String domainId;
     @NotNull(message = "resources is required")
     @Size(min = 1, message = "at least one resource is required")
-    private List<String> resources;
-    private List<String> authorities;
+    private List<String> resources = Collections.emptyList();
+    private List<String> authorities = Collections.emptyList();
 }

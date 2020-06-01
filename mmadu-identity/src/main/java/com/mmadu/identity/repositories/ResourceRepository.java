@@ -4,6 +4,7 @@ import com.mmadu.identity.entities.Resource;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ResourceRepository extends MongoRepository<Resource, String> {
@@ -13,4 +14,7 @@ public interface ResourceRepository extends MongoRepository<Resource, String> {
 
     boolean existsByDomainIdAndIdentifier(@Param("domainId") String domainId,
                                           @Param("identifier") String identifier);
+
+    int countByDomainIdAndIdentifierIn(@Param("domainId") String domainId,
+                                       @Param("identifier") List<String> identifier);
 }
