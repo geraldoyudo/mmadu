@@ -28,7 +28,6 @@ public class ClientInstance implements HasDomain {
     private String clientProfile = ClientProfileUtils.WEB_APP;
     @Valid
     private ClientCredentials credentials;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String identifier = UUID.randomUUID().toString();
     private List<String> redirectionUris = Collections.emptyList();
     private List<String> allowedHosts = Collections.emptyList();

@@ -11,7 +11,7 @@ public class AuthorizationCodeTokenRequestValidation implements TokenRequestVali
 
     @Override
     public boolean apply(TokenRequest request) {
-        return GRANT_TYPE.equals(request.getGrantType());
+        return GRANT_TYPE.equals(request.getGrant_type());
     }
 
     @Override

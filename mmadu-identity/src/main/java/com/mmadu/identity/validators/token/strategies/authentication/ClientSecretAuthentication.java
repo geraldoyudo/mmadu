@@ -13,12 +13,12 @@ public class ClientSecretAuthentication implements ClientTokenRequestAuthenticat
 
     @Override
     public boolean apply(TokenRequest request, MmaduClient client) {
-        return !StringUtils.isEmpty(request.getClientSecret()) &&
+        return !StringUtils.isEmpty(request.getClient_secret()) &&
                 client.getCredentials() != null && (client.getCredentials() instanceof ClientSecretCredentials);
     }
 
     @Override
     public boolean isPermitted(TokenRequest request, MmaduClient client) {
-        return client.getCredentials().matches(request.getClientSecret());
+        return client.getCredentials().matches(request.getClient_secret());
     }
 }

@@ -2,6 +2,7 @@ package com.mmadu.identity.config;
 
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.providers.client.authentication.ClientAuthenticationFilter;
+import com.mmadu.identity.providers.client.authentication.ClientAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,25 +17,34 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
-@Order(300)
+@Order(150)
 public class ClientApiConfig extends WebSecurityConfigurerAdapter {
     private ClientAuthenticationFilter clientAuthenticationFilter;
+    private ClientAuthenticationProvider clientAuthenticationProvider;
 
     @Autowired
     public void setClientAuthenticationFilter(ClientAuthenticationFilter clientAuthenticationFilter) {
         this.clientAuthenticationFilter = clientAuthenticationFilter;
     }
 
+    @Autowired
+    public void setClientAuthenticationProvider(ClientAuthenticationProvider clientAuthenticationProvider) {
+        this.clientAuthenticationProvider = clientAuthenticationProvider;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .disable()
                 .authorizeRequests()
                 .antMatchers("/oauth/token/**")
-                .authenticated()
+                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()
+                .authenticationProvider(clientAuthenticationProvider)
                 .addFilterBefore(clientAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

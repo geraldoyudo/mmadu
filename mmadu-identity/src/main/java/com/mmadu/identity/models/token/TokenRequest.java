@@ -1,35 +1,21 @@
 package com.mmadu.identity.models.token;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotEmpty;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-
+@EqualsAndHashCode
 public class TokenRequest {
-    @JsonProperty("grant_type")
-    @NotEmpty(message = "grant type cannot be empty")
-    private String grantType;
-    @JsonProperty("code")
+    private String grant_type;
     private String code;
-    @JsonProperty("redirect_uri")
-    private String redirectUri;
-    @JsonProperty("client_id")
-    private String clientId;
-    @JsonProperty("client_secret")
-    private String clientSecret;
+    private String redirect_uri;
+    private String client_id;
+    private String client_secret;
 
-    private Map<String, Object> properties = new LinkedHashMap<>();
-
-    public String getGrantType() {
-        return grantType;
+    public String getGrant_type() {
+        return grant_type;
     }
 
-    public void setGrantType(String grantType) {
-        this.grantType = grantType;
+    public void setGrant_type(String grant_type) {
+        this.grant_type = grant_type;
     }
 
     public String getCode() {
@@ -40,42 +26,28 @@ public class TokenRequest {
         this.code = code;
     }
 
-    public String getRedirectUri() {
-        return redirectUri;
+    public String getRedirect_uri() {
+        return redirect_uri;
     }
 
-    public void setRedirectUri(String redirectUri) {
-        this.redirectUri = redirectUri;
+    public void setRedirect_uri(String redirect_uri) {
+        this.redirect_uri = redirect_uri;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getClient_id() {
+        return client_id;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setClient_id(String client_id) {
+        this.client_id = client_id;
     }
 
-    public String getClientSecret() {
-        return clientSecret;
+    public String getClient_secret() {
+        return client_secret;
     }
 
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+    public void setClient_secret(String client_secret) {
+        this.client_secret = client_secret;
     }
 
-    @JsonAnySetter
-    public void setProperty(String key, Object value) {
-        this.properties.put(key, value);
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getProperties() {
-        return properties;
-    }
-
-    public <T> Optional<T> getProperty(String value) {
-        return Optional.ofNullable(properties.get(value))
-                .map(v -> (T) v);
-    }
 }

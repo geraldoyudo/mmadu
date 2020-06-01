@@ -1,6 +1,5 @@
 package com.mmadu.identity.validators.token.strategies;
 
-import com.mmadu.identity.entities.ClientType;
 import com.mmadu.identity.exceptions.AuthenticationException;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.TokenRequest;
@@ -35,27 +34,23 @@ public class RequireClientIdForPublicClients implements TokenRequestValidationSt
 
     @Override
     public boolean apply(TokenRequest request) {
-        return mmaduClient == null;
+        return mmaduClient.getClientIdentifier() == null;
     }
 
     @Override
     public void validate(TokenRequest request, Errors errors) {
-        if (StringUtils.isEmpty(request.getClientId())) {
+        if (StringUtils.isEmpty(request.getClient_id())) {
             errors.rejectValue("client_id", "client_id.required", "client id is required");
         } else {
-            Optional<MmaduClient> clientOptional = mmaduClientService.loadClientByIdentifier(request.getClientId());
+            Optional<MmaduClient> clientOptional = mmaduClientService.loadClientByIdentifier(request.getClient_id());
             if (clientOptional.isEmpty()) {
                 errors.rejectValue("client_id", "client.not.found", "client not found");
             } else {
                 MmaduClient client = clientOptional.get();
-                if (ClientType.CONFIDENTIAL.equals(client.getClientType())) {
-                    errors.rejectValue("client_id", "client.not.authorized", "client not authorized");
-                } else {
-                    try {
-                        clientTokenRequestAuthenticator.authenticatePublicClient(request, client);
-                    } catch (AuthenticationException ex) {
-                        errors.rejectValue("client_id", "client.authentication.failed", "client authentication failed");
-                    }
+                try {
+                    clientTokenRequestAuthenticator.authenticatePublicClient(request, client);
+                } catch (AuthenticationException ex) {
+                    errors.rejectValue("client_id", "client.authentication.failed", "client authentication failed");
                 }
             }
         }
