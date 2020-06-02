@@ -10,4 +10,9 @@ public class JwtTokenCredentials implements TokenCredentials, HasBasicTokenData 
     public String getType() {
         return "jwt";
     }
+
+    @Override
+    public String toString() {
+        return token;
+    }
 }

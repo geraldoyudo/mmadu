@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -21,4 +22,8 @@ public class DomainIdentityConfiguration implements HasDomain {
     private Map<String, Object> grantCodeTypeProperties;
     private Long grantCodeTTLSeconds = 600L;
     private boolean refreshTokenEnabled = true;
+    private String accessTokenProvider = "jwt";
+    private Map<String, Object> accessTokenProperties = new HashMap<>();
+    private String refreshTokenProvider = "alphanumeric";
+    private Map<String, Object> refreshTokenProperties = new HashMap<>();
 }

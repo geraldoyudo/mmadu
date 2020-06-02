@@ -10,4 +10,9 @@ public class AlphanumericTokenCredentials implements TokenCredentials, HasBasicT
     public String getType() {
         return token;
     }
+
+    @Override
+    public String toString() {
+        return token;
+    }
 }

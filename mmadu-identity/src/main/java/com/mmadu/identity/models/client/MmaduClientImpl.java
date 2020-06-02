@@ -48,4 +48,9 @@ public class MmaduClientImpl implements MmaduClient {
     public ClientCredentials getCredentials() {
         return clientInstance.getCredentials();
     }
+
+    @Override
+    public boolean issueRefreshTokens() {
+        return clientInstance.isIssueRefreshTokens();
+    }
 }

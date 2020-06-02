@@ -28,12 +28,12 @@ public class TokenFactoryImpl implements TokenFactory {
     @Autowired
     public void setTokenProviders(List<TokenProvider> tokenProviders) {
         tokenProviderMap = tokenProviders.stream()
-                .collect(Collectors.toMap(TokenProvider::type, p -> p));
+                .collect(Collectors.toMap(TokenProvider::providerId, p -> p));
     }
 
     @Override
     public Token createToken(TokenSpecification spec) {
-        TokenCredentials credentials = Optional.ofNullable(tokenProviderMap.get(spec.getType()))
+        TokenCredentials credentials = Optional.ofNullable(tokenProviderMap.get(spec.getProvider()))
                 .orElseThrow(() -> new TokenCreationException("provider not found"))
                 .create(spec);
         Token token = createBaseToken(spec);
@@ -44,13 +44,13 @@ public class TokenFactoryImpl implements TokenFactory {
     private Token createBaseToken(TokenSpecification specification) {
         Token token = new Token();
         token.setDomainId(specification.getDomainId());
-        token.setClientId(specification.getClient().getId());
-        token.setClientInstanceId(specification.getClient().getId());
-        token.setUserId(specification.getUserId());
+        token.setClientId(specification.getGrantAuthorization().getClientId());
+        token.setClientInstanceId(specification.getGrantAuthorization().getClientInstanceId());
+        token.setUserId(specification.getGrantAuthorization().getUserId());
         token.setGrantAuthorizationId(specification.getGrantAuthorization().getId());
         token.setLabels(specification.getLabels());
         token.setScopes(specification.getScopes());
-        token.setType(specification.getType());
+        token.setType(specification.getProvider());
         return token;
     }
 }

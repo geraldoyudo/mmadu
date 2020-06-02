@@ -17,4 +17,8 @@ public interface MmaduClient {
     ClientType getClientType();
 
     ClientCredentials getCredentials();
+
+    default boolean issueRefreshTokens() {
+        return false;
+    }
 }

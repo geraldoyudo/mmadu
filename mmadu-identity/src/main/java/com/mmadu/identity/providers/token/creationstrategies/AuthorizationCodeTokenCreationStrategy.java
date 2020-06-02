@@ -1,25 +1,45 @@
 package com.mmadu.identity.providers.token.creationstrategies;
 
 import com.mmadu.identity.entities.AuthorizationCodeGrantData;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.entities.GrantAuthorization;
+import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
+import com.mmadu.identity.models.token.TokenSpecification;
+import com.mmadu.identity.models.token.error.InvalidClient;
 import com.mmadu.identity.models.token.error.InvalidRequest;
+import com.mmadu.identity.providers.token.TokenFactory;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Component
 public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStrategy {
     private GrantAuthorizationRepository grantAuthorizationRepository;
+    private TokenFactory tokenFactory;
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
 
     @Autowired(required = false)
     public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
         this.grantAuthorizationRepository = grantAuthorizationRepository;
+    }
+
+    @Autowired
+    public void setTokenFactory(TokenFactory tokenFactory) {
+        this.tokenFactory = tokenFactory;
+    }
+
+    @Autowired
+    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
+        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
     }
 
     @Override
@@ -40,19 +60,42 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
             throw redirectUriIsRequired();
         }
 
-        /*
-        TODO:
-        1. check if token is still valid
-        2. Check if client supports refresh token
-        3. Create such property on client and domain configuration
-        4. Implement TokenCreatorProvider - JwtToken, Alphanumeric token
-        5. Create configuration on domain for accessTokenType and accessTokenProperties, refreshTokenType and refreshTokenProperties
-        6. Set domain configuration default to access token -jwt, refresh-token - alphanumeric
-        7. Create Access Token
-        8. If Configured, create refresh token
-        9. Return in response
-         */
-        return null;
+        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
+                .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidClient);
+
+        Token accessToken = tokenFactory.createToken(
+                TokenSpecification.builder()
+                        .configuration(configuration.getAccessTokenProperties())
+                        .domainId(client.getDomainId())
+                        .grantAuthorization(authorization)
+                        .labels(List.of("access_token"))
+                        .provider(configuration.getAccessTokenProvider())
+                        .type("access_token")
+                        .build()
+        );
+        String refreshTokenString = "";
+
+        if (configuration.isRefreshTokenEnabled() && client.issueRefreshTokens()) {
+            Token refreshToken = tokenFactory.createToken(
+                    TokenSpecification.builder()
+                            .configuration(configuration.getAccessTokenProperties())
+                            .domainId(client.getDomainId())
+                            .grantAuthorization(authorization)
+                            .labels(List.of("access_token"))
+                            .provider(configuration.getAccessTokenProvider())
+                            .type("access_token")
+                            .build()
+            );
+
+            refreshTokenString = refreshToken.getCredentials().toString();
+        }
+
+        return TokenResponse.builder()
+                .accessToken(accessToken.getCredentials().toString())
+                .expiresIn(authorization.getExpiryTime())
+                .refreshToken(refreshTokenString)
+                .build()
+                ;
     }
 
     private static TokenException invalidCodeError() {
@@ -65,5 +108,9 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
 
     private static TokenException invalidGrantData() {
         return new TokenException(new InvalidRequest("grant_data.invalid", ""));
+    }
+
+    private static TokenException invalidClient() {
+        return new TokenException(new InvalidClient("client.domain.invalid", ""));
     }
 }

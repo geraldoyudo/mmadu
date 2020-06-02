@@ -35,4 +35,5 @@ public class GrantAuthorization {
     private String redirectUri;
     private GrantData data;
     private boolean redirectUriSpecified;
+    private String grantType;
 }

@@ -4,7 +4,7 @@ import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.models.token.TokenSpecification;
 
 public interface TokenProvider {
-    String type();
+    String providerId();
 
     TokenCredentials create(TokenSpecification specification);
 }

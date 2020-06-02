@@ -18,7 +18,7 @@ public class AlphaNumericTokenProvider implements TokenProvider {
     private int defaultTokenLength = 20;
 
     @Override
-    public String type() {
+    public String providerId() {
         return TYPE;
     }
 
