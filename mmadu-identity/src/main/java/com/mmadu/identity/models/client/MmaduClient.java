@@ -3,6 +3,7 @@ package com.mmadu.identity.models.client;
 import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientType;
 
+import java.util.Collections;
 import java.util.List;
 
 public interface MmaduClient {
@@ -20,5 +21,9 @@ public interface MmaduClient {
 
     default boolean issueRefreshTokens() {
         return false;
+    }
+
+    default List<String> getResources() {
+        return Collections.emptyList();
     }
 }

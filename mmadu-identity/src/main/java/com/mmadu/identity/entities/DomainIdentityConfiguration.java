@@ -26,4 +26,5 @@ public class DomainIdentityConfiguration implements HasDomain {
     private Map<String, Object> accessTokenProperties = new HashMap<>();
     private String refreshTokenProvider = "alphanumeric";
     private Map<String, Object> refreshTokenProperties = new HashMap<>();
+    private String issuerId;
 }

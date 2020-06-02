@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.identity.entities.credentials.CredentialData;
 import com.mmadu.identity.entities.credentials.RSACredentialData;
+import com.mmadu.identity.entities.token.JwtTokenCredentials;
 import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.exceptions.CredentialNotFoundException;
 import com.mmadu.identity.exceptions.TokenCreationException;
@@ -90,12 +91,15 @@ public class JwtTokenProvider implements TokenProvider {
                     claimsSet);
 
             signedJWT.sign(signer);
+            JwtTokenCredentials credentials = new JwtTokenCredentials();
+            credentials.setToken(signedJWT.serialize());
+            credentials.setJti(signedJWT.getHeader().getKeyID());
+            return credentials;
         } catch (ParseException ex) {
             throw new IllegalStateException("invalid credential key format");
         } catch (JOSEException ex) {
             throw new TokenCreationException("could not create token", ex);
         }
-        return null;
     }
 
     private JWTClaimsSet convertToClaimSet(Object object) {

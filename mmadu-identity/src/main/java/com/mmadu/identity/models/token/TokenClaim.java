@@ -3,6 +3,7 @@ package com.mmadu.identity.models.token;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 public interface TokenClaim {
     @JsonProperty("iss")
@@ -12,7 +13,7 @@ public interface TokenClaim {
     String getSubject();
 
     @JsonProperty("aud")
-    String getAudience();
+    List<String> getAudience();
 
     @JsonProperty("exp")
     ZonedDateTime getExpirationTime();
@@ -28,5 +29,8 @@ public interface TokenClaim {
 
     @JsonProperty("client_id")
     String getClientIdentifier();
+
+    @JsonProperty("domain_id")
+    String getDomainId();
 
 }

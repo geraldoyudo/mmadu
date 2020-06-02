@@ -19,5 +19,7 @@ public class TokenResponse {
     private ZonedDateTime expiresIn;
     @JsonProperty("refresh_token")
     private String refreshToken;
+    @JsonProperty("jti")
+    private String tokenIdentifier;
 
 }

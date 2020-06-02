@@ -12,9 +12,9 @@ import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.authorization.code.DomainAuthorizationCodeGenerator;
-import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -74,6 +74,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setScopes(response.getScopes());
         grantAuthorization.setRedirectUri(context.getResult().getRedirectUri());
         grantAuthorization.setRedirectUriSpecified(context.getResult().isRedirectUriSpecified());
+        grantAuthorization.setClientIdentifier(clientInstance.getIdentifier());
         AuthorizationCodeGrantData grantData = new AuthorizationCodeGrantData();
         grantData.setCode(authorizationCodeGenerator.generateAuthorizationCodeAsDomain(authorizer.getDomainId()));
         grantData.setCodeExpiryTime(ZonedDateTime.now().plusSeconds(configuration.getGrantCodeTTLSeconds()));

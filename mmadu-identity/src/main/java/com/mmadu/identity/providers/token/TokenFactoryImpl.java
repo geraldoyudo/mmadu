@@ -1,6 +1,7 @@
 package com.mmadu.identity.providers.token;
 
 import com.mmadu.identity.entities.Token;
+import com.mmadu.identity.entities.token.HasTokenIdentifier;
 import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.exceptions.TokenCreationException;
 import com.mmadu.identity.models.token.TokenSpecification;
@@ -38,6 +39,9 @@ public class TokenFactoryImpl implements TokenFactory {
                 .create(spec);
         Token token = createBaseToken(spec);
         token.setCredentials(credentials);
+        if (credentials instanceof HasTokenIdentifier) {
+            token.setTokenIdentifier(((HasTokenIdentifier) credentials).getTokenIdentifier());
+        }
         return tokenRepository.save(token);
     }
 

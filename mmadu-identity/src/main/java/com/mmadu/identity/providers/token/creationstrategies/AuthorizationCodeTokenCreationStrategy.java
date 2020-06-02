@@ -94,8 +94,8 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                 .accessToken(accessToken.getCredentials().toString())
                 .expiresIn(authorization.getExpiryTime())
                 .refreshToken(refreshTokenString)
-                .build()
-                ;
+                .tokenIdentifier(accessToken.getTokenIdentifier())
+                .build();
     }
 
     private static TokenException invalidCodeError() {

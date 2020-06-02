@@ -30,4 +30,5 @@ public class Token {
     private List<String> labels;
     private TokenCredentials credentials;
     private List<String> scopes;
+    private String tokenIdentifier;
 }

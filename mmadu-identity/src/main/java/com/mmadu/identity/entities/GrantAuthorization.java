@@ -21,12 +21,15 @@ public class GrantAuthorization {
     private String userId;
     @NotEmpty(message = "client id is required")
     private String clientId;
+    @NotEmpty(message = "client identifier is required")
+    private String clientIdentifier;
     @NotEmpty(message = "client instance id is required")
     private String clientInstanceId;
     private List<String> refreshTokens = Collections.emptyList();
     private List<String> accessTokens = Collections.emptyList();
     private ZonedDateTime activationTime;
     private ZonedDateTime expiryTime;
+    private ZonedDateTime issuedTime;
     private boolean revoked;
     private boolean active;
     private boolean expired;
