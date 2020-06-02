@@ -3,17 +3,20 @@ package com.mmadu.identity.providers.token.claims;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.identity.config.TokenCreationConfig;
 import com.mmadu.identity.services.client.MmaduClientService;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.Resource;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = {
         TokenCreationConfig.class,
@@ -21,6 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 })
 class AuthorizationCodeGrantAccessTokenClaimStrategyTest {
+
+    @Value("classpath:claims/authentication-code-grant-access-token-claims.json")
+    private Resource resource;
+
     @Autowired
     @Qualifier("jwt")
     private ObjectMapper objectMapper;
@@ -44,7 +51,7 @@ class AuthorizationCodeGrantAccessTokenClaimStrategyTest {
                 .tokenIdentifier("3849283")
                 .userId("2333")
                 .build();
-        assertEquals("{\"scope\":\"view edit\",\"iss\":\"test\",\"sub\":\"subject\",\"aud\":[\"service-1\",\"service-2\"],\"exp\":\"1577923200\",\"nbf\":\"1577836800\",\"iat\":\"1577835600\",\"jti\":\"3849283\",\"client_id\":\"122333\",\"domain_id\":\"2\",\"user_id\":\"2333\"}",
-                objectMapper.writeValueAsString(claims));
+        JSONAssert.assertEquals(IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8),
+                objectMapper.writeValueAsString(claims), true);
     }
 }
