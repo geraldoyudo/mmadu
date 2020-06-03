@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
-@Order(300)
+@Order(0)
 public class ClientApiConfig extends WebSecurityConfigurerAdapter {
     private ClientAuthenticationFilter clientAuthenticationFilter;
     private ClientAuthenticationProvider clientAuthenticationProvider;
@@ -36,9 +36,11 @@ public class ClientApiConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .disable()
                 .antMatcher("/clients/**")
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/clients/token/**")

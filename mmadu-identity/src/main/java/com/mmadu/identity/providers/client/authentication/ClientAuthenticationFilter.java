@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,13 @@ public class ClientAuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (((HttpServletRequest) servletRequest).getServletPath().startsWith("/clients")) {
+            setClientAuthenication(servletRequest);
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private void setClientAuthenication(ServletRequest servletRequest) {
         boolean authenticated = false;
         for (ClientAuthenticationExtractor extractor : authenticationExtractors) {
             Optional<MmaduClientAuthenticationToken> clientAuthentication = extractor.extractAuthentication(servletRequest);
@@ -37,6 +45,5 @@ public class ClientAuthenticationFilter implements Filter {
                     new MmaduClientAuthenticationToken(new UnauthenticatedClient())
             );
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 }

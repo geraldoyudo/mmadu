@@ -89,7 +89,7 @@
     <p th:if="${param.logout}">
         You have been logged out.
     </p>
-    <form th:action="@{/app/login}" method="post" class="loginbox" autocomplete="off">
+    <form th:action="@{/login}" method="post" class="loginbox" autocomplete="off">
         <input placeholder="Username" type="text" id="username" name="username"/>
         <input placeholder="Password" type="password" id="password" name="password"/>
         <button type="submit">Sign In</button>

@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Controller
 @Slf4j
-@RequestMapping("/app/authorize")
+@RequestMapping("/oauth/authorize")
 public class AuthorizationController {
     private AuthorizationRequestValidator authorizationRequestValidator;
     private AuthorizationResponseValidator authorizationResponseValidator;
