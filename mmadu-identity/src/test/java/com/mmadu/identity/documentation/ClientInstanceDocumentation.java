@@ -2,12 +2,10 @@ package com.mmadu.identity.documentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mmadu.identity.entities.Client;
-import com.mmadu.identity.entities.ClientInstance;
-import com.mmadu.identity.entities.ClientSecretCredentials;
-import com.mmadu.identity.entities.ClientType;
+import com.mmadu.identity.entities.*;
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.ClientRepository;
+import com.mmadu.identity.repositories.ResourceRepository;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +35,18 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     private ClientRepository clientRepository;
     @Autowired
     private ClientInstanceRepository clientInstanceRepository;
+    @Autowired
+    private ResourceRepository resourceRepository;
     private Client client;
+    private Resource resource;
 
     @BeforeEach
-    void setUpClient() {
+    void setUp() {
+        createClient();
+        createResource();
+    }
+
+    private void createClient() {
         client = new Client();
         client.setApplicationUrl("https://myapp.com");
         client.setCategory("test");
@@ -52,10 +58,19 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         client = clientRepository.save(client);
     }
 
+    private void createResource() {
+        resource = new Resource();
+        resource.setDescription("test resource");
+        resource.setDomainId("1");
+        resource.setIdentifier("test");
+        resource.setName("test");
+        resource = resourceRepository.save(resource);
+    }
+
     @Test
     void createNewClientInstance() throws Exception {
         mockMvc.perform(
-                post("/repo/clientInstances")
+                post("/admin/repo/clientInstances")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                         .content(newClientInstanceRequest())
         ).andExpect(status().isCreated())
@@ -73,6 +88,10 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 .put("clientProfile", "web_app")
                 .put("tlsEnabled", true)
                 .put("domainId", DOMAIN_ID);
+        node.putArray("resources")
+                .add(resource.getIdentifier());
+        node.putArray("authorities")
+                .add("admin");
         node.putArray("redirectionUris")
                 .add("https://myapp.com/callback")
                 .add("https://localhost:8080/callback");
@@ -102,6 +121,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("supportedGrantTypes").type(JsonFieldType.ARRAY).description("The grant types these clients are permitted to use"),
                 fieldWithPath("tlsEnabled").type(JsonFieldType.BOOLEAN).description("Whether TLS should be made compulsory"),
                 fieldWithPath("domainId").description("the ID of the domain"),
+                fieldWithPath("resources").description("The resource ids of the resources the client should have access to"),
+                fieldWithPath("authorities").description("The list of authorities granted to the client"),
                 fieldWithPath("credentials.type").description("The client's credential type (for now, `secret`)"),
                 fieldWithPath("credentials.secret").description("The client secret (if credential type is `secret`)").optional()
         );
@@ -111,7 +132,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     void getClientInstanceById() throws Exception {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
@@ -135,6 +156,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         instance.setTlsEnabled(true);
         instance.setSupportedGrantTypes(List.of(GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.CLIENT_CREDENTIALS));
         instance.setDomainId("1");
+        instance.setAuthorities(List.of("admin"));
+        instance.setResources(List.of(resource.getIdentifier()));
         return clientInstanceRepository.save(instance);
     }
 
@@ -146,7 +169,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     public void getClientInstancesByDomain() throws Exception {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/repo/clientInstances/search/findByDomainId")
+                RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/search/findByDomainId")
                         .param("domainId", instance.getDomainId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
@@ -169,6 +192,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.clientInstances.[].redirectionUris").description("The client's allowed redirection uris"),
                 fieldWithPath("_embedded.clientInstances.[].allowedHosts").description("The client's allowed hosts"),
                 fieldWithPath("_embedded.clientInstances.[].tlsEnabled").description("If client is must use TLS or not"),
+                fieldWithPath("_embedded.clientInstances.[].resources").description("The resource ids of the resources the client should have access to"),
+                fieldWithPath("_embedded.clientInstances.[].authorities").description("The list of authorities granted to the client"),
                 fieldWithPath("_embedded.clientInstances.[].credentials.type").optional().description("The client's credential type (for now, `secret`)"),
                 fieldWithPath("_embedded.clientInstances.[].credentials.secret").optional().description("The client secret (if credential type is `secret`)").optional()
         );
@@ -178,7 +203,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     public void getClientInstancesByDomainAndClient() throws Exception {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/repo/clientInstances/search/findByDomainIdAndClientId")
+                RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/search/findByDomainIdAndClientId")
                         .param("domainId", instance.getDomainId())
                         .param("clientId", instance.getClientId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -199,7 +224,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         final boolean tlsEnabled = false;
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                RestDocumentationRequestBuilders.patch("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
@@ -219,7 +244,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     public void deleteClientById() throws Exception {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
-                RestDocumentationRequestBuilders.delete("/repo/clientInstances/{clientInstanceId}", instance.getId())
+                RestDocumentationRequestBuilders.delete("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(

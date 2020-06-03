@@ -31,7 +31,7 @@ public class ClientDocumentation extends AbstractDocumentation {
     @Test
     void createNewClient() throws Exception {
         mockMvc.perform(
-                post("/repo/clients")
+                post("/admin/repo/clients")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                         .content(newClientRequest())
         ).andExpect(status().isCreated())
@@ -75,7 +75,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         Client client = newClient();
         client = clientRepository.save(client);
         mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/repo/clients/{clientId}", client.getId())
+                RestDocumentationRequestBuilders.get("/admin/repo/clients/{clientId}", client.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
@@ -99,7 +99,7 @@ public class ClientDocumentation extends AbstractDocumentation {
     public void getClientsByDomain() throws Exception {
         Client client = clientRepository.save(newClient());
         mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/repo/clients/search/findByDomainId")
+                RestDocumentationRequestBuilders.get("/admin/repo/clients/search/findByDomainId")
                         .param("domainId", client.getDomainId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isOk())
@@ -130,7 +130,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         final String newClientName = "New Email Client";
         Client client = clientRepository.save(newClient());
         mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/repo/clients/{clientId}", client.getId())
+                RestDocumentationRequestBuilders.patch("/admin/repo/clients/{clientId}", client.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
@@ -150,7 +150,7 @@ public class ClientDocumentation extends AbstractDocumentation {
     public void deleteClientById() throws Exception {
         Client client = clientRepository.save(newClient());
         mockMvc.perform(
-                RestDocumentationRequestBuilders.delete("/repo/clients/{clientId}", client.getId())
+                RestDocumentationRequestBuilders.delete("/admin/repo/clients/{clientId}", client.getId())
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(

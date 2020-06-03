@@ -1,14 +1,15 @@
 package com.mmadu.identity.providers.authorization;
 
-import com.mmadu.identity.models.authorization.errors.AuthorizationError;
 import com.mmadu.identity.models.authorization.AuthorizationResult;
 import com.mmadu.identity.models.authorization.RedirectData;
+import com.mmadu.identity.models.authorization.errors.AuthorizationError;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,11 @@ class AuthorizationResultProcessorImplTest {
         result.setRedirectUri(redirectUri);
         result.setComplete(true);
         String resultString = processor.processResult(result);
-
-        assertEquals(expectedString, resultString);
+        assertEquals(expectedString.substring(0, 9), resultString.substring(0, 9));
+        assertEquals(
+                UriComponentsBuilder.fromHttpUrl(expectedString.substring(9)).build(),
+                UriComponentsBuilder.fromHttpUrl(resultString.substring(9)).build()
+        );
     }
 
     private static Stream<Arguments> success() {
