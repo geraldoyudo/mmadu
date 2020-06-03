@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
-@Order(200)
+@Order(1000)
 public class AuthorizeEndpointConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationProvider userAuthenticationProvider;
     private ClientDomainPopulatorFilter clientDomainPopulatorFilter;
@@ -37,18 +38,24 @@ public class AuthorizeEndpointConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .antMatcher("/app/**")
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/authorize/**")
+                .antMatchers("/app/authorize/**")
                 .authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/app/login")
+                .loginProcessingUrl("/app/login")
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/app/logout")
                 .permitAll()
                 .and()
                 .authenticationProvider(userAuthenticationProvider)

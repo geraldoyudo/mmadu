@@ -102,7 +102,7 @@
 <section class="form animated flipInX">
     <h2 style="margin:auto">An application wants to access your account</h2>
 
-    <form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}" class="loginbox">
+    <form th:action="@{/app/authorize}" method="post" th:object="${authorizationResponse}" class="loginbox">
 
         <div th:if="${not #lists.isEmpty(availableScopes)}">
             <p style="color: #ffffff;">
