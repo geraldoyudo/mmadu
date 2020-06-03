@@ -77,7 +77,7 @@ public class JwtTokenProvider implements TokenProvider {
             ClaimConfiguration claimConfiguration = (ClaimConfiguration) Optional.ofNullable(properties.get("claim"))
                     .orElse(new ClaimConfiguration());
             JWTClaimsSet claimsSet = convertToClaimSet(claimGenerator.generateClaim(
-                    specification.getGrantAuthorization(), ClaimSpecs.builder()
+                    specification, ClaimSpecs.builder()
                             .type(specification.getType())
                             .configuration(claimConfiguration)
                             .build()
@@ -91,7 +91,7 @@ public class JwtTokenProvider implements TokenProvider {
             signedJWT.sign(signer);
             JwtTokenCredentials credentials = new JwtTokenCredentials();
             credentials.setToken(signedJWT.serialize());
-            credentials.setJti(signedJWT.getHeader().getKeyID());
+            credentials.setJti(claimsSet.getJWTID());
             return credentials;
         } catch (JOSEException ex) {
             throw new TokenCreationException("could not create token", ex);

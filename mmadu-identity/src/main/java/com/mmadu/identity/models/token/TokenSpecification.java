@@ -4,6 +4,7 @@ import com.mmadu.identity.entities.GrantAuthorization;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,7 @@ public class TokenSpecification {
     private List<String> scopes;
     private List<String> labels;
     private String type;
+    private ZonedDateTime expirationTime;
+    private ZonedDateTime issueTime;
+    private ZonedDateTime activationTime;
 }

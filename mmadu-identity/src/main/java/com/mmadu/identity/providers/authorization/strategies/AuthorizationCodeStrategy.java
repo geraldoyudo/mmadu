@@ -15,11 +15,14 @@ import com.mmadu.identity.providers.authorization.code.DomainAuthorizationCodeGe
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
+import com.mmadu.identity.utils.GrantTypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
+
+import static org.apache.commons.lang3.ObjectUtils.min;
 
 @Component
 @Order(100)
@@ -75,6 +78,12 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setRedirectUri(context.getResult().getRedirectUri());
         grantAuthorization.setRedirectUriSpecified(context.getResult().isRedirectUriSpecified());
         grantAuthorization.setClientIdentifier(clientInstance.getIdentifier());
+        grantAuthorization.setGrantType(GrantTypeUtils.AUTHORIZATION_CODE);
+        ZonedDateTime now = ZonedDateTime.now();
+        grantAuthorization.setIssuedTime(now);
+        grantAuthorization.setExpiryTime(
+                now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), clientInstance.getAuthorizationCodeGrantTypeTTLSeconds()))
+        );
         AuthorizationCodeGrantData grantData = new AuthorizationCodeGrantData();
         grantData.setCode(authorizationCodeGenerator.generateAuthorizationCodeAsDomain(authorizer.getDomainId()));
         grantData.setCodeExpiryTime(ZonedDateTime.now().plusSeconds(configuration.getGrantCodeTTLSeconds()));

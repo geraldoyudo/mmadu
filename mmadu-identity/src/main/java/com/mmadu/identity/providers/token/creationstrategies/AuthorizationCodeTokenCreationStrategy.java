@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.time.ZonedDateTime;
 import java.util.List;
+
+import static com.mmadu.identity.utils.ZoneDateTimeUtils.min;
 
 @Component
 public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStrategy {
@@ -52,6 +55,9 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
         GrantAuthorization authorization = grantAuthorizationRepository.findByAuthorizationCode(request.getCode())
                 .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidCodeError);
 
+        if (authorization.isActive() || authorization.isExpired() || authorization.isRevoked()) {
+            throw invalidRequest();
+        }
         if (!(authorization.getData() instanceof AuthorizationCodeGrantData)) {
             throw invalidGrantData();
         }
@@ -63,38 +69,54 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
                 .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidClient);
 
+        ZonedDateTime now = ZonedDateTime.now();
         Token accessToken = tokenFactory.createToken(
                 TokenSpecification.builder()
                         .configuration(configuration.getAccessTokenProperties())
                         .domainId(client.getDomainId())
                         .grantAuthorization(authorization)
+                        .activationTime(now)
+                        .issueTime(now)
+                        .expirationTime(
+                                min(now.plusSeconds(client.getAccessTokenTTLSeconds()), authorization.getExpiryTime())
+                        )
                         .labels(List.of("access_token"))
                         .provider(configuration.getAccessTokenProvider())
                         .type("access_token")
                         .build()
         );
+        authorization.addAddAccessToken(accessToken);
         String refreshTokenString = "";
 
         if (configuration.isRefreshTokenEnabled() && client.issueRefreshTokens()) {
             Token refreshToken = tokenFactory.createToken(
                     TokenSpecification.builder()
-                            .configuration(configuration.getAccessTokenProperties())
+                            .configuration(configuration.getRefreshTokenProperties())
                             .domainId(client.getDomainId())
                             .grantAuthorization(authorization)
-                            .labels(List.of("access_token"))
-                            .provider(configuration.getAccessTokenProvider())
-                            .type("access_token")
+                            .labels(List.of("refresh_token"))
+                            .provider(configuration.getRefreshTokenProvider())
+                            .activationTime(now)
+                            .issueTime(now)
+                            .expirationTime(
+                                    min(now.plusSeconds(client.getRefreshTokenTTLSeconds()), authorization.getExpiryTime())
+                            )
+                            .type("refresh_token")
                             .build()
             );
 
             refreshTokenString = refreshToken.getCredentials().toString();
+            authorization.addRefreshToken(refreshToken);
         }
-
+        authorization.setActive(true);
+        grantAuthorizationRepository.save(authorization);
         return TokenResponse.builder()
                 .accessToken(accessToken.getCredentials().toString())
                 .expiresIn(authorization.getExpiryTime())
                 .refreshToken(refreshTokenString)
                 .tokenIdentifier(accessToken.getTokenIdentifier())
+                .tokenType("bearer")
+                .expiresIn(accessToken.getExpiryTime())
                 .build();
     }
 
@@ -112,5 +134,9 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
 
     private static TokenException invalidClient() {
         return new TokenException(new InvalidClient("client.domain.invalid", ""));
+    }
+
+    private static TokenException invalidRequest() {
+        return new TokenException(new InvalidRequest("request.invalid", ""));
     }
 }

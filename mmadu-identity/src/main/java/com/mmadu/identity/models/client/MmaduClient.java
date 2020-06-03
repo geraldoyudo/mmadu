@@ -26,4 +26,12 @@ public interface MmaduClient {
     default List<String> getResources() {
         return Collections.emptyList();
     }
+
+    default Long getAccessTokenTTLSeconds() {
+        return 0L;
+    }
+
+    default Long getRefreshTokenTTLSeconds() {
+        return 0L;
+    }
 }

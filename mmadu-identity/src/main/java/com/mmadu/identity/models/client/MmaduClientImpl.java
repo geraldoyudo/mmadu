@@ -53,4 +53,19 @@ public class MmaduClientImpl implements MmaduClient {
     public boolean issueRefreshTokens() {
         return clientInstance.isIssueRefreshTokens();
     }
+
+    @Override
+    public Long getAccessTokenTTLSeconds() {
+        return clientInstance.getAccessTokenTTLSeconds();
+    }
+
+    @Override
+    public Long getRefreshTokenTTLSeconds() {
+        return clientInstance.getRefreshTokenTTLSeconds();
+    }
+
+    @Override
+    public List<String> getResources() {
+        return clientInstance.getResources();
+    }
 }

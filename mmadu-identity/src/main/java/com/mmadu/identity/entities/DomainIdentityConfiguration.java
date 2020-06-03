@@ -21,6 +21,7 @@ public class DomainIdentityConfiguration implements HasDomain {
     private String grantCodeType = AlphaNumericCodeGenerator.TYPE;
     private Map<String, Object> grantCodeTypeProperties;
     private Long grantCodeTTLSeconds = 600L;
+    private Long maxAuthorizationTTLSeconds = 24 * 60 * 60L;
     private boolean refreshTokenEnabled = true;
     private String accessTokenProvider = "jwt";
     private Map<String, Object> accessTokenProperties = new HashMap<>();

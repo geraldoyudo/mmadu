@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -25,8 +25,8 @@ public class GrantAuthorization {
     private String clientIdentifier;
     @NotEmpty(message = "client instance id is required")
     private String clientInstanceId;
-    private List<String> refreshTokens = Collections.emptyList();
-    private List<String> accessTokens = Collections.emptyList();
+    private List<String> refreshTokens = new LinkedList<>();
+    private List<String> accessTokens = new LinkedList<>();
     private ZonedDateTime activationTime;
     private ZonedDateTime expiryTime;
     private ZonedDateTime issuedTime;
@@ -39,4 +39,12 @@ public class GrantAuthorization {
     private GrantData data;
     private boolean redirectUriSpecified;
     private String grantType;
+
+    public void addRefreshToken(Token token) {
+        this.refreshTokens.add(token.getId());
+    }
+
+    public void addAddAccessToken(Token token) {
+        this.accessTokens.add(token.getId());
+    }
 }

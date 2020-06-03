@@ -7,6 +7,7 @@ import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.ClaimConfiguration;
 import com.mmadu.identity.models.token.ClaimSpecs;
 import com.mmadu.identity.models.token.TokenClaim;
+import com.mmadu.identity.models.token.TokenSpecification;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import lombok.Builder;
@@ -30,22 +31,23 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
     }
 
     @Override
-    public boolean apply(GrantAuthorization authorization, ClaimSpecs specs) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(authorization.getGrantType()) &&
+    public boolean apply(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+        return GrantTypeUtils.AUTHORIZATION_CODE.equals(tokenSpecs.getGrantAuthorization().getGrantType()) &&
                 "access_token".equals(specs.getType());
     }
 
     @Override
-    public TokenClaim generateClaim(GrantAuthorization authorization, ClaimSpecs specs) {
+    public TokenClaim generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+        GrantAuthorization authorization = tokenSpecs.getGrantAuthorization();
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
         ClaimConfiguration configuration = specs.getConfiguration();
         return AuthorizationCodeAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
-                .activationTime(ZonedDateTime.now())
-                .expirationTime(authorization.getExpiryTime())
-                .issueTime(ZonedDateTime.now())
+                .activationTime(tokenSpecs.getActivationTime())
+                .expirationTime(tokenSpecs.getExpirationTime())
+                .issueTime(tokenSpecs.getIssueTime())
                 .clientIdentifier(authorization.getClientIdentifier())
                 .audience(client.getResources())
                 .tokenIdentifier(specs.getId())
