@@ -1,11 +1,10 @@
 package com.mmadu.identity.config;
 
-import com.mmadu.identity.entities.Client;
-import com.mmadu.identity.entities.ClientInstance;
-import com.mmadu.identity.entities.DomainConfiguration;
-import com.mmadu.identity.validators.ClientInstanceValidator;
-import com.mmadu.identity.validators.ClientValidator;
-import com.mmadu.identity.validators.HasDomainValidator;
+import com.mmadu.identity.entities.*;
+import com.mmadu.identity.validators.client.ClientInstanceValidator;
+import com.mmadu.identity.validators.client.ClientValidator;
+import com.mmadu.identity.validators.domain.DomainIdentityConfigurationValidator;
+import com.mmadu.identity.validators.domain.HasDomainValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +29,13 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
     private ClientInstanceValidator clientInstanceValidator;
     @Autowired
     private HasDomainValidator hasDomainValidator;
+    @Autowired
+    private DomainIdentityConfigurationValidator domainIdentityConfigurationValidator;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(
-                Client.class, ClientInstance.class, DomainConfiguration.class
+                Client.class, ClientInstance.class, DomainIdentityConfiguration.class, Resource.class, Scope.class
         );
     }
 
@@ -48,5 +49,7 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
         validatingListener.addValidator(BEFORE_SAVE, clientValidator);
         validatingListener.addValidator(BEFORE_CREATE, clientInstanceValidator);
         validatingListener.addValidator(BEFORE_SAVE, clientInstanceValidator);
+        validatingListener.addValidator(BEFORE_CREATE, domainIdentityConfigurationValidator);
+        validatingListener.addValidator(BEFORE_SAVE, domainIdentityConfigurationValidator);
     }
 }

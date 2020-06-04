@@ -1,7 +1,7 @@
 spring:
   data:
     rest:
-      base-path: /repo
+      base-path: /admin/repo
 
 mmadu:
   domainKey: 2222

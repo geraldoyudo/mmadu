@@ -25,4 +25,5 @@ public class WebConfig {
         return new ObjectMapper().registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
+
 }

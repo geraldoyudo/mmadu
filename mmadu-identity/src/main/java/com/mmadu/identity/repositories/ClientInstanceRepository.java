@@ -17,4 +17,6 @@ public interface ClientInstanceRepository extends MongoRepository<ClientInstance
                                                    @Param("clientId") String clientId, Pageable p);
 
     Page<ClientInstance> findByDomainId(@Param("domainId") String domainId, Pageable p);
+
+    Optional<ClientInstance> findByIdentifier(@Param("identifier") String identifier);
 }

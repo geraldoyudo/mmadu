@@ -1,7 +1,9 @@
 package com.mmadu.identity.providers.users;
 
 import com.mmadu.identity.config.RestResourceConfig;
-import com.mmadu.identity.models.users.Domain;
+import com.mmadu.identity.models.domain.Domain;
+import com.mmadu.identity.services.domain.DomainService;
+import com.mmadu.identity.services.domain.DomainServiceImpl;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

@@ -2,9 +2,8 @@ package com.mmadu.identity.documentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mmadu.identity.models.users.Domain;
-import com.mmadu.identity.providers.users.DomainService;
-import com.mmadu.security.DomainTokenChecker;
+import com.mmadu.identity.models.domain.Domain;
+import com.mmadu.identity.services.domain.DomainService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,6 @@ public abstract class AbstractDocumentation {
     @Autowired
     protected ObjectMapper objectMapper;
     @MockBean
-    private DomainTokenChecker domainTokenChecker;
-    @MockBean
     private DomainService domainService;
 
     protected MockMvc mockMvc;
@@ -51,8 +48,6 @@ public abstract class AbstractDocumentation {
     @BeforeEach
     void initializeTest(WebApplicationContext context,
                         RestDocumentationContextProvider restDocumentation) {
-        doReturn(true).when(domainTokenChecker)
-                .checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
         doReturn(Optional.of(new Domain("new-domain")))
                 .when(domainService).findById(DOMAIN_ID);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
