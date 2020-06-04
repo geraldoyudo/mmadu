@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
         @CompoundIndex(name = "domain-code", def = "{'domainId': 1, 'code': 1}", unique = true)
 }
 )
-public class Scope {
+public class Scope implements HasDomain {
     @Id
     private String id;
     private String domainId;

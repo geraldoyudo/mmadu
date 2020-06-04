@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document
 @EqualsAndHashCode
-public class Resource {
+public class Resource implements HasDomain {
     @Id
     private String id;
     private String domainId;
