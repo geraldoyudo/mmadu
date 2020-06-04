@@ -31,4 +31,5 @@ public class Token {
     private TokenCredentials credentials;
     private List<String> scopes;
     private String tokenIdentifier;
+    private String tokenString;
 }
