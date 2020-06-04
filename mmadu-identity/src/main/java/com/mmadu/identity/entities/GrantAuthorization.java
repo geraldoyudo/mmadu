@@ -39,12 +39,13 @@ public class GrantAuthorization {
     private GrantData data;
     private boolean redirectUriSpecified;
     private String grantType;
+    private boolean refreshTokenIssued;
 
     public void addRefreshToken(Token token) {
         this.refreshTokens.add(token.getId());
     }
 
-    public void addAddAccessToken(Token token) {
+    public void addAccessToken(Token token) {
         this.accessTokens.add(token.getId());
     }
 }

@@ -48,13 +48,20 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setDomainId(specification.getDomainId());
         token.setClientId(specification.getGrantAuthorization().getClientId());
         token.setClientInstanceId(specification.getGrantAuthorization().getClientInstanceId());
+        token.setClientIdentifier(specification.getGrantAuthorization().getClientIdentifier());
         token.setUserId(specification.getGrantAuthorization().getUserId());
         token.setGrantAuthorizationId(specification.getGrantAuthorization().getId());
         token.setLabels(specification.getLabels());
-        token.setScopes(specification.getScopes());
-        token.setType(specification.getProvider());
+        if(specification.getScopes() == null || specification.getScopes().isEmpty()){
+            token.setScopes(specification.getGrantAuthorization().getScopes());
+        }else {
+            token.setScopes(specification.getScopes());
+        }
+        token.setType(specification.getType());
+        token.setProvider(specification.getProvider());
         token.setExpiryTime(specification.getExpirationTime());
         token.setActivationTime(specification.getActivationTime());
+        token.setActive(specification.isActive());
         return token;
     }
 }

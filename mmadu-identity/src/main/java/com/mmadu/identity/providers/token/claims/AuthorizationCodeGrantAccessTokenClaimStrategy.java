@@ -42,6 +42,12 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
         ClaimConfiguration configuration = specs.getConfiguration();
+        List<String> scopes;
+        if (tokenSpecs.getScopes() == null || tokenSpecs.getScopes().isEmpty()) {
+            scopes = authorization.getScopes();
+        } else {
+            scopes = tokenSpecs.getScopes();
+        }
         return AuthorizationCodeAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
@@ -54,9 +60,9 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
                 .domainId(authorization.getDomainId())
                 .userId(authorization.getUserId())
                 .scope(
-                        Optional.ofNullable(authorization.getScopes()).orElse(Collections.emptyList())
+                        Optional.ofNullable(scopes).orElse(Collections.emptyList())
                                 .stream()
-                                .collect(Collectors.joining())
+                                .collect(Collectors.joining(" "))
                 )
                 .build();
     }
