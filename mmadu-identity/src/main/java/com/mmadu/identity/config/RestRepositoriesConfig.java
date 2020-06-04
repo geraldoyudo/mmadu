@@ -5,6 +5,7 @@ import com.mmadu.identity.entities.ClientInstance;
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.validators.client.ClientInstanceValidator;
 import com.mmadu.identity.validators.client.ClientValidator;
+import com.mmadu.identity.validators.domain.DomainIdentityConfigurationValidator;
 import com.mmadu.identity.validators.domain.HasDomainValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +31,8 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
     private ClientInstanceValidator clientInstanceValidator;
     @Autowired
     private HasDomainValidator hasDomainValidator;
+    @Autowired
+    private DomainIdentityConfigurationValidator domainIdentityConfigurationValidator;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
@@ -48,5 +51,7 @@ public class RestRepositoriesConfig implements RepositoryRestConfigurer {
         validatingListener.addValidator(BEFORE_SAVE, clientValidator);
         validatingListener.addValidator(BEFORE_CREATE, clientInstanceValidator);
         validatingListener.addValidator(BEFORE_SAVE, clientInstanceValidator);
+        validatingListener.addValidator(BEFORE_CREATE, domainIdentityConfigurationValidator);
+        validatingListener.addValidator(BEFORE_SAVE, domainIdentityConfigurationValidator);
     }
 }
