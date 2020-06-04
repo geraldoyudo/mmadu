@@ -6,11 +6,14 @@ import com.mmadu.identity.entities.*;
 import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.ClientRepository;
 import com.mmadu.identity.repositories.ResourceRepository;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -18,10 +21,12 @@ import org.springframework.restdocs.request.ParameterDescriptor;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -39,6 +44,10 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
     private ResourceRepository resourceRepository;
     private Client client;
     private Resource resource;
+    @MockBean
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
+    @Mock
+    private DomainIdentityConfiguration configuration;
 
     @BeforeEach
     void setUp() {
@@ -69,6 +78,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
 
     @Test
     void createNewClientInstance() throws Exception {
+        when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/clientInstances")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -221,6 +231,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
 
     @Test
     public void updateClientInstanceById() throws Exception {
+        when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         final boolean tlsEnabled = false;
         ClientInstance instance = newClientInstance();
         mockMvc.perform(

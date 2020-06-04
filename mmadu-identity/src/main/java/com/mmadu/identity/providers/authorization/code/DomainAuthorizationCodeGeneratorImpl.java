@@ -32,8 +32,8 @@ public class DomainAuthorizationCodeGeneratorImpl implements DomainAuthorization
     public String generateAuthorizationCodeAsDomain(String domainId) {
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(domainId)
                 .orElseThrow(() -> new DomainNotFoundException("domain not found"));
-        return Optional.ofNullable(providerMap.get(configuration.getGrantCodeType()))
+        return Optional.ofNullable(providerMap.get(configuration.getAuthorizationCodeType()))
                 .orElseThrow(() -> new IllegalStateException("Grant code type not configured for domain"))
-                .generateCode(configuration.getGrantCodeTypeProperties());
+                .generateCode(configuration.getAuthorizationCodeTypeProperties());
     }
 }

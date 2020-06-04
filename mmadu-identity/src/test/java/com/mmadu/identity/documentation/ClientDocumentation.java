@@ -3,19 +3,25 @@ package com.mmadu.identity.documentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.identity.entities.Client;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.repositories.ClientRepository;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -27,9 +33,14 @@ public class ClientDocumentation extends AbstractDocumentation {
     private ObjectMapper objectMapper;
     @Autowired
     private ClientRepository clientRepository;
+    @MockBean
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
+    @Mock
+    private DomainIdentityConfiguration configuration;
 
     @Test
     void createNewClient() throws Exception {
+        when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/clients")
                         .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
@@ -127,6 +138,7 @@ public class ClientDocumentation extends AbstractDocumentation {
 
     @Test
     public void updateClientById() throws Exception {
+        when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         final String newClientName = "New Email Client";
         Client client = clientRepository.save(newClient());
         mockMvc.perform(

@@ -86,7 +86,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         );
         AuthorizationCodeGrantData grantData = new AuthorizationCodeGrantData();
         grantData.setCode(authorizationCodeGenerator.generateAuthorizationCodeAsDomain(authorizer.getDomainId()));
-        grantData.setCodeExpiryTime(ZonedDateTime.now().plusSeconds(configuration.getGrantCodeTTLSeconds()));
+        grantData.setCodeExpiryTime(ZonedDateTime.now().plusSeconds(configuration.getAuthorizationCodeTTLSeconds()));
         grantAuthorization.setData(grantData);
         AuthorizationCodeRedirectData data = new AuthorizationCodeRedirectData();
         data.setCode(grantData.getCode());

@@ -20,10 +20,10 @@ public class DomainIdentityConfiguration {
     @Indexed(unique = true)
     @NotEmpty(message = "domainId is required")
     private String domainId;
-    @NotEmpty(message = "grantCodeType is required")
-    private String grantCodeType = AlphaNumericCodeGenerator.TYPE;
-    private Map<String, Object> grantCodeTypeProperties = new HashMap<>();
-    private Long grantCodeTTLSeconds = 600L;
+    @NotEmpty(message = "authorizationCodeType is required")
+    private String authorizationCodeType = AlphaNumericCodeGenerator.TYPE;
+    private Map<String, Object> authorizationCodeTypeProperties = new HashMap<>();
+    private Long authorizationCodeTTLSeconds = 600L;
     private Long maxAuthorizationTTLSeconds = 24 * 60 * 60L;
     private boolean refreshTokenEnabled = true;
     @NotEmpty(message = "accessTokenProvider is required")
