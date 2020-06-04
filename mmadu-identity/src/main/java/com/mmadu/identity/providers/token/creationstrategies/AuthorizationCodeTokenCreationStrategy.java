@@ -52,7 +52,8 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
 
     @Override
     public TokenResponse getToken(TokenRequest request, MmaduClient client) {
-        GrantAuthorization authorization = grantAuthorizationRepository.findByAuthorizationCode(request.getCode())
+        GrantAuthorization authorization = grantAuthorizationRepository.
+                findByClientIdentifierAndAuthorizationCode(client.getClientIdentifier(), request.getCode())
                 .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidCodeError);
 
         if (authorization.isActive() || authorization.isExpired() || authorization.isRevoked()) {
