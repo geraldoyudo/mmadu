@@ -19,7 +19,7 @@ public class TokenCreationConfig {
         objectMapper.registerModule(new JavaTimeModule());
         Jackson8Module module = new Jackson8Module();
         module.addStringSerializer(ZonedDateTime.class, (val) -> Long.toString(
-                val.toInstant().toEpochMilli() / 1000));
+                val.toEpochSecond()));
         objectMapper.registerModule(module);
         return objectMapper;
     }

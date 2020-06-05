@@ -1,7 +1,6 @@
 package com.mmadu.identity.providers.token;
 
 import com.mmadu.identity.entities.Token;
-import com.mmadu.identity.entities.token.HasTokenIdentifier;
 import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.exceptions.TokenCreationException;
 import com.mmadu.identity.models.token.TokenSpecification;
@@ -39,9 +38,8 @@ public class TokenFactoryImpl implements TokenFactory {
                 .create(spec);
         Token token = createBaseToken(spec);
         token.setCredentials(credentials);
-        if (credentials instanceof HasTokenIdentifier) {
-            token.setTokenIdentifier(((HasTokenIdentifier) credentials).getTokenIdentifier());
-        }
+        token.setTokenIdentifier(credentials.getTokenIdentifier());
+        token.setTokenString(credentials.getTokenString());
         return tokenRepository.save(token);
     }
 
@@ -50,13 +48,20 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setDomainId(specification.getDomainId());
         token.setClientId(specification.getGrantAuthorization().getClientId());
         token.setClientInstanceId(specification.getGrantAuthorization().getClientInstanceId());
+        token.setClientIdentifier(specification.getGrantAuthorization().getClientIdentifier());
         token.setUserId(specification.getGrantAuthorization().getUserId());
         token.setGrantAuthorizationId(specification.getGrantAuthorization().getId());
         token.setLabels(specification.getLabels());
-        token.setScopes(specification.getScopes());
-        token.setType(specification.getProvider());
+        if(specification.getScopes() == null || specification.getScopes().isEmpty()){
+            token.setScopes(specification.getGrantAuthorization().getScopes());
+        }else {
+            token.setScopes(specification.getScopes());
+        }
+        token.setType(specification.getType());
+        token.setProvider(specification.getProvider());
         token.setExpiryTime(specification.getExpirationTime());
         token.setActivationTime(specification.getActivationTime());
+        token.setActive(specification.isActive());
         return token;
     }
 }

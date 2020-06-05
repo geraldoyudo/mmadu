@@ -4,6 +4,7 @@ import com.mmadu.identity.config.MongoDbConfiguration;
 import com.mmadu.identity.entities.AuthorizationCodeGrantData;
 import com.mmadu.identity.entities.ClientCredentialsGrantData;
 import com.mmadu.identity.entities.GrantAuthorization;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -19,6 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class GrantAuthorizationRepositoryTest {
     @Autowired
     private GrantAuthorizationRepository grantAuthorizationRepository;
+
+    @AfterEach
+    void clearAll() {
+        grantAuthorizationRepository.deleteAll();
+    }
 
     @Test
     void testPersistAuthorizationCodeGrant() {
@@ -58,6 +64,26 @@ class GrantAuthorizationRepositoryTest {
         authorization.setData(data);
         grantAuthorizationRepository.save(authorization);
         GrantAuthorization received = grantAuthorizationRepository.findByAuthorizationCode(data.getCode()).get();
+        AuthorizationCodeGrantData receivedData = (AuthorizationCodeGrantData) received.getData();
+        assertAll(
+                () -> assertEquals(data.getCode(), receivedData.getCode()),
+                () -> assertEquals(0, Duration.between(data.getCodeExpiryTime(), receivedData.getCodeExpiryTime()).toMinutes())
+        );
+    }
+
+    @Test
+    void testGrantAuthorizationQueryWithClientInstanceId() {
+        GrantAuthorization authorization = new GrantAuthorization();
+        authorization.setClientInstanceId("2382938");
+        authorization.setClientIdentifier("382939283938");
+        AuthorizationCodeGrantData data = new AuthorizationCodeGrantData();
+        data.setCode("232983");
+        data.setCodeExpiryTime(ZonedDateTime.now());
+        authorization.setData(data);
+        grantAuthorizationRepository.save(authorization);
+        GrantAuthorization received = grantAuthorizationRepository.findByClientIdentifierAndAuthorizationCode(
+                authorization.getClientIdentifier(),
+                data.getCode()).get();
         AuthorizationCodeGrantData receivedData = (AuthorizationCodeGrantData) received.getData();
         assertAll(
                 () -> assertEquals(data.getCode(), receivedData.getCode()),

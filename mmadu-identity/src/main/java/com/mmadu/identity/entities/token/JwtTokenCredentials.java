@@ -3,7 +3,7 @@ package com.mmadu.identity.entities.token;
 import lombok.Data;
 
 @Data
-public class JwtTokenCredentials implements TokenCredentials, HasBasicTokenData, HasTokenIdentifier {
+public class JwtTokenCredentials implements TokenCredentials {
     private String token;
     private String jti;
 
@@ -20,5 +20,10 @@ public class JwtTokenCredentials implements TokenCredentials, HasBasicTokenData,
     @Override
     public String getTokenIdentifier() {
         return jti;
+    }
+
+    @Override
+    public String getTokenString() {
+        return token;
     }
 }

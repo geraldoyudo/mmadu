@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -13,4 +14,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public interface TokenCredentials {
 
     String getType();
+
+    @JsonIgnore
+    String getTokenString();
+
+    @JsonIgnore
+    String getTokenIdentifier();
 }

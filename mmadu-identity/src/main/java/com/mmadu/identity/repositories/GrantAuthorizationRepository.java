@@ -11,4 +11,9 @@ public interface GrantAuthorizationRepository extends MongoRepository<GrantAutho
 
     @Query("{ 'data.code' : ?0 }")
     Optional<GrantAuthorization> findByAuthorizationCode(@Param("code") String code);
+
+    @Query("{ 'clientIdentifier': ?0, 'data.code' : ?1 }")
+    Optional<GrantAuthorization> findByClientIdentifierAndAuthorizationCode(
+            @Param("clientId") String clientId,
+            @Param("code") String code);
 }

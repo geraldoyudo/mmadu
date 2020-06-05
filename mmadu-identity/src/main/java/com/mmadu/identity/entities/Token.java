@@ -18,6 +18,7 @@ public class Token {
     private String grantAuthorizationId;
     private String domainId;
     private String clientInstanceId;
+    private String clientIdentifier;
     private String clientId;
     private String userId;
     private ZonedDateTime expiryTime;
@@ -27,8 +28,10 @@ public class Token {
     private boolean revoked;
     private boolean expired;
     private String type;
+    private String provider;
     private List<String> labels;
     private TokenCredentials credentials;
     private List<String> scopes;
     private String tokenIdentifier;
+    private String tokenString;
 }

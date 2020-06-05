@@ -1,5 +1,6 @@
 package com.mmadu.identity.models.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -15,11 +16,19 @@ public class TokenResponse {
     private String accessToken;
     @JsonProperty("token_type")
     private String tokenType;
-    @JsonProperty("expires_in")
+    @JsonIgnore
     private ZonedDateTime expiresIn;
     @JsonProperty("refresh_token")
     private String refreshToken;
     @JsonProperty("jti")
     private String tokenIdentifier;
 
+    @JsonProperty("expires_in")
+    public Long getExpiresIn() {
+        if (expiresIn == null) {
+            return null;
+        } else {
+            return expiresIn.toEpochSecond();
+        }
+    }
 }
