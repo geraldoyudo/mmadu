@@ -97,6 +97,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 .put("clientType", "CONFIDENTIAL")
                 .put("clientProfile", "web_app")
                 .put("tlsEnabled", true)
+                .put("includeUserRoles", true)
+                .put("includeUserAuthorities", true)
                 .put("domainId", DOMAIN_ID);
         node.putArray("resources")
                 .add(resource.getIdentifier());
@@ -133,6 +135,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("domainId").description("the ID of the domain"),
                 fieldWithPath("resources").description("The resource ids of the resources the client should have access to"),
                 fieldWithPath("authorities").description("The list of authorities granted to the client"),
+                fieldWithPath("includeUserRoles").description("Include user's roles in the token info"),
+                fieldWithPath("includeUserAuthorities").description("Include user's authorities in the token info"),
                 fieldWithPath("credentials.type").description("The client's credential type (for now, `secret`)"),
                 fieldWithPath("credentials.secret").description("The client secret (if credential type is `secret`)").optional()
         );
@@ -204,6 +208,8 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.clientInstances.[].tlsEnabled").description("If client is must use TLS or not"),
                 fieldWithPath("_embedded.clientInstances.[].resources").description("The resource ids of the resources the client should have access to"),
                 fieldWithPath("_embedded.clientInstances.[].authorities").description("The list of authorities granted to the client"),
+                fieldWithPath("_embedded.clientInstances.[].includeUserRoles").description("Include user's roles in the token info"),
+                fieldWithPath("_embedded.clientInstances.[].includeUserAuthorities").description("Include user's authorities in the token info"),
                 fieldWithPath("_embedded.clientInstances.[].credentials.type").optional().description("The client's credential type (for now, `secret`)"),
                 fieldWithPath("_embedded.clientInstances.[].credentials.secret").optional().description("The client secret (if credential type is `secret`)").optional()
         );
