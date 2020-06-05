@@ -4,6 +4,7 @@ import com.mmadu.identity.config.MongoDbConfiguration;
 import com.mmadu.identity.entities.AuthorizationCodeGrantData;
 import com.mmadu.identity.entities.ClientCredentialsGrantData;
 import com.mmadu.identity.entities.GrantAuthorization;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -19,6 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class GrantAuthorizationRepositoryTest {
     @Autowired
     private GrantAuthorizationRepository grantAuthorizationRepository;
+
+    @AfterEach
+    void clearAll() {
+        grantAuthorizationRepository.deleteAll();
+    }
 
     @Test
     void testPersistAuthorizationCodeGrant() {
