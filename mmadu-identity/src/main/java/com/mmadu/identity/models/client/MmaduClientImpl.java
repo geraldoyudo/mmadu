@@ -6,7 +6,6 @@ import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientInstance;
 import com.mmadu.identity.entities.ClientType;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MmaduClientImpl implements MmaduClient {
@@ -30,7 +29,7 @@ public class MmaduClientImpl implements MmaduClient {
 
     @Override
     public List<String> getAuthorities() {
-        return Collections.emptyList();
+        return clientInstance.getAuthorities();
     }
 
     @Override

@@ -42,4 +42,5 @@ public class ClientInstance implements HasDomain {
     private Long authorizationCodeGrantTypeTTLSeconds = 24 * 60 * 60l;
     private Long accessTokenTTLSeconds = 300L;
     private Long refreshTokenTTLSeconds = 60 * 60L;
+    private Long clientCredentialsGrantTypeTTLSeconds = 24 * 60 * 60l;
 }

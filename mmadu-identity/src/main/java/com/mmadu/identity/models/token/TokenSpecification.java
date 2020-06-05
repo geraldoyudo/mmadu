@@ -21,6 +21,7 @@ public class TokenSpecification {
     private ZonedDateTime expirationTime;
     private ZonedDateTime issueTime;
     private ZonedDateTime activationTime;
+    private List<String> authorities;
     @Builder.Default
     private boolean active = true;
 }
