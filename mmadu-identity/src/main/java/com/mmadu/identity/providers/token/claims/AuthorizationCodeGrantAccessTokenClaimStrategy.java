@@ -1,5 +1,6 @@
 package com.mmadu.identity.providers.token.claims;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
@@ -64,11 +65,14 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
                                 .stream()
                                 .collect(Collectors.joining(" "))
                 )
+                .authorities(client.isIncludeUserAuthorities() ? authorization.getUserAuthorities() : null)
+                .roles(client.isIncludeUserRoles() ? authorization.getUserRoles() : null)
                 .build();
     }
 
     @Data
     @Builder
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class AuthorizationCodeAccessTokenClaim implements TokenClaim {
         private String issuer;
         private String subject;
@@ -82,5 +86,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         private String scope;
         @JsonProperty("user_id")
         private String userId;
+        private List<String> authorities;
+        private List<String> roles;
     }
 }

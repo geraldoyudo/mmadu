@@ -67,4 +67,14 @@ public class MmaduClientImpl implements MmaduClient {
     public List<String> getResources() {
         return clientInstance.getResources();
     }
+
+    @Override
+    public boolean isIncludeUserAuthorities() {
+        return clientInstance.isIncludeUserAuthorities();
+    }
+
+    @Override
+    public boolean isIncludeUserRoles() {
+        return clientInstance.isIncludeUserRoles();
+    }
 }
