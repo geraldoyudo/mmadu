@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GrantAuthorizationRepository extends MongoRepository<GrantAuthorization, String> {
@@ -16,4 +17,10 @@ public interface GrantAuthorizationRepository extends MongoRepository<GrantAutho
     Optional<GrantAuthorization> findByClientIdentifierAndAuthorizationCode(
             @Param("clientId") String clientId,
             @Param("code") String code);
+
+    List<GrantAuthorization> findByClientIdentifierAndGrantTypeAndActive(
+            @Param("clientId") String clientId,
+            @Param("grantType") String grantType,
+            @Param("active") Boolean active
+    );
 }

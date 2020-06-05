@@ -34,4 +34,12 @@ public interface MmaduClient {
     default Long getRefreshTokenTTLSeconds() {
         return 0L;
     }
+
+    default boolean isIncludeUserRoles() {
+        return false;
+    }
+
+    default boolean isIncludeUserAuthorities() {
+        return false;
+    }
 }

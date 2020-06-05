@@ -1,7 +1,5 @@
 package com.mmadu.identity.providers.token.claims;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.models.client.MmaduClient;
@@ -17,13 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
-public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
+public class ClientCredentialsGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
     private MmaduClientService mmaduClientService;
 
     @Autowired
@@ -33,7 +28,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
 
     @Override
     public boolean apply(TokenSpecification tokenSpecs, ClaimSpecs specs) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(tokenSpecs.getGrantAuthorization().getGrantType()) &&
+        return GrantTypeUtils.CLIENT_CREDENTIALS.equals(tokenSpecs.getGrantAuthorization().getGrantType()) &&
                 "access_token".equals(specs.getType());
     }
 
@@ -43,13 +38,8 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
         ClaimConfiguration configuration = specs.getConfiguration();
-        List<String> scopes;
-        if (tokenSpecs.getScopes() == null || tokenSpecs.getScopes().isEmpty()) {
-            scopes = authorization.getScopes();
-        } else {
-            scopes = tokenSpecs.getScopes();
-        }
-        return AuthorizationCodeAccessTokenClaim.builder()
+
+        return ClientCredentialsAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
                 .activationTime(tokenSpecs.getActivationTime())
@@ -59,21 +49,13 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
                 .audience(client.getResources())
                 .tokenIdentifier(specs.getId())
                 .domainId(authorization.getDomainId())
-                .userId(authorization.getUserId())
-                .scope(
-                        Optional.ofNullable(scopes).orElse(Collections.emptyList())
-                                .stream()
-                                .collect(Collectors.joining(" "))
-                )
-                .authorities(client.isIncludeUserAuthorities() ? authorization.getUserAuthorities() : null)
-                .roles(client.isIncludeUserRoles() ? authorization.getUserRoles() : null)
+                .authorities(client.getAuthorities())
                 .build();
     }
 
     @Data
     @Builder
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class AuthorizationCodeAccessTokenClaim implements TokenClaim {
+    public static class ClientCredentialsAccessTokenClaim implements TokenClaim {
         private String issuer;
         private String subject;
         private List<String> audience;
@@ -84,9 +66,6 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         private String clientIdentifier;
         private String domainId;
         private String scope;
-        @JsonProperty("user_id")
-        private String userId;
         private List<String> authorities;
-        private List<String> roles;
     }
 }

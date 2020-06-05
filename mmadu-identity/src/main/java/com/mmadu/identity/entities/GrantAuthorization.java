@@ -19,6 +19,7 @@ public class GrantAuthorization {
     @NotEmpty(message = "domain id is required")
     private String domainId;
     private String userId;
+    private String username;
     @NotEmpty(message = "client id is required")
     private String clientId;
     @NotEmpty(message = "client identifier is required")
@@ -40,6 +41,8 @@ public class GrantAuthorization {
     private boolean redirectUriSpecified;
     private String grantType;
     private boolean refreshTokenIssued;
+    private List<String> userAuthorities;
+    private List<String> userRoles;
 
     public void addRefreshToken(Token token) {
         this.refreshTokens.add(token.getId());
