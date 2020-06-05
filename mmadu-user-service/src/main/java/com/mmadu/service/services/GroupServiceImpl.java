@@ -1,15 +1,13 @@
 package com.mmadu.service.services;
 
+import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.entities.Group;
 import com.mmadu.service.entities.UserGroup;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.GroupNotFoundException;
 import com.mmadu.service.exceptions.NotFoundException;
 import com.mmadu.service.exceptions.UserNotFoundException;
-import com.mmadu.service.models.GroupUserRemovalRequest;
-import com.mmadu.service.models.NewGroupRequest;
-import com.mmadu.service.models.NewGroupUserRequest;
-import com.mmadu.service.models.UserView;
+import com.mmadu.service.models.*;
 import com.mmadu.service.repositories.AppUserRepository;
 import com.mmadu.service.repositories.GroupRepository;
 import com.mmadu.service.repositories.UserGroupRepository;
@@ -19,7 +17,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,7 +65,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void addUserToGroup(String domainId, NewGroupUserRequest request) {
-        if (userGroupRepository.existsByDomainIdAndUserExternalIdAndGroupIdentifier(domainId, request.getId(), request.getGroup())) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, request.getId())
+                .orElseThrow(UserNotFoundException::new);
+        Group group = groupRepository.findByDomainIdAndIdentifier(domainId, request.getGroup())
+                .orElseThrow(GroupNotFoundException::new);
+        if (userGroupRepository.existsByDomainIdAndUserIdAndGroupId(domainId, user.getId(), group.getId())) {
             throw new DuplicationException("user is already in group");
         }
         UserGroup userGroup = new UserGroup();
@@ -82,14 +87,23 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void removeUserFromGroup(String domainId, GroupUserRemovalRequest request) {
-        if (!userGroupRepository.existsByDomainIdAndUserExternalIdAndGroupIdentifier(domainId, request.getId(), request.getGroup())) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, request.getId())
+                .orElseThrow(UserNotFoundException::new);
+        Group group = groupRepository.findByDomainIdAndIdentifier(domainId, request.getGroup())
+                .orElseThrow(GroupNotFoundException::new);
+
+        if (!userGroupRepository.existsByDomainIdAndUserIdAndGroupId(domainId, user.getId(), group.getId())) {
             throw new NotFoundException("user is not directly linked to group");
         }
+
+        userGroupRepository.deleteByDomainIdAndUserIdAndGroupId(domainId, user.getId(), group.getId());
     }
 
     @Override
-    public List<String> getGroups(String domainId, String userId) {
-        List<Group> groups = userGroupRepository.findByDomainIdAndUserExternalId(domainId, userId)
+    public Set<String> getGroups(String domainId, String userId) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        List<Group> groups = userGroupRepository.findByDomainIdAndUserId(domainId, user.getId())
                 .stream()
                 .map(UserGroup::getGroup)
                 .collect(Collectors.toList());
@@ -98,7 +112,7 @@ public class GroupServiceImpl implements GroupService {
             groupIdentifiers.add(group.getIdentifier());
             addParents(group, groupIdentifiers);
         }
-        return new ArrayList<>(groupIdentifiers);
+        return groupIdentifiers;
     }
 
     private void addParents(Group group, Set<String> groupIdentifiers) {
@@ -112,24 +126,37 @@ public class GroupServiceImpl implements GroupService {
     public Page<UserView> getUsersInGroup(String domainId, String groupIdentifier, Pageable pageable) {
         Group group = groupRepository.findByDomainIdAndIdentifier(domainId, groupIdentifier)
                 .orElseThrow(GroupNotFoundException::new);
-        List<String> groupIds = new LinkedList<>();
-        addGroupToList(group, groupIds);
-        return null;
+        List<Group> groups = getGroupAndChildren(group);
+        Page<UserView> userViewPage = userGroupRepository.findByDomainIdAndGroupIn(domainId, groups, pageable)
+                .map(ug -> ug.getUser().userView());
+        return new PagedList<>(userViewPage.getContent(), userViewPage.getPageable(), userViewPage.getTotalElements());
+
     }
 
-    private void addGroupToList(Group group, List<String> groupIds) {
-        groupIds.add(group.getIdentifier());
+    private List<Group> getGroupAndChildren(Group group) {
+        List<Group> groups = new LinkedList<>();
+        addGroupToList(group, groups);
+        return groups;
+    }
+
+    private void addGroupToList(Group group, List<Group> groups) {
+        groups.add(group);
         if (group.getChildren() != null && !group.getChildren().isEmpty()) {
             group.getChildren().forEach(
-                    child -> addGroupToList(child, groupIds)
+                    child -> addGroupToList(child, groups)
             );
         }
     }
 
     @Override
     public boolean userInGroup(String domainId, String userExternalId, String groupIdentifier) {
-        return false;
-
-
+        Group group = groupRepository.findByDomainIdAndIdentifier(domainId, groupIdentifier)
+                .orElseThrow(GroupNotFoundException::new);
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userExternalId)
+                .orElseThrow(UserNotFoundException::new);
+        List<Group> groupAndChildren = getGroupAndChildren(group);
+        return userGroupRepository.existsByDomainIdAndUserIdAndGroupIn(
+                domainId, user.getId(), groupAndChildren
+        );
     }
 }

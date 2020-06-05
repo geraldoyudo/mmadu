@@ -1,6 +1,7 @@
 package com.mmadu.service.repositories;
 
 
+import com.mmadu.service.entities.Group;
 import com.mmadu.service.entities.UserGroup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,16 +19,23 @@ public interface UserGroupRepository extends MongoRepository<UserGroup, String> 
 
     List<UserGroup> findByUserId(String userId);
 
-    Page<UserGroup> findByDomainIdAndUserExternalId(String domainId, String userExternalId, Pageable p);
+    List<UserGroup> findByDomainIdAndUserId(String domainId, String userId);
 
-    List<UserGroup> findByDomainIdAndUserExternalId(String domainId, String userExternalId);
 
-    Page<UserGroup> findByDomainIdAndUserUsername(String domainId, String username, Pageable p);
+    boolean existsByDomainIdAndUserIdAndGroupId(String domainId,
+                                                String externalId,
+                                                String groupIdentifier);
 
-    boolean existsByDomainIdAndUserExternalIdAndGroupIdentifier(String domainId,
-                                                                String externalId,
-                                                                String groupIdentifier);
+    Page<UserGroup> findByDomainIdAndGroupIn(String domainId, List<Group> groups, Pageable p);
 
-    Page<UserGroup> findByDomainIdAndGroupIdIn(String domainId, List<String> groupIds, Pageable p);
+    Page<UserGroup> findByDomainIdAndUserIdAndGroupIdIn(String domainId, String userId, List<String> groupIds, Pageable p);
+
+    boolean existsByDomainIdAndUserIdAndGroupIn(String domainId,
+                                                String externalId,
+                                                List<Group> groups);
+
+    void deleteByDomainIdAndUserIdAndGroupId(String domainId,
+                                             String externalId,
+                                             String groupIdentifier);
 
 }
