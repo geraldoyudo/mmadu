@@ -20,6 +20,14 @@ public interface UserGroupRepository extends MongoRepository<UserGroup, String> 
 
     Page<UserGroup> findByDomainIdAndUserExternalId(String domainId, String userExternalId, Pageable p);
 
+    List<UserGroup> findByDomainIdAndUserExternalId(String domainId, String userExternalId);
+
     Page<UserGroup> findByDomainIdAndUserUsername(String domainId, String username, Pageable p);
+
+    boolean existsByDomainIdAndUserExternalIdAndGroupIdentifier(String domainId,
+                                                                String externalId,
+                                                                String groupIdentifier);
+
+    Page<UserGroup> findByDomainIdAndGroupIdIn(String domainId, List<String> groupIds, Pageable p);
 
 }

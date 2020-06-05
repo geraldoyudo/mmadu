@@ -1,12 +1,23 @@
 package com.mmadu.service.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Document
+@CompoundIndexes({
+        @CompoundIndex(name = "domain_group_identifier", def = "{'domainId': 1, 'identifier': 1}", unique = true),
+        @CompoundIndex(name = "domain_group_name", def = "{'domainId': 1, 'name': 1}", unique = true)
+})
 public class Group {
     @Id
     private String id;
@@ -20,6 +31,8 @@ public class Group {
     private String identifier;
     @DBRef
     private Group parent;
+    @DBRef
+    private Set<Group> children = new HashSet<>();
 
     public String getId() {
         return id;
@@ -67,5 +80,45 @@ public class Group {
 
     public void setParent(Group parent) {
         this.parent = parent;
+        this.parent.addChildren(this);
+        this.domainId = parent.getDomainId();
+    }
+
+    public Set<Group> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Group> children) {
+        this.children = children;
+    }
+
+    public void addChildren(Group... groups) {
+        this.children.addAll(Set.of(groups));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        return new EqualsBuilder()
+                .append(domainId, group.domainId)
+                .append(name, group.name)
+                .append(description, group.description)
+                .append(identifier, group.identifier)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(domainId)
+                .append(name)
+                .append(description)
+                .append(identifier)
+                .toHashCode();
     }
 }
