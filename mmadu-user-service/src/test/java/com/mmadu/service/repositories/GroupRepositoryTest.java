@@ -33,20 +33,30 @@ class GroupRepositoryTest {
         parent.setDescription("people who work");
         parent.setIdentifier("workers");
         parent.setParent(ancestor);
+        parent.setDomainId("0");
         parent = groupRepository.save(parent);
         groupRepository.save(ancestor);
+        parent = groupRepository.save(parent);
         Group child = new Group();
         child.setName("doctors");
         child.setDescription("doctors");
         child.setIdentifier("doctors");
         child.setParent(parent);
-        groupRepository.save(child);
+        child.setDomainId("0");
+        final Group child1 = groupRepository.save(child);
+        Group child2 = new Group();
+        child2.setName("lawyers");
+        child2.setDescription("lawyers");
+        child2.setIdentifier("lawyers");
+        child2.setParent(parent);
+        child2.setDomainId("0");
+        Group child2Saved = groupRepository.save(child2);
         groupRepository.save(parent);
 
         Group readParent = groupRepository.findById(parent.getId()).get();
         assertAll(
                 () -> assertEquals(readAncestor, readParent.getParent()),
-                () -> assertEquals(Set.of(child), readParent.getChildren())
+                () -> assertEquals(Set.of(child1, child2Saved), readParent.getChildren())
         );
     }
 

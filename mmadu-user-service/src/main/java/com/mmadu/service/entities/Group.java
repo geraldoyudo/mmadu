@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Document
@@ -81,7 +80,6 @@ public class Group {
     public void setParent(Group parent) {
         this.parent = parent;
         this.parent.addChildren(this);
-        this.domainId = parent.getDomainId();
     }
 
     public Set<Group> getChildren() {
