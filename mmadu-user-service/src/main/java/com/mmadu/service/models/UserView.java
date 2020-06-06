@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserView {
     private String id;
     @JsonProperty("username")
@@ -19,6 +18,7 @@ public class UserView {
     @JsonProperty("authorities")
     private List<String> authorities = new LinkedList<>();
     @JsonProperty("groups")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> groups;
 
     private Map<String, Object> properties = new LinkedHashMap<>();
