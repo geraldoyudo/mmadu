@@ -9,7 +9,6 @@ public class NewGroupRequest {
     private String name;
     @NotEmpty(message = "description is required")
     private String description;
-    @NotEmpty(message = "parentGroup is required")
     private String parentGroup;
 
     public String getIdentifier() {

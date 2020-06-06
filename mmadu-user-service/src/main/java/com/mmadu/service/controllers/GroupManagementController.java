@@ -10,6 +10,7 @@ import com.mmadu.service.services.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,12 +31,14 @@ public class GroupManagementController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void addGroup(@PathVariable("domainId") String domainId,
                          @RequestBody @Valid NewGroupRequest request) {
         groupService.addGroup(domainId, request);
     }
 
     @PostMapping("/{groupIdentifier}/users/{userExternalId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addUserToGroup(@PathVariable("domainId") String domainId,
                                @PathVariable("groupIdentifier") String groupIdentifier,
                                @PathVariable("userExternalId") String userExternalId) {
@@ -46,6 +49,7 @@ public class GroupManagementController {
     }
 
     @DeleteMapping("/{groupIdentifier}/users/{userExternalId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeUserFromGroup(@PathVariable("domainId") String domainId,
                                     @PathVariable("groupIdentifier") String groupIdentifier,
                                     @PathVariable("userExternalId") String userExternalId) {
