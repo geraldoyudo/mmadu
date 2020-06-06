@@ -3,6 +3,7 @@ package com.mmadu.service.controllers;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserUpdateRequest;
 import com.mmadu.service.models.UserView;
+import com.mmadu.service.services.GroupService;
 import com.mmadu.service.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,11 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/domains/{domainId}/users")
 public class UserManagementController {
     @Autowired
     private UserManagementService userManagementService;
+    @Autowired
+    private GroupService groupService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,7 +57,9 @@ public class UserManagementController {
     @GetMapping("/load")
     public UserView loadUserByUsername(@PathVariable("domainId") String domainId,
                                        @RequestParam("username") String username) {
-        return userManagementService.getUserByDomainIdAndUsername(domainId, username);
+        UserView userView = userManagementService.getUserByDomainIdAndUsername(domainId, username);
+        userView.setGroups(List.copyOf(groupService.getGroups(domainId, userView.getId())));
+        return userView;
     }
 
     @GetMapping("/search")

@@ -3,6 +3,12 @@ spring:
     rest:
       base-path: /admin/repo
 
+management:
+  endpoints:
+    web:
+      base-path: /admin/actuator
+      exposure:
+        include: health, info, caches
 mmadu:
   domainKey: 2222
   tokenService:

@@ -30,18 +30,25 @@ public class MmaduUserServiceImpl implements MmaduUserService {
         try {
             return userServiceClient.get()
                     .uri(uriBuilder -> uriBuilder
-                            .path("/appUsers/search/findByUsernameAndDomainId")
+                            .path("/domains/")
+                            .path(domainId)
+                            .path("/users/load")
                             .queryParam("username", username)
-                            .queryParam("domainId", domainId)
                             .build()
                     )
                     .retrieve()
                     .bodyToMono(MmaduUserImpl.class)
+                    .map(user -> this.setDomain(user, domainId))
                     .cast(MmaduUser.class)
                     .blockOptional();
         } catch (WebClientResponseException.NotFound ex) {
             return Optional.empty();
         }
+    }
+
+    private MmaduUserImpl setDomain(MmaduUserImpl user, String domainId) {
+        user.setDomainId(domainId);
+        return user;
     }
 
     @Override
@@ -65,9 +72,12 @@ public class MmaduUserServiceImpl implements MmaduUserService {
         if (status.isPresent()) {
             String statusString = status.get();
             switch (statusString) {
-                case "AUTHENTICATED": return;
-                case "USERNAME_INVALID": throw new UsernameNotFoundException("username invalid");
-                case "PASSWORD_INVALID": throw  new BadCredentialsException("password invalid");
+                case "AUTHENTICATED":
+                    return;
+                case "USERNAME_INVALID":
+                    throw new UsernameNotFoundException("username invalid");
+                case "PASSWORD_INVALID":
+                    throw new BadCredentialsException("password invalid");
             }
         }
         throw new BadCredentialsException("could not authenticate");

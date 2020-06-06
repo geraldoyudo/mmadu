@@ -45,4 +45,5 @@ public class ClientInstance implements HasDomain {
     private Long clientCredentialsGrantTypeTTLSeconds = 24 * 60 * 60l;
     private boolean includeUserRoles;
     private boolean includeUserAuthorities;
+    private boolean includeUserGroups;
 }

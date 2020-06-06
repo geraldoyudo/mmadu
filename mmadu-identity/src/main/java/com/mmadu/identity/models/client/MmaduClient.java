@@ -42,4 +42,8 @@ public interface MmaduClient {
     default boolean isIncludeUserAuthorities() {
         return false;
     }
+
+    default boolean isIncludeUserGroups() {
+        return false;
+    }
 }

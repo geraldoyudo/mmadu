@@ -2,6 +2,7 @@ package com.mmadu.service.models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
@@ -16,6 +17,9 @@ public class UserView {
     private List<String> roles = new LinkedList<>();
     @JsonProperty("authorities")
     private List<String> authorities = new LinkedList<>();
+    @JsonProperty("groups")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> groups;
 
     private Map<String, Object> properties = new LinkedHashMap<>();
 
@@ -95,5 +99,13 @@ public class UserView {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
+    }
+
+    public List<String> getGroups() {
+        return groups;
     }
 }
