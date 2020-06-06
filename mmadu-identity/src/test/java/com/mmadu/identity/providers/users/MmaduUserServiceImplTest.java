@@ -72,6 +72,7 @@ class MmaduUserServiceImplTest {
                 () -> assertEquals("0c76dbb1c4234404be8b1b051937de77", user.getId()),
                 () -> assertEquals(List.of("admin"), user.getRoles()),
                 () -> assertEquals(List.of("edit"), user.getAuthorities()),
+                () -> assertEquals(List.of("test", "sample"), user.getGroups()),
                 () -> server.verify(request, VerificationTimes.exactly(1))
         );
     }
@@ -79,9 +80,8 @@ class MmaduUserServiceImplTest {
     private HttpRequest mockUserApi(MockServerClient server) throws IOException {
         HttpRequest request = request()
                 .withMethod("GET")
-                .withPath("/appUsers/search/findByUsernameAndDomainId")
+                .withPath("/domains/1/users/load")
                 .withQueryStringParameter("username", "test")
-                .withQueryStringParameter("domainId", "1")
                 .withHeader("domain-auth-token", "2222");
         server.when(
                 request
@@ -110,9 +110,8 @@ class MmaduUserServiceImplTest {
     private HttpRequest mockNotFound(MockServerClient server) throws IOException {
         HttpRequest request = request()
                 .withMethod("GET")
-                .withPath("/appUsers/search/findByUsernameAndDomainId")
+                .withPath("/domains/1/users/load")
                 .withQueryStringParameter("username", "test")
-                .withQueryStringParameter("domainId", "1")
                 .withHeader("domain-auth-token", "2222");
         server.when(
                 request

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class MmaduUserImpl implements MmaduUser {
-    @JsonProperty("externalId")
+    @JsonProperty("id")
     private String id;
     @JsonProperty("domainId")
     private String domainId;
@@ -17,4 +17,6 @@ public class MmaduUserImpl implements MmaduUser {
     private List<String> authorities;
     @JsonProperty("roles")
     private List<String> roles;
+    @JsonProperty("groups")
+    private List<String> groups;
 }

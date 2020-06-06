@@ -76,6 +76,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setUserId(authorizer.getId());
         grantAuthorization.setUsername(authorizer.getUsername());
         grantAuthorization.setUserRoles(authorizer.getRoles());
+        grantAuthorization.setUserGroups(authorizer.getGroups());
         grantAuthorization.setUserAuthorities(authorizer.getAuthorities());
         grantAuthorization.setScopes(response.getScopes());
         grantAuthorization.setRedirectUri(context.getResult().getRedirectUri());

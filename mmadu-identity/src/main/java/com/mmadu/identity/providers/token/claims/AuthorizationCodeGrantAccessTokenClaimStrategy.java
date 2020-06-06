@@ -67,6 +67,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
                 )
                 .authorities(client.isIncludeUserAuthorities() ? authorization.getUserAuthorities() : null)
                 .roles(client.isIncludeUserRoles() ? authorization.getUserRoles() : null)
+                .groups(client.isIncludeUserGroups() ? authorization.getUserGroups() : null)
                 .build();
     }
 
@@ -88,5 +89,6 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         private String userId;
         private List<String> authorities;
         private List<String> roles;
+        private List<String> groups;
     }
 }

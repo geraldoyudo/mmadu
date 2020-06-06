@@ -77,4 +77,9 @@ public class MmaduClientImpl implements MmaduClient {
     public boolean isIncludeUserRoles() {
         return clientInstance.isIncludeUserRoles();
     }
+
+    @Override
+    public boolean isIncludeUserGroups() {
+        return clientInstance.isIncludeUserGroups();
+    }
 }
