@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UserRole {
     @Id
     private String id;
+    private String domainId;
     @DBRef
     private AppUser user;
     @DBRef

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,7 @@ public interface RoleRepository extends MongoRepository<Role, String> {
 
     boolean existsByDomainIdAndIdentifier(@Param("domainId") String domainId,
                                           @Param("identifier") String identifier);
+
+    List<Role> findByDomainIdAndIdentifierIn(@Param("domainId") String domainId,
+                                             @Param("identifiers") List<String> identifiers);
 }

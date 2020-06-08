@@ -1,16 +1,19 @@
 package com.mmadu.service.services;
 
-import com.mmadu.service.models.AddRoleAuthorityRequest;
+import com.mmadu.service.models.RoleAuthorityUpdateRequest;
 import com.mmadu.service.models.RoleData;
 import com.mmadu.service.models.SaveRoleRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RoleManagementService {
 
     void saveRoles(String domainId, List<SaveRoleRequest> roleRequests);
 
-    List<RoleData> getRoles(String domainId);
+    Page<RoleData> getRoles(String domainId, Pageable p);
 
     void deleteRole(String domainId, String identifier);
 
@@ -18,11 +21,11 @@ public interface RoleManagementService {
 
     void revokeUserRoles(String domainId, String userId, List<String> roleIdentifiers);
 
-    void addAuthorityToRole(String domainId, List<AddRoleAuthorityRequest> roleAuthorities);
+    void addAuthorityToRole(String domainId, List<RoleAuthorityUpdateRequest> roleAuthorities);
 
-    void removeAuthorityFromRole(String domainId, List<AddRoleAuthorityRequest> roleAuthorities);
+    void removeAuthorityFromRole(String domainId, List<RoleAuthorityUpdateRequest> roleAuthorities);
 
-    List<String> getUserRoles(String domainId, String userId);
+    Set<String> getUserRoles(String domainId, String userId);
 
-    List<String> getAuthoritiesForRoles(String domainId, List<String> roleIdentifiers);
+    Set<String> getAuthoritiesForRoles(String domainId, List<String> roleIdentifiers);
 }

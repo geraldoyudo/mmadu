@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.service.models.RoleData;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
@@ -90,5 +91,13 @@ public class Role {
                 .append(description)
                 .append(identifier)
                 .toHashCode();
+    }
+
+    public RoleData roleData() {
+        RoleData data = new RoleData();
+        data.setDescription(description);
+        data.setIdentifier(identifier);
+        data.setName(name);
+        return data;
     }
 }

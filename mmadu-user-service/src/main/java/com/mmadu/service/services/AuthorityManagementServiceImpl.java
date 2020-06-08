@@ -76,10 +76,11 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
 
     @Override
     public void deleteAuthority(String domainId, String identifier) {
-        if (!authorityRepository.existsByDomainIdAndIdentifier(domainId, identifier)) {
+        Authority auth = authorityRepository.findByDomainIdAndIdentifier(domainId, identifier).orElseThrow(() -> {
             throw new NotFoundException("authority not found");
-        }
-        authorityRepository.deleteByDomainIdAndIdentifier(domainId, identifier);
+        });
+        userAuthorityRepository.deleteByDomainIdAndAuthorityId(domainId, auth.getId());
+        authorityRepository.deleteById(auth.getId());
     }
 
     @Override

@@ -21,5 +21,9 @@ public interface UserAuthorityRepository extends MongoRepository<UserAuthority, 
             @Param("userId") String userId,
             @Param("authorityId") String authorityId);
 
+    void deleteByDomainIdAndAuthorityId(
+            @Param("domainId") String domainId,
+            @Param("authorityId") String authorityId);
+
     List<UserAuthority> findByDomainIdAndUserId(String domainId, String userId);
 }
