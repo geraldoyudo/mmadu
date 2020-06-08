@@ -21,4 +21,8 @@ public interface RoleManagementService {
     void addAuthorityToRole(String domainId, List<AddRoleAuthorityRequest> roleAuthorities);
 
     void removeAuthorityFromRole(String domainId, List<AddRoleAuthorityRequest> roleAuthorities);
+
+    List<String> getUserRoles(String domainId, String userId);
+
+    List<String> getAuthoritiesForRoles(String domainId, List<String> roleIdentifiers);
 }

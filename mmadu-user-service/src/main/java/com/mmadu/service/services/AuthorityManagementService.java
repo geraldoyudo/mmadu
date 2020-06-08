@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AuthorityManagementService {
 
@@ -17,4 +18,6 @@ public interface AuthorityManagementService {
     void grantUserAuthorities(String domainId, String userId, List<String> authorityIdentifiers);
 
     void revokeUserAuthorities(String domainId, String userId, List<String> authorityIdentifiers);
+
+    Set<String> getUserAuthorities(String domainId, String userId);
 }

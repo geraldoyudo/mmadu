@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -144,5 +145,17 @@ class AuthorityManagementServiceImplTest {
             userAuth.setAuthority(auth);
             userAuthorityRepository.save(userAuth);
         });
+    }
+
+    @Test
+    void getUserAuthorities() {
+        AppUser user = createSampleUser();
+        List<Authority> authorities = createSampleAuthorities();
+        grantUserAuthorities(user, authorities);
+
+        assertEquals(
+                Set.of("view", "edit"),
+                authorityManagementService.getUserAuthorities(DOMAIN_ID, EXTERNAL_ID)
+        );
     }
 }

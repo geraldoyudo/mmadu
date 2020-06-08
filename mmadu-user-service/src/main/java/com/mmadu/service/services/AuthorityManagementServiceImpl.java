@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorityManagementServiceImpl implements AuthorityManagementService {
@@ -116,5 +118,15 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
         if (userAuthorityRepository.existsByDomainIdAndUserIdAndAuthorityId(domainId, user.getId(), auth.getId())) {
             userAuthorityRepository.deleteByDomainIdAndUserIdAndAuthorityId(domainId, user.getId(), auth.getId());
         }
+    }
+
+    @Override
+    public Set<String> getUserAuthorities(String domainId, String userId) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        return userAuthorityRepository.findByDomainIdAndUserId(domainId, user.getId())
+                .stream()
+                .map(userAuthority -> userAuthority.getAuthority().getIdentifier())
+                .collect(Collectors.toSet());
     }
 }
