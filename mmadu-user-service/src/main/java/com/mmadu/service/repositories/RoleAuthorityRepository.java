@@ -1,6 +1,7 @@
 package com.mmadu.service.repositories;
 
 
+import com.mmadu.service.entities.Role;
 import com.mmadu.service.entities.RoleAuthority;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +24,7 @@ public interface RoleAuthorityRepository extends MongoRepository<RoleAuthority, 
     void deleteByDomainIdAndRoleId(@Param("domainId") String domainId, @Param("roleId") String roleId);
 
 
-    List<RoleAuthority> findByDomainIdAndRoleIdIn(
-            @Param("domainId") String domainId,
-            @Param("identifiers") List<String> roleIdentifiers);
+    List<RoleAuthority> findByDomainIdAndRoleIn(
+            String domainId,
+            List<Role> roles);
 }

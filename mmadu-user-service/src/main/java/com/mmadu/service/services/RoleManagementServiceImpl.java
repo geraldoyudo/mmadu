@@ -234,8 +234,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
         if (roles.size() != roleIdentifiers.size()) {
             throw new NotFoundException("role not found");
         }
-        List<String> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
-        return roleAuthorityRepository.findByDomainIdAndRoleIdIn(domainId, roleIds)
+        return roleAuthorityRepository.findByDomainIdAndRoleIn(domainId, roles)
                 .stream()
                 .map(ra -> ra.getAuthority().getIdentifier())
                 .collect(Collectors.toSet());
