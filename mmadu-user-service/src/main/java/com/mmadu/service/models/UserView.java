@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class UserView {
     private String id;
@@ -14,9 +17,11 @@ public class UserView {
     @JsonProperty("password")
     private String password;
     @JsonProperty("roles")
-    private List<String> roles = new LinkedList<>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> roles;
     @JsonProperty("authorities")
-    private List<String> authorities = new LinkedList<>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> authorities;
     @JsonProperty("groups")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> groups;

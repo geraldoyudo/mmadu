@@ -8,7 +8,9 @@ import com.mmadu.service.models.PatchOperation;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserView;
+import com.mmadu.service.services.AuthorityManagementService;
 import com.mmadu.service.services.GroupService;
+import com.mmadu.service.services.RoleManagementService;
 import com.mmadu.service.services.UserManagementService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -59,6 +61,10 @@ class UserManagementControllerTest {
     private UserManagementService userManagementService;
     @MockBean
     private GroupService groupService;
+    @MockBean
+    private RoleManagementService roleManagementService;
+    @MockBean
+    private AuthorityManagementService authorityManagementService;
 
     private static final String DOMAIN_ID = "1234";
 

@@ -3,7 +3,9 @@ package com.mmadu.service.controllers;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserUpdateRequest;
 import com.mmadu.service.models.UserView;
+import com.mmadu.service.services.AuthorityManagementService;
 import com.mmadu.service.services.GroupService;
+import com.mmadu.service.services.RoleManagementService;
 import com.mmadu.service.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/domains/{domainId}/users")
@@ -20,6 +24,10 @@ public class UserManagementController {
     private UserManagementService userManagementService;
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private RoleManagementService roleManagementService;
+    @Autowired
+    private AuthorityManagementService authorityManagementService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -59,6 +67,15 @@ public class UserManagementController {
                                        @RequestParam("username") String username) {
         UserView userView = userManagementService.getUserByDomainIdAndUsername(domainId, username);
         userView.setGroups(List.copyOf(groupService.getGroups(domainId, userView.getId())));
+        userView.setRoles(
+                List.copyOf(
+                        roleManagementService.getUserRoles(domainId, userView.getId())
+                )
+        );
+        Set<String> authorities = new HashSet<>();
+        authorities.addAll(authorityManagementService.getUserAuthorities(domainId, userView.getId()));
+        authorities.addAll(roleManagementService.getAuthoritiesForRoles(domainId, userView.getRoles()));
+        userView.setAuthorities(List.copyOf(authorities));
         return userView;
     }
 
