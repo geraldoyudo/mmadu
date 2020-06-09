@@ -8,7 +8,9 @@ import com.mmadu.service.models.PatchOperation;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserView;
+import com.mmadu.service.services.AuthorityManagementService;
 import com.mmadu.service.services.GroupService;
+import com.mmadu.service.services.RoleManagementService;
 import com.mmadu.service.services.UserManagementService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -59,6 +61,10 @@ class UserManagementControllerTest {
     private UserManagementService userManagementService;
     @MockBean
     private GroupService groupService;
+    @MockBean
+    private RoleManagementService roleManagementService;
+    @MockBean
+    private AuthorityManagementService authorityManagementService;
 
     private static final String DOMAIN_ID = "1234";
 
@@ -74,9 +80,7 @@ class UserManagementControllerTest {
     private String testUser() {
         ObjectNode user = objectMapper.createObjectNode();
         user.put("username", USERNAME)
-                .put("password", "password")
-                .putArray("roles").add("admin");
-        user.putArray("authorities").add("manage-users");
+                .put("password", "password");
         user.put("email", "user@email")
                 .put("nationality", "Nigerian");
         return user.toString();
@@ -205,9 +209,7 @@ class UserManagementControllerTest {
         UserView userView = userCaptor.getValue();
         assertAll(
                 () -> assertThat(userView.getUsername(), equalTo("test-user")),
-                () -> assertThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian")),
-                () -> assertThat(userView.getRoles(), equalTo(asList("admin"))),
-                () -> assertThat(userView.getAuthorities(), equalTo(asList("manage-users")))
+                () -> assertThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian"))
         );
     }
 

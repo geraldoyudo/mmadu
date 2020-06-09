@@ -74,8 +74,6 @@ public class UserManagementServiceImplTest {
                 () -> assertThat(appUser.getDomainId(), equalTo(DOMAIN_ID)),
                 () -> assertThat(appUser.getPassword(), equalTo(userView.getPassword())),
                 () -> assertThat(appUser.getUsername(), equalTo(userView.getUsername())),
-                () -> assertThat(appUser.getAuthorities(), equalTo(userView.getAuthorities())),
-                () -> assertThat(appUser.getRoles(), equalTo(userView.getRoles())),
                 () -> assertThat(appUser.getProperties(), equalTo(userView.getProperties())),
                 () -> assertThat(appUser.getExternalId(), equalTo(UNIQUE_USER_ID))
         );
@@ -151,8 +149,6 @@ public class UserManagementServiceImplTest {
                 () -> assertThat(appUser.getDomainId(), equalTo(DOMAIN_ID)),
                 () -> assertThat(appUser.getPassword(), equalTo(userView.getPassword())),
                 () -> assertThat(appUser.getUsername(), equalTo(userView.getUsername())),
-                () -> assertThat(appUser.getAuthorities(), equalTo(userView.getAuthorities())),
-                () -> assertThat(appUser.getRoles(), equalTo(userView.getRoles())),
                 () -> assertThat(appUser.getProperties(), equalTo(userView.getProperties())),
                 () -> assertThat(appUser.getExternalId(), equalTo(TEST_ID))
         );
@@ -275,8 +271,6 @@ public class UserManagementServiceImplTest {
                 () -> assertThat(updatedAppUser.getExternalId(), equalTo(UNIQUE_USER_ID + "1")),
                 () -> assertThat(updatedAppUser.getPassword(), equalTo(userView.getPassword() + "1")),
                 () -> assertThat(updatedAppUser.getUsername(), equalTo(userView.getUsername() + "1")),
-                () -> assertThat(updatedAppUser.getRoles(), equalTo(asList("member"))),
-                () -> assertThat(updatedAppUser.getAuthorities(), equalTo(asList("sign-card"))),
                 () -> assertThat(updatedAppUser.getProperties(), equalTo(Maps.newHashMap("color", "white")))
         );
     }

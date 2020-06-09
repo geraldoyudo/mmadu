@@ -34,13 +34,11 @@ public class UserViewTest {
     public void testDeserialization() throws Exception {
         UserView object = objectMapper
                 .readValue("{\"username\":\"username\",\"password\":\"password\"," +
-                                "\"roles\":[\"admin\"],\"authorities\":[\"manage-users\"],\"property\":\"one\"}",
+                                "\"property\":\"one\"}",
                 UserView.class);
         assertThat(object.getPassword(), equalTo("password"));
         assertThat(object.getUsername(), equalTo("username"));
         assertThat(object.getProperty("property").get(), equalTo("one"));
-        assertThat(object.getRoles(), equalTo(asList("admin")));
-        assertThat(object.getAuthorities(), equalTo(asList("manage-users")));
     }
 
 }

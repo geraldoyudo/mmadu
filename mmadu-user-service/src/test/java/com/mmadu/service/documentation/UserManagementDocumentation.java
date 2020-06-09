@@ -35,8 +35,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
 
     @Test
     void createUser() throws Exception {
-        UserView user = new UserView("user", "password",
-                asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
+        UserView user = new UserView("user", "password", newHashMap("color", "blue"));
         user.setId("123");
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -48,9 +47,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                         fieldWithPath("id")
                                 .description("The user's id " +
                                         "(unique identifier used to reference user in your application)"),
-                        fieldWithPath("password").description("The user's password"),
-                        fieldWithPath("roles").description("The user's assigned roles"),
-                        fieldWithPath("authorities").description("The user's granted authorities")
+                        fieldWithPath("password").description("The user's password")
                 ), pathParameters(
                         parameterWithName("domainId").description("The domain id of the user")
                 )));
@@ -134,13 +131,14 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     @Test
     void updatingUserProperties() throws Exception {
         createAUserAndSave();
-        UserView userView = appUserRepository.findById(TEST_USER_ID).get().userView();
-        userView.setUsername("changed-username");
-        userView.setPassword("changed-password");
         mockMvc.perform(RestDocumentationRequestBuilders.put("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
                 .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
-                .content(objectMapper.writeValueAsString(userView))
+                .content(objectMapper.createObjectNode()
+                        .put("username", "changed-username")
+                        .put("password", "changed-password")
+                        .toPrettyString()
+                )
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,

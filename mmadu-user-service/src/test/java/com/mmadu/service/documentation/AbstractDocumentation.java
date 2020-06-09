@@ -46,8 +46,6 @@ public abstract class AbstractDocumentation {
     public static final String USER_DOMAIN_ID = "test-app";
     public static final String USER_PASSWORD = "my-password";
     public static final String USERNAME = "test-user";
-    public static final String TEST_AUTHORITY = "admin";
-    public static final String TEST_ROLE = "admin-role";
     private static final String DOMAIN_NAME = "test";
     public static final String DOMAIN_TOKEN = "1234";
     public static final String USER_EXTERNAL_ID = "123453432";
@@ -89,8 +87,6 @@ public abstract class AbstractDocumentation {
         user.setPassword(USER_PASSWORD);
         user.setUsername(USERNAME);
         user.setId(TEST_USER_ID);
-        user.addAuthorities(TEST_AUTHORITY);
-        user.addRoles(TEST_ROLE);
         user.setExternalId(USER_EXTERNAL_ID);
         user.set("country", "Nigeria");
         user.set("favourite-colour", "blue");
@@ -103,8 +99,6 @@ public abstract class AbstractDocumentation {
         user.setPassword(USER_PASSWORD + index);
         user.setUsername(USERNAME + index);
         user.setId(TEST_USER_ID + index);
-        user.addAuthorities(TEST_AUTHORITY);
-        user.addRoles(TEST_ROLE);
         user.setExternalId(USER_EXTERNAL_ID);
         user.set("country", "Nigeria");
         user.set("favourite-color", "blue");
