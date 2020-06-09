@@ -9,7 +9,10 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Document
 @CompoundIndexes({
@@ -28,8 +31,6 @@ public class AppUser {
     private String password;
     @NotEmpty
     private String domainId;
-    private Collection<String> roles = new HashSet<>();
-    private Collection<String> authorities = new HashSet<>();
     private Map<String, Object> properties = new HashMap<>();
 
     public AppUser() {
@@ -41,8 +42,6 @@ public class AppUser {
         this.domainId = domainId;
         this.username = userView.getUsername();
         this.password = userView.getPassword();
-        this.roles = new ArrayList<>(userView.getRoles());
-        this.authorities = new ArrayList<>(userView.getAuthorities());
         this.properties = new HashMap<>(userView.getProperties());
     }
 
@@ -70,22 +69,6 @@ public class AppUser {
         this.password = password;
     }
 
-    public Collection<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
-    public Collection<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
     public Map<String, Object> getProperties() {
         return properties;
     }
@@ -101,14 +84,6 @@ public class AppUser {
 
     public void set(String property, Object value) {
         properties.put(property, value);
-    }
-
-    public void addRoles(String... rolesArray) {
-        roles.addAll(Arrays.asList(rolesArray));
-    }
-
-    public void addAuthorities(String... authoritiesArray) {
-        authorities.addAll(Arrays.asList(authoritiesArray));
     }
 
     public String getDomainId() {
@@ -136,8 +111,8 @@ public class AppUser {
                 externalId,
                 username,
                 password,
-                new ArrayList<>(roles),
-                new ArrayList<>(authorities),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 new HashMap<>(properties)
         );
     }
@@ -156,8 +131,6 @@ public class AppUser {
                 .append(username, appUser.username)
                 .append(password, appUser.password)
                 .append(domainId, appUser.domainId)
-                .append(roles, appUser.roles)
-                .append(authorities, appUser.authorities)
                 .append(properties, appUser.properties)
                 .isEquals();
     }
@@ -170,8 +143,6 @@ public class AppUser {
                 .append(username)
                 .append(password)
                 .append(domainId)
-                .append(roles)
-                .append(authorities)
                 .append(properties)
                 .toHashCode();
     }

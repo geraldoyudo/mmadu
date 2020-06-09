@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
 
 public class AppUserTest {
 
@@ -15,8 +14,6 @@ public class AppUserTest {
     private static final String DOMAIN_ID = "domain-id";
     private static final String PROPERTY_COUNTRY = "country";
     private static final String NIGERIA = "Nigeria";
-    private static final String ADMIN_AUTH = "admin-auth";
-    private static final String ADMIN = "admin";
     private AppUser appUser;
 
     @BeforeEach
@@ -27,8 +24,6 @@ public class AppUserTest {
         appUser.setId(TEST_ID);
         appUser.setDomainId(DOMAIN_ID);
         appUser.set(PROPERTY_COUNTRY, NIGERIA);
-        appUser.addAuthorities(ADMIN_AUTH);
-        appUser.addRoles(ADMIN);
     }
 
     @Test
@@ -54,15 +49,5 @@ public class AppUserTest {
     @Test
     void getCountryCustomProperty() {
         assertThat(appUser.get(PROPERTY_COUNTRY).get(), equalTo(NIGERIA));
-    }
-
-    @Test
-    void getAuthorities() {
-        assertThat(appUser.getAuthorities(), hasItem(ADMIN_AUTH));
-    }
-
-    @Test
-    void getRoles() {
-        assertThat(appUser.getRoles(), hasItem(ADMIN));
     }
 }

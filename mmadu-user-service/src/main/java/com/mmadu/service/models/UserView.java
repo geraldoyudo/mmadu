@@ -31,6 +31,12 @@ public class UserView {
     public UserView() {
     }
 
+    public UserView(String username, String password, Map<String, Object> properties) {
+        this.username = username;
+        this.password = password;
+        this.properties = properties;
+    }
+
     public UserView(String username, String password, List<String> roles, List<String> authorities, Map<String, Object> properties) {
         this.username = username;
         this.password = password;

@@ -80,9 +80,7 @@ class UserManagementControllerTest {
     private String testUser() {
         ObjectNode user = objectMapper.createObjectNode();
         user.put("username", USERNAME)
-                .put("password", "password")
-                .putArray("roles").add("admin");
-        user.putArray("authorities").add("manage-users");
+                .put("password", "password");
         user.put("email", "user@email")
                 .put("nationality", "Nigerian");
         return user.toString();
@@ -211,9 +209,7 @@ class UserManagementControllerTest {
         UserView userView = userCaptor.getValue();
         assertAll(
                 () -> assertThat(userView.getUsername(), equalTo("test-user")),
-                () -> assertThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian")),
-                () -> assertThat(userView.getRoles(), equalTo(asList("admin"))),
-                () -> assertThat(userView.getAuthorities(), equalTo(asList("manage-users")))
+                () -> assertThat(userView.getProperty("nationality").orElse(""), equalTo("Nigerian"))
         );
     }
 
