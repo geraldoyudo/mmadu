@@ -32,6 +32,17 @@ public class Jackson8Module extends SimpleModule {
         addSerializer(cls, jsonSerializer);
     }
 
+    public <T> void addLongSerializer(Class<T> cls, Function<T, Long> serializeFunction) {
+        JsonSerializer<T> jsonSerializer = new JsonSerializer<T>() {
+            @Override
+            public void serialize(T t, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
+                Long val = serializeFunction.apply(t);
+                jgen.writeNumber(val);
+            }
+        };
+        addSerializer(cls, jsonSerializer);
+    }
+
     public static interface SerializeFunction<T> {
         public void serialize(T t, JsonGenerator jgen) throws IOException, JsonProcessingException;
     }
