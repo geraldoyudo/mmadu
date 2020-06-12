@@ -1,4 +1,4 @@
-package com.mmadu.security;
+package com.mmadu.security.providers;
 
 import org.springframework.security.access.expression.SecurityExpressionOperations;
 import org.springframework.security.authentication.AuthenticationTrustResolver;

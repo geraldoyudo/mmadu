@@ -1,4 +1,4 @@
-package com.mmadu.security;
+package com.mmadu.security.providers;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.access.expression.SecurityExpressionOperations;

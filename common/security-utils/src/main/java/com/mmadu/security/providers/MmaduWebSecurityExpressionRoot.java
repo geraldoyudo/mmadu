@@ -1,4 +1,4 @@
-package com.mmadu.security;
+package com.mmadu.security.providers;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;

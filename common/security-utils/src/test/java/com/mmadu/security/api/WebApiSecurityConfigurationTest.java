@@ -1,7 +1,6 @@
 package com.mmadu.security.api;
 
-import com.mmadu.security.MmaduJwtConfiguration;
-import com.mmadu.security.MmaduWebSecurityConfigurer;
+import com.mmadu.security.MmaduSecurityAutoConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = {
-        MmaduJwtConfiguration.class,
+        MmaduSecurityAutoConfiguration.class,
         WebApiSecurityConfigurationTest.ApiSecurity.class
 })
 @AutoConfigureMockMvc
@@ -61,7 +60,7 @@ public class WebApiSecurityConfigurationTest {
             super.configure(http);
             http.authorizeRequests()
                     .antMatchers("/api/**")
-                    .authenticated()
+                    .hasAuthority("SCOPE_edit")
                     .anyRequest()
                     .permitAll();
         }

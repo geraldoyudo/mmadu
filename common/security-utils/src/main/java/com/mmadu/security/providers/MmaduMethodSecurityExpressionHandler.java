@@ -1,4 +1,4 @@
-package com.mmadu.security;
+package com.mmadu.security.providers;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;

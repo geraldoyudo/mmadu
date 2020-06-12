@@ -1,4 +1,4 @@
-package com.mmadu.security;
+package com.mmadu.security.providers;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

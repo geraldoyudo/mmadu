@@ -11,5 +11,6 @@ import java.lang.annotation.*;
 @Documented
 @Configuration
 @ConditionalOnProperty(name = "mmadu.domain.api-security-enabled", havingValue = "true", matchIfMissing = true)
+@Deprecated
 public @interface EnabledWebSecurityConfiguration {
 }

@@ -1,107 +1,81 @@
 package com.mmadu.security;
 
+import com.mmadu.security.models.MmaduQualified;
+import com.mmadu.security.models.MmaduQualifiedBean;
+import com.mmadu.security.providers.MmaduJwtAuthenticationConverter;
+import com.mmadu.security.providers.MmaduMethodSecurityExpressionHandler;
+import com.mmadu.security.providers.MmaduWebSecurityExpressionHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.security.access.PermissionEvaluator;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.crypto.codec.Hex;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
-import java.util.List;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 
 @Configuration
-@EnableWebSecurity
 public class MmaduSecurityAutoConfiguration {
+    private String publicKey;
 
-    @Bean
-    @ConditionalOnMissingBean(DomainTokenChecker.class)
-    public DomainTokenChecker domainTokenChecker(
-            @Value("${mmadu.tokenService.url}") String tokenServiceUrl,
-            @Value("${mmadu.domainKey}") String adminKey
-    ) {
-        RemoteAppTokenServiceDomainTokenChecker tokenChecker =
-                new RemoteAppTokenServiceDomainTokenChecker();
-        tokenChecker.setTokenServiceUrl(tokenServiceUrl);
-        tokenChecker.setAdminKey(adminKey);
-        return tokenChecker;
+    @Value("${mmadu.identity.public-key:30820122300d06092a864886f70d01010105000382010f003082010a0282010100a31b559ff90788f92436bb61ad0d528cf088a9190a97c7dbf98539409663d54d3fb4a089ccd77ca49165d8d5a76b21b30fc733a558569647498b182dc4a06ea7fd1022b761877c9776d0db5107b8f3e0c67ba0f101315be5989d0a33c6a431a3de07c071457672c6266a1e89d079222c42031ca7c3b563a913c41eee45d20ddaf58a92014adbc4bbe135c055c604380b649b3178540fc4a0c2f7c46aa90f62422d5ae621332bacf6771f2319ae03936fdaf346abdc599e3b63cae4c0d4d8ec5832f1c61b5e370005c3aed880130513970b79de6d5734aa11dcf8fb866ea9d0cfafd55d0c4f27a13763f1d193ca402c5c8a65e198a7500b3e9928552e19a40d3d0203010001}")
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
-    @ConditionalOnProperty(name = "mmadu.domain.api-security-enabled", havingValue = "true", matchIfMissing = true)
-    public static class MainSecurityConfiguration extends WebSecurityConfigurerAdapter {
-        private DomainTokenChecker domainTokenChecker;
-        private List<MmaduSecurityConfigurer> securityConfigurers;
+    @MmaduQualifiedBean
+    public KeyFactory mmaduKeyFactory() throws Exception {
+        return KeyFactory.getInstance("RSA");
+    }
 
-        public MainSecurityConfiguration(DomainTokenChecker domainTokenChecker,
-                                         List<MmaduSecurityConfigurer> securityConfigurers) {
-            this.domainTokenChecker = domainTokenChecker;
-            this.securityConfigurers = securityConfigurers;
-        }
+    @MmaduQualifiedBean
+    public RSAPublicKey rsaPublicKey(@MmaduQualified KeyFactory keyFactory) throws Exception {
+        X509EncodedKeySpec pubKeySpec
+                = new X509EncodedKeySpec(Hex.decode(publicKey));
+        return (RSAPublicKey) keyFactory.generatePublic(pubKeySpec);
+    }
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            for (MmaduSecurityConfigurer configurer : securityConfigurers) {
-                configurer.configure(http);
-            }
-            http
-                    .addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                    .authenticationProvider(tokenAuthenticationProvider());
-        }
+    @MmaduQualifiedBean
+    public JwtDecoder jwtDecoder(@MmaduQualified RSAPublicKey publicKey) {
+        return NimbusJwtDecoder.withPublicKey(publicKey)
+                .signatureAlgorithm(SignatureAlgorithm.RS256)
+                .build();
+    }
 
-        @Override
-        public void configure(WebSecurity web) throws Exception {
-            web.expressionHandler(defaultWebSecurityExpressionHandler());
-        }
+    @MmaduQualifiedBean
+    public MmaduJwtAuthenticationConverter mmaduJwtAuthenticationConverter() {
+        return new MmaduJwtAuthenticationConverter();
+    }
 
-        @Bean
-        public PermissionEvaluator domainPermissionEvaluator() {
-            DomainPermissionEvaluator evaluator = new DomainPermissionEvaluator();
-            evaluator.setDomainTokenChecker(domainTokenChecker);
-            return evaluator;
-        }
+    @MmaduQualifiedBean
+    public MmaduWebSecurityExpressionHandler mmaduWebSecurityExpressionHandler() {
+        return new MmaduWebSecurityExpressionHandler();
+    }
 
-        @Bean
-        public TokenAuthenticationFilter tokenAuthenticationFilter() {
-            return new TokenAuthenticationFilter();
-        }
-
-        @Bean
-        public TokenAuthenticationProvider tokenAuthenticationProvider() {
-            return new TokenAuthenticationProvider();
-        }
-
-        @Bean
-        public SpelExpressionParser spelExpressionParser() {
-            return new SpelExpressionParser();
-        }
-
-        @Bean
-        public DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler() {
-            DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
-            handler.setPermissionEvaluator(domainPermissionEvaluator());
-            handler.setExpressionParser(spelExpressionParser());
-            return handler;
-        }
+    @MmaduQualifiedBean
+    public MmaduMethodSecurityExpressionHandler mmaduMethodSecurityExpressionHandler() {
+        return new MmaduMethodSecurityExpressionHandler();
     }
 
     @Configuration
-    @ConditionalOnProperty(name = "mmadu.domain.api-security-enabled", havingValue = "false")
-    public static class NoOpConfiguration extends WebSecurityConfigurerAdapter {
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
+    static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+        private MmaduMethodSecurityExpressionHandler expressionHandler;
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .anyRequest()
-                    .permitAll();
+        @Autowired
+        public void setExpressionHandler(MmaduMethodSecurityExpressionHandler expressionHandler) {
+            this.expressionHandler = expressionHandler;
         }
 
+        @Override
+        protected MethodSecurityExpressionHandler createExpressionHandler() {
+            return expressionHandler;
+        }
     }
 }
