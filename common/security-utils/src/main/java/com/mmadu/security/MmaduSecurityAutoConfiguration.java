@@ -7,10 +7,7 @@ import com.mmadu.security.providers.MmaduMethodSecurityExpressionHandler;
 import com.mmadu.security.providers.MmaduWebSecurityExpressionHandler;
 import com.mmadu.security.providers.converters.DefaultAuthenticationConversionStrategy;
 import com.mmadu.security.providers.converters.JwtAuthenticationConversionStrategy;
-import com.mmadu.security.providers.domainparsers.DomainExtractor;
-import com.mmadu.security.providers.domainparsers.DomainParser;
-import com.mmadu.security.providers.domainparsers.DomainParserImpl;
-import com.mmadu.security.providers.domainparsers.HttpHeaderDomainExtractor;
+import com.mmadu.security.providers.domainparsers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +34,9 @@ public class MmaduSecurityAutoConfiguration {
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
     }
+
+    @Value("${mmadu.identify.global-domain-name:global}")
+    private String globalDomainName;
 
     @MmaduQualifiedBean
     public KeyFactory mmaduKeyFactory() throws Exception {
@@ -67,20 +67,30 @@ public class MmaduSecurityAutoConfiguration {
     }
 
     @MmaduQualifiedBean
-    public MmaduWebSecurityExpressionHandler mmaduWebSecurityExpressionHandler() {
-        return new MmaduWebSecurityExpressionHandler();
-    }
-
-    @MmaduQualifiedBean
-    public MmaduMethodSecurityExpressionHandler mmaduMethodSecurityExpressionHandler() {
-        return new MmaduMethodSecurityExpressionHandler();
-    }
-
-    @MmaduQualifiedBean
     public DomainParser mmaduDomainParser(List<DomainExtractor> domainExtractors) {
         DomainParserImpl domainParser = new DomainParserImpl();
         domainParser.setExtractors(domainExtractors);
         return domainParser;
+    }
+
+    @MmaduQualifiedBean
+    public MmaduWebSecurityExpressionHandler mmaduWebSecurityExpressionHandler(
+            @MmaduQualified DomainParser domainParser
+    ) {
+        MmaduWebSecurityExpressionHandler handler = new MmaduWebSecurityExpressionHandler();
+        handler.setDomainParser(domainParser);
+        handler.setDefaultDomainId(globalDomainName);
+        return handler;
+    }
+
+    @MmaduQualifiedBean
+    public MmaduMethodSecurityExpressionHandler mmaduMethodSecurityExpressionHandler(
+            @MmaduQualified DomainParser domainParser
+    ) {
+        MmaduMethodSecurityExpressionHandler handler = new MmaduMethodSecurityExpressionHandler();
+        handler.setDomainParser(domainParser);
+        handler.setDefaultDomainId(globalDomainName);
+        return handler;
     }
 
     @Configuration
@@ -112,6 +122,18 @@ public class MmaduSecurityAutoConfiguration {
 
     @Configuration
     static class DomainExtractorConfiguration {
+
+        @Bean
+        @Order(100)
+        public DomainExtractor queryParamDomainExtractor() {
+            return new QueryParameterDomainExtractor();
+        }
+
+        @Bean
+        @Order(200)
+        public DomainExtractor pathVariableDomainExtractor() {
+            return new PathVariableDomainExtractor();
+        }
 
         @Bean
         public DomainExtractor httpHeaderDomainExtractor() {

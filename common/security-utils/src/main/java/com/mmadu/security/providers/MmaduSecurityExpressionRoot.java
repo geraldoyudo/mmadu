@@ -31,6 +31,7 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
     public final String create = "create";
     public final String delete = "delete";
     public final String admin = "administration";
+    private String domainId = "global";
 
     public MmaduSecurityExpressionRoot(Authentication authentication) {
         if (authentication == null) {
@@ -151,12 +152,11 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
         }
     }
 
-    protected Optional<HttpServletRequest> getCurrentRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes instanceof ServletRequestAttributes) {
-            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            return Optional.of(request);
-        }
-        return Optional.empty();
+    public void setDomainId(String domainId) {
+        this.domainId = domainId;
+    }
+
+    public String getDomainId() {
+        return domainId;
     }
 }
