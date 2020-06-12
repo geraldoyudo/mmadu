@@ -1,36 +1,35 @@
 package com.mmadu.security.providers;
 
+import com.mmadu.security.providers.converters.JwtAuthenticationConversionStrategy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
-import org.springframework.util.Assert;
 
-import java.util.Collection;
+import javax.annotation.PostConstruct;
+import java.util.Collections;
+import java.util.List;
 
 public class MmaduJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
-    private Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    private List<JwtAuthenticationConversionStrategy> strategies = Collections.emptyList();
 
-    public MmaduJwtAuthenticationConverter() {
+    @PostConstruct
+    public void init() {
+        if (strategies.isEmpty()) {
+            throw new IllegalStateException("no jwt conversion strategies set");
+        }
     }
 
     public final AbstractAuthenticationToken convert(Jwt jwt) {
-        Collection<GrantedAuthority> authorities = this.extractAuthorities(jwt);
-        return new JwtAuthenticationToken(jwt, authorities);
+        JwtAuthenticationConversionStrategy strategy = strategies
+                .stream()
+                .filter(s -> s.apply(jwt))
+                .findFirst().orElseThrow(() -> new BadCredentialsException("invalid.jwt.claims"));
+        return strategy.convert(jwt);
     }
 
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    protected Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
-        return (Collection) this.jwtGrantedAuthoritiesConverter.convert(jwt);
-    }
-
-    public void setJwtGrantedAuthoritiesConverter(Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter) {
-        Assert.notNull(jwtGrantedAuthoritiesConverter, "jwtGrantedAuthoritiesConverter cannot be null");
-        this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
+    public void setStrategies(List<JwtAuthenticationConversionStrategy> strategies) {
+        this.strategies = strategies;
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationTrustResolverIm
 import org.springframework.security.core.Authentication;
 
 public class MmaduMethodSecurityExpressionHandler extends DefaultMethodSecurityExpressionHandler {
-    private AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
 
     @Override
     protected MethodSecurityExpressionOperations createSecurityExpressionRoot(Authentication authentication, MethodInvocation invocation) {

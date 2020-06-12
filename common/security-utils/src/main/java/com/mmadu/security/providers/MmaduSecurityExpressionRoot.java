@@ -7,9 +7,14 @@ import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionOperations {
@@ -144,5 +149,14 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
         } else {
             return role;
         }
+    }
+
+    protected Optional<HttpServletRequest> getCurrentRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            return Optional.of(request);
+        }
+        return Optional.empty();
     }
 }

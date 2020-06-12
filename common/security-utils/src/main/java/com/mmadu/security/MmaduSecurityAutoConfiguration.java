@@ -5,9 +5,17 @@ import com.mmadu.security.models.MmaduQualifiedBean;
 import com.mmadu.security.providers.MmaduJwtAuthenticationConverter;
 import com.mmadu.security.providers.MmaduMethodSecurityExpressionHandler;
 import com.mmadu.security.providers.MmaduWebSecurityExpressionHandler;
+import com.mmadu.security.providers.converters.DefaultAuthenticationConversionStrategy;
+import com.mmadu.security.providers.converters.JwtAuthenticationConversionStrategy;
+import com.mmadu.security.providers.domainparsers.DomainExtractor;
+import com.mmadu.security.providers.domainparsers.DomainParser;
+import com.mmadu.security.providers.domainparsers.DomainParserImpl;
+import com.mmadu.security.providers.domainparsers.HttpHeaderDomainExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -19,6 +27,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.List;
 
 @Configuration
 public class MmaduSecurityAutoConfiguration {
@@ -49,8 +58,12 @@ public class MmaduSecurityAutoConfiguration {
     }
 
     @MmaduQualifiedBean
-    public MmaduJwtAuthenticationConverter mmaduJwtAuthenticationConverter() {
-        return new MmaduJwtAuthenticationConverter();
+    public MmaduJwtAuthenticationConverter mmaduJwtAuthenticationConverter(
+            @Autowired List<JwtAuthenticationConversionStrategy> strategies
+    ) {
+        MmaduJwtAuthenticationConverter converter = new MmaduJwtAuthenticationConverter();
+        converter.setStrategies(strategies);
+        return converter;
     }
 
     @MmaduQualifiedBean
@@ -61,6 +74,13 @@ public class MmaduSecurityAutoConfiguration {
     @MmaduQualifiedBean
     public MmaduMethodSecurityExpressionHandler mmaduMethodSecurityExpressionHandler() {
         return new MmaduMethodSecurityExpressionHandler();
+    }
+
+    @MmaduQualifiedBean
+    public DomainParser mmaduDomainParser(List<DomainExtractor> domainExtractors) {
+        DomainParserImpl domainParser = new DomainParserImpl();
+        domainParser.setExtractors(domainExtractors);
+        return domainParser;
     }
 
     @Configuration
@@ -76,6 +96,26 @@ public class MmaduSecurityAutoConfiguration {
         @Override
         protected MethodSecurityExpressionHandler createExpressionHandler() {
             return expressionHandler;
+        }
+    }
+
+    @Configuration
+    static class JwtAuthenticationConvertersConfiguration {
+
+        @Bean
+        @Order
+        public JwtAuthenticationConversionStrategy defaultConversionStrategy() {
+            return new DefaultAuthenticationConversionStrategy();
+        }
+    }
+
+
+    @Configuration
+    static class DomainExtractorConfiguration {
+
+        @Bean
+        public DomainExtractor httpHeaderDomainExtractor() {
+            return new HttpHeaderDomainExtractor();
         }
     }
 }
