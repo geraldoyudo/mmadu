@@ -28,9 +28,6 @@ public class MmaduMethodSecurityExpressionHandler extends DefaultMethodSecurityE
         root.setThis(invocation.getThis());
         root.setPermissionEvaluator(this.getPermissionEvaluator());
         root.setTrustResolver(this.getTrustResolver());
-        root.setRoleHierarchy(this.getRoleHierarchy());
-        root.setDefaultRolePrefix(this.getDefaultRolePrefix());
-
         List<Object> domainPayloads = Arrays.asList(invocation.getArguments());
         RequestUtils.getCurrentRequest()
                 .ifPresent(domainPayloads::add);

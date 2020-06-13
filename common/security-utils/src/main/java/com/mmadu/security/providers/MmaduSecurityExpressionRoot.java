@@ -1,28 +1,26 @@
 package com.mmadu.security.providers;
 
+import com.mmadu.security.providers.permissions.AntStylePermissionMatcher;
+import com.mmadu.security.providers.permissions.PermissionMatcher;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.access.expression.SecurityExpressionOperations;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionOperations {
     protected final Authentication authentication;
     private AuthenticationTrustResolver trustResolver;
-    private RoleHierarchy roleHierarchy;
+    private PermissionMatcher permissionMatcher = new AntStylePermissionMatcher();
     private Set<String> roles;
-    private String defaultRolePrefix = "ROLE_";
+    private String defaultRolePrefix = "r.";
+    private String defaultAuthorityPrefix = "a.";
     public final boolean permitAll = true;
     public final boolean denyAll = false;
     private PermissionEvaluator permissionEvaluator;
@@ -32,6 +30,7 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
     public final String delete = "delete";
     public final String admin = "administration";
     private String domainId = "global";
+    private Set<String> authorities;
 
     public MmaduSecurityExpressionRoot(Authentication authentication) {
         if (authentication == null) {
@@ -46,7 +45,7 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
     }
 
     public final boolean hasAnyAuthority(String... authorities) {
-        return this.hasAnyAuthorityName(null, authorities);
+        return this.hasAnyAuthorityName(authorities);
     }
 
     public final boolean hasRole(String role) {
@@ -54,22 +53,32 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
     }
 
     public final boolean hasAnyRole(String... roles) {
-        return this.hasAnyAuthorityName(this.defaultRolePrefix, roles);
+        return this.hasAnyRoleName(roles);
     }
 
-    private boolean hasAnyAuthorityName(String prefix, String... roles) {
-        Set<String> roleSet = this.getAuthoritySet();
-        String[] var4 = roles;
-        int var5 = roles.length;
-
-        for (int var6 = 0; var6 < var5; ++var6) {
-            String role = var4[var6];
-            String defaultedRole = getRoleWithDefaultPrefix(prefix, role);
-            if (roleSet.contains(defaultedRole)) {
-                return true;
+    private boolean hasAnyAuthorityName(String... authorities) {
+        Set<String> authoritySet = getAuthoritySet();
+        for (String authorityInQuestion : authorities) {
+            for (String availableAuthority : authoritySet) {
+                if (permissionMatcher.matchesPermission(availableAuthority,
+                        domainId + "." + authorityInQuestion)) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
 
+    private boolean hasAnyRoleName(String... roles) {
+        Set<String> roleSet = getRoleSet();
+        for (String roleInQuestion : roles) {
+            for (String availableRole : roleSet) {
+                if (permissionMatcher.matchesPermission(availableRole,
+                        domainId + "." + roleInQuestion)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -109,24 +118,39 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
         this.trustResolver = trustResolver;
     }
 
-    public void setRoleHierarchy(RoleHierarchy roleHierarchy) {
-        this.roleHierarchy = roleHierarchy;
-    }
-
     public void setDefaultRolePrefix(String defaultRolePrefix) {
         this.defaultRolePrefix = defaultRolePrefix;
     }
 
+    public void setDefaultAuthorityPrefix(String defaultAuthorityPrefix) {
+        this.defaultAuthorityPrefix = defaultAuthorityPrefix;
+    }
+
     private Set<String> getAuthoritySet() {
-        if (this.roles == null) {
-            Collection<? extends GrantedAuthority> userAuthorities = this.authentication.getAuthorities();
-            if (this.roleHierarchy != null) {
-                userAuthorities = this.roleHierarchy.getReachableGrantedAuthorities(userAuthorities);
-            }
-
-            this.roles = AuthorityUtils.authorityListToSet(userAuthorities);
+        if (this.authorities == null) {
+            Collection<? extends GrantedAuthority> userAuthorities = this.authentication.getAuthorities()
+                    .stream()
+                    .filter(authority -> authority.getAuthority().startsWith(defaultAuthorityPrefix))
+                    .collect(Collectors.toList());
+            this.authorities = AuthorityUtils.authorityListToSet(userAuthorities)
+                    .stream()
+                    .map(auth -> auth.substring(2))
+                    .collect(Collectors.toSet());
         }
+        return this.authorities;
+    }
 
+    private Set<String> getRoleSet() {
+        if (this.roles == null) {
+            Collection<? extends GrantedAuthority> userAuthorities = this.authentication.getAuthorities()
+                    .stream()
+                    .filter(authority -> authority.getAuthority().startsWith(defaultRolePrefix))
+                    .collect(Collectors.toList());
+            this.roles = AuthorityUtils.authorityListToSet(userAuthorities)
+                    .stream()
+                    .map(auth -> auth.substring(2))
+                    .collect(Collectors.toSet());
+        }
         return this.roles;
     }
 
@@ -158,5 +182,9 @@ public abstract class MmaduSecurityExpressionRoot implements SecurityExpressionO
 
     public String getDomainId() {
         return domainId;
+    }
+
+    public void setPermissionMatcher(PermissionMatcher permissionMatcher) {
+        this.permissionMatcher = permissionMatcher;
     }
 }

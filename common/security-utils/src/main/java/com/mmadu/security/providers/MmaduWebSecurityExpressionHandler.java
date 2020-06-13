@@ -10,7 +10,6 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 
 public class MmaduWebSecurityExpressionHandler extends DefaultWebSecurityExpressionHandler {
     private AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
-    private final String defaultRolePrefix = "ROLE_";
     private DomainParser domainParser;
     private String defaultDomainId = "global";
 
@@ -27,8 +26,6 @@ public class MmaduWebSecurityExpressionHandler extends DefaultWebSecurityExpress
         MmaduWebSecurityExpressionRoot root = new MmaduWebSecurityExpressionRoot(authentication, fi);
         root.setPermissionEvaluator(this.getPermissionEvaluator());
         root.setTrustResolver(this.trustResolver);
-        root.setRoleHierarchy(this.getRoleHierarchy());
-        root.setDefaultRolePrefix(this.defaultRolePrefix);
         String domainId = domainParser.parseDomain(fi.getHttpRequest())
                 .orElse(defaultDomainId);
         root.setDomainId(domainId);
