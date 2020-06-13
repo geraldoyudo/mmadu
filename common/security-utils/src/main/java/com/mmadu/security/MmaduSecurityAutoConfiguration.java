@@ -1,5 +1,7 @@
 package com.mmadu.security;
 
+import com.mmadu.security.models.AppClient;
+import com.mmadu.security.models.AppUser;
 import com.mmadu.security.models.MmaduQualified;
 import com.mmadu.security.models.MmaduQualifiedBean;
 import com.mmadu.security.providers.MmaduJwtAuthenticationConverter;
@@ -14,14 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
@@ -152,6 +158,32 @@ public class MmaduSecurityAutoConfiguration {
         @Bean
         public DomainExtractor httpHeaderDomainExtractor() {
             return new HttpHeaderDomainExtractor();
+        }
+    }
+
+    @Configuration
+    static class ApiPrincipalConfiguration {
+
+        @Bean
+        @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.INTERFACES)
+        public AppClient currentClient() {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof AppClient) {
+                return (AppClient) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            } else {
+                throw new IllegalStateException("Authorized user is not an AppClient");
+            }
+        }
+
+        @Bean
+        @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.INTERFACES)
+        public AppUser currentUser() {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof AppUser) {
+                return (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            } else {
+                throw new IllegalStateException("Authorized user is not an AppUser");
+            }
         }
     }
 }
