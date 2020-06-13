@@ -35,6 +35,9 @@ public abstract class MmaduWebSecurityConfigurer extends WebSecurityConfigurerAd
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .authorizeRequests()
+                .expressionHandler(expressionHandler)
+                .and()
                 .oauth2ResourceServer(
                         configurer -> configurer.jwt()
                                 .decoder(jwtDecoder)
@@ -42,8 +45,4 @@ public abstract class MmaduWebSecurityConfigurer extends WebSecurityConfigurerAd
                 );
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.expressionHandler(expressionHandler);
-    }
 }

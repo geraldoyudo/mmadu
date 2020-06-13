@@ -144,6 +144,12 @@ public class MmaduSecurityAutoConfiguration {
     static class DomainExtractorConfiguration {
 
         @Bean
+        @Order(50)
+        public DomainExtractor domainPayloadExtractor() {
+            return new DomainPayloadExtractor();
+        }
+
+        @Bean
         @Order(100)
         public DomainExtractor queryParamDomainExtractor() {
             return new QueryParameterDomainExtractor();
