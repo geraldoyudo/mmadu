@@ -8,6 +8,7 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.core.Authentication;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MmaduMethodSecurityExpressionHandler extends DefaultMethodSecurityExpressionHandler {
@@ -28,7 +29,7 @@ public class MmaduMethodSecurityExpressionHandler extends DefaultMethodSecurityE
         root.setThis(invocation.getThis());
         root.setPermissionEvaluator(this.getPermissionEvaluator());
         root.setTrustResolver(this.getTrustResolver());
-        List<Object> domainPayloads = Arrays.asList(invocation.getArguments());
+        List<Object> domainPayloads = new LinkedList<>(Arrays.asList(invocation.getArguments()));
         RequestUtils.getCurrentRequest()
                 .ifPresent(domainPayloads::add);
         String domainId = domainPayloads.stream()

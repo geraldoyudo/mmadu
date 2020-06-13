@@ -12,6 +12,7 @@ import java.util.List;
 public class MmaduUserAuthenticationToken extends AbstractMmaduAuthenticationToken<AppUser> {
     public MmaduUserAuthenticationToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities) {
         super(jwt, authorities);
+        setAuthenticated(true);
     }
 
     @Override
@@ -24,7 +25,6 @@ public class MmaduUserAuthenticationToken extends AbstractMmaduAuthenticationTok
                 .roles(AuthoritiesUtils.getRoles(getAuthorities()))
                 .build();
     }
-
 
     @Data
     @Builder
