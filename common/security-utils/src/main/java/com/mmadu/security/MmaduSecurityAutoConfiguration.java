@@ -5,6 +5,8 @@ import com.mmadu.security.models.MmaduQualifiedBean;
 import com.mmadu.security.providers.MmaduJwtAuthenticationConverter;
 import com.mmadu.security.providers.MmaduMethodSecurityExpressionHandler;
 import com.mmadu.security.providers.MmaduWebSecurityExpressionHandler;
+import com.mmadu.security.providers.converters.AppClientAuthenticationConversionStrategy;
+import com.mmadu.security.providers.converters.AppUserAuthenticationConversionStrategy;
 import com.mmadu.security.providers.converters.DefaultAuthenticationConversionStrategy;
 import com.mmadu.security.providers.converters.JwtAuthenticationConversionStrategy;
 import com.mmadu.security.providers.domainparsers.*;
@@ -111,6 +113,18 @@ public class MmaduSecurityAutoConfiguration {
 
     @Configuration
     static class JwtAuthenticationConvertersConfiguration {
+
+        @Bean
+        @Order(100)
+        public JwtAuthenticationConversionStrategy userConversionStrategy() {
+            return new AppUserAuthenticationConversionStrategy();
+        }
+
+        @Bean
+        @Order(200)
+        public JwtAuthenticationConversionStrategy clientConversionStrategy() {
+            return new AppClientAuthenticationConversionStrategy();
+        }
 
         @Bean
         @Order
