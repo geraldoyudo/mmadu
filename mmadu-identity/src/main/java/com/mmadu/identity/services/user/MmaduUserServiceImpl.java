@@ -2,6 +2,7 @@ package com.mmadu.identity.services.user;
 
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.models.user.MmaduUserImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MmaduUserServiceImpl implements MmaduUserService {
     private WebClient userServiceClient;
 
@@ -67,6 +69,7 @@ public class MmaduUserServiceImpl implements MmaduUserService {
                 ))
                 .retrieve()
                 .bodyToMono(HashMap.class)
+                .doOnError(ex -> log.error("An error occurred", ex))
                 .map(result -> (String) result.getOrDefault("status", "USERNAME_INVALID"))
                 .blockOptional();
         if (status.isPresent()) {

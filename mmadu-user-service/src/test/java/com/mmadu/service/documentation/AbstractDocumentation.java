@@ -3,7 +3,6 @@ package com.mmadu.service.documentation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mmadu.security.DomainTokenChecker;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppDomain;
 import com.mmadu.service.entities.AppUser;
@@ -57,15 +56,11 @@ public abstract class AbstractDocumentation {
     protected AppUserRepository appUserRepository;
     @Autowired
     protected AppDomainRepository appDomainRepository;
-    @MockBean
-    protected DomainTokenChecker tokenChecker;
 
     protected MockMvc mockMvc;
 
     @BeforeEach
     void initializeTest(WebApplicationContext context, RestDocumentationContextProvider restDocumentation) {
-        doReturn(true).when(tokenChecker).checkIfTokenMatchesDomainToken(DOMAIN_TOKEN, USER_DOMAIN_ID);
-        doReturn(true).when(tokenChecker).checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(restDocumentation))

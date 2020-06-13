@@ -2,7 +2,6 @@ package com.mmadu.tokenservice.documentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mmadu.security.DomainTokenChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +36,12 @@ public abstract class AbstractDocumentation {
 
     @Autowired
     protected ObjectMapper objectMapper;
-    @MockBean
-    private DomainTokenChecker domainTokenChecker;
 
     protected MockMvc mockMvc;
 
     @BeforeEach
     void initializeDocumentation(WebApplicationContext webApplicationContext,
                                  RestDocumentationContextProvider restDocumentation) {
-        doReturn(true).when(domainTokenChecker)
-                .checkIfTokenMatchesDomainToken(ADMIN_TOKEN, "admin");
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(restDocumentation))

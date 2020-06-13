@@ -1,7 +1,6 @@
 package com.mmadu.service.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mmadu.security.DomainTokenChecker;
 import com.mmadu.service.config.MongoInitializationConfig;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.models.AuthenticateRequest;
@@ -11,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -40,8 +37,6 @@ class AuthenticationApiDomainTokenSecurityIT {
     @Autowired
     private AppUserRepository appUserRepository;
     private ObjectMapper mapper = new ObjectMapper();
-    @MockBean
-    private DomainTokenChecker domainTokenChecker;
 
     @BeforeEach
     void setUp(WebApplicationContext context) {
@@ -72,7 +67,6 @@ class AuthenticationApiDomainTokenSecurityIT {
 
     @Test
     void givenCorrectDomainTokenHeaderWhenAuthenticateShouldReturnAuthorized() throws Exception {
-        doReturn(true).when(domainTokenChecker).checkIfTokenMatchesDomainToken(getToken(), DOMAIN_ID);
         createAppUser();
         this.mockMvc.perform(
                 post("/domains/{domainId}/authenticate", DOMAIN_ID)
