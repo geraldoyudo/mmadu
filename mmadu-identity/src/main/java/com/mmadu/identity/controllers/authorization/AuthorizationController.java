@@ -4,14 +4,17 @@ import com.mmadu.identity.entities.Scope;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.user.MmaduUser;
+import com.mmadu.identity.services.authorization.AuthorizationService;
+import com.mmadu.identity.services.authorization.ScopeLimitService;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.services.user.ScopeService;
-import com.mmadu.identity.services.authorization.AuthorizationService;
 import com.mmadu.identity.utils.StringListUtils;
 import com.mmadu.identity.validators.authorization.AuthorizationRequestValidator;
 import com.mmadu.identity.validators.authorization.AuthorizationResponseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
@@ -32,6 +35,7 @@ public class AuthorizationController {
     private AuthorizationService authorizationService;
     private ScopeService scopeService;
     private MmaduClientService mmaduClientService;
+    private ScopeLimitService scopeLimitService;
 
     @Autowired
     public void setAuthorizationRequestValidator(AuthorizationRequestValidator authorizationRequestValidator) {
@@ -58,6 +62,11 @@ public class AuthorizationController {
         this.mmaduClientService = mmaduClientService;
     }
 
+    @Autowired
+    public void setScopeLimitService(ScopeLimitService scopeLimitService) {
+        this.scopeLimitService = scopeLimitService;
+    }
+
     @InitBinder("authorizationRequest")
     void bindAuthorizationRequest(WebDataBinder binder) {
         binder.addValidators(authorizationRequestValidator);
@@ -69,7 +78,7 @@ public class AuthorizationController {
     }
 
     @ModelAttribute("availableScopes")
-    public List<Scope> addScopesToModel(AuthorizationRequest request) {
+    public List<Scope> addScopesToModel(AuthorizationRequest request, @AuthenticationPrincipal MmaduUser user) {
         if (request.getClient_id() == null) {
             return Collections.emptyList();
         }
@@ -79,9 +88,13 @@ public class AuthorizationController {
         } else {
             return scopeService.getAllScopeInfo(
                     client.get().getDomainId(),
-                    StringListUtils.toList(request.getScope())
+                    filterUserScopes(user, client.get(), StringListUtils.toList(request.getScope()))
             );
         }
+    }
+
+    private List<String> filterUserScopes(MmaduUser user, MmaduClient client, List<String> proposedScopes) {
+        return scopeLimitService.limitScopesForUser(proposedScopes, user, client);
     }
 
     @GetMapping
