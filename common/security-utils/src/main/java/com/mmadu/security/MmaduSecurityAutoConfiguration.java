@@ -158,7 +158,9 @@ public class MmaduSecurityAutoConfiguration {
         @Bean
         @Order(200)
         public DomainExtractor pathVariableDomainExtractor() {
-            return new PathVariableDomainExtractor();
+            PathVariableDomainExtractor extractor = new PathVariableDomainExtractor();
+            extractor.setDomainKeys(List.of("domains", "domainId"));
+            return extractor;
         }
 
         @Bean
