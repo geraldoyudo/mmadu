@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -31,17 +32,20 @@ public class UserManagementController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('user.create')")
     public void createUserInDomain(@RequestBody UserView user,
                                    @PathVariable("domainId") String domainId) {
         userManagementService.createUser(domainId, user);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('user.read')")
     public Page<UserView> getAllUsersInDomain(@PathVariable("domainId") String domainId, Pageable p) {
         return userManagementService.getAllUsers(domainId, p);
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("hasAuthority('user.read')")
     public UserView getUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
                                                  @PathVariable("userId") String externalId) {
         return userManagementService.getUserByDomainIdAndExternalId(domainId, externalId);
@@ -49,6 +53,7 @@ public class UserManagementController {
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.delete')")
     public void deleteUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
                                                 @PathVariable("userId") String externalId) {
         userManagementService.deleteUserByDomainAndExternalId(domainId, externalId);
@@ -56,6 +61,7 @@ public class UserManagementController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.update')")
     public void updateUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
                                                 @PathVariable("userId") String externalId,
                                                 @RequestBody UserView userView) {
@@ -63,6 +69,7 @@ public class UserManagementController {
     }
 
     @GetMapping("/load")
+    @PreAuthorize("hasAuthority('user.load')")
     public UserView loadUserByUsername(@PathVariable("domainId") String domainId,
                                        @RequestParam("username") String username) {
         UserView userView = userManagementService.getUserByDomainIdAndUsername(domainId, username);
@@ -80,6 +87,7 @@ public class UserManagementController {
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasAuthority('user.read')")
     public Page<UserView> queryUsers(@PathVariable("domainId") String domainId,
                                      @RequestParam("query") String query,
                                      Pageable p) {
@@ -88,6 +96,7 @@ public class UserManagementController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.update')")
     public void patchUpdateUsers(@RequestBody UserUpdateRequest request,
                                  @PathVariable("domainId") String domainId) {
         UpdateRequest updateRequest = new UpdateRequest(request.getUpdates());

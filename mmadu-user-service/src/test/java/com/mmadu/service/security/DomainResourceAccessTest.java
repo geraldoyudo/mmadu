@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -57,6 +57,7 @@ public class DomainResourceAccessTest {
     }
 
     @Test
+    @DirtiesContext
     void deleteDomainWithAuthorityShouldReturnNoContent() throws Exception {
         mockMvc.perform(delete("/appDomains/1")
                 .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.delete"))
@@ -78,5 +79,41 @@ public class DomainResourceAccessTest {
                 .header(HttpHeaders.AUTHORIZATION, authorization("a.2.domain.delete"))
         )
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void createDomainWithCorrectAuthorityShouldBeAccessible() throws Exception {
+        mockMvc.perform(post("/appDomains")
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.global.domain.delete"))
+        )
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    void createDomainWithIncorrectCorrectAuthorityShouldBeForbidden() throws Exception {
+        mockMvc.perform(post("/appDomains")
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.delete"))
+        )
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    void updateDomainWithCorrectAuthorityShouldBeAccessible() throws Exception {
+        mockMvc.perform(patch("/appDomains/1")
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.delete"))
+        )
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    void updateDomainWithIncorrectCorrectAuthorityShouldBeForbidden() throws Exception {
+        mockMvc.perform(patch("/appDomains/1")
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.2.domain.delete"))
+        )
+                .andExpect(status().isBadRequest());
+
     }
 }
