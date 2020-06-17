@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
@@ -32,7 +33,7 @@ public class CredentialCreationDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/admin/credentials/{domainId}", DOMAIN_ID)
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .accept(MediaType.TEXT_PLAIN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newCredentialsRequest())

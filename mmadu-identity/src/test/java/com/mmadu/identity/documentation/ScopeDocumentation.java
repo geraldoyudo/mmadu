@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -42,7 +43,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/scopes")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(newScopeRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -77,7 +78,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         scope = scopeRepository.save(scope);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -102,7 +103,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/scopes/search/findByDomainId")
                         .param("domainId", scope.getDomainId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -130,7 +131,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         Scope scope = scopeRepository.save(newScope());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", newScopeName)
@@ -150,7 +151,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         Scope scope = scopeRepository.save(newScope());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
