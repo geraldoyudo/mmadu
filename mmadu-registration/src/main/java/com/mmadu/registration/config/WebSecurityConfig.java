@@ -13,7 +13,9 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/*/register/**", "/css/**", "/js/**")
+                .permitAll()
                 .anyRequest()
-                .permitAll();
+                .authenticated();
     }
 }

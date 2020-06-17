@@ -5,6 +5,7 @@ import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 
@@ -34,7 +35,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         RegistrationProfile profile = createNewRegistrationProfile();
         mockMvc.perform(
                 post("/repo/registrationProfiles")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(objectMapper.writeValueAsString(profile))
         )
                 .andExpect(status().isCreated())
@@ -90,7 +91,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(
@@ -111,7 +112,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/search/findByDomainId")
                         .param("domainId", profile.getDomainId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(
@@ -134,7 +135,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("defaultRedirectUrl", modifiedRedirectUrl)
@@ -155,7 +156,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME, pathParameters(
