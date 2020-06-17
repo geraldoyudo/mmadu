@@ -50,7 +50,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
 
         mockMvc.perform(post("/domains/{domainId}/groups", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
@@ -79,7 +79,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
         createAndSaveGroup();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/groups/{groupIdentifier}/users/{userId}",
                 USER_DOMAIN_ID, group.getIdentifier(), USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -109,7 +109,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
         setUserGroup();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/groups/{groupIdentifier}/users/{userId}",
                 USER_DOMAIN_ID, group.getIdentifier(), USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -144,7 +144,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
                 USER_DOMAIN_ID, group.getIdentifier())
                 .param("page", "0")
                 .param("size", "10")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,

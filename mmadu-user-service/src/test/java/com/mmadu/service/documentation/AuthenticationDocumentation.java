@@ -3,6 +3,7 @@ package com.mmadu.service.documentation;
 import com.mmadu.service.models.AuthenticateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
@@ -27,7 +28,7 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
     void authentication() throws Exception {
         this.mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authenticate",
                 USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON).content(objectToString(
                         new AuthenticateRequest(USERNAME, USER_PASSWORD)
                         )

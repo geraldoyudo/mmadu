@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -27,7 +26,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -48,7 +46,7 @@ public abstract class AbstractDocumentation {
     private static final String DOMAIN_NAME = "test";
     public static final String DOMAIN_TOKEN = "1234";
     public static final String USER_EXTERNAL_ID = "123453432";
-    protected final String ADMIN_TOKEN = "2222";
+    protected final String ADMIN_TOKEN = "eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTE5NjU4OTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6InZpZXcgZWRpdCIsImV4cCI6Mjk5MTk2NjE5MiwiaWF0IjoxNTkxOTY1ODkyLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.EgjaDmX03BYWbBdnFx4rYLTlT3wnRqnILd-pLWZLrUPZ48llyuzPoB2dJ3QcNSuzxb9koOS55513nzpKekOAkcDuA3XP7OTxw_4X5rar7xQiA3gEnQ1RAgUcUCOXGmlzl5f9XQsdHtY-WxMuh-qgdELqH8fkb4p0HcAHOOdhKOivSoIGu1uGBrbmT8RFUcAti1mmUzDJM0RFn0JZc7IULizoaibEh-mGNuBn0AN2ZhK1xRM-tbKIOZBp5_wVY1YcGc7M1bO-VeCmg2dWilZC9_9GT2X2t4E1vXoz1a4OkiBZx27GhZwJCSWnrve5OwRPf4ONTV7B0FZqJxFP3yQTIg";
 
     @Autowired
     protected ObjectMapper objectMapper;

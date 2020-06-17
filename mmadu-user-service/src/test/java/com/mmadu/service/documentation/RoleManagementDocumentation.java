@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -42,7 +41,8 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         userRoleRepository.deleteAll();
         roleRepository.deleteAll();
         authorityRepository.deleteAll();
-        roleAuthorityRepository.deleteAll();;
+        roleAuthorityRepository.deleteAll();
+        ;
     }
 
     @Test
@@ -50,7 +50,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         createAndSaveAuthority();
         mockMvc.perform(post("/domains/{domainId}/roles", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(newRoleRequest()))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -100,7 +100,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
                 USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -127,7 +127,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         createAndSaveRole();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/roles/{roleIdentifier}",
                 USER_DOMAIN_ID, role.getIdentifier())
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent());
         assertTrue(
                 roleRepository.findById(role.getId()).isEmpty()
@@ -140,7 +140,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         createAndSaveRole();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/roles/users/{userId}/addRoles",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         objectMapper.createArrayNode()
                                 .add(role.getIdentifier())
@@ -163,7 +163,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         setUserRole();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/roles/users/{userId}/removeRoles",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         objectMapper.createArrayNode()
                                 .add(role.getIdentifier())
@@ -199,7 +199,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         Authority authority = createAndSaveAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/roles/authorities/add",
                 USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         roleAuthorityUpdateRequest(authority)
                 )
@@ -228,7 +228,7 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         linkAuthorityToRole(authority);
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/roles/authorities/remove",
                 USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         roleAuthorityUpdateRequest(authority)
                 )

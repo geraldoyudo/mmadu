@@ -3,11 +3,11 @@ package com.mmadu.service.documentation;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppDomain;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -24,7 +24,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     void createADomain() throws Exception {
         mockMvc.perform(post("/appDomains")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(objectToString(createConstantDomain()))
         ).andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -43,7 +43,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     void gettingAllDomains() throws Exception {
         mockMvc.perform(get("/appDomains")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, domainsResponseFields()));
@@ -63,7 +63,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     void getADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -87,7 +87,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     void deletingADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -102,7 +102,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("name", "changed-name");
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(objectNode.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
