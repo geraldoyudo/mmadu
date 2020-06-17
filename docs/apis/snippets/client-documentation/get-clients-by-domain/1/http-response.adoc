@@ -1,0 +1,185 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 5326
+
+{
+  "_embedded" : {
+    "clients" : [ {
+      "id" : "5eea1ff0ffc4495eca2ff359",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff0ffc4495eca2ff359"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff0ffc4495eca2ff359"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff35c",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35c"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35c"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff35f",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35f"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35f"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff362",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff362"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff362"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff365",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff365"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff365"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff368",
+      "domainId" : "1",
+      "name" : "test",
+      "code" : "1234",
+      "applicationUrl" : "https://myapp.com",
+      "logoUrl" : "https://logo.url/favicon",
+      "category" : "test",
+      "tags" : [ "tags" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff368"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff368"
+        }
+      }
+    }, {
+      "id" : "5eea201bffc4495eca2ff384",
+      "domainId" : "1",
+      "name" : "New Email Client",
+      "code" : "A12345",
+      "applicationUrl" : "http://an.email.com",
+      "logoUrl" : "http://an.email.com/favicon",
+      "category" : "third_party",
+      "tags" : [ "email", "communications" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff384"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff384"
+        }
+      }
+    }, {
+      "id" : "5eea201bffc4495eca2ff385",
+      "domainId" : "1",
+      "name" : "Email Client",
+      "code" : "A12345",
+      "applicationUrl" : "http://an.email.com",
+      "logoUrl" : "http://an.email.com/favicon",
+      "category" : "third_party",
+      "tags" : [ "email", "communications" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+        }
+      }
+    }, {
+      "id" : "5eea201bffc4495eca2ff386",
+      "domainId" : "1",
+      "name" : "Email Client",
+      "code" : "A12345",
+      "applicationUrl" : "http://an.email.com",
+      "logoUrl" : "http://an.email.com/favicon",
+      "category" : "third_party",
+      "tags" : [ "email", "communications" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff386"
+        },
+        "client" : {
+          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff386"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/clients/search/findByDomainId?page=0&size=20"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 9,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----

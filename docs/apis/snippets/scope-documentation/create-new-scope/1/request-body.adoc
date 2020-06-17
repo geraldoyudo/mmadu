@@ -1,0 +1,9 @@
+[source,options="nowrap"]
+----
+{
+  "name" : "Email Scope",
+  "code" : "test.mail",
+  "description" : "Email Contacts",
+  "domainId" : "1"
+}
+----

@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Resource ID
+
+|`+name+`
+|`+String+`
+|The resource's name
+
+|`+identifier+`
+|`+String+`
+|The resource's identifier
+
+|`+description+`
+|`+String+`
+|A description of the resource
+
+|`+domainId+`
+|`+String+`
+|The domain ID
+
+|===

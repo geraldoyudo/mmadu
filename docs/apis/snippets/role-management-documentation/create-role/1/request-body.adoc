@@ -1,0 +1,9 @@
+[source,options="nowrap"]
+----
+[ {
+  "identifier" : "app.view",
+  "name" : "View Entities",
+  "description" : "View all Entities",
+  "authorities" : [ "test-auth" ]
+} ]
+----

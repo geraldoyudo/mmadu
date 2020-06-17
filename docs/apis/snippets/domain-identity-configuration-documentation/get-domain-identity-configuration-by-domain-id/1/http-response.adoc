@@ -1,0 +1,38 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 743
+
+{
+  "id" : "5eea200effc4495eca2ff37a",
+  "domainId" : "1",
+  "authorizationCodeType" : "alphanumeric",
+  "authorizationCodeTypeProperties" : { },
+  "authorizationCodeTTLSeconds" : 600,
+  "maxAuthorizationTTLSeconds" : 86400,
+  "refreshTokenEnabled" : true,
+  "accessTokenProvider" : "jwt",
+  "accessTokenProperties" : { },
+  "refreshTokenProvider" : "alphanumeric",
+  "refreshTokenProperties" : { },
+  "issuerId" : "mmadu.com",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eea200effc4495eca2ff37a"
+    },
+    "domainIdentityConfiguration" : {
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eea200effc4495eca2ff37a"
+    }
+  }
+}
+----

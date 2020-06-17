@@ -1,0 +1,21 @@
+[source,options="nowrap"]
+----
+{
+  "clientId" : "5eea1ff1ffc4495eca2ff362",
+  "clientType" : "CONFIDENTIAL",
+  "clientProfile" : "web_app",
+  "tlsEnabled" : true,
+  "includeUserRoles" : true,
+  "includeUserAuthorities" : true,
+  "domainId" : "1",
+  "resources" : [ "test" ],
+  "authorities" : [ "admin" ],
+  "redirectionUris" : [ "https://myapp.com/callback", "https://localhost:8080/callback" ],
+  "allowedHosts" : [ "localhost", "teamapt.com", "32.32.182.34" ],
+  "supportedGrantTypes" : [ "authentication_code", "client_credentials" ],
+  "credentials" : {
+    "type" : "secret",
+    "secret" : "1234"
+  }
+}
+----

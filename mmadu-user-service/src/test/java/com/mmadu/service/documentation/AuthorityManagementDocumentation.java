@@ -43,7 +43,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
     void createAuthority() throws Exception {
         mockMvc.perform(post("/domains/{domainId}/authorities", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(newAuthorityRequest()))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -81,7 +81,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
                 USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -108,7 +108,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         createAndSaveAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/authorities/{authorityIdentifier}",
                 USER_DOMAIN_ID, authority.getIdentifier())
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent());
         assertTrue(
                 authorityRepository.findById(authority.getId()).isEmpty()
@@ -121,7 +121,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         createAndSaveAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authorities/users/{userId}/addAuthorities",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         objectMapper.createArrayNode()
                                 .add(authority.getIdentifier())
@@ -144,7 +144,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         setUserAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authorities/users/{userId}/removeAuthorities",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                 .content(
                         objectMapper.createArrayNode()
                                 .add(authority.getIdentifier())

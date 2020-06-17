@@ -15,9 +15,11 @@ import com.mmadu.service.services.UserManagementService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -40,11 +42,17 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = UserManagementController.class,
-        excludeAutoConfiguration = {
+@SpringBootTest(classes = {
+        UserManagementController.class,
+        GeneralExceptionHandler.class
+})
+@EnableAutoConfiguration(
+        exclude = {
                 SecurityAutoConfiguration.class,
                 SecurityFilterAutoConfiguration.class
-        })
+        }
+)
+@AutoConfigureMockMvc
 class UserManagementControllerTest {
     public static final String USER_ID = "13423";
     public static final String USERNAME = "test-user";

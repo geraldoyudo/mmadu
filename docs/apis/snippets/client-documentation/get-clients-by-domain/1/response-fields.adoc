@@ -1,0 +1,36 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.clients.[].id+`
+|`+String+`
+|The client id
+
+|`+_embedded.clients.[].domainId+`
+|`+String+`
+|the client domain id
+
+|`+_embedded.clients.[].name+`
+|`+String+`
+|The client name
+
+|`+_embedded.clients.[].code+`
+|`+String+`
+|The client code
+
+|`+_embedded.clients.[].applicationUrl+`
+|`+String+`
+|The client's application url
+
+|`+_embedded.clients.[].logoUrl+`
+|`+String+`
+|The client's logo url
+
+|`+_embedded.clients.[].category+`
+|`+String+`
+|The client's category
+
+|`+_embedded.clients.[].tags+`
+|`+Array+`
+|The client's tags
+
+|===

@@ -1,0 +1,144 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 3917
+
+{
+  "_embedded" : {
+    "resources" : [ {
+      "id" : "5eea1ff0ffc4495eca2ff35a",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff0ffc4495eca2ff35a"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff0ffc4495eca2ff35a"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff35d",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff35d"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff35d"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff360",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff360"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff360"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff363",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff363"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff363"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff366",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff366"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff366"
+        }
+      }
+    }, {
+      "id" : "5eea1ff1ffc4495eca2ff369",
+      "domainId" : "1",
+      "identifier" : "test",
+      "name" : "test",
+      "description" : "test resource",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff369"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff369"
+        }
+      }
+    }, {
+      "id" : "5eea201bffc4495eca2ff37f",
+      "domainId" : "1",
+      "identifier" : "email-service",
+      "name" : "New Email Resource",
+      "description" : "Email Microservice",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff37f"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff37f"
+        }
+      }
+    }, {
+      "id" : "5eea201bffc4495eca2ff380",
+      "domainId" : "1",
+      "identifier" : "email-service",
+      "name" : "email",
+      "description" : "Email Microservice",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff380"
+        },
+        "resource" : {
+          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff380"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/resources/search/findByDomainId?page=0&size=20"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 8,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----

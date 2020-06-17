@@ -6,6 +6,7 @@ import com.mmadu.registration.repositories.FieldTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -34,7 +35,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = createNewFieldType();
         mockMvc.perform(
                 post("/repo/fieldTypes")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(objectMapper.writeValueAsString(fieldType))
         ).andExpect(status().isCreated())
                 .andDo(
@@ -87,7 +88,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes/{fieldTypeId}",
                         fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -107,7 +108,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, relaxedResponseFields(
@@ -140,7 +141,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", modifiedName)
@@ -160,7 +161,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

@@ -1,0 +1,8 @@
+.+/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}+
+|===
+|Parameter|Description
+
+|`+domainIdentityConfigurationId+`
+|The domain identity configuration id
+
+|===

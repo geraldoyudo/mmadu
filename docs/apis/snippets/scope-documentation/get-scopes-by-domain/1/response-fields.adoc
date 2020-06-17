@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.scopes.[].id+`
+|`+String+`
+|The scope id
+
+|`+_embedded.scopes.[].domainId+`
+|`+String+`
+|the scope domain id
+
+|`+_embedded.scopes.[].name+`
+|`+String+`
+|The scope name
+
+|`+_embedded.scopes.[].code+`
+|`+String+`
+|The scope code
+
+|`+_embedded.scopes.[].description+`
+|`+String+`
+|The scope's description
+
+|===

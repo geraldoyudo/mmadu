@@ -6,6 +6,7 @@ import com.mmadu.registration.repositories.FieldRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -32,7 +33,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = createNewField();
         mockMvc.perform(
                 post("/repo/fields")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(objectMapper.writeValueAsString(field))
         ).andExpect(status().isCreated())
                 .andDo(
@@ -79,7 +80,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fields/{fieldId}", field.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -100,7 +101,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fields/search/findByDomainId")
                         .param("domainId", field.getDomainId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -132,7 +133,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/fields/{fieldId}", field.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("placeholder", modifiedPlaceHolder)
@@ -152,7 +153,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fields/{fieldId}", field.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

@@ -7,9 +7,11 @@ import com.mmadu.service.models.AuthenticateResponse;
 import com.mmadu.service.services.AuthenticationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,10 +24,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = AuthenticationController.class, excludeAutoConfiguration = {
+@SpringBootTest(classes = {
+        AuthenticationController.class,
+        GeneralExceptionHandler.class
+})
+@EnableAutoConfiguration(exclude = {
         SecurityAutoConfiguration.class,
         SecurityFilterAutoConfiguration.class
 })
+@AutoConfigureMockMvc
 class AuthenticationControllerTest {
 
     public static final String DOMAIN_ID = "domain-0";

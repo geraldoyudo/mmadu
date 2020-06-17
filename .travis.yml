@@ -47,8 +47,7 @@ matrix:
       install: mvn -q clean
       script:
         - mvn -q install
-        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration,mmadu-identity -DskipTests
-        - cd ./docker/heroku-test/token-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-token-service && cd ../../../
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity -DskipTests
         - cd ./docker/heroku-test/user-service && heroku container:login && ./build.sh && heroku container:release web --app mmadu-user-service && cd ../../../
         - cd ./docker/heroku-test/user-registration && heroku container:login && ./build.sh && heroku container:release web --app mmadu-registration && cd ../../../
         - cd ./docker/heroku-test/identity && heroku container:login && ./build.sh && heroku container:release web --app mmadu-identity && cd ../../../
@@ -62,10 +61,9 @@ matrix:
       services:
         - docker
       before_install:
-        - curl https://cli-assets.heroku.com/install.sh | sh
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       install: mvn -q clean
       script:
         - mvn -q install
-        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-token-service,mmadu-registration -DskipTests
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity -DskipTests
         - cd ./docker/prod && ./release.sh cd ../../

@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+[].identifier+`
+|`+String+`
+|The role identifier
+
+|`+[].name+`
+|`+String+`
+|The name of the role
+
+|`+[].description+`
+|`+String+`
+|A brief description of the role
+
+|`+[].authorities+`
+|`+Array+`
+|A list of authority identifiers to be granted to this role
+
+|===

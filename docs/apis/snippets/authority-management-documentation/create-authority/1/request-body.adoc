@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+[ {
+  "identifier" : "app.view.authority",
+  "name" : "View Entities",
+  "description" : "View all Entities"
+} ]
+----

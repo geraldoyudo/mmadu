@@ -8,6 +8,7 @@ import com.mmadu.identity.repositories.DomainIdentityConfigurationRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -38,7 +39,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
     void createNewDomainIdentityConfiguration() throws Exception {
         mockMvc.perform(
                 post("/admin/repo/domainIdentityConfigurations")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(newDomainIdentityConfigurationRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -90,7 +91,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.get(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -115,7 +116,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/domainIdentityConfigurations/search/findByDomainId")
                         .param("domainId", configuration.getDomainId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -131,7 +132,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
         DomainIdentityConfiguration configuration = domainIdentityConfigurationRepository.save(newDomainIdentityConfiguration());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/domainIdentityConfigurations")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, relaxedResponseFields(
@@ -165,7 +166,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.patch(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("authorizationCodeTTLSeconds", authorizationCodeTTLSeconds)
@@ -188,7 +189,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.delete(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

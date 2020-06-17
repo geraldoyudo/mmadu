@@ -1,0 +1,72 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Client ID
+
+|`+clientId+`
+|`+String+`
+|The client ID
+
+|`+clientType+`
+|`+String+`
+|Either CONFIDENTIAL or PUBLIC
+
+|`+clientProfile+`
+|`+String+`
+|Client profile category: either web_app, user_agent_app, or native_app, custom profiles may be used.
+
+|`+credentials+`
+|`+Varies+`
+|Client credentials
+
+|`+identifier+`
+|`+String+`
+|The client's generated identifier used for authorization and authentication
+
+|`+allowedHosts+`
+|`+Array+`
+|The host names to be used with this client
+
+|`+redirectionUris+`
+|`+Array+`
+|The redirection urls permitted to be used with this client
+
+|`+supportedGrantTypes+`
+|`+Array+`
+|The grant types these clients are permitted to use
+
+|`+tlsEnabled+`
+|`+Boolean+`
+|Whether TLS should be made compulsory
+
+|`+domainId+`
+|`+String+`
+|the ID of the domain
+
+|`+resources+`
+|`+Array+`
+|The resource ids of the resources the client should have access to
+
+|`+authorities+`
+|`+Array+`
+|The list of authorities granted to the client
+
+|`+includeUserRoles+`
+|`+Boolean+`
+|Include user's roles in the token info
+
+|`+includeUserAuthorities+`
+|`+Boolean+`
+|Include user's authorities in the token info
+
+|`+credentials.type+`
+|`+String+`
+|The client's credential type (for now, `secret`)
+
+|`+credentials.secret+`
+|`+String+`
+|The client secret (if credential type is `secret`)
+
+|===

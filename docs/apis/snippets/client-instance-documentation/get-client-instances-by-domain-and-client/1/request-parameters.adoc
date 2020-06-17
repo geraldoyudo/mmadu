@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+domainId+`
+|Domain ID of the client instance
+
+|`+clientId+`
+|The client's ID
+
+|===

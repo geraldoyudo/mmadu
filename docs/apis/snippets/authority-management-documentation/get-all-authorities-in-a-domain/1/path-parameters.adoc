@@ -1,0 +1,8 @@
+.+/domains/{domainId}/authorities+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id of the authority
+
+|===

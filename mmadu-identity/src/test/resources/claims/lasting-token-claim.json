@@ -1,0 +1,19 @@
+{
+  "sub": "5ee378ad47489129cc49b3b0",
+  "roles": [],
+  "iss": "mmadu.com",
+  "groups": [
+    "test",
+    "sample"
+  ],
+  "authorities": [],
+  "client_id": "22e65b72-9234-4281-9d73-3230089d49a7",
+  "domain_id": "0",
+  "aud": "test",
+  "nbf": 1591965892,
+  "user_id": "111111111",
+  "scope": "view edit",
+  "exp": 2991966192,
+  "iat": 1591965892,
+  "jti": "f5bf75a6-04a0-42f7-a1e0-583e29cde86c"
+}

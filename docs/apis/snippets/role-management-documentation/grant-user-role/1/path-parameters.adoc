@@ -1,0 +1,11 @@
+.+/domains/{domainId}/roles/users/{userId}/addRoles+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id of the role
+
+|`+userId+`
+|The id of the user
+
+|===

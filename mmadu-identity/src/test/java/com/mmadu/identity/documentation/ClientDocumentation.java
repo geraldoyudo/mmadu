@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -43,7 +44,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/clients")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(newClientRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -87,7 +88,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         client = clientRepository.save(client);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/clients/{clientId}", client.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -112,7 +113,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/clients/search/findByDomainId")
                         .param("domainId", client.getDomainId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -143,7 +144,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         Client client = clientRepository.save(newClient());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/admin/repo/clients/{clientId}", client.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", newClientName)
@@ -163,7 +164,7 @@ public class ClientDocumentation extends AbstractDocumentation {
         Client client = clientRepository.save(newClient());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/admin/repo/clients/{clientId}", client.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
