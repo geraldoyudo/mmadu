@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,18 +43,21 @@ public class RoleManagementController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('role.update')")
     public void saveRoles(@PathVariable("domainId") String domainId,
                           @RequestBody @Valid @Size(min = 1, message = "roles required") List<SaveRoleRequest> roles) {
         roleManagementService.saveRoles(domainId, roles);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('role.read')")
     public Page<RoleData> getRoles(@PathVariable("domainId") String domainId, Pageable p) {
         return roleManagementService.getRoles(domainId, p);
     }
 
     @DeleteMapping("/{roleIdentifier}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('role.delete')")
     public void deleteRole(@PathVariable("domainId") String domainId,
                            @PathVariable("roleIdentifier") String identifier) {
         roleManagementService.deleteRole(domainId, identifier);
@@ -61,6 +65,7 @@ public class RoleManagementController {
 
     @PostMapping(path = "/users/{userId}/addRoles", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('role.grant_user')")
     public void grantUserRoles(@PathVariable("domainId") String domainId,
                                @PathVariable("userId") String userId,
                                @RequestBody @Valid @Size(min = 1, message = "role identifiers required")
@@ -70,6 +75,7 @@ public class RoleManagementController {
 
     @PostMapping(path = "/users/{userId}/removeRoles", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('role.revoke_user')")
     public void revokeUserRoles(
             @PathVariable("domainId") String domainId,
             @PathVariable("userId") String userId,
@@ -81,6 +87,7 @@ public class RoleManagementController {
 
     @PostMapping(path = "/authorities/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('role.add_authority')")
     public void addAuthorityToRole(@PathVariable("domainId") String domainId,
                                    @RequestBody @Valid @Size(min = 1, message = "roleAuthorities required")
                                            List<RoleAuthorityUpdateRequest> roleAuthorities) {
@@ -89,6 +96,7 @@ public class RoleManagementController {
 
     @PostMapping(path = "/authorities/remove", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('role.remove_authority')")
     public void removeAuthorityFromRole(@PathVariable("domainId") String domainId,
                                         @RequestBody @Valid @Size(min = 1, message = "roleAuthorities required")
                                                 List<RoleAuthorityUpdateRequest> roleAuthorities) {
