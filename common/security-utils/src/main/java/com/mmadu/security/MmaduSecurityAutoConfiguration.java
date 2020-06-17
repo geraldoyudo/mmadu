@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -157,9 +158,9 @@ public class MmaduSecurityAutoConfiguration {
 
         @Bean
         @Order(200)
-        public DomainExtractor pathVariableDomainExtractor() {
+        public DomainExtractor pathVariableDomainExtractor(@Value("${mmadu.security.domain-parsing.path-keys:domain,domainId}") String domainKeys) {
             PathVariableDomainExtractor extractor = new PathVariableDomainExtractor();
-            extractor.setDomainKeys(List.of("domains", "domainId"));
+            extractor.setDomainKeys(Arrays.asList(domainKeys.split("[,]")));
             return extractor;
         }
 

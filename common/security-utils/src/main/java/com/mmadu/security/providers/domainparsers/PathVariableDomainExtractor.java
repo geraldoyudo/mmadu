@@ -30,7 +30,7 @@ public class PathVariableDomainExtractor implements HttpRequestDomainExtractor {
     }
 
     private Stream<String> extractFromPathVariableWithPattern(Pattern domainParamPattern, HttpServletRequest request) {
-        String path = request.getServletPath();
+        String path = request.getRequestURI().substring(request.getContextPath().length());
         Matcher matcher = domainParamPattern.matcher(path);
         if (!matcher.find()) {
             return Stream.empty();
