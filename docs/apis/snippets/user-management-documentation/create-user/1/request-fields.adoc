@@ -13,12 +13,4 @@
 |`+String+`
 |The user's password
 
-|`+roles+`
-|`+Array+`
-|The user's assigned roles
-
-|`+authorities+`
-|`+Array+`
-|The user's granted authorities
-
 |===

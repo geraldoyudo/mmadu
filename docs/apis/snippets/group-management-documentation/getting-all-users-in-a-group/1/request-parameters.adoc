@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+page+`
+|page number to request
+
+|`+size+`
+|maximum number of items in page
+
+|===

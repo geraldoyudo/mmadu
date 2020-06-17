@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+content.[].id+`
+|`+String+`
+|The user's unique identification
+
+|`+content.[].username+`
+|`+String+`
+|Username of the user
+
+|`+content.[].password+`
+|`+String+`
+|password of the user
+
+|`+content.[].roles+`
+|`+string list+`
+|List of roles assigned to this user
+
+|`+content.[].authorities+`
+|`+string list+`
+|List of authorities given to ths user
+
+|===

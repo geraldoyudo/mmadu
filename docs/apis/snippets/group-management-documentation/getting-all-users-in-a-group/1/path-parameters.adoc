@@ -1,0 +1,11 @@
+.+/domains/{domainId}/groups/{groupIdentifier}/users+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id of the group
+
+|`+groupIdentifier+`
+|The group identifier
+
+|===

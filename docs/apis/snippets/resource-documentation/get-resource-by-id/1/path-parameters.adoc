@@ -1,0 +1,8 @@
+.+/admin/repo/resources/{resourceId}+
+|===
+|Parameter|Description
+
+|`+resourceId+`
+|The resource ID
+
+|===

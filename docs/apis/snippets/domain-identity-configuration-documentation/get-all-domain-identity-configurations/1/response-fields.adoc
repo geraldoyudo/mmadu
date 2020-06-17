@@ -1,0 +1,52 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.domainIdentityConfigurations.[].id+`
+|`+string+`
+|Domain Identity Configuration ID
+
+|`+_embedded.domainIdentityConfigurations.[].domainId+`
+|`+String+`
+|The Domain Id
+
+|`+_embedded.domainIdentityConfigurations.[].authorizationCodeType+`
+|`+String+`
+|The format of authorization code generated in authorization_code grant type flow
+
+|`+_embedded.domainIdentityConfigurations.[].authorizationCodeTypeProperties+`
+|`+Object+`
+|Properties for customizing the authorization code generation
+
+|`+_embedded.domainIdentityConfigurations.[].authorizationCodeTTLSeconds+`
+|`+Number+`
+|Validity of the authorization code in seconds
+
+|`+_embedded.domainIdentityConfigurations.[].maxAuthorizationTTLSeconds+`
+|`+Number+`
+|Maximum validity of Granted Authorization in seconds (regardless of any authorization type)
+
+|`+_embedded.domainIdentityConfigurations.[].refreshTokenEnabled+`
+|`+Boolean+`
+|If enabled, refresh token will be issued if the flow supports it.
+
+|`+_embedded.domainIdentityConfigurations.[].accessTokenProvider+`
+|`+String+`
+|The provider used for generating access tokens
+
+|`+_embedded.domainIdentityConfigurations.[].accessTokenProperties+`
+|`+Object+`
+|Properties for customizing the access token generation
+
+|`+_embedded.domainIdentityConfigurations.[].refreshTokenProvider+`
+|`+String+`
+|The provider used for generating refresh tokens
+
+|`+_embedded.domainIdentityConfigurations.[].refreshTokenProperties+`
+|`+Object+`
+|Properties for customizing the refresh token generation
+
+|`+_embedded.domainIdentityConfigurations.[].issuerId+`
+|`+String+`
+|issuer id of the domain
+
+|===

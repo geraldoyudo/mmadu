@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"id":"123453432","username":"test-user","password":"my-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}
+{"id":"123453432","username":"test-user","password":"my-password","roles":[],"authorities":[],"favourite-colour":"blue","country":"Nigeria"}
 ----

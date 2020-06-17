@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 253
+
+{"content":[{"identifier":"sample","name":"Sample Role","description":"Sample Role"}],"totalPages":1,"last":true,"totalElements":1,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false,"empty":true},"numberOfElements":1,"first":true,"empty":false}
+----

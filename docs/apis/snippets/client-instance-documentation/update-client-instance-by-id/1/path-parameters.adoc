@@ -1,0 +1,8 @@
+.+/admin/repo/clientInstances/{clientInstanceId}+
+|===
+|Parameter|Description
+
+|`+clientInstanceId+`
+|The client instance ID
+
+|===

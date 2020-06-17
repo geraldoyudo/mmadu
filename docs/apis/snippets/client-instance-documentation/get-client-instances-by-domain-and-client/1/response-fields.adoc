@@ -1,0 +1,60 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.clientInstances.[].id+`
+|`+String+`
+|The client instance id
+
+|`+_embedded.clientInstances.[].domainId+`
+|`+String+`
+|the client instance domain id
+
+|`+_embedded.clientInstances.[].clientType+`
+|`+String+`
+|The client instance type
+
+|`+_embedded.clientInstances.[].clientProfile+`
+|`+String+`
+|The client instance profile
+
+|`+_embedded.clientInstances.[].identifier+`
+|`+String+`
+|The client's identifier (used for authentication and authorization)
+
+|`+_embedded.clientInstances.[].redirectionUris+`
+|`+Array+`
+|The client's allowed redirection uris
+
+|`+_embedded.clientInstances.[].allowedHosts+`
+|`+Array+`
+|The client's allowed hosts
+
+|`+_embedded.clientInstances.[].tlsEnabled+`
+|`+Boolean+`
+|If client is must use TLS or not
+
+|`+_embedded.clientInstances.[].resources+`
+|`+Array+`
+|The resource ids of the resources the client should have access to
+
+|`+_embedded.clientInstances.[].authorities+`
+|`+Array+`
+|The list of authorities granted to the client
+
+|`+_embedded.clientInstances.[].includeUserRoles+`
+|`+Boolean+`
+|Include user's roles in the token info
+
+|`+_embedded.clientInstances.[].includeUserAuthorities+`
+|`+Boolean+`
+|Include user's authorities in the token info
+
+|`+_embedded.clientInstances.[].credentials.type+`
+|`+String+`
+|The client's credential type (for now, `secret`)
+
+|`+_embedded.clientInstances.[].credentials.secret+`
+|`+String+`
+|The client secret (if credential type is `secret`)
+
+|===

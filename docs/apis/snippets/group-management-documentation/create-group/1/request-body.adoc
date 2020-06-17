@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"identifier":"test","name":"Test Group","description":"A test Group","parentGroup":"sample"}
+----

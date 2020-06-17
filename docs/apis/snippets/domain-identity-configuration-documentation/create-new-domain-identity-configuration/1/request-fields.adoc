@@ -1,0 +1,52 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Domain Identity Configuration ID
+
+|`+domainId+`
+|`+String+`
+|The Domain Id
+
+|`+authorizationCodeType+`
+|`+String+`
+|The format of authorization code generated in authorization_code grant type flow
+
+|`+authorizationCodeTypeProperties+`
+|`+Object+`
+|Properties for customizing the authorization code generation
+
+|`+authorizationCodeTTLSeconds+`
+|`+Number+`
+|Validity of the authorization code in seconds
+
+|`+maxAuthorizationTTLSeconds+`
+|`+Number+`
+|Maximum validity of Granted Authorization in seconds (regardless of any authorization type)
+
+|`+refreshTokenEnabled+`
+|`+Boolean+`
+|If enabled, refresh token will be issued if the flow supports it.
+
+|`+accessTokenProvider+`
+|`+String+`
+|The provider used for generating access tokens
+
+|`+accessTokenProperties+`
+|`+Object+`
+|Properties for customizing the access token generation
+
+|`+refreshTokenProvider+`
+|`+String+`
+|The provider used for generating refresh tokens
+
+|`+refreshTokenProperties+`
+|`+Object+`
+|Properties for customizing the refresh token generation
+
+|`+issuerId+`
+|`+String+`
+|issuer id of the domain
+
+|===

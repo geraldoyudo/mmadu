@@ -1,0 +1,36 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Client ID
+
+|`+name+`
+|`+String+`
+|The client's name
+
+|`+category+`
+|`+String+`
+|The client's category
+
+|`+tags+`
+|`+Array+`
+|List of tags to further categorize clients
+
+|`+logoUrl+`
+|`+String+`
+|The Client's logo
+
+|`+applicationUrl+`
+|`+String+`
+|The client's main application home page url
+
+|`+code+`
+|`+String+`
+|The client code
+
+|`+domainId+`
+|`+String+`
+|the ID of the domain
+
+|===
