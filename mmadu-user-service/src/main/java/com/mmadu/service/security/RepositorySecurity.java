@@ -2,6 +2,7 @@ package com.mmadu.service.security;
 
 import com.mmadu.service.entities.*;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
+import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +31,12 @@ public class RepositorySecurity {
 
     }
 
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('user.delete')")
+    public void deleteUser(@P("user") AppUser user) {
+
+    }
+
     @HandleBeforeCreate
     @PreAuthorize("hasAuthority('authority.create')")
     public void createAuthority(@P("authority") Authority authority) {
@@ -39,6 +46,12 @@ public class RepositorySecurity {
     @HandleBeforeSave
     @PreAuthorize("hasAuthority('authority.update')")
     public void updateAuthority(@P("authority") Authority authority) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('authority.delete')")
+    public void deleteAuthority(@P("user") Authority authority) {
 
     }
 
@@ -54,6 +67,12 @@ public class RepositorySecurity {
 
     }
 
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('group.delete')")
+    public void deleteGroup(@P("group") Group group) {
+
+    }
+
     @HandleBeforeCreate
     @PreAuthorize("hasAuthority('role.create')")
     public void createRole(@P("role") Role role) {
@@ -63,6 +82,12 @@ public class RepositorySecurity {
     @HandleBeforeSave
     @PreAuthorize("hasAuthority('role.update')")
     public void updateRole(@P("role") Role role) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('role.delete')")
+    public void deleteRole(@P("role") Role role) {
 
     }
 
@@ -78,6 +103,12 @@ public class RepositorySecurity {
 
     }
 
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('role_authority.delete')")
+    public void deleteRoleAuthority(@P("roleAuthority") RoleAuthority roleAuthority) {
+
+    }
+
     @HandleBeforeCreate
     @PreAuthorize("hasAuthority('user_authority.create')")
     public void createUserAuthority(@P("userAuthority") UserAuthority userAuthority) {
@@ -87,6 +118,12 @@ public class RepositorySecurity {
     @HandleBeforeSave
     @PreAuthorize("hasAuthority('user_authority.update')")
     public void updateUserAuthority(@P("userAuthority") UserAuthority userAuthority) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('user_authority.delete')")
+    public void deleteUserAuthority(@P("userAuthority") UserAuthority userAuthority) {
 
     }
 
@@ -102,6 +139,12 @@ public class RepositorySecurity {
 
     }
 
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('user_group.delete')")
+    public void deleteUserGroup(@P("userGroup") UserGroup userGroup) {
+
+    }
+
     @HandleBeforeCreate
     @PreAuthorize("hasRole('user_role.create')")
     public void createUserRole(@P("userRole") UserRole userRole) {
@@ -111,6 +154,12 @@ public class RepositorySecurity {
     @HandleBeforeSave
     @PreAuthorize("hasRole('user_role.update')")
     public void updateUserRole(@P("userRole") UserRole userRole) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasRole('user_role.delete')")
+    public void deleteUserRole(@P("userRole") UserRole userRole) {
 
     }
 }
