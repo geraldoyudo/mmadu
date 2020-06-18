@@ -24,6 +24,8 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
                 .hasAuthority("user.read")
                 .antMatchers(HttpMethod.GET, "/authorities/**")
                 .hasAuthority("authority.read")
+                .antMatchers(HttpMethod.GET, "/roles/**")
+                .hasAuthority("role.read")
                 .antMatchers(HttpMethod.GET, "/groups/**")
                 .hasAuthority("group.read")
                 .antMatchers(HttpMethod.GET, "/roleAuthorities/**")
