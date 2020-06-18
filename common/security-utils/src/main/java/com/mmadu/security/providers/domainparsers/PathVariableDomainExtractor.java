@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 
 public class PathVariableDomainExtractor implements HttpRequestDomainExtractor {
     private List<Pattern> domainPathVariablePattern = List.of(
-            Pattern.compile("domain/([a-zA-Z0-9]*)[/]?")
+            Pattern.compile("domain/([a-zA-Z0-9_\\-]*)[/]?")
     );
 
     public void setDomainKeys(List<String> domainKeys) {
         this.domainPathVariablePattern = domainKeys.stream()
-                .map(key -> String.format("%s/([a-zA-Z0-9]*)[/]?", key))
+                .map(key -> String.format("%s/([a-zA-Z0-9_\\-]*)[/]?", key))
                 .map(Pattern::compile)
                 .collect(Collectors.toList());
     }

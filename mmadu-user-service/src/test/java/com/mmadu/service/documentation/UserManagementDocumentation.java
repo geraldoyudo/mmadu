@@ -39,7 +39,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         user.setId("123");
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.create"))
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
@@ -60,7 +60,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -88,7 +88,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -118,7 +118,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.delete"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -133,7 +133,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.put("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.update"))
                 .content(objectMapper.createObjectNode()
                         .put("username", "changed-username")
                         .put("password", "changed-password")
@@ -153,7 +153,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load",
                 USER_DOMAIN_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.load"))
                 .param("username", USERNAME))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, userResponseFields(),
@@ -175,7 +175,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .param("page", "0")
                 .param("size", "10")
                 .param("query", "(country equals 'Nigeria') and (favourite-color equals 'blue')")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -197,7 +197,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.update"))
                 .content(objectMapper.writeValueAsString(request))
         )
                 .andExpect(status().isNoContent())
