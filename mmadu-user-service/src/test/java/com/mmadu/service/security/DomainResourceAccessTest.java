@@ -1,5 +1,7 @@
 package com.mmadu.service.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.service.utilities.TokenGeneratorUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -7,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,6 +26,9 @@ public class DomainResourceAccessTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     static void setUpClass() throws Exception {
@@ -84,7 +92,7 @@ public class DomainResourceAccessTest {
     @Test
     void createDomainWithCorrectAuthorityShouldBeAccessible() throws Exception {
         mockMvc.perform(post("/appDomains")
-                .header(HttpHeaders.AUTHORIZATION, authorization("a.global.domain.delete"))
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.global.domain.create"))
         )
                 .andExpect(status().isBadRequest());
 
@@ -93,27 +101,35 @@ public class DomainResourceAccessTest {
     @Test
     void createDomainWithIncorrectCorrectAuthorityShouldBeForbidden() throws Exception {
         mockMvc.perform(post("/appDomains")
-                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.delete"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newDomainRequest())
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.create"))
         )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isForbidden());
 
+    }
+
+    private String newDomainRequest() throws JsonProcessingException {
+        return objectMapper.writeValueAsString(Map.of("name", "test-domain"));
     }
 
     @Test
     void updateDomainWithCorrectAuthorityShouldBeAccessible() throws Exception {
         mockMvc.perform(patch("/appDomains/1")
-                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.delete"))
+                .content(newDomainRequest())
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.1.domain.update"))
         )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNoContent());
 
     }
 
     @Test
     void updateDomainWithIncorrectCorrectAuthorityShouldBeForbidden() throws Exception {
         mockMvc.perform(patch("/appDomains/1")
-                .header(HttpHeaders.AUTHORIZATION, authorization("a.2.domain.delete"))
+                .content(newDomainRequest())
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.2.domain.update"))
         )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isForbidden());
 
     }
 }

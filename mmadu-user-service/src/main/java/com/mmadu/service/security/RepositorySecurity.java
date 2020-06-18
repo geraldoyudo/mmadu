@@ -12,6 +12,12 @@ import org.springframework.stereotype.Component;
 @RepositoryEventHandler
 public class RepositorySecurity {
 
+    @HandleBeforeSave
+    @PreAuthorize("hasAuthority('domain.update')")
+    public void updateDomain(@P("domain") AppDomain domain) {
+
+    }
+
     @HandleBeforeCreate
     @PreAuthorize("hasAuthority('user.create')")
     public void createUser(@P("user") AppUser user) {

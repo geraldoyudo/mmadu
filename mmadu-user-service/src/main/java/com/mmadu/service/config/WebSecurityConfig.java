@@ -18,6 +18,8 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
                 .hasAuthority("domain.read")
                 .antMatchers(HttpMethod.DELETE, "/appDomains/**")
                 .hasAuthority("domain.delete")
+                .antMatchers(HttpMethod.POST, "/appDomains")
+                .hasAuthority("domain.create")
                 .antMatchers(HttpMethod.GET, "/appUsers/**")
                 .hasAuthority("user.read")
                 .antMatchers(HttpMethod.DELETE, "/appUsers/**")
