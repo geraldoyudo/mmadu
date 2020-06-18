@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"content":[{"identifier":"sample","name":"Sample Authority","description":"Sample Authority"}],"totalPages":1,"last":true,"totalElements":1,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false,"empty":true},"numberOfElements":1,"first":true,"empty":false}
+{"content":[{"identifier":"sample","name":"Sample Authority","description":"Sample Authority"}],"totalElements":1,"totalPages":1,"last":true,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false,"empty":true},"first":true,"numberOfElements":1,"empty":false}
 ----
