@@ -36,6 +36,8 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
                 .hasAuthority("scope.read")
                 .antMatchers(HttpMethod.GET,"/admin/repo/tokens/**")
                 .hasAuthority("token.read")
+                .antMatchers(HttpMethod.GET,"/admin/repo/credentials/**")
+                .hasAuthority("credential.read")
                 .anyRequest()
                 .authenticated();
     }
