@@ -91,6 +91,6 @@ public class CredentialServiceImpl implements CredentialService {
     private byte[] getVerificationKey(Credential credential) {
         CredentialData data = credential.getData();
         data.decryptData(decryptionProvider);
-        return ((HasVerificationKey) data).getVerificationKey();
+        return ((HasVerificationKey) data).verificationKey();
     }
 }

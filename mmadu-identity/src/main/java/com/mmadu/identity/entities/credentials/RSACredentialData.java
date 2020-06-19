@@ -25,7 +25,7 @@ public class RSACredentialData implements CredentialData, HasVerificationKey {
 
     @Override
     @JsonIgnore
-    public byte[] getVerificationKey() {
+    public byte[] verificationKey() {
         try {
             return RSAKey.parse(keyData).toPublicKey().getEncoded();
         } catch (ParseException | JOSEException ex) {

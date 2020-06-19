@@ -49,6 +49,7 @@ public class AESCredentialCipher implements CredentialDecryptionProvider, Creden
             Key newKey = new Key();
             newKey.setId(keyId);
             newKey.setValue(keyCipher.encrypt(secretKey.getEncoded()));
+            keyRepository.save(newKey);
         } else {
             Key loadedKey = key.get();
             byte[] decryptedKey = keyCipher.decrypt(loadedKey.getValue());
