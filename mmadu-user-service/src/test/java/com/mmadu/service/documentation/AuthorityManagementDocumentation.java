@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.entities.Authority;
-import com.mmadu.service.entities.Authority;
 import com.mmadu.service.entities.UserAuthority;
 import com.mmadu.service.repositories.AuthorityRepository;
 import com.mmadu.service.repositories.UserAuthorityRepository;
@@ -16,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -43,7 +41,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
     void createAuthority() throws Exception {
         mockMvc.perform(post("/domains/{domainId}/authorities", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.update"))
                 .content(newAuthorityRequest()))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -81,7 +79,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
                 USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -108,7 +106,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         createAndSaveAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/authorities/{authorityIdentifier}",
                 USER_DOMAIN_ID, authority.getIdentifier())
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.delete"))
         ).andExpect(status().isNoContent());
         assertTrue(
                 authorityRepository.findById(authority.getId()).isEmpty()
@@ -121,7 +119,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         createAndSaveAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authorities/users/{userId}/addAuthorities",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.grant_user"))
                 .content(
                         objectMapper.createArrayNode()
                                 .add(authority.getIdentifier())
@@ -144,7 +142,7 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         setUserAuthority();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authorities/users/{userId}/removeAuthorities",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.revoke_user"))
                 .content(
                         objectMapper.createArrayNode()
                                 .add(authority.getIdentifier())

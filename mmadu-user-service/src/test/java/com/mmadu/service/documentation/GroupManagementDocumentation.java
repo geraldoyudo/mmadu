@@ -16,7 +16,6 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
 import java.util.List;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -50,7 +49,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
 
         mockMvc.perform(post("/domains/{domainId}/groups", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.group.create"))
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
@@ -79,7 +78,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
         createAndSaveGroup();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/groups/{groupIdentifier}/users/{userId}",
                 USER_DOMAIN_ID, group.getIdentifier(), USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.group.add_user"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -109,7 +108,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
         setUserGroup();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/groups/{groupIdentifier}/users/{userId}",
                 USER_DOMAIN_ID, group.getIdentifier(), USER_EXTERNAL_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.group.remove_user"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -144,7 +143,7 @@ public class GroupManagementDocumentation extends AbstractDocumentation {
                 USER_DOMAIN_ID, group.getIdentifier())
                 .param("page", "0")
                 .param("size", "10")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.group.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,

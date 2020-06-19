@@ -28,7 +28,7 @@ public class AuthenticationDocumentation extends AbstractDocumentation {
     void authentication() throws Exception {
         this.mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/authenticate",
                 USER_DOMAIN_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.authenticate"))
                 .contentType(MediaType.APPLICATION_JSON).content(objectToString(
                         new AuthenticateRequest(USERNAME, USER_PASSWORD)
                         )

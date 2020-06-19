@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,18 +41,21 @@ public class AuthorityManagementController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('authority.update')")
     public void saveAuthorities(@PathVariable("domainId") String domainId,
                                 @RequestBody @Valid @Size(min = 1, message = "authorities required") List<AuthorityData> authorities) {
         authorityManagementService.saveAuthorities(domainId, authorities);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('authority.read')")
     public Page<AuthorityData> getAuthorities(@PathVariable("domainId") String domainId, Pageable p) {
         return authorityManagementService.getAuthorities(domainId, p);
     }
 
     @DeleteMapping("/{authorityIdentifier}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('authority.delete')")
     public void deleteAuthority(@PathVariable("domainId") String domainId,
                                 @PathVariable("authorityIdentifier") String identifier) {
         authorityManagementService.deleteAuthority(domainId, identifier);
@@ -59,6 +63,7 @@ public class AuthorityManagementController {
 
     @PostMapping(path = "/users/{userId}/addAuthorities", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('authority.grant_user')")
     public void grantUserAuthorities(@PathVariable("domainId") String domainId,
                                      @PathVariable("userId") String userId,
                                      @RequestBody @Valid @Size(min = 1, message = "authority identifiers required")
@@ -68,6 +73,7 @@ public class AuthorityManagementController {
 
     @PostMapping(path = "/users/{userId}/removeAuthorities", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('authority.revoke_user')")
     public void revokeUserAuthorities(
             @PathVariable("domainId") String domainId,
             @PathVariable("userId") String userId,

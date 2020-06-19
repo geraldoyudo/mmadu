@@ -24,7 +24,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     void createADomain() throws Exception {
         mockMvc.perform(post("/appDomains")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.global.domain.create"))
                 .content(objectToString(createConstantDomain()))
         ).andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
@@ -43,7 +43,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     @Test
     void gettingAllDomains() throws Exception {
         mockMvc.perform(get("/appDomains")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.global.domain.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, domainsResponseFields()));
@@ -63,7 +63,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     void getADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a." + NEW_DOMAIN_ID + ".domain.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -87,7 +87,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
     void deletingADomainById() throws Exception {
         createAndSaveDomain();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a." + NEW_DOMAIN_ID + ".domain.delete"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -102,7 +102,7 @@ public class DomainManagementDocumentation extends AbstractDocumentation {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("name", "changed-name");
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/appDomains/{domainId}", NEW_DOMAIN_ID)
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a." + NEW_DOMAIN_ID + ".domain.update"))
                 .content(objectNode.toString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())

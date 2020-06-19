@@ -21,20 +21,23 @@ class PathVariableDomainExtractorTest {
 
     @Test
     void givenPathWithDomainIdWhenExtractDomainShouldReturnDomain() {
-        when(request.getServletPath()).thenReturn("/something/else/domain/1111");
+        when(request.getRequestURI()).thenReturn("http://localhost/something/else/domain/1111");
+        when(request.getContextPath()).thenReturn("/");
         assertEquals("1111", domainExtractor.extractDomainIdFromRequest(request).orElse(""));
     }
 
     @Test
     void givenPathWithDomainIdWhenCustomExtractDomainShouldReturnDomain() {
-        when(request.getServletPath()).thenReturn("/something/else/domainId/1111");
+        when(request.getRequestURI()).thenReturn("http://localhost/something/else/domainId/1111");
+        when(request.getContextPath()).thenReturn("/");
         domainExtractor.setDomainKeys(List.of("tenant", "domainId"));
         assertEquals("1111", domainExtractor.extractDomainIdFromRequest(request).orElse(""));
     }
 
     @Test
     void givenPathWithoutDomainIdWhenExtractDomainShouldReturnDomain() {
-        when(request.getServletPath()).thenReturn("/something/else/domain/");
+        when(request.getRequestURI()).thenReturn("http://localhost/something/else/domain/");
+        when(request.getContextPath()).thenReturn("/");
         assertTrue(domainExtractor.extractDomainIdFromRequest(request).isEmpty());
     }
 }

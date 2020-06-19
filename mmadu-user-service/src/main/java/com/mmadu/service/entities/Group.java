@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
@@ -17,7 +18,7 @@ import java.util.Set;
         @CompoundIndex(name = "domain_group_identifier", def = "{'domainId': 1, 'identifier': 1}", unique = true),
         @CompoundIndex(name = "domain_group_name", def = "{'domainId': 1, 'name': 1}", unique = true)
 })
-public class Group {
+public class Group implements DomainPayload {
     @Id
     private String id;
     @NotEmpty(message = "domainId is required")

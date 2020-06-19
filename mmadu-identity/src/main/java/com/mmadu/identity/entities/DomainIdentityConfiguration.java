@@ -1,6 +1,7 @@
 package com.mmadu.identity.entities;
 
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
+import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -14,7 +15,7 @@ import java.util.Map;
 @Data
 @Document
 @EqualsAndHashCode
-public class DomainIdentityConfiguration {
+public class DomainIdentityConfiguration implements DomainPayload {
     @Id
     private String id;
     @Indexed(unique = true)

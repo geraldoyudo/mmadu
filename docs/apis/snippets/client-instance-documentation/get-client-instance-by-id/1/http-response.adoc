@@ -14,8 +14,8 @@ X-Frame-Options: DENY
 Content-Length: 1135
 
 {
-  "id" : "5eea1ff1ffc4495eca2ff361",
-  "clientId" : "5eea1ff1ffc4495eca2ff35f",
+  "id" : "5eec5c83d4de4b28a4a41c56",
+  "clientId" : "5eec5c83d4de4b28a4a41c54",
   "clientType" : "CONFIDENTIAL",
   "clientProfile" : "web_app",
   "credentials" : {
@@ -40,10 +40,10 @@ Content-Length: 1135
   "includeUserGroups" : false,
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff361"
+      "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
     },
     "clientInstance" : {
-      "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff361"
+      "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
     }
   }
 }

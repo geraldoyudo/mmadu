@@ -16,8 +16,8 @@ Content-Length: 1590
 {
   "_embedded" : {
     "clientInstances" : [ {
-      "id" : "5eea1ff1ffc4495eca2ff35b",
-      "clientId" : "5eea1ff0ffc4495eca2ff359",
+      "id" : "5eec5c82d4de4b28a4a41c50",
+      "clientId" : "5eec5c82d4de4b28a4a41c4e",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
@@ -42,10 +42,10 @@ Content-Length: 1590
       "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff35b"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff35b"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
         }
       }
     } ]

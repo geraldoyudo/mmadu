@@ -1,6 +1,7 @@
 package com.mmadu.identity.entities;
 
 import com.mmadu.identity.entities.token.TokenCredentials;
+import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 @Document
 @EqualsAndHashCode
-public class Token {
+public class Token implements DomainPayload {
     @Id
     private String id;
     private String grantAuthorizationId;

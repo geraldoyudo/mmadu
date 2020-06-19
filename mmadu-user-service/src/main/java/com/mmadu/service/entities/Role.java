@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import com.mmadu.service.models.RoleData;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
         @CompoundIndex(name = "domain_role_identifier", def = "{'domainId': 1, 'identifier': 1}", unique = true),
         @CompoundIndex(name = "domain_role_name", def = "{'domainId': 1, 'name': 1}", unique = true)
 })
-public class Role {
+public class Role implements DomainPayload {
     @Id
     private String id;
     @NotEmpty(message = "domainId is required")

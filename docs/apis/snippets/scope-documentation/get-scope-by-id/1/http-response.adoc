@@ -14,17 +14,17 @@ X-Frame-Options: DENY
 Content-Length: 387
 
 {
-  "id" : "5eea1ff0ffc4495eca2ff358",
+  "id" : "5eec5c82d4de4b28a4a41c4d",
   "domainId" : "1",
   "code" : "test.mail",
   "name" : "Email Scope",
   "description" : "Email Contacts",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff358"
+      "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4d"
     },
     "scope" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff358"
+      "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4d"
     }
   }
 }

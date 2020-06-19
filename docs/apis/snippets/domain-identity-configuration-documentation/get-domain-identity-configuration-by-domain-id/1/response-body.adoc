@@ -1,7 +1,7 @@
 [source,options="nowrap"]
 ----
 {
-  "id" : "5eea200effc4495eca2ff37a",
+  "id" : "5eec5ca0d4de4b28a4a41c6f",
   "domainId" : "1",
   "authorizationCodeType" : "alphanumeric",
   "authorizationCodeTypeProperties" : { },
@@ -15,10 +15,10 @@
   "issuerId" : "mmadu.com",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eea200effc4495eca2ff37a"
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f"
     },
     "domainIdentityConfiguration" : {
-      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eea200effc4495eca2ff37a"
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f"
     }
   }
 }

@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @Document
 @NoArgsConstructor
-public class RoleAuthority {
+public class RoleAuthority implements DomainPayload {
     @Id
     private String id;
     @NotEmpty(message = "domainId is required")

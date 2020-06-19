@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import com.mmadu.service.models.UserView;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -19,7 +20,7 @@ import java.util.Optional;
         @CompoundIndex(name = "domain_external_id", def = "{'domainId': 1, 'externalId': 1}", unique = true),
         @CompoundIndex(name = "domain_username", def = "{'domainId': 1, 'username': 1}", unique = true)
 })
-public class AppUser {
+public class AppUser implements DomainPayload {
 
     @Id
     private String id;

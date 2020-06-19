@@ -1,5 +1,6 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import com.mmadu.service.models.AuthorityData;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
         @CompoundIndex(name = "domain_authority_identifier", def = "{'domainId': 1, 'identifier': 1}", unique = true),
         @CompoundIndex(name = "domain_authority_name", def = "{'domainId': 1, 'name': 1}", unique = true)
 })
-public class Authority {
+public class Authority implements DomainPayload {
     @Id
     private String id;
     @NotEmpty(message = "domainId is required")

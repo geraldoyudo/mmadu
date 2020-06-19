@@ -1,5 +1,7 @@
 package com.mmadu.identity.entities;
 
-public interface HasDomain {
+import com.mmadu.security.api.DomainPayload;
+
+public interface HasDomain extends DomainPayload {
     String getDomainId();
 }

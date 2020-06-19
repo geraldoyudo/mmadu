@@ -43,7 +43,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/scopes")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.scope.create"))
                         .content(newScopeRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -78,7 +78,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         scope = scopeRepository.save(scope);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.scope.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -103,7 +103,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/scopes/search/findByDomainId")
                         .param("domainId", scope.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.scope.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -131,7 +131,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         Scope scope = scopeRepository.save(newScope());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.scope.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", newScopeName)
@@ -151,7 +151,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
         Scope scope = scopeRepository.save(newScope());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/admin/repo/scopes/{scopeId}", scope.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.scope.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

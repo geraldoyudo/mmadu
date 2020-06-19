@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class ResourceDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/resources")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.resource.create"))
                         .content(newResourceRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -79,7 +78,7 @@ public class ResourceDocumentation extends AbstractDocumentation {
         resource = resourceRepository.save(resource);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/resources/{resourceId}", resource.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.resource.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -104,7 +103,7 @@ public class ResourceDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/resources/search/findByDomainId")
                         .param("domainId", resource.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.resource.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -132,7 +131,7 @@ public class ResourceDocumentation extends AbstractDocumentation {
         Resource resource = resourceRepository.save(newResource());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/admin/repo/resources/{resourceId}", resource.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.resource.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", newResourceName)
@@ -152,7 +151,7 @@ public class ResourceDocumentation extends AbstractDocumentation {
         Resource resource = resourceRepository.save(newResource());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/admin/repo/resources/{resourceId}", resource.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.resource.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

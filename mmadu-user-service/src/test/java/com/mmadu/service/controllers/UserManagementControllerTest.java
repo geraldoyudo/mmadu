@@ -2,6 +2,7 @@ package com.mmadu.service.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mmadu.security.MmaduSecurityAutoConfiguration;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.models.PatchOperation;
@@ -49,10 +50,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableAutoConfiguration(
         exclude = {
                 SecurityAutoConfiguration.class,
-                SecurityFilterAutoConfiguration.class
+                SecurityFilterAutoConfiguration.class,
+                MmaduSecurityAutoConfiguration.class
         }
 )
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class UserManagementControllerTest {
     public static final String USER_ID = "13423";
     public static final String USERNAME = "test-user";

@@ -29,11 +29,11 @@ public class CredentialCreationDocumentation extends AbstractDocumentation {
     private DomainIdentityConfiguration configuration;
 
     @Test
-    void createNewClient() throws Exception {
+    void createNewCredential() throws Exception {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/admin/credentials/{domainId}", DOMAIN_ID)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                RestDocumentationRequestBuilders.post("/admin/domains/{domainId}/credentials", DOMAIN_ID)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.credential.create"))
                         .accept(MediaType.TEXT_PLAIN)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(newCredentialsRequest())
