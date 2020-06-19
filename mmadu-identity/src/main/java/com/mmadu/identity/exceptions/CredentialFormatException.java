@@ -7,4 +7,8 @@ public class CredentialFormatException extends RuntimeException {
     public CredentialFormatException(String message) {
         super(message);
     }
+
+    public CredentialFormatException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
