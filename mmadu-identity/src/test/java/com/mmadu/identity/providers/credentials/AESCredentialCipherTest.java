@@ -1,6 +1,5 @@
 package com.mmadu.identity.providers.credentials;
 
-import com.mmadu.identity.config.CredentialsCipherConfig;
 import com.nimbusds.jose.util.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +8,10 @@ import org.springframework.core.io.ClassPathResource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = {
-        CredentialsCipherConfig.class,
-        RSACredentialCipher.class
-})
-class RSACredentialCipherTest {
+@SpringBootTest
+class AESCredentialCipherTest {
     @Autowired
-    private RSACredentialCipher cipher;
+    private AESCredentialCipher cipher;
 
     @Test
     void testCipher() throws Exception {

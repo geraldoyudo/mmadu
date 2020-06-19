@@ -17,10 +17,16 @@ import java.text.ParseException;
 @Qualifier("rsa")
 public class RSACredentialsLoader implements CredentialsLoader<RSAKey> {
     private CredentialService credentialService;
+    private CredentialDecryptionProvider decryptionProvider;
 
     @Autowired
     public void setCredentialService(CredentialService credentialService) {
         this.credentialService = credentialService;
+    }
+
+    @Autowired
+    public void setDecryptionProvider(CredentialDecryptionProvider decryptionProvider) {
+        this.decryptionProvider = decryptionProvider;
     }
 
     @Override
@@ -28,6 +34,7 @@ public class RSACredentialsLoader implements CredentialsLoader<RSAKey> {
     public RSAKey loadCredentialById(String credentialId) throws CredentialFormatException {
         CredentialData data = credentialService.findById(credentialId)
                 .orElseThrow(CredentialNotFoundException::new);
+        data.decryptData(decryptionProvider);
         if (!(data instanceof RSACredentialData)) {
             throw new IllegalStateException("invalid credential");
         }
