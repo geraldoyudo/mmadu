@@ -33,7 +33,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = createNewField();
         mockMvc.perform(
                 post("/repo/fields")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.field.create"))
                         .content(objectMapper.writeValueAsString(field))
         ).andExpect(status().isCreated())
                 .andDo(
@@ -80,7 +80,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fields/{fieldId}", field.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -101,7 +101,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fields/search/findByDomainId")
                         .param("domainId", field.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.field.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -133,7 +133,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/fields/{fieldId}", field.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.field.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("placeholder", modifiedPlaceHolder)
@@ -153,7 +153,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         Field field = fieldRepository.save(createNewField());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fields/{fieldId}", field.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.field.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

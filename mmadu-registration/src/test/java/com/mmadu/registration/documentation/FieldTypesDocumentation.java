@@ -35,7 +35,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = createNewFieldType();
         mockMvc.perform(
                 post("/repo/fieldTypes")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.create"))
                         .content(objectMapper.writeValueAsString(fieldType))
         ).andExpect(status().isCreated())
                 .andDo(
@@ -88,7 +88,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes/{fieldTypeId}",
                         fieldType.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -108,7 +108,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, relaxedResponseFields(
@@ -141,7 +141,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", modifiedName)
@@ -161,7 +161,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

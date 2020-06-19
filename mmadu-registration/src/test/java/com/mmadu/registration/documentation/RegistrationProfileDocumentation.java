@@ -35,7 +35,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         RegistrationProfile profile = createNewRegistrationProfile();
         mockMvc.perform(
                 post("/repo/registrationProfiles")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.0.reg_profile.create"))
                         .content(objectMapper.writeValueAsString(profile))
         )
                 .andExpect(status().isCreated())
@@ -91,7 +91,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.reg_profile.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(
@@ -112,7 +112,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/registrationProfiles/search/findByDomainId")
                         .param("domainId", profile.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.0.reg_profile.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(
@@ -135,7 +135,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.0.reg_profile.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("defaultRedirectUrl", modifiedRedirectUrl)
@@ -156,7 +156,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/registrationProfiles/{profileId}",
                         profile.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.0.reg_profile.delete"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME, pathParameters(
