@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.client.instance;
+package com.mmadu.identity.providers.credentials;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

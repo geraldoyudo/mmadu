@@ -1,8 +1,8 @@
 package com.mmadu.identity.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashMatcher;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashProvider;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.credentials.CredentialDataHashProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

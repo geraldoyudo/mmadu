@@ -3,7 +3,7 @@ package com.mmadu.identity.providers.client.authentication.authenticationextract
 import com.mmadu.identity.entities.ClientSecretCredentials;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.providers.client.authentication.MmaduClientAuthenticationToken;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
 import com.mmadu.identity.services.client.MmaduClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

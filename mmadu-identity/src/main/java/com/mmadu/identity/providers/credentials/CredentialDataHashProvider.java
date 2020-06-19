@@ -1,4 +1,4 @@
-package com.mmadu.identity.providers.client.instance;
+package com.mmadu.identity.providers.credentials;
 
 public interface CredentialDataHashProvider {
 

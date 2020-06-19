@@ -2,6 +2,7 @@ package com.mmadu.identity.providers.client.instance;
 
 import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientInstance;
+import com.mmadu.identity.providers.credentials.CredentialDataHashProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;

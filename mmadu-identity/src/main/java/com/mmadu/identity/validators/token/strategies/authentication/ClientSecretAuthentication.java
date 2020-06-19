@@ -3,7 +3,7 @@ package com.mmadu.identity.validators.token.strategies.authentication;
 import com.mmadu.identity.entities.ClientSecretCredentials;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.TokenRequest;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

@@ -2,8 +2,8 @@ package com.mmadu.identity.entities;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashMatcher;
-import com.mmadu.identity.providers.client.instance.CredentialDataHashProvider;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.credentials.CredentialDataHashProvider;
 
 import java.io.Serializable;
 
