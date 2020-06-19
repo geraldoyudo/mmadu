@@ -6,13 +6,14 @@ import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.services.security.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/credentials/{domainId}")
+@RequestMapping("/admin/domain/{domainId}/credentials")
 public class CredentialController {
     private DomainIdentityConfigurationService domainIdentityConfigurationService;
     private CredentialService credentialService;
@@ -33,6 +34,7 @@ public class CredentialController {
                 .orElseThrow(DomainNotFoundException::new);
     }
 
+    @PreAuthorize("hasAuthority('credential.create')")
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String createCredential(@PathVariable("domainId") String domainId,
                                    @RequestBody @Valid CredentialGenerationRequest request) {

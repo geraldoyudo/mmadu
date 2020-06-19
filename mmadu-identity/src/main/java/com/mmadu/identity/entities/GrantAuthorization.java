@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @Document
 @EqualsAndHashCode
-public class GrantAuthorization {
+public class GrantAuthorization implements DomainPayload {
     @Id
     private String id;
     @NotEmpty(message = "domain id is required")
