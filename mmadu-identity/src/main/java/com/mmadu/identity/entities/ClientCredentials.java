@@ -2,6 +2,8 @@ package com.mmadu.identity.entities;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.mmadu.identity.providers.client.instance.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.client.instance.CredentialDataHashProvider;
 
 import java.io.Serializable;
 
@@ -16,5 +18,7 @@ public interface ClientCredentials extends Serializable {
 
     String getType();
 
-    boolean matches(Object credential);
+    boolean matches(Object credential, CredentialDataHashMatcher matcher);
+
+    void hashData(CredentialDataHashProvider provider);
 }

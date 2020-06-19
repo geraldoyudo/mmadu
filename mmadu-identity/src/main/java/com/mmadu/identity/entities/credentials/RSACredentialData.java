@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities.credentials;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.exceptions.CredentialFormatException;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 
 @Data
 public class RSACredentialData implements CredentialData, HasVerificationKey {
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String keyData;
 
     @Override

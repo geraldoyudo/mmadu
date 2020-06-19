@@ -2,6 +2,8 @@ package com.mmadu.identity.security;
 
 import com.mmadu.identity.entities.*;
 import com.mmadu.identity.entities.credentials.Credential;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RepositoryEventHandler
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RepositoryRestSecurity {
 
     @HandleBeforeCreate
