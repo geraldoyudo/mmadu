@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mmadu.identity.models.domain.Domain;
 import com.mmadu.identity.services.domain.DomainService;
+import com.mmadu.identity.utilities.TokenGeneratorUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +44,13 @@ public abstract class AbstractDocumentation {
     protected ObjectMapper objectMapper;
     @MockBean
     private DomainService domainService;
-
+    private static TokenGeneratorUtils tokenGenerator;
     protected MockMvc mockMvc;
+
+    @BeforeAll
+    static void setUpTokenGenerator() throws Exception {
+        tokenGenerator = TokenGeneratorUtils.getInstance();
+    }
 
     @BeforeEach
     void initializeTest(WebApplicationContext context,
@@ -56,6 +63,10 @@ public abstract class AbstractDocumentation {
                 .alwaysDo(document(DOCUMENTATION_NAME,
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()))).build();
+    }
+
+    protected String authorization(String... authorities) throws Exception {
+        return "Bearer " + tokenGenerator.generateTokenWithAuthorities(authorities);
     }
 
     @Configuration

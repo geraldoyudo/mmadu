@@ -82,7 +82,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
         mockMvc.perform(
                 post("/admin/repo/clientInstances")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.client_instance.create"))
                         .content(newClientInstanceRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -148,7 +148,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.client_instance.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -186,7 +186,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/search/findByDomainId")
                         .param("domainId", instance.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.client_instance.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -223,7 +223,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 RestDocumentationRequestBuilders.get("/admin/repo/clientInstances/search/findByDomainIdAndClientId")
                         .param("domainId", instance.getDomainId())
                         .param("clientId", instance.getClientId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.client_instance.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -243,7 +243,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.client_instance.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("tlsEnabled", tlsEnabled)
@@ -263,7 +263,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         ClientInstance instance = newClientInstance();
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/admin/repo/clientInstances/{clientInstanceId}", instance.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.client_instance.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

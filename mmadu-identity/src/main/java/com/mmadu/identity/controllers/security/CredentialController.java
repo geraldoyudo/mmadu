@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/domain/{domainId}/credentials")
+@RequestMapping("/admin/domains/{domainId}/credentials")
 public class CredentialController {
     private DomainIdentityConfigurationService domainIdentityConfigurationService;
     private CredentialService credentialService;

@@ -39,7 +39,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
     void createNewDomainIdentityConfiguration() throws Exception {
         mockMvc.perform(
                 post("/admin/repo/domainIdentityConfigurations")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.identity_config.create"))
                         .content(newDomainIdentityConfigurationRequest())
         ).andExpect(status().isCreated())
                 .andDo(
@@ -91,7 +91,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.get(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.identity_config.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -116,7 +116,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/domainIdentityConfigurations/search/findByDomainId")
                         .param("domainId", configuration.getDomainId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.identity_config.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, requestParameters(
@@ -129,10 +129,10 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
 
     @Test
     public void getAllDomainIdentityConfigurations() throws Exception {
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationRepository.save(newDomainIdentityConfiguration());
+        domainIdentityConfigurationRepository.save(newDomainIdentityConfiguration());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/admin/repo/domainIdentityConfigurations")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.identity_config.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, relaxedResponseFields(
@@ -166,7 +166,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.patch(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.identity_config.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("authorizationCodeTTLSeconds", authorizationCodeTTLSeconds)
@@ -189,7 +189,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 RestDocumentationRequestBuilders.delete(
                         "/admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}",
                         configuration.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.1.identity_config.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

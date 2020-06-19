@@ -21,6 +21,9 @@ management:
       exposure:
         include: health, info, caches
 mmadu:
+  security:
+    domain-parsing:
+      path-keys: domain,domainId,domains
   domainKey: 2222
   tokenService:
     url: http://localhost:10082
