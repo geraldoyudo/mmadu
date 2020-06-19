@@ -10,4 +10,6 @@ public interface CredentialService {
     Optional<CredentialData> findById(String credentialId);
 
     String generateCredentialForDomain(String domainId, CredentialGenerationRequest request);
+
+    String getCredentialVerificationKey(String domainId, String credentialId);
 }

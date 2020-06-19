@@ -1,0 +1,11 @@
+.+/admin/domains/{domainId}/credentials/{credentialId}/verificationKey+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|domain for the credentials to be crated in
+
+|`+credentialId+`
+|the credential id
+
+|===

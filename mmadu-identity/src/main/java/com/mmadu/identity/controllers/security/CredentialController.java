@@ -11,6 +11,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin/domains/{domainId}/credentials")
@@ -39,5 +40,12 @@ public class CredentialController {
     public String createCredential(@PathVariable("domainId") String domainId,
                                    @RequestBody @Valid CredentialGenerationRequest request) {
         return credentialService.generateCredentialForDomain(domainId, request);
+    }
+
+    @PreAuthorize("hasAuthority('credential.read')")
+    @GetMapping(path = "/{credentialId}/verificationKey", produces = "text/plain")
+    public String viewCredentialVerificationKey(@PathVariable("domainId") String domainId,
+                                                          @PathVariable("credentialId") String credentialId) {
+        return credentialService.getCredentialVerificationKey(domainId, credentialId);
     }
 }

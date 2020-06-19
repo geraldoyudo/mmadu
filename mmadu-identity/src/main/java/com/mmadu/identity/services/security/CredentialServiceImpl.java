@@ -2,10 +2,13 @@ package com.mmadu.identity.services.security;
 
 import com.mmadu.identity.entities.credentials.Credential;
 import com.mmadu.identity.entities.credentials.CredentialData;
+import com.mmadu.identity.entities.credentials.HasVerificationKey;
+import com.mmadu.identity.exceptions.CredentialNotFoundException;
 import com.mmadu.identity.models.security.CredentialGenerationRequest;
 import com.mmadu.identity.providers.credentials.CredentialsProvider;
 import com.mmadu.identity.repositories.CredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -45,5 +48,16 @@ public class CredentialServiceImpl implements CredentialService {
         credential.setData(provider.generateCredential(request));
         credential = credentialRepository.save(credential);
         return credential.getId();
+    }
+
+    @Override
+    public String getCredentialVerificationKey(String domainId, String credentialId) {
+        return credentialRepository.findById(credentialId)
+                .filter(credential -> domainId.equals(credential.getDomainId()))
+                .filter(credential -> credential.getData() instanceof HasVerificationKey)
+                .map(credential -> (HasVerificationKey) credential.getData())
+                .map(HasVerificationKey::getVerificationKey)
+                .map(key -> new String(Hex.encode(key)))
+                .orElseThrow(CredentialNotFoundException::new);
     }
 }
