@@ -16,7 +16,7 @@ Content-Length: 5326
 {
   "_embedded" : {
     "clients" : [ {
-      "id" : "5eea1ff0ffc4495eca2ff359",
+      "id" : "5eec5c82d4de4b28a4a41c4e",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -26,14 +26,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff0ffc4495eca2ff359"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff0ffc4495eca2ff359"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff35c",
+      "id" : "5eec5c83d4de4b28a4a41c51",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -43,14 +43,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35c"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35c"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff35f",
+      "id" : "5eec5c83d4de4b28a4a41c54",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -60,14 +60,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35f"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff35f"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff362",
+      "id" : "5eec5c83d4de4b28a4a41c57",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -77,14 +77,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff362"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff362"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff365",
+      "id" : "5eec5c83d4de4b28a4a41c5a",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -94,14 +94,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff365"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff365"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff368",
+      "id" : "5eec5c83d4de4b28a4a41c5d",
       "domainId" : "1",
       "name" : "test",
       "code" : "1234",
@@ -111,14 +111,14 @@ Content-Length: 5326
       "tags" : [ "tags" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff368"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea1ff1ffc4495eca2ff368"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d"
         }
       }
     }, {
-      "id" : "5eea201bffc4495eca2ff384",
+      "id" : "5eec5caed4de4b28a4a41c79",
       "domainId" : "1",
       "name" : "New Email Client",
       "code" : "A12345",
@@ -128,14 +128,14 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff384"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff384"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79"
         }
       }
     }, {
-      "id" : "5eea201bffc4495eca2ff385",
+      "id" : "5eec5caed4de4b28a4a41c7a",
       "domainId" : "1",
       "name" : "Email Client",
       "code" : "A12345",
@@ -145,14 +145,14 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
         }
       }
     }, {
-      "id" : "5eea201bffc4495eca2ff386",
+      "id" : "5eec5caed4de4b28a4a41c7b",
       "domainId" : "1",
       "name" : "Email Client",
       "code" : "A12345",
@@ -162,10 +162,10 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff386"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff386"
+          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b"
         }
       }
     } ]

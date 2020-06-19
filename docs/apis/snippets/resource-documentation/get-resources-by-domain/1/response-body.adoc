@@ -3,115 +3,115 @@
 {
   "_embedded" : {
     "resources" : [ {
-      "id" : "5eea1ff0ffc4495eca2ff35a",
+      "id" : "5eec5c82d4de4b28a4a41c4f",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff0ffc4495eca2ff35a"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff0ffc4495eca2ff35a"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff35d",
+      "id" : "5eec5c83d4de4b28a4a41c52",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff35d"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff35d"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff360",
+      "id" : "5eec5c83d4de4b28a4a41c55",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff360"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff360"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff363",
+      "id" : "5eec5c83d4de4b28a4a41c58",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff363"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff363"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff366",
+      "id" : "5eec5c83d4de4b28a4a41c5b",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff366"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff366"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff369",
+      "id" : "5eec5c83d4de4b28a4a41c5e",
       "domainId" : "1",
       "identifier" : "test",
       "name" : "test",
       "description" : "test resource",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff369"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea1ff1ffc4495eca2ff369"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e"
         }
       }
     }, {
-      "id" : "5eea201bffc4495eca2ff37f",
+      "id" : "5eec5cadd4de4b28a4a41c74",
       "domainId" : "1",
       "identifier" : "email-service",
       "name" : "New Email Resource",
       "description" : "Email Microservice",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff37f"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff37f"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74"
         }
       }
     }, {
-      "id" : "5eea201bffc4495eca2ff380",
+      "id" : "5eec5caed4de4b28a4a41c75",
       "domainId" : "1",
       "identifier" : "email-service",
       "name" : "email",
       "description" : "Email Microservice",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff380"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75"
         },
         "resource" : {
-          "href" : "http://localhost:8080/admin/repo/resources/5eea201bffc4495eca2ff380"
+          "href" : "http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75"
         }
       }
     } ]

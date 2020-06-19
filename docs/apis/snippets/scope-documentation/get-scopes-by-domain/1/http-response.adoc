@@ -16,45 +16,45 @@ Content-Length: 1505
 {
   "_embedded" : {
     "scopes" : [ {
-      "id" : "5eea1ff0ffc4495eca2ff354",
+      "id" : "5eec5c82d4de4b28a4a41c49",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "Email Scope",
       "description" : "Email Contacts",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff354"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c49"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff354"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c49"
         }
       }
     }, {
-      "id" : "5eea1ff0ffc4495eca2ff356",
+      "id" : "5eec5c82d4de4b28a4a41c4b",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "New Email",
       "description" : "Email Contacts",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff356"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4b"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff356"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4b"
         }
       }
     }, {
-      "id" : "5eea1ff0ffc4495eca2ff357",
+      "id" : "5eec5c82d4de4b28a4a41c4c",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "Email Scope",
       "description" : "Email Contacts",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff357"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4c"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eea1ff0ffc4495eca2ff357"
+          "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4c"
         }
       }
     } ]

@@ -14,7 +14,7 @@ X-Frame-Options: DENY
 Content-Length: 516
 
 {
-  "id" : "5eea201bffc4495eca2ff385",
+  "id" : "5eec5caed4de4b28a4a41c7a",
   "domainId" : "1",
   "name" : "Email Client",
   "code" : "A12345",
@@ -24,10 +24,10 @@ Content-Length: 516
   "tags" : [ "email", "communications" ],
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
     },
     "client" : {
-      "href" : "http://localhost:8080/admin/repo/clients/5eea201bffc4495eca2ff385"
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
     }
   }
 }

@@ -3,8 +3,8 @@
 {
   "_embedded" : {
     "clientInstances" : [ {
-      "id" : "5eea1ff1ffc4495eca2ff35b",
-      "clientId" : "5eea1ff0ffc4495eca2ff359",
+      "id" : "5eec5c82d4de4b28a4a41c50",
+      "clientId" : "5eec5c82d4de4b28a4a41c4e",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
@@ -29,15 +29,15 @@
       "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff35b"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff35b"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff361",
-      "clientId" : "5eea1ff1ffc4495eca2ff35f",
+      "id" : "5eec5c83d4de4b28a4a41c56",
+      "clientId" : "5eec5c83d4de4b28a4a41c54",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
@@ -62,22 +62,22 @@
       "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff361"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff361"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff364",
-      "clientId" : "5eea1ff1ffc4495eca2ff362",
+      "id" : "5eec5c83d4de4b28a4a41c59",
+      "clientId" : "5eec5c83d4de4b28a4a41c57",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
         "secret" : "1234",
         "type" : "secret"
       },
-      "identifier" : "7ff4b652-5ff0-4e47-91ab-214f3bbe0cf4",
+      "identifier" : "43e622d5-b661-4c95-89fe-f020ce32bc7d",
       "redirectionUris" : [ "https://myapp.com/callback", "https://localhost:8080/callback" ],
       "allowedHosts" : [ "localhost", "teamapt.com", "32.32.182.34" ],
       "tlsEnabled" : true,
@@ -95,15 +95,15 @@
       "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff364"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff364"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59"
         }
       }
     }, {
-      "id" : "5eea1ff1ffc4495eca2ff367",
-      "clientId" : "5eea1ff1ffc4495eca2ff365",
+      "id" : "5eec5c83d4de4b28a4a41c5c",
+      "clientId" : "5eec5c83d4de4b28a4a41c5a",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
@@ -128,10 +128,10 @@
       "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff367"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eea1ff1ffc4495eca2ff367"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c"
         }
       }
     } ]
