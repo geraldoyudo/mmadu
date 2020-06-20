@@ -46,4 +46,8 @@ public interface MmaduClient {
     default boolean isIncludeUserGroups() {
         return false;
     }
+
+    default List<String> getScopes() {
+        return Collections.emptyList();
+    }
 }

@@ -82,4 +82,9 @@ public class MmaduClientImpl implements MmaduClient {
     public boolean isIncludeUserGroups() {
         return clientInstance.isIncludeUserGroups();
     }
+
+    @Override
+    public List<String> getScopes() {
+        return clientInstance.getScopes();
+    }
 }
