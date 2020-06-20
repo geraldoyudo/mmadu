@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1312",
+    "name": "global-config",
+    "users": [
+      {
+        "username": "test",
+        "password": "test",
+        "externalId": 1111,
+        "properties": {
+          "country": "nigerian"
+        }
+      }
+    ],
+    "authorities": [
+      {
+        "identifier": "read",
+        "name": "Read",
+        "description": "Read Things"
+      },
+      {
+        "identifier": "execute",
+        "name": "Execute",
+        "description": "Execute Things"
+      }
+    ],
+    "roles": [
+      {
+        "identifier": "admin",
+        "name": "Admin",
+        "description": "admin"
+      }
+    ],
+    "roleAuthorities": [
+      {
+        "role": "admin",
+        "authority": "execute"
+      }
+    ],
+    "userAuthorities": [
+      {
+        "user": "test",
+        "authority": "read"
+      }
+    ],
+    "userRoles": [
+      {
+        "user": "test",
+        "role": "admin"
+      }
+    ],
+    "groups": [
+      {
+        "identifier": "workers",
+        "name": "Workers",
+        "description": "App Workers"
+      },
+      {
+        "identifier": "lawyers",
+        "name": "Lawyers",
+        "description": "Law people",
+        "parent": "workers"
+      }
+    ],
+    "userGroups": [
+      {
+        "user": "test",
+        "group": "lawyers"
+      }
+    ]
+  }
+]
