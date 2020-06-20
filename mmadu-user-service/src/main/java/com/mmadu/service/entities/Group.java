@@ -80,7 +80,9 @@ public class Group implements DomainPayload {
 
     public void setParent(Group parent) {
         this.parent = parent;
-        this.parent.addChildren(this);
+        if (parent != null) {
+            this.parent.addChildren(this);
+        }
     }
 
     public Set<Group> getChildren() {

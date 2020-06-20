@@ -10,7 +10,6 @@ mmadu:
     domains:
       - id: 0
         name: sample-domain
-        authenticationApiToken: 0
   token-config:
     tokens:
       - id: 0
