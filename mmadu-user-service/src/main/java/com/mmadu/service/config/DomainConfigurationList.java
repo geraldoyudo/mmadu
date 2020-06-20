@@ -13,7 +13,7 @@ import java.util.*;
 @ConfigurationProperties(prefix = "mmadu.domain-config")
 @Data
 public class DomainConfigurationList {
-    private List<AppDomain> domains = new ArrayList<>();
+    private List<DomainItem> domains = new ArrayList<>();
 
     @Data
     public static class DomainItem {
@@ -25,13 +25,14 @@ public class DomainConfigurationList {
         private List<GroupItem> groups = Collections.emptyList();
         private List<RoleItem> roles = Collections.emptyList();
         private List<RoleAuthorityItem> roleAuthorities = Collections.emptyList();
-        private List<UserAuthorityItem> userAuthorityItems = Collections.emptyList();
-        private List<UserGroupItem> userGroupItems = Collections.emptyList();
-        private List<UserRoleItem> userRoleItems = Collections.emptyList();
+        private List<UserAuthorityItem> userAuthorities = Collections.emptyList();
+        private List<UserGroupItem> userGroups = Collections.emptyList();
+        private List<UserRoleItem> userRoles = Collections.emptyList();
 
         public AppDomain toEntity() {
             AppDomain domain = new AppDomain();
             domain.setName(name);
+            domain.setId(id);
             return domain;
         }
     }
@@ -107,7 +108,7 @@ public class DomainConfigurationList {
 
     @FunctionalInterface
     public interface GroupResolver {
-        Optional<Group> getGroup(String identifiers);
+        Optional<Group> getGroup(String identifier);
     }
 
     @Data
@@ -155,12 +156,12 @@ public class DomainConfigurationList {
 
     @FunctionalInterface
     public interface RoleResolver {
-        Optional<Role> getRole(String identifiers);
+        Optional<Role> getRole(String identifier);
     }
 
     @FunctionalInterface
     public interface AuthorityResolver {
-        Optional<Authority> getAuthority(String identifiers);
+        Optional<Authority> getAuthority(String identifier);
     }
 
     @Data
@@ -178,7 +179,7 @@ public class DomainConfigurationList {
                             new IllegalArgumentException("authority not found: " + authority))
             );
             userAuthority.setUser(
-                    userResolver.getUser(domainId, user).orElseThrow(() ->
+                    userResolver.getUser(user).orElseThrow(() ->
                             new IllegalArgumentException("user not found: " + user))
             );
             userAuthority.setDomainId(domainId);
@@ -188,7 +189,7 @@ public class DomainConfigurationList {
 
     @FunctionalInterface
     public interface UserResolver {
-        Optional<AppUser> getUser(String domainId, String externalId);
+        Optional<AppUser> getUser(String externalIdOrUsername);
     }
 
     @Data
@@ -206,7 +207,7 @@ public class DomainConfigurationList {
                             new IllegalArgumentException("group not found: " + group))
             );
             userGroup.setUser(
-                    userResolver.getUser(domainId, user).orElseThrow(() ->
+                    userResolver.getUser(user).orElseThrow(() ->
                             new IllegalArgumentException("user not found: " + user))
             );
             userGroup.setDomainId(domainId);
@@ -229,7 +230,7 @@ public class DomainConfigurationList {
                             new IllegalArgumentException("role not found: " + role))
             );
             userRole.setUser(
-                    userResolver.getUser(domainId, user).orElseThrow(() ->
+                    userResolver.getUser(user).orElseThrow(() ->
                             new IllegalArgumentException("user not found: " + user))
             );
             userRole.setDomainId(domainId);
