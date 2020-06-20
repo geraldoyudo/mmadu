@@ -4,6 +4,8 @@ import com.mmadu.service.config.DomainConfigurationList;
 import com.mmadu.service.entities.*;
 import com.mmadu.service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,12 @@ public class DomainPopulator {
     private UserRoleRepository userRoleRepository;
     private UserAuthorityRepository userAuthorityRepository;
     private RoleAuthorityRepository roleAuthorityRepository;
+    private ApplicationEventPublisher publisher;
+
+    @Autowired
+    public void setPublisher(ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     @Autowired
     public void setAppDomainRepository(AppDomainRepository appDomainRepository) {
@@ -74,7 +82,7 @@ public class DomainPopulator {
         this.userGroupRepository = userGroupRepository;
     }
 
-    @EventListener(ContextRefreshedEvent.class)
+    @EventListener(ApplicationContextInitializedEvent.class)
     public void setUpDomains() {
         List<DomainConfigurationList.DomainItem> unInitializedDomains = Optional.ofNullable(domainConfigurationList.getDomains())
                 .orElse(Collections.emptyList())
@@ -82,17 +90,20 @@ public class DomainPopulator {
                 .filter(domainItem -> !appDomainRepository.existsByName(domainItem.getName()))
                 .collect(Collectors.toList());
         if (!unInitializedDomains.isEmpty()) {
-            initializeDomains(unInitializedDomains);
+            List<String> domainIds = initializeDomains(unInitializedDomains);
+            publisher.publishEvent(new DomainPopulatedEvent(domainIds));
         }
     }
 
-    public void initializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
-        domainItems.forEach(
-                this::initializeDomain
-        );
+    public List<String> initializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
+        List<String> domainIds = new LinkedList<>();
+        for (DomainConfigurationList.DomainItem domainItem : domainItems) {
+            domainIds.add(initializeDomain(domainItem).getId());
+        }
+        return domainIds;
     }
 
-    private void initializeDomain(DomainConfigurationList.DomainItem item) {
+    private AppDomain initializeDomain(DomainConfigurationList.DomainItem item) {
         AppDomain domain = appDomainRepository.save(item.toEntity());
         DomainContext context = new DomainContext(domain);
         initializeDomainUsers(item.getUsers(), context);
@@ -103,6 +114,7 @@ public class DomainPopulator {
         initializeDomainUserRoles(item.getUserRoles(), context);
         initializeDomainGroups(item.getGroups(), context);
         initializeDomainUserGroups(item.getUserGroups(), context);
+        return domain;
     }
 
     private void initializeDomainUsers(List<DomainConfigurationList.UserItem> users, DomainContext context) {
@@ -177,7 +189,7 @@ public class DomainPopulator {
         private final Map<String, AppUser> usernameUserMap = new HashMap<>();
         private final Map<String, Role> identifierRoleMap = new HashMap<>();
         private final Map<String, Authority> identifierAuthorityMap = new HashMap<>();
-        private final Map<String, Group> identifierGroupMap = Collections.emptyMap();
+        private final Map<String, Group> identifierGroupMap = new HashMap<>();
 
         public DomainContext(AppDomain domain) {
             this.domain = domain;
