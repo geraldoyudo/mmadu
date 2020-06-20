@@ -46,4 +46,5 @@ public class ClientInstance implements HasDomain {
     private boolean includeUserRoles;
     private boolean includeUserAuthorities;
     private boolean includeUserGroups;
+    private List<String> scopes = Collections.emptyList();
 }

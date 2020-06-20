@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ScopeLimitServiceImpl implements ScopeLimitService {
@@ -34,15 +35,18 @@ public class ScopeLimitServiceImpl implements ScopeLimitService {
     public List<String> limitScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client) {
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(user.getDomainId())
                 .orElseThrow(() -> new DomainNotFoundException("user domain not found"));
-        Set<String> approvedScopes = new HashSet<>();
+        Set<String> approvedScopes = new HashSet<>(scopes);
         final ScopeFilterContext context = ScopeFilterContext.builder()
                 .client(client)
                 .configuration(configuration)
                 .user(user)
                 .build();
-        scopeFilters.stream()
+        List<ScopeFilter> filtersToApply = scopeFilters.stream()
                 .filter(f -> f.apply(configuration, user, client))
-                .forEach(f -> approvedScopes.addAll(f.filter(scopes, context)));
+                .collect(Collectors.toList());
+        for (ScopeFilter filter : filtersToApply) {
+            approvedScopes = Set.copyOf(filter.filter(List.copyOf(approvedScopes), context));
+        }
         return List.copyOf(approvedScopes);
     }
 }

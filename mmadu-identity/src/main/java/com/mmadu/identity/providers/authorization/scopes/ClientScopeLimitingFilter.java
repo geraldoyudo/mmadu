@@ -6,12 +6,14 @@ import com.mmadu.identity.models.user.MmaduUser;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @Order(100)
-public class RoleAndAuthoritiesPopulatorFilter implements ScopeFilter {
+public class ClientScopeLimitingFilter implements ScopeFilter {
     @Override
     public boolean apply(DomainIdentityConfiguration configuration, MmaduUser user, MmaduClient client) {
         return true;
@@ -19,15 +21,13 @@ public class RoleAndAuthoritiesPopulatorFilter implements ScopeFilter {
 
     @Override
     public List<String> filter(List<String> scopes, ScopeFilterContext context) {
-
-        MmaduUser user = context.getUser();
+        List<String> availableScopes = Optional.ofNullable(context.getClient().getScopes()).orElse(Collections.emptyList());
         if (scopes.isEmpty()) {
-            List<String> rolesAndAuthorities = new LinkedList<>();
-            rolesAndAuthorities.addAll(user.getAuthorities());
-            rolesAndAuthorities.addAll(user.getRoles());
-            return rolesAndAuthorities;
+            return availableScopes;
         } else {
-            return scopes;
+            return scopes.stream()
+                    .filter(availableScopes::contains)
+                    .collect(Collectors.toList());
         }
     }
 }

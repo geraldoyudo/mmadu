@@ -58,7 +58,8 @@ public class ScopeDocumentation extends AbstractDocumentation {
         node.put("name", "Email Scope")
                 .put("code", "test.mail")
                 .put("description", "Email Contacts")
-                .put("domainId", DOMAIN_ID);
+                .put("domainId", DOMAIN_ID)
+                .putArray("authorities").add("view_users");
         return node.toPrettyString();
     }
 
@@ -67,6 +68,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
                 fieldWithPath("id").type("string").optional().description("Scope ID"),
                 fieldWithPath("name").description("The scope's name"),
                 fieldWithPath("code").description("The scopes identification code"),
+                fieldWithPath("authorities").description("List of authorities and roles associated with this scope"),
                 fieldWithPath("description").description("The scopes description"),
                 fieldWithPath("domainId").description("The domain id of the scope")
         );
@@ -120,6 +122,7 @@ public class ScopeDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.scopes.[].domainId").description("the scope domain id"),
                 fieldWithPath("_embedded.scopes.[].name").description("The scope name"),
                 fieldWithPath("_embedded.scopes.[].code").description("The scope code"),
+                fieldWithPath("_embedded.scopes.[].authorities").description("List of authorities and roles associated with this scope"),
                 fieldWithPath("_embedded.scopes.[].description").description("The scope's description")
         );
     }

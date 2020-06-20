@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Collections;
+import java.util.List;
+
 @Data
 @Document
 @EqualsAndHashCode
@@ -21,4 +24,5 @@ public class Scope implements HasDomain {
     private String code;
     private String name;
     private String description;
+    private List<String> authorities = Collections.emptyList();
 }
