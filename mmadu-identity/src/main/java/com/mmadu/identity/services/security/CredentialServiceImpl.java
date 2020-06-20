@@ -5,6 +5,9 @@ import com.mmadu.identity.entities.credentials.CredentialData;
 import com.mmadu.identity.entities.credentials.HasVerificationKey;
 import com.mmadu.identity.exceptions.CredentialNotFoundException;
 import com.mmadu.identity.models.security.CredentialGenerationRequest;
+import com.mmadu.identity.providers.credentials.CredentialDataHashProvider;
+import com.mmadu.identity.providers.credentials.CredentialDecryptionProvider;
+import com.mmadu.identity.providers.credentials.CredentialEncryptionProvider;
 import com.mmadu.identity.providers.credentials.CredentialsProvider;
 import com.mmadu.identity.repositories.CredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ import java.util.Optional;
 public class CredentialServiceImpl implements CredentialService {
     private CredentialRepository credentialRepository;
     private List<CredentialsProvider> providers = Collections.emptyList();
+    private CredentialEncryptionProvider encryptionProvider;
+    private CredentialDataHashProvider hashProvider;
+    private CredentialDecryptionProvider decryptionProvider;
 
     @Autowired(required = false)
     public void setProviders(List<CredentialsProvider> providers) {
@@ -28,6 +34,21 @@ public class CredentialServiceImpl implements CredentialService {
     @Autowired
     public void setCredentialRepository(CredentialRepository credentialRepository) {
         this.credentialRepository = credentialRepository;
+    }
+
+    @Autowired
+    public void setEncryptionProvider(CredentialEncryptionProvider encryptionProvider) {
+        this.encryptionProvider = encryptionProvider;
+    }
+
+    @Autowired
+    public void setDecryptionProvider(CredentialDecryptionProvider decryptionProvider) {
+        this.decryptionProvider = decryptionProvider;
+    }
+
+    @Autowired
+    public void setHashProvider(CredentialDataHashProvider hashProvider) {
+        this.hashProvider = hashProvider;
     }
 
     @Override
@@ -45,9 +66,16 @@ public class CredentialServiceImpl implements CredentialService {
         Credential credential = new Credential();
         credential.setType(request.getType());
         credential.setDomainId(domainId);
-        credential.setData(provider.generateCredential(request));
+        credential.setData(generateCredentialData(request, provider));
         credential = credentialRepository.save(credential);
         return credential.getId();
+    }
+
+    private CredentialData generateCredentialData(CredentialGenerationRequest request, CredentialsProvider provider) {
+        CredentialData data = provider.generateCredential(request);
+        data.encryptData(encryptionProvider);
+        data.hashData(hashProvider);
+        return data;
     }
 
     @Override
@@ -55,9 +83,14 @@ public class CredentialServiceImpl implements CredentialService {
         return credentialRepository.findById(credentialId)
                 .filter(credential -> domainId.equals(credential.getDomainId()))
                 .filter(credential -> credential.getData() instanceof HasVerificationKey)
-                .map(credential -> (HasVerificationKey) credential.getData())
-                .map(HasVerificationKey::getVerificationKey)
+                .map(this::getVerificationKey)
                 .map(key -> new String(Hex.encode(key)))
                 .orElseThrow(CredentialNotFoundException::new);
+    }
+
+    private byte[] getVerificationKey(Credential credential) {
+        CredentialData data = credential.getData();
+        data.decryptData(decryptionProvider);
+        return ((HasVerificationKey) data).verificationKey();
     }
 }

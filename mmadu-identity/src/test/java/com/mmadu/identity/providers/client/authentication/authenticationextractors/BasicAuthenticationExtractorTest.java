@@ -3,6 +3,7 @@ package com.mmadu.identity.providers.client.authentication.authenticationextract
 import com.mmadu.identity.entities.ClientSecretCredentials;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.providers.client.authentication.MmaduClientAuthenticationToken;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
 import com.mmadu.identity.services.client.MmaduClientService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +31,8 @@ class BasicAuthenticationExtractorTest {
     private MmaduClient mmaduClient;
     @Mock
     private MmaduClientService mmaduClientService;
+    @Mock
+    private CredentialDataHashMatcher matcher;
 
     @InjectMocks
     private final BasicAuthenticationExtractor authenticationExtractor = new BasicAuthenticationExtractor();
@@ -40,6 +44,7 @@ class BasicAuthenticationExtractorTest {
         String authorization = "Basic MTExMToxMjM0";
         when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(authorization);
         when(mmaduClientService.loadClientByIdentifier("1111")).thenReturn(Optional.of(mmaduClient));
+        when(matcher.matches(anyString(), anyString())).thenReturn(true);
         when(mmaduClient.getCredentials()).thenReturn(credentials);
         Optional<MmaduClientAuthenticationToken> token = authenticationExtractor.extractAuthentication(request);
         assertTrue(token.isPresent());

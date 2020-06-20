@@ -68,6 +68,7 @@ public class TokenController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public TokenError handleGeneralExceptions(Exception ex) {
+        log.error("Unexpected error", ex);
         return new InvalidRequest(ex.getMessage(), "");
     }
 }

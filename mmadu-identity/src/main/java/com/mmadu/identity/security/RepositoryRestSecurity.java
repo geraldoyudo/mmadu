@@ -2,6 +2,9 @@ package com.mmadu.identity.security;
 
 import com.mmadu.identity.entities.*;
 import com.mmadu.identity.entities.credentials.Credential;
+import com.mmadu.identity.entities.keys.Key;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RepositoryEventHandler
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RepositoryRestSecurity {
 
     @HandleBeforeCreate
@@ -158,6 +162,24 @@ public class RepositoryRestSecurity {
     @HandleBeforeDelete
     @PreAuthorize("hasAuthority('token.delete')")
     public void deleteToken(@P("token") Token token) {
+
+    }
+
+    @HandleBeforeCreate
+    @PreAuthorize("hasAuthority('key.create')")
+    public void createKey(@P("key") Key key) {
+
+    }
+
+    @HandleBeforeSave
+    @PreAuthorize("hasAuthority('key.update')")
+    public void updateKey(@P("key") Key key) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('key.delete')")
+    public void deleteKey(@P("key") Key key) {
 
     }
 }

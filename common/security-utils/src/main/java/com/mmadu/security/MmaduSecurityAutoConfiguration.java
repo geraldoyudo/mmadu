@@ -14,6 +14,7 @@ import com.mmadu.security.providers.converters.JwtAuthenticationConversionStrate
 import com.mmadu.security.providers.domainparsers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -38,11 +39,14 @@ import java.util.List;
 @Configuration
 public class MmaduSecurityAutoConfiguration {
     private String publicKey;
+    @Value("${mmadu.identity.jwk-set-uri:http://localhost:10084/metadata/0/jwks.json}")
+    private String jwkSetUri;
 
     @Value("${mmadu.identity.public-key:30820122300d06092a864886f70d01010105000382010f003082010a0282010100a31b559ff90788f92436bb61ad0d528cf088a9190a97c7dbf98539409663d54d3fb4a089ccd77ca49165d8d5a76b21b30fc733a558569647498b182dc4a06ea7fd1022b761877c9776d0db5107b8f3e0c67ba0f101315be5989d0a33c6a431a3de07c071457672c6266a1e89d079222c42031ca7c3b563a913c41eee45d20ddaf58a92014adbc4bbe135c055c604380b649b3178540fc4a0c2f7c46aa90f62422d5ae621332bacf6771f2319ae03936fdaf346abdc599e3b63cae4c0d4d8ec5832f1c61b5e370005c3aed880130513970b79de6d5734aa11dcf8fb866ea9d0cfafd55d0c4f27a13763f1d193ca402c5c8a65e198a7500b3e9928552e19a40d3d0203010001}")
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
     }
+
 
     @Value("${mmadu.identify.global-domain-name:global}")
     private String globalDomainName;
@@ -60,9 +64,17 @@ public class MmaduSecurityAutoConfiguration {
     }
 
     @MmaduQualifiedBean
-    public JwtDecoder jwtDecoder(@MmaduQualified RSAPublicKey publicKey) {
+    @ConditionalOnProperty(name = "mmadu.identity.jwt-auto-discovery", havingValue = "false", matchIfMissing = true)
+    public JwtDecoder localJwtDecoder(@MmaduQualified RSAPublicKey publicKey) {
         return NimbusJwtDecoder.withPublicKey(publicKey)
                 .signatureAlgorithm(SignatureAlgorithm.RS256)
+                .build();
+    }
+
+    @MmaduQualifiedBean
+    @ConditionalOnProperty(name = "mmadu.identity.jwt-auto-discovery", havingValue = "true")
+    public JwtDecoder authServerJwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri)
                 .build();
     }
 

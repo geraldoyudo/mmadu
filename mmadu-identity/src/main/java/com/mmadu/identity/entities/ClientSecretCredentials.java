@@ -1,5 +1,8 @@
 package com.mmadu.identity.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
+import com.mmadu.identity.providers.credentials.CredentialDataHashProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +16,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class ClientSecretCredentials implements ClientCredentials {
     @NotEmpty(message = "secret cannot be empty")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String secret;
 
     @Override
@@ -21,10 +25,15 @@ public class ClientSecretCredentials implements ClientCredentials {
     }
 
     @Override
-    public boolean matches(Object credential) {
+    public boolean matches(Object credential, CredentialDataHashMatcher matcher) {
         if (credential instanceof String) {
-            return secret.equals(credential);
+            return matcher.matches((String) credential, secret);
         }
         return false;
+    }
+
+    @Override
+    public void hashData(CredentialDataHashProvider provider) {
+        secret = provider.hash(secret);
     }
 }

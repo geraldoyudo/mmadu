@@ -4,5 +4,5 @@ import net.minidev.json.annotate.JsonIgnore;
 
 public interface HasVerificationKey {
     @JsonIgnore
-    byte[] getVerificationKey();
+    byte[] verificationKey();
 }
