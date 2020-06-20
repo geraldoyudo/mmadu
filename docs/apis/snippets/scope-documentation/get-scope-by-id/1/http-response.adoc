@@ -11,20 +11,21 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 387
+Content-Length: 424
 
 {
-  "id" : "5eec5c82d4de4b28a4a41c4d",
+  "id" : "5eed8d1efb781170c68bafaa",
   "domainId" : "1",
   "code" : "test.mail",
   "name" : "Email Scope",
   "description" : "Email Contacts",
+  "authorities" : [ "view_users" ],
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4d"
+      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
     },
     "scope" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eec5c82d4de4b28a4a41c4d"
+      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
     }
   }
 }

@@ -17,6 +17,10 @@
 |`+String+`
 |The scope code
 
+|`+_embedded.scopes.[].authorities+`
+|`+Array+`
+|List of authorities and roles associated with this scope
+
 |`+_embedded.scopes.[].description+`
 |`+String+`
 |The scope's description

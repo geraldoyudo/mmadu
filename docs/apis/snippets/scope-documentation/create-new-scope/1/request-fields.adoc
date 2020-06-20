@@ -13,6 +13,10 @@
 |`+String+`
 |The scopes identification code
 
+|`+authorities+`
+|`+Array+`
+|List of authorities and roles associated with this scope
+
 |`+description+`
 |`+String+`
 |The scopes description

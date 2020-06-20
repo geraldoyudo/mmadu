@@ -4,6 +4,7 @@
   "name" : "Email Scope",
   "code" : "test.mail",
   "description" : "Email Contacts",
-  "domainId" : "1"
+  "domainId" : "1",
+  "authorities" : [ "view_users" ]
 }
 ----
