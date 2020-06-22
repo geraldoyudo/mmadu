@@ -10,7 +10,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -107,8 +106,7 @@ public class DomainIdentityConfigurationList {
         private ClientType clientType = ClientType.CONFIDENTIAL;
         @NotEmpty
         private String clientProfile = ClientProfileUtils.WEB_APP;
-        @Valid
-        private ClientCredentials credentials;
+        private Map<String, Object> credentials;
         @NotEmpty
         private String identifier;
         private List<String> redirectionUris = Collections.emptyList();
@@ -129,7 +127,9 @@ public class DomainIdentityConfigurationList {
         private boolean includeUserGroups;
         private List<String> scopes = Collections.emptyList();
 
-        public ClientInstance toEntity(String domainId, ClientResolver clientResolver) {
+        public ClientInstance toEntity(String domainId,
+                                       ClientResolver clientResolver,
+                                       CredentialConverter credentialConverter) {
             ClientInstance instance = new ClientInstance();
             instance.setClientId(
                     clientResolver.getClient(clientCode).orElseThrow(() ->
@@ -137,7 +137,7 @@ public class DomainIdentityConfigurationList {
             );
             instance.setClientType(clientType);
             instance.setClientProfile(clientProfile);
-            instance.setCredentials(credentials);
+            instance.setCredentials(credentialConverter.convert(credentials));
             instance.setIdentifier(identifier);
             instance.setRedirectionUris(redirectionUris);
             instance.setAllowedHosts(allowedHosts);
@@ -162,6 +162,11 @@ public class DomainIdentityConfigurationList {
     @FunctionalInterface
     public interface ClientResolver {
         Optional<Client> getClient(String code);
+    }
+
+    @FunctionalInterface
+    public interface CredentialConverter {
+        ClientCredentials convert(Map<String, Object> credentials);
     }
 
     @Data

@@ -6,11 +6,12 @@ import com.mmadu.identity.entities.*;
 import com.mmadu.identity.repositories.*;
 import com.mmadu.identity.services.security.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,12 @@ public class DomainIdentityPopulator {
     private ScopeRepository scopeRepository;
     private ObjectMapper objectMapper;
     private CredentialService credentialService;
+    private DomainIdentityConfigurationList.CredentialConverter credentialConverter;
+
+    @PostConstruct
+    public void init() {
+        credentialConverter = credentials -> objectMapper.convertValue(credentials, ClientCredentials.class);
+    }
 
     @Autowired
     public void setDomainIdentityConfigurationRepository(DomainIdentityConfigurationRepository domainIdentityConfigurationRepository) {
@@ -72,7 +79,7 @@ public class DomainIdentityPopulator {
         this.credentialService = credentialService;
     }
 
-    @EventListener(ApplicationContextInitializedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     public void setUpDomainIdentities() {
         List<DomainIdentityConfigurationList.DomainIdentityItem> unInitializedDomains =
                 Optional.ofNullable(domainIdentityConfigurationList.getDomains())
@@ -135,7 +142,7 @@ public class DomainIdentityPopulator {
 
     private void initializeDomainClientInstances(List<DomainIdentityConfigurationList.ClientInstanceItem> clients, DomainContext context) {
         List<ClientInstance> appClientInstances = clients.stream()
-                .map(ci -> ci.toEntity(context.getDomainId(), context))
+                .map(ci -> ci.toEntity(context.getDomainId(), context, credentialConverter))
                 .collect(Collectors.toList());
         clientInstanceRepository.saveAll(appClientInstances);
     }

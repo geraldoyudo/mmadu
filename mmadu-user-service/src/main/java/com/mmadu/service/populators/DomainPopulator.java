@@ -4,7 +4,6 @@ import com.mmadu.service.config.DomainConfigurationList;
 import com.mmadu.service.entities.*;
 import com.mmadu.service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -82,7 +81,7 @@ public class DomainPopulator {
         this.userGroupRepository = userGroupRepository;
     }
 
-    @EventListener(ApplicationContextInitializedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     public void setUpDomains() {
         List<DomainConfigurationList.DomainItem> unInitializedDomains = Optional.ofNullable(domainConfigurationList.getDomains())
                 .orElse(Collections.emptyList())
