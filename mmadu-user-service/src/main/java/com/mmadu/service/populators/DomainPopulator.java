@@ -89,17 +89,16 @@ public class DomainPopulator {
                 .filter(domainItem -> !appDomainRepository.existsByName(domainItem.getName()))
                 .collect(Collectors.toList());
         if (!unInitializedDomains.isEmpty()) {
-            List<String> domainIds = initializeDomains(unInitializedDomains);
-            publisher.publishEvent(new DomainPopulatedEvent(domainIds));
+            initializeDomains(unInitializedDomains);
         }
     }
 
-    public List<String> initializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
+    public void initializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
         List<String> domainIds = new LinkedList<>();
         for (DomainConfigurationList.DomainItem domainItem : domainItems) {
             domainIds.add(initializeDomain(domainItem).getId());
         }
-        return domainIds;
+        publisher.publishEvent(new DomainPopulatedEvent(domainIds));
     }
 
     private AppDomain initializeDomain(DomainConfigurationList.DomainItem item) {

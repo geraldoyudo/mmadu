@@ -88,17 +88,16 @@ public class DomainIdentityPopulator {
                         .filter(domainIdentityItem -> !domainIdentityConfigurationRepository.existsByDomainId(domainIdentityItem.getDomainId()))
                         .collect(Collectors.toList());
         if (!unInitializedDomains.isEmpty()) {
-            List<String> domainIds = initializeDomains(unInitializedDomains);
-            publisher.publishEvent(new DomainIdentityPopulatedEvent(domainIds));
+            initializeDomains(unInitializedDomains);
         }
     }
 
-    private List<String> initializeDomains(List<DomainIdentityConfigurationList.DomainIdentityItem> domainIdentityItems) {
+    public void initializeDomains(List<DomainIdentityConfigurationList.DomainIdentityItem> domainIdentityItems) {
         List<String> domainIds = new LinkedList<>();
         for (DomainIdentityConfigurationList.DomainIdentityItem item : domainIdentityItems) {
             domainIds.add(initializeDomain(item).getDomainId());
         }
-        return domainIds;
+        publisher.publishEvent(new DomainIdentityPopulatedEvent(domainIds));
     }
 
     private DomainIdentityConfiguration initializeDomain(DomainIdentityConfigurationList.DomainIdentityItem item) {

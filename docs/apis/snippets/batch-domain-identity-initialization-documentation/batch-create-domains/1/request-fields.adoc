@@ -1,0 +1,60 @@
+|===
+|Path|Type|Description
+
+|`+[].domainId+`
+|`+Number+`
+|Domain id
+
+|`+[].authorizationCodeType+`
+|`+String+`
+|Authorization Code Type e.g {alphanumeric, jwt}
+
+|`+[].authorizationCodeTTLSeconds+`
+|`+Number+`
+|Authorization code validity period
+
+|`+[].maxAuthorizationTTLSeconds+`
+|`+Number+`
+|Maximum validity period for every authorization
+
+|`+[].authorizationCodeTypeProperties+`
+|`+Object+`
+|Properties of the authorization code
+
+|`+[].refreshTokenEnabled+`
+|`+Boolean+`
+|Generate refresh token for refresh token enabled grants
+
+|`+[].refreshTokenProperties+`
+|`+Object+`
+|Properties of the refresh token
+
+|`+[].accessTokenProvider+`
+|`+String+`
+|Provider for generating access token e.g (jwt)
+
+|`+[].accessTokenProperties+`
+|`+Object+`
+|Access token properties
+
+|`+[].issuerId+`
+|`+String+`
+|Issuer id. Will be the used as the iss field in jwt tokens
+
+|`+[].clients+`
+|`+Array+`
+|List of predefined clients
+
+|`+[].clientInstances+`
+|`+Array+`
+|List of predefined client instances
+
+|`+[].resources+`
+|`+Array+`
+|List of predefined resources
+
+|`+[].scopes+`
+|`+Array+`
+|List of predefined scopes
+
+|===

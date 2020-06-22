@@ -36,7 +36,7 @@ mmadu:
             name: User Management Service
             description: User Management Service for Mmadu
         scopes:
-          - identifier: admin
+          - code: admin
             name: admin
             description: Admin Privileges
             authorities:
