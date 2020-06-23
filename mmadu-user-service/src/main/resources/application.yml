@@ -2,6 +2,8 @@ mmadu:
   admin:
     username: ${MMADU_ADMIN_USERNAME:admin}
     password: ${MMADU_ADMIN_PASSWORD:password}
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
   security:
     domain-parsing:
       path-keys: domain,domainId,domains,appDomains
@@ -18,15 +20,15 @@ mmadu:
             name: All
             description: Access Everything
         roles:
-          - identifier: super_admin
+          - identifier: r.super_admin
             name: Super Admin
             description: Access Everything
         role-authorities:
-          - role: super_admin
+          - role: r.super_admin
             authority: a.*.**
         user-roles:
           - user: ${mmadu.admin.username}
-            role: super_admin
+            role: r.super_admin
 spring:
   main:
     allow-bean-definition-overriding: true

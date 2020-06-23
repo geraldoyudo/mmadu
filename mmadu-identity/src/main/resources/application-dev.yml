@@ -1,5 +1,5 @@
 spring:
   data:
     mongodb:
-      database: mmadu_db
+      database: mmadu_identity_db
       host: localhost
