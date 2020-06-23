@@ -199,12 +199,13 @@ public class DomainIdentityConfigurationList {
         @NotEmpty
         private List<String> authorities = Collections.emptyList();
 
-        public Scope toEntity(String domainid) {
+        public Scope toEntity(String domainId) {
             Scope scope = new Scope();
             scope.setCode(code);
             scope.setAuthorities(authorities);
             scope.setDescription(description);
-            scope.setDomainId(domainid);
+            scope.setDomainId(domainId);
+            scope.setName(name);
             return scope;
         }
     }

@@ -6,7 +6,7 @@ import com.mmadu.identity.models.user.MmaduUser;
 
 import java.util.List;
 
-public interface ScopeFilter {
+public interface ApprovedScopeFilter {
 
     boolean apply(DomainIdentityConfiguration configuration,
                   MmaduUser user,
