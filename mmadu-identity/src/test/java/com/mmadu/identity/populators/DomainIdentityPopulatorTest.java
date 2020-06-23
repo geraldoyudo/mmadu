@@ -5,6 +5,7 @@ import com.mmadu.identity.entities.ClientSecretCredentials;
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.entities.credentials.Credential;
 import com.mmadu.identity.entities.credentials.RSACredentialData;
+import com.mmadu.identity.providers.credentials.CredentialDataHashMatcher;
 import com.mmadu.identity.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ class DomainIdentityPopulatorTest {
     private ScopeRepository scopeRepository;
     @Autowired
     private CredentialRepository credentialRepository;
+    @Autowired
+    private CredentialDataHashMatcher dataHashMatcher;
 
     @Test
     void testConfigRead() throws Exception {
@@ -47,7 +50,7 @@ class DomainIdentityPopulatorTest {
 
     private void assertClientInstanceHasCorrectSecret(ClientInstance clientInstance) {
         ClientSecretCredentials credentials = (ClientSecretCredentials) clientInstance.getCredentials();
-        assertEquals("1234567890", credentials.getSecret());
+        assertTrue(dataHashMatcher.matches("1234567890", credentials.getSecret()));
     }
 
     private void assertCredentialIdCreated(DomainIdentityConfiguration configuration) {

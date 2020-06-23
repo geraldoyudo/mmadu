@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Order(100)
-public class ClientScopeLimitingFilter implements ScopeFilter {
+public class ClientProposedScopeLimitingFilter implements ProposedScopeFilter {
     @Override
     public boolean apply(DomainIdentityConfiguration configuration, MmaduUser user, MmaduClient client) {
         return true;

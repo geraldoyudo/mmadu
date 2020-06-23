@@ -4,7 +4,7 @@ import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.exceptions.DomainNotFoundException;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.user.MmaduUser;
-import com.mmadu.identity.providers.authorization.scopes.ScopeFilter;
+import com.mmadu.identity.providers.authorization.scopes.ApprovedScopeFilter;
 import com.mmadu.identity.providers.authorization.scopes.ScopeFilterContext;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ScopeLimitServiceImpl implements ScopeLimitService {
+public class ApprovedScopeServiceImpl implements ApprovedScopeService {
     private DomainIdentityConfigurationService domainIdentityConfigurationService;
-    private List<ScopeFilter> scopeFilters = Collections.emptyList();
+    private List<ApprovedScopeFilter> approvedScopeFilters = Collections.emptyList();
 
     @Autowired(required = false)
-    public void setScopeFilters(List<ScopeFilter> scopeFilters) {
-        this.scopeFilters = scopeFilters;
+    public void setApprovedScopeFilters(List<ApprovedScopeFilter> approvedScopeFilters) {
+        this.approvedScopeFilters = approvedScopeFilters;
     }
 
     @Autowired
@@ -32,7 +32,7 @@ public class ScopeLimitServiceImpl implements ScopeLimitService {
     }
 
     @Override
-    public List<String> limitScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client) {
+    public List<String> processScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client) {
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(user.getDomainId())
                 .orElseThrow(() -> new DomainNotFoundException("user domain not found"));
         Set<String> approvedScopes = new HashSet<>(scopes);
@@ -41,10 +41,10 @@ public class ScopeLimitServiceImpl implements ScopeLimitService {
                 .configuration(configuration)
                 .user(user)
                 .build();
-        List<ScopeFilter> filtersToApply = scopeFilters.stream()
+        List<ApprovedScopeFilter> filtersToApply = approvedScopeFilters.stream()
                 .filter(f -> f.apply(configuration, user, client))
                 .collect(Collectors.toList());
-        for (ScopeFilter filter : filtersToApply) {
+        for (ApprovedScopeFilter filter : filtersToApply) {
             approvedScopes = Set.copyOf(filter.filter(List.copyOf(approvedScopes), context));
         }
         return List.copyOf(approvedScopes);

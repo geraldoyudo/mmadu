@@ -5,7 +5,7 @@ import com.mmadu.identity.models.user.MmaduUser;
 
 import java.util.List;
 
-public interface ScopeLimitService {
+public interface ApprovedScopeService {
 
-    List<String> limitScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client);
+    List<String> processScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client);
 }

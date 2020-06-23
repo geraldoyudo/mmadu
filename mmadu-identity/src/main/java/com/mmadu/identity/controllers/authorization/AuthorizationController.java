@@ -6,7 +6,7 @@ import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.services.authorization.AuthorizationService;
-import com.mmadu.identity.services.authorization.ScopeLimitService;
+import com.mmadu.identity.services.authorization.ProposedScopeLimitService;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.services.user.ScopeService;
 import com.mmadu.identity.utils.StringListUtils;
@@ -35,7 +35,7 @@ public class AuthorizationController {
     private AuthorizationService authorizationService;
     private ScopeService scopeService;
     private MmaduClientService mmaduClientService;
-    private ScopeLimitService scopeLimitService;
+    private ProposedScopeLimitService proposedScopeLimitService;
 
     @Autowired
     public void setAuthorizationRequestValidator(AuthorizationRequestValidator authorizationRequestValidator) {
@@ -63,8 +63,8 @@ public class AuthorizationController {
     }
 
     @Autowired
-    public void setScopeLimitService(ScopeLimitService scopeLimitService) {
-        this.scopeLimitService = scopeLimitService;
+    public void setProposedScopeLimitService(ProposedScopeLimitService proposedScopeLimitService) {
+        this.proposedScopeLimitService = proposedScopeLimitService;
     }
 
     @InitBinder("authorizationRequest")
@@ -94,7 +94,7 @@ public class AuthorizationController {
     }
 
     private List<String> filterUserScopes(MmaduUser user, MmaduClient client, List<String> proposedScopes) {
-        return scopeLimitService.limitScopesForUser(proposedScopes, user, client);
+        return proposedScopeLimitService.limitScopesForUser(proposedScopes, user, client);
     }
 
     @GetMapping

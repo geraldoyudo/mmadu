@@ -3,6 +3,7 @@ package com.mmadu.identity.populators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.identity.config.DomainIdentityConfigurationList;
 import com.mmadu.identity.entities.*;
+import com.mmadu.identity.providers.client.instance.ClientInstanceCredentialsHasher;
 import com.mmadu.identity.repositories.*;
 import com.mmadu.identity.services.security.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,7 @@ public class DomainIdentityPopulator {
     private ObjectMapper objectMapper;
     private CredentialService credentialService;
     private DomainIdentityConfigurationList.CredentialConverter credentialConverter;
-
-    @PostConstruct
-    public void init() {
-        credentialConverter = credentials -> objectMapper.convertValue(credentials, ClientCredentials.class);
-    }
+    private ClientInstanceCredentialsHasher clientInstanceCredentialsHasher;
 
     @Autowired
     public void setDomainIdentityConfigurationRepository(DomainIdentityConfigurationRepository domainIdentityConfigurationRepository) {
@@ -77,6 +74,16 @@ public class DomainIdentityPopulator {
     @Autowired
     public void setCredentialService(CredentialService credentialService) {
         this.credentialService = credentialService;
+    }
+
+    @Autowired
+    public void setClientInstanceCredentialsHasher(ClientInstanceCredentialsHasher clientInstanceCredentialsHasher) {
+        this.clientInstanceCredentialsHasher = clientInstanceCredentialsHasher;
+    }
+
+    @PostConstruct
+    public void init() {
+        credentialConverter = credentials -> objectMapper.convertValue(credentials, ClientCredentials.class);
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -143,6 +150,7 @@ public class DomainIdentityPopulator {
         List<ClientInstance> appClientInstances = clients.stream()
                 .map(ci -> ci.toEntity(context.getDomainId(), context, credentialConverter))
                 .collect(Collectors.toList());
+        appClientInstances.forEach(clientInstanceCredentialsHasher::hashCredentialsBeforeCreate);
         clientInstanceRepository.saveAll(appClientInstances);
     }
 

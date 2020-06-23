@@ -1,6 +1,7 @@
 package com.mmadu.identity.models.authorization;
 
 import com.mmadu.identity.models.authorization.errors.AuthorizationError;
+import com.mmadu.identity.models.client.MmaduClient;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class AuthorizationContext {
     private Map<String, Object> context = new HashMap<>();
     private AuthorizationResult result = new AuthorizationResult();
     private Object authorizer;
+    private MmaduClient client;
 
     public <T> Optional<T> get(String key) {
         return Optional.ofNullable(context.get(key))
@@ -61,5 +63,13 @@ public class AuthorizationContext {
 
     public Object getAuthorizer() {
         return authorizer;
+    }
+
+    public void setClient(MmaduClient client) {
+        this.client = client;
+    }
+
+    public MmaduClient getClient() {
+        return client;
     }
 }

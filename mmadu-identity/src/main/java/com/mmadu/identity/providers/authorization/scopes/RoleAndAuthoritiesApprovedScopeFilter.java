@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Order(200)
-public class RoleAndAuthoritiesScopeFilter implements ScopeFilter {
+public class RoleAndAuthoritiesApprovedScopeFilter implements ApprovedScopeFilter {
     private ScopeRepository scopeRepository;
 
     @Autowired

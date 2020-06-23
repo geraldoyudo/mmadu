@@ -1,21 +1,34 @@
 mmadu:
+  admin:
+    username: ${MMADU_ADMIN_USERNAME:admin}
+    password: ${MMADU_ADMIN_PASSWORD:password}
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
   security:
-    master-key: 11111111111111111111111111111111
     domain-parsing:
       path-keys: domain,domainId,domains,appDomains
-  tokenService:
-    url: http://localhost:10082
-  domainKey: 2222
   domain-config:
     domains:
       - id: 0
-        name: sample-domain
-  token-config:
-    tokens:
-      - id: 0
-        value: 1111
-      - id: admin-token
-        value: 2222
+        name: mmadu
+        users:
+          - username: ${mmadu.admin.username}
+            password: ${mmadu.admin.password}
+            external-id: 1111
+        authorities:
+          - identifier: a.*.**
+            name: All
+            description: Access Everything
+        roles:
+          - identifier: r.super_admin
+            name: Super Admin
+            description: Access Everything
+        role-authorities:
+          - role: r.super_admin
+            authority: a.*.**
+        user-roles:
+          - user: ${mmadu.admin.username}
+            role: r.super_admin
 spring:
   main:
     allow-bean-definition-overriding: true
