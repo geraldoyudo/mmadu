@@ -1,0 +1,45 @@
+mmadu:
+  domain-identity-config:
+    domains:
+      - domainId: 1212
+        authorization-code-type: alphanumeric
+        authorization-code-ttl-seconds: 600
+        max-authorization-ttl-seconds: 3600
+        refresh-token-enabled: true
+        access-token-provider: jwt
+        access-token-properties:
+          credentialId:
+            type: rsa
+        issuer-id: mmadu.com
+        clients:
+          - name: mmadu
+            code: 1111
+            application-url: http://localhost:18000
+            logo-url: http://logo.com/logo.png
+            tags:
+              - primary
+              - test
+        client-instances:
+          - client-code: 1111
+            client-type: CONFIDENTIAL
+            client-profile: web_app
+            credentials:
+              type: secret
+              secret: "1234567890"
+            identifier: mmadu-admin
+            tls-enabled: true
+            supported-grant-types:
+              - authorization_code
+              - client_credentials
+        resources:
+          - identifier: user-management-service
+            name: User Management Service
+            description: User Management Service for Mmadu
+        scopes:
+          - code: admin
+            name: admin
+            description: Admin Privileges
+            authorities:
+              - a.*.**
+              - r.*.**
+

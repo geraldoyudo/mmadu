@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
@@ -40,6 +42,7 @@ public class AESCredentialCipher implements CredentialDecryptionProvider, Creden
     }
 
     @EventListener(ContextRefreshedEvent.class)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public void refreshKey() throws Exception {
         Optional<Key> key = keyRepository.findById(keyId);
         if (key.isEmpty()) {
