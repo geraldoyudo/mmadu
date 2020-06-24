@@ -36,7 +36,7 @@ public class AuthorizeEndpointConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/metadata/**")
+                .antMatchers("/metadata/**", "/webjars/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
