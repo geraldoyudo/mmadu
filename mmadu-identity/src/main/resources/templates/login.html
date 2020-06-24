@@ -29,6 +29,10 @@
 
         </div>
         <div class="col-11 col-sm-6 col-md-4">
+            <p class="alert alert-danger" role="alert" th:if="${param.error}">Error. Please enter correct Username &amp; password.</p>
+            <p class="alert alert-success" role="alert" th:if="${param.logout}">
+                You have been logged out.
+            </p>
             <div class="card bg-info">
                 <form th:action="@{/login}" method="post" autocomplete="off" class="card-body">
                     <div class="form-group">
