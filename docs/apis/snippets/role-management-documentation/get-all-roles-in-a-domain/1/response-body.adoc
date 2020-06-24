@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"content":[{"identifier":"sample","name":"Sample Role","description":"Sample Role"}],"totalElements":1,"totalPages":1,"last":true,"number":0,"size":10,"sort":{"unsorted":true,"sorted":false,"empty":true},"first":true,"numberOfElements":1,"empty":false}
+{"content":[{"identifier":"sample","name":"Sample Role","description":"Sample Role"}],"totalPages":1,"last":true,"totalElements":1,"number":0,"size":10,"sort":{"sorted":false,"unsorted":true,"empty":true},"first":true,"numberOfElements":1,"empty":false}
 ----

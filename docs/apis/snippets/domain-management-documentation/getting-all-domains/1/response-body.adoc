@@ -40,6 +40,9 @@
     },
     "profile" : {
       "href" : "http://localhost:8080/profile/appDomains"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/appDomains/search"
     }
   },
   "page" : {
