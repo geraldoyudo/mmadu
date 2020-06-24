@@ -37,13 +37,13 @@
                             <!--/*/
                               <option th:each="scope: ${availableScopes}"
                                     th:value="${scope.code}"
-                                    th:text="${scope.name + ': ' + scope.description}"></option>
+                                    th:text="${scope.name + ': ' + scope.description}" selected></option>
                             /*/-->
 
                             <!--/*-->
-                            <option>Edit: Edit all Users</option>
-                            <option>View: View all Users</option>
-                            <option>Scan: Perform Scan Operations</option>
+                            <option selected>Edit: Edit all Users</option>
+                            <option selected>View: View all Users</option>
+                            <option selected>Scan: Perform Scan Operations</option>
                             <!--*/-->
                         </select>
                     </div>
