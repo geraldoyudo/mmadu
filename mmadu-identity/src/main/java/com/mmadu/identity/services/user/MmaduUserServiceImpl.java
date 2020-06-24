@@ -56,8 +56,9 @@ public class MmaduUserServiceImpl implements MmaduUserService {
 
     @Override
     public void authenticate(String domainId, String username, String password) {
+        Optional<String> status;
         try {
-            Optional<String> status = userServiceClient.post()
+            status = userServiceClient.post()
                     .uri(uriBuilder -> uriBuilder.path("/domains/")
                             .path(domainId)
                             .path("/authenticate")
@@ -74,22 +75,22 @@ public class MmaduUserServiceImpl implements MmaduUserService {
                     .doOnError(ex -> log.error("An error occurred", ex))
                     .map(result -> (String) result.getOrDefault("status", "USERNAME_INVALID"))
                     .blockOptional();
-            if (status.isPresent()) {
-                String statusString = status.get();
-                switch (statusString) {
-                    case "AUTHENTICATED":
-                        return;
-                    case "USERNAME_INVALID":
-                        throw new UsernameNotFoundException("username invalid");
-                    case "PASSWORD_INVALID":
-                        throw new BadCredentialsException("password invalid");
-                }
-            }
         } catch (Exception ex) {
             log.error("An unexpected error occurred", ex);
             throw new AuthenticationServiceException("Login error", ex);
         }
 
+        if (status.isPresent()) {
+            String statusString = status.get();
+            switch (statusString) {
+                case "AUTHENTICATED":
+                    return;
+                case "USERNAME_INVALID":
+                    throw new UsernameNotFoundException("username invalid");
+                case "PASSWORD_INVALID":
+                    throw new BadCredentialsException("password invalid");
+            }
+        }
         throw new BadCredentialsException("could not authenticate");
     }
 }
