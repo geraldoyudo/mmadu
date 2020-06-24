@@ -5,6 +5,7 @@ import com.mmadu.identity.models.user.MmaduUserImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -55,34 +56,40 @@ public class MmaduUserServiceImpl implements MmaduUserService {
 
     @Override
     public void authenticate(String domainId, String username, String password) {
-        Optional<String> status = userServiceClient.post()
-                .uri(uriBuilder -> uriBuilder.path("/domains/")
-                        .path(domainId)
-                        .path("/authenticate")
-                        .build()
-                )
-                .body(BodyInserters.fromValue(
-                        Map.of(
-                                "username", username,
-                                "password", password
-                        )
-                ))
-                .retrieve()
-                .bodyToMono(HashMap.class)
-                .doOnError(ex -> log.error("An error occurred", ex))
-                .map(result -> (String) result.getOrDefault("status", "USERNAME_INVALID"))
-                .blockOptional();
-        if (status.isPresent()) {
-            String statusString = status.get();
-            switch (statusString) {
-                case "AUTHENTICATED":
-                    return;
-                case "USERNAME_INVALID":
-                    throw new UsernameNotFoundException("username invalid");
-                case "PASSWORD_INVALID":
-                    throw new BadCredentialsException("password invalid");
+        try {
+            Optional<String> status = userServiceClient.post()
+                    .uri(uriBuilder -> uriBuilder.path("/domains/")
+                            .path(domainId)
+                            .path("/authenticate")
+                            .build()
+                    )
+                    .body(BodyInserters.fromValue(
+                            Map.of(
+                                    "username", username,
+                                    "password", password
+                            )
+                    ))
+                    .retrieve()
+                    .bodyToMono(HashMap.class)
+                    .doOnError(ex -> log.error("An error occurred", ex))
+                    .map(result -> (String) result.getOrDefault("status", "USERNAME_INVALID"))
+                    .blockOptional();
+            if (status.isPresent()) {
+                String statusString = status.get();
+                switch (statusString) {
+                    case "AUTHENTICATED":
+                        return;
+                    case "USERNAME_INVALID":
+                        throw new UsernameNotFoundException("username invalid");
+                    case "PASSWORD_INVALID":
+                        throw new BadCredentialsException("password invalid");
+                }
             }
+        } catch (Exception ex) {
+            log.error("An unexpected error occurred", ex);
+            throw new AuthenticationServiceException("Login error", ex);
         }
+
         throw new BadCredentialsException("could not authenticate");
     }
 }

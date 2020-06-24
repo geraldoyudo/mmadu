@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Spring Security Example </title>
+    <title>Mmadu Login</title>
     <link rel="stylesheet"
           href="../../../../../../mmadu/common/theme-utils/src/main/resources/META-INF/resources/webjars/mmadu-theme-utils/css/theme.css"
           th:href="@{/webjars/mmadu-theme-utils/css/theme.css}">
@@ -29,14 +29,17 @@
 
         </div>
         <div class="col-11 col-sm-6 col-md-4">
-            <p class="alert alert-danger" role="alert" th:if="${param.error}">Error. Please enter correct Username &amp; password.</p>
+            <p class="alert alert-danger" role="alert" th:if="${param.error}">
+                Error: Invalid Username or password.
+            </p>
             <p class="alert alert-success" role="alert" th:if="${param.logout}">
                 You have been logged out.
             </p>
             <div class="card bg-info">
                 <form th:action="@{/login}" method="post" autocomplete="off" class="card-body">
                     <div class="form-group">
-                        <input placeholder="Username" type="text" id="username" name="username" class="form-control bg-info"/>
+                        <input placeholder="Username" type="text" id="username" name="username"
+                               class="form-control bg-info"/>
                     </div>
                     <div class="form-group">
                         <input placeholder="Password" type="password" id="password" name="password"
