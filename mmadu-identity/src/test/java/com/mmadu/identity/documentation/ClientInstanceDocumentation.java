@@ -9,6 +9,7 @@ import com.mmadu.identity.repositories.ResourceRepository;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
+import com.mmadu.identity.utils.TokenCategoryUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -100,6 +101,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 .put("tlsEnabled", true)
                 .put("includeUserRoles", true)
                 .put("includeUserAuthorities", true)
+                .put("tokenCategory", TokenCategoryUtils.CATEGORY_BEARER)
                 .put("domainId", DOMAIN_ID);
         node.putArray("resources")
                 .add(resource.getIdentifier());
