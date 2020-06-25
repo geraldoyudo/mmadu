@@ -1,9 +1,11 @@
 package com.mmadu.identity.repositories;
 
 import com.mmadu.identity.entities.Token;
+import org.springframework.data.mongodb.repository.DeleteQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +18,7 @@ public interface TokenRepository extends MongoRepository<Token, String> {
             @Param("type") String type,
             @Param("active") Boolean active
     );
+
+    @DeleteQuery("{ $or: [ {expired:true, expiryTime: { $lt: ?0}}, {revoked:true, revokedTime: { $lt: ?0}} ] }")
+    void deleteExpiredAndRevokedTokens(ZonedDateTime time);
 }
