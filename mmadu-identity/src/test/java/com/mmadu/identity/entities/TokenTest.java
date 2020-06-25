@@ -41,13 +41,13 @@ class TokenTest {
     }
 
     @Test
-    void revokedTokenWithoutTimeSetShouldNotBeDeleted() throws Exception {
+    void revokedTokenWithoutTimeSetShouldBeDeleted() throws Exception {
         Token token = getToken();
         token.setRevoked(true);
         token = tokenRepository.save(token);
         assertNotNull(token.getId());
         tokenRepository.deleteExpiredAndRevokedTokens(ZonedDateTime.now().plusSeconds(10));
-        assertTrue(tokenRepository.existsById(token.getId()));
+        assertFalse(tokenRepository.existsById(token.getId()));
     }
 
     @Test
@@ -62,13 +62,13 @@ class TokenTest {
     }
 
     @Test
-    void expiredTokenWithoutTimeSetShouldNotBeDeleted() throws Exception {
+    void expiredTokenWithoutTimeSetShouldBeDeleted() throws Exception {
         Token token = getToken();
         token.setExpired(true);
         token = tokenRepository.save(token);
         assertNotNull(token.getId());
         tokenRepository.deleteExpiredAndRevokedTokens(ZonedDateTime.now().plusSeconds(10));
-        assertTrue(tokenRepository.existsById(token.getId()));
+        assertFalse(tokenRepository.existsById(token.getId()));
     }
 
     @Test
@@ -78,17 +78,17 @@ class TokenTest {
         token = tokenRepository.save(token);
         assertNotNull(token.getId());
         tokenRepository.deleteExpiredAndRevokedTokens(ZonedDateTime.now().plusSeconds(10));
-        assertTrue(tokenRepository.existsById(token.getId()));
+        assertFalse(tokenRepository.existsById(token.getId()));
     }
 
     @Test
-    void revokedTokenWithoutFlagSetShouldNotBeDeleted() throws Exception {
+    void revokedTokenWithoutFlagSetShouldBeDeleted() throws Exception {
         Token token = getToken();
         token.setRevokedTime(ZonedDateTime.now());
         token = tokenRepository.save(token);
         assertNotNull(token.getId());
         tokenRepository.deleteExpiredAndRevokedTokens(ZonedDateTime.now().plusSeconds(10));
-        assertTrue(tokenRepository.existsById(token.getId()));
+        assertFalse(tokenRepository.existsById(token.getId()));
     }
 
     @Test

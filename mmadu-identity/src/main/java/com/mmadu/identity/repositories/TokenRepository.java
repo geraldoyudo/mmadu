@@ -19,6 +19,6 @@ public interface TokenRepository extends MongoRepository<Token, String> {
             @Param("active") Boolean active
     );
 
-    @DeleteQuery("{ $or: [ {expired:true, expiryTime: { $lt: ?0}}, {revoked:true, revokedTime: { $lt: ?0}} ] }")
+    @DeleteQuery("{ $or: [ {expiryTime: { $lt: ?0}}, {revokedTime: { $lt: ?0}}, {expired: true}, {revoked: true} ] }")
     void deleteExpiredAndRevokedTokens(ZonedDateTime time);
 }
