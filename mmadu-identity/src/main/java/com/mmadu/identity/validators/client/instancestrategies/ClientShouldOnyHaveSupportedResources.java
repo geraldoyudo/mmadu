@@ -25,8 +25,14 @@ public class ClientShouldOnyHaveSupportedResources implements ClientInstanceVali
 
     @Override
     public void validate(ClientInstance instance, Errors errors) {
-        if (!resourceService.areAllResourcesSupportedInDomain(instance.getDomainId(), instance.getResources())) {
-            errors.rejectValue("resources", "resources.not.supported", "some or all of the resources are not supported");
+        if (!resourceService.areAllResourcesSupportedInDomain(instance.getDomainId(), instance.getResources()) ||
+                !resourceService.supportsTokenCategory(instance.getDomainId(),
+                        instance.getResources(), instance.getTokenCategory())) {
+            rejectResourceNotSupported(errors);
         }
+    }
+
+    private void rejectResourceNotSupported(Errors errors) {
+        errors.rejectValue("resources", "resources.not.supported", "some or all of the resources are not supported");
     }
 }

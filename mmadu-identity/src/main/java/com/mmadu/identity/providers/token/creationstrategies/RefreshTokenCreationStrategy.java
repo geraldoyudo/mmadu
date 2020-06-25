@@ -89,6 +89,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                         .labels(List.of("access_token"))
                         .provider(configuration.getAccessTokenProvider())
                         .type("access_token")
+                        .category(client.getTokenCategory())
                         .scopes(scopes)
                         .active(true)
                         .build()
@@ -112,6 +113,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                                     min(now.plusSeconds(client.getRefreshTokenTTLSeconds()), authorization.getExpiryTime())
                             )
                             .type("refresh_token")
+                            .category(client.getTokenCategory())
                             .active(true)
                             .build()
             );
@@ -125,7 +127,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                 .expiresIn(authorization.getExpiryTime())
                 .refreshToken(refreshTokenString)
                 .tokenIdentifier(newAccessToken.getTokenIdentifier())
-                .tokenType("bearer")
+                .tokenType(newAccessToken.getCategory())
                 .expiresIn(newAccessToken.getExpiryTime())
                 .build();
     }

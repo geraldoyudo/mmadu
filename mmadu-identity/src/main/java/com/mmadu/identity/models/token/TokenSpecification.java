@@ -11,17 +11,18 @@ import java.util.Map;
 @Getter
 @Builder
 public class TokenSpecification {
-    private String provider;
-    private String domainId;
-    private GrantAuthorization grantAuthorization;
-    private Map<String, Object> configuration;
-    private List<String> scopes;
-    private List<String> labels;
-    private String type;
-    private ZonedDateTime expirationTime;
-    private ZonedDateTime issueTime;
-    private ZonedDateTime activationTime;
-    private List<String> authorities;
+    private final String provider;
+    private final String domainId;
+    private final GrantAuthorization grantAuthorization;
+    private final Map<String, Object> configuration;
+    private final List<String> scopes;
+    private final List<String> labels;
+    private final String type;
+    private final ZonedDateTime expirationTime;
+    private final ZonedDateTime issueTime;
+    private final ZonedDateTime activationTime;
+    private final List<String> authorities;
+    private final String category;
     @Builder.Default
-    private boolean active = true;
+    private final boolean active = true;
 }

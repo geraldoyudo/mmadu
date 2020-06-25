@@ -87,4 +87,9 @@ public class MmaduClientImpl implements MmaduClient {
     public List<String> getScopes() {
         return clientInstance.getScopes();
     }
+
+    @Override
+    public String getTokenCategory() {
+        return clientInstance.getTokenCategory();
+    }
 }

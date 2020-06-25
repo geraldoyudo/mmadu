@@ -12,4 +12,6 @@ public interface ResourceService {
     boolean existsByDomainIdAndIdentifier(String domainId, String identifier);
 
     boolean areAllResourcesSupportedInDomain(String domainId, List<String> resources);
+
+    boolean supportsTokenCategory(String domainId, List<String> resources, String tokenCategory);
 }

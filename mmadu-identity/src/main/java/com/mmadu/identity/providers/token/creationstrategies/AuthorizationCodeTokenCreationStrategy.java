@@ -84,6 +84,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                         .labels(List.of("access_token"))
                         .provider(configuration.getAccessTokenProvider())
                         .type("access_token")
+                        .category(client.getTokenCategory())
                         .active(true)
                         .build()
         );
@@ -104,6 +105,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                                     min(now.plusSeconds(client.getRefreshTokenTTLSeconds()), authorization.getExpiryTime())
                             )
                             .type("refresh_token")
+                            .category(client.getTokenCategory())
                             .active(true)
                             .build()
             );
@@ -118,7 +120,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                 .expiresIn(authorization.getExpiryTime())
                 .refreshToken(refreshTokenString)
                 .tokenIdentifier(accessToken.getTokenIdentifier())
-                .tokenType("bearer")
+                .tokenType(accessToken.getCategory())
                 .expiresIn(accessToken.getExpiryTime())
                 .build();
     }

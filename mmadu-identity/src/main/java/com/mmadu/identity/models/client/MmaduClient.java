@@ -2,6 +2,7 @@ package com.mmadu.identity.models.client;
 
 import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientType;
+import com.mmadu.identity.utils.TokenCategoryUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,5 +50,9 @@ public interface MmaduClient {
 
     default List<String> getScopes() {
         return Collections.emptyList();
+    }
+
+    default String getTokenCategory() {
+        return TokenCategoryUtils.CATEGORY_BEARER;
     }
 }
