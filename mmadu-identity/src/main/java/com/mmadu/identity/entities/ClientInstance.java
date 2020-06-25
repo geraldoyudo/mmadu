@@ -2,6 +2,7 @@ package com.mmadu.identity.entities;
 
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
+import com.mmadu.identity.utils.TokenCategoryUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -47,4 +48,5 @@ public class ClientInstance implements HasDomain {
     private boolean includeUserAuthorities;
     private boolean includeUserGroups;
     private List<String> scopes = Collections.emptyList();
+    private String tokenCategory = TokenCategoryUtils.CATEGORY_BEARER;
 }

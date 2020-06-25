@@ -21,4 +21,7 @@ public interface ResourceRepository extends MongoRepository<Resource, String> {
                                        @Param("identifier") List<String> identifier);
 
     Page<Resource> findByDomainId(@Param("domainId") String domainId, Pageable p);
+
+    List<Resource> findByDomainIdAndIdentifierIn(@Param("domainId") String domainId,
+                                                 @Param("identifier") List<String> identifier);
 }

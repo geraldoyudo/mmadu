@@ -6,6 +6,7 @@ import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator
 import com.mmadu.identity.utils.ClientCategoryUtils;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
+import com.mmadu.identity.utils.TokenCategoryUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -126,6 +127,7 @@ public class DomainIdentityConfigurationList {
         private boolean includeUserAuthorities;
         private boolean includeUserGroups;
         private List<String> scopes = Collections.emptyList();
+        private String tokenCategory = TokenCategoryUtils.CATEGORY_BEARER;
 
         public ClientInstance toEntity(String domainId,
                                        ClientResolver clientResolver,
@@ -155,6 +157,7 @@ public class DomainIdentityConfigurationList {
             instance.setIncludeUserGroups(includeUserGroups);
             instance.setScopes(scopes);
             instance.setDomainId(domainId);
+            instance.setTokenCategory(tokenCategory);
             return instance;
         }
     }
@@ -177,6 +180,9 @@ public class DomainIdentityConfigurationList {
         private String name;
         @NotEmpty
         private String description;
+        @NotNull
+        @Size(min = 1)
+        private List<String> supportedTokenCategories = Collections.singletonList(TokenCategoryUtils.CATEGORY_BEARER);
 
         public Resource toEntity(String domainId) {
             Resource resource = new Resource();
@@ -184,6 +190,7 @@ public class DomainIdentityConfigurationList {
             resource.setDescription(description);
             resource.setIdentifier(identifier);
             resource.setName(name);
+            resource.setSupportedTokenCategories(supportedTokenCategories);
             return resource;
         }
     }

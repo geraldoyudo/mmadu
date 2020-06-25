@@ -103,6 +103,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
                         .labels(List.of("access_token"))
                         .provider(configuration.getAccessTokenProvider())
                         .type("access_token")
+                        .category(client.getTokenCategory())
                         .active(true)
                         .build()
         );
@@ -111,7 +112,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
         return TokenResponse.builder()
                 .accessToken(accessToken.getTokenString())
                 .tokenIdentifier(accessToken.getTokenIdentifier())
-                .tokenType("bearer")
+                .tokenType(accessToken.getCategory())
                 .expiresIn(grantAuthorization.getExpiryTime())
                 .build();
     }

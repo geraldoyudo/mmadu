@@ -62,6 +62,7 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setExpiryTime(specification.getExpirationTime());
         token.setActivationTime(specification.getActivationTime());
         token.setActive(specification.isActive());
+        token.setCategory(specification.getCategory());
         return token;
     }
 }

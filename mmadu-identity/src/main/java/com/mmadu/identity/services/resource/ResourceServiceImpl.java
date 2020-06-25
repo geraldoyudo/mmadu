@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+
 @Service
 public class ResourceServiceImpl implements ResourceService {
     private ResourceRepository resourceRepository;
@@ -31,5 +34,17 @@ public class ResourceServiceImpl implements ResourceService {
         Set<String> resourceSet = new HashSet<>(resources);
         return resourceRepository.countByDomainIdAndIdentifierIn(domainId, new ArrayList<>(resourceSet))
                 == resourceSet.size();
+    }
+
+    @Override
+    public boolean supportsTokenCategory(String domainId, List<String> resources, String tokenCategory) {
+        List<Resource> resourceList = resourceRepository.findByDomainIdAndIdentifierIn(domainId, resources);
+        for (Resource resource : resourceList) {
+            List<String> supportedCategories = ofNullable(resource.getSupportedTokenCategories()).orElse(emptyList());
+            if (!supportedCategories.contains(tokenCategory)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

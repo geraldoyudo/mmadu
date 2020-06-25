@@ -35,4 +35,5 @@ public class Token implements DomainPayload {
     private List<String> scopes;
     private String tokenIdentifier;
     private String tokenString;
+    private String category;
 }
