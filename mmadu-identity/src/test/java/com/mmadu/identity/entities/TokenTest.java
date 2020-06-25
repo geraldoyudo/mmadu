@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TokenTest {
     @Autowired
     private TokenRepository tokenRepository;
-
-    private final ZonedDateTime time = ZonedDateTime.now();
 
     @Test
     void revokedTokenShouldBeDeleted() throws Exception {
