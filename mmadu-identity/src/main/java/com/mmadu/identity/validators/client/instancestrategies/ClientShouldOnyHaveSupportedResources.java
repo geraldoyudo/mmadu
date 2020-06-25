@@ -20,7 +20,7 @@ public class ClientShouldOnyHaveSupportedResources implements ClientInstanceVali
     @Override
     public boolean apply(ClientInstance instance) {
         return !StringUtils.isEmpty(instance.getDomainId()) &&
-                CollectionUtils.isEmpty(instance.getResources());
+                !CollectionUtils.isEmpty(instance.getResources());
     }
 
     @Override
