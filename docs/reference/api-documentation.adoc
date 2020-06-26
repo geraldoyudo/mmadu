@@ -4,11 +4,16 @@ v2.0.0, 2019-07-08
 :toc:
 :sectnums:
 :showtitle:
-:page-navtitle: Api Convention Documentation
-:page-excerpt: General Api Documentation Conventions
+:page-navtitle: API Convention Documentation
+:page-excerpt: General API Documentation Conventions
 :page-root: ../
 :imagesdir: {page-root}/images
 :permalink: /:title/
 :page-layout: reference
 :snippets: ../apis/snippets
 :version: master
+
+This documentation explains the various standards and conventions used for implementing
+mmadu web services.
+
+Coming Soon.

@@ -1,4 +1,4 @@
-- name: user-management
-  title: User Management
 - name: api-documentation
   title: Api Convention Documentation
+- name: user-management
+  title: User Management
