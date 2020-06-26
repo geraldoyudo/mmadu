@@ -15,37 +15,36 @@ v2.0.0, 2020-06-26
 
 == Overview
 
-Mmadu User Service is an independent service for managing users. It exposes the following resources
-for managing users:
+Mmadu Registration Service is an independent service for managing user flows.
 
-. AppDomains - This is a tenant, with its own users, groups, roles and authorities.
-. AppUsers - Representing users of client applications. Users can have custom properties defined by the domain.
-. Roles and Authorities - Enforcable user privileges.
-. Groups - Objects used to further categorize users in a tree hierarchy.
+For now, only user registration flow issupported.
+
+It exposes the following resources for handling dynamic generation of registration forms:
+
+. Domain Registration Profile - Handles registration service configuration for the domain
+. Field Types - Global field types supported by the registration service
+. Field - Domain Fields supported by a domain
 
 == Features
 
 Currently, mmadu user service provides the following:
 
-. Resource Management - Management of domains, users, roles, authorities and groups
-. Authentication - Provides an api that clients can use to Authenticate their users.
-. Password Hashing - Passwords of users are hashed and cannot be decrypted.
+. Resource Management - Management of registration profiles, fields, and field types.
+. Registration - Provides a dynamic registration form to register users.
 
 == Default Configuration
 
 === Default Port
 
-Mmadu User Service listens to port 15551 by default and this can be configured using the SERVER_PORT environment variable
+Mmadu Registration Service listens to port 15552 by default and this can be configured using the SERVER_PORT environment variable
 or the server.port SpringBoot property.
 
+== User Registration
 
-
-=== Registration Service
-
-The registration service provides an api to access the registration page for a domain. The registration page
+The registration service provides an api to access the registration page for a domain. The registration service
 generates a form from the configured fields and field types of a domain.
 
-==== Displaying the registration form
+=== Displaying the registration form
 
 The registration form can be accessed in the browser using the url:
 
@@ -66,211 +65,214 @@ this domain. To specify a url to redirect to, add the redirectUrl parameter
 ----
 http://localhost:1552/0/register?redirectUrl=http://myapp.com
 ----
-==== Customizing Registration Forms
+
+
+== Customizing Registration Forms
 
 Registration forms for a domain can be customized by adding and removing fields and field types.
 The registration service ensures that form fields are created for each field.
 
-==== Registration Profiles
+
+== Registration Profiles
 
 Each domain has a registration profile object that is used for configuring the applications behaviour during
 registration.
 
 NOTE: There can be only one registration profile for a domain.
 
-===== Creating a Registration Profile
+=== Creating a Registration Profile
 
-A POST Request will create a registration profile.
+A `POST /repo/registrationProfiles` Request will create a registration profile.
 
-====== Fixed Request Fields
+==== Create Registration Profile Request Body
 
 include::{snippets}/registration-profile-documentation/create-registration-profile/1/request-fields.adoc[]
 
-Example:
+==== Sample Create Registration Profile Request
 
 include::{snippets}/registration-profile-documentation/create-registration-profile/1/http-request.adoc[]
 
-====== Response Fields
+==== Create Registration Profile Response
 
 This API returns a HTTP 201 CREATED response with an empty body.
 
-===== Obtaining Registration Profile by Profile ID
+
+=== Retrieving a Registration Profile
 
 A GET Request will return a registration profile with its ID
 
-====== Path Parameters
+==== Registration Profile Retrieval Path Parameter
 
 include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Registration Profile Retrieval Request
 
 include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-request.adoc[]
 
 
-===== Response Fields
+==== Registration Profile Retrieval Response
 
 This API returns the registration profile with the following fields:
 
 include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/response-fields.adoc[]
 
-Example:
+==== Sample Registration Profile Retrieval Response
 
 include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-response.adoc[]
 
 
-===== Updating Registration Profile by ID
+=== Updating Registration Profile by ID
 
-A PATCH Request will update a registration profile. The example below updates the defaultRegistrationUrl property.
+A `PATCH /repo/registrationProfiles/{profileId}` Request will update a registration profile.
+The example below updates the defaultRegistrationUrl property.
 
-====== Path Parameters
+==== Registration Profile Update Request Path Parameter
 
 include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Registration Profile Update Request
 
 include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-request.adoc[]
 
 
-====== Response Fields
+==== Registration Profile Update Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Registration Profile Update Response
 
 include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-response.adoc[]
 
 
-===== Deleting a Registration Profile by ID
+=== Deleting a Registration Profile by ID
 
-A DELETE request will delete a registration profile.
+A `DELETE /repo/registrationProfiles/{profileId}` request will delete a registration profile.
 
 WARNING: Deleting a registration profile will remote all fields associated with the profile and a registration page
 for that domain will be unavailable.
 
-====== Path Parameters
+==== Registration Profile Delete Request Path
 
 include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Registration Profile Delete Request
 
 include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-request.adoc[]
 
-====== Response Fields
+==== Registration Profile Delete Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Registration Profile Delete Response
 
 include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-response.adoc[]
 
-==== Field Types
+== Managing Field Types
 
 Field type objects specify the properties of a field type in the registration form. You can create a field type that
-can be used by fields in a registration form.
+can be used by fields in a registration form. Field types are global and can be used by any domain.
 
 See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize field types.
 
-===== Creating a field Type
+=== Creating a field Type
 
-A POST request will create a field type
+A `POST /repo/fieldTypes` request will create a field type
 
-====== Request Fields
+==== Field Type Creation Request Body
 
 include::{snippets}/field-types-documentation/create-field-types/1/request-fields.adoc[]
 
-Example:
+==== Sample Field Type Creation Request
 
 include::{snippets}/field-types-documentation/create-field-types/1/http-request.adoc[]
 
-====== Response Fields
+==== Field Type Creation Response
 
-This API returns a HTTP 201 CREATED response with an empty body.
+This API returns a `HTTP 201 CREATED` response with an empty body.
 
-===== Getting a field type with an ID
+=== Retrieving a Field Type
 
-A GET request will get a field type with an ID.
+A `GET /repo/fieldTypes/{fieldTypeId} `request will get a field type with an ID.
 
-====== Path Parameters
+==== Field Type Retrieval Request Path
 
 include::{snippets}/field-types-documentation/get-field-type-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Field Type Retrieval Request
 
 include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-request.adoc[]
 
-
-====== Response Fields
+==== Field Type Retrieval Response
 
 This API returns a FieldType object with these fields:
 
 include::{snippets}/field-types-documentation/get-field-type-by-id/1/response-fields.adoc[]
 
-Example:
+==== Sample Field Type Retrieval Response
 
 include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-response.adoc[]
 
-===== Getting All Field Types
+=== Getting All Field Types
 
-A GET request will get all field types.
+A `GET /repo/fieldTypes` request will get all field types.
 
-Example:
+==== Sample All Fields Retrieval Request
 
 include::{snippets}/field-types-documentation/get-all-field-types/1/http-request.adoc[]
 
-
-====== Response Fields
+==== All Fields Retrieval Response
 
 This API returns a list of all field types with these fields:
 
 include::{snippets}/field-types-documentation/get-all-field-types/1/response-fields.adoc[]
 
-Example:
+==== Sample All Fields Retrieval Response
 
 include::{snippets}/field-types-documentation/get-all-field-types/1/http-response.adoc[]
 
-===== Updating A Field Type
+=== Updating A Field Type
 
 A PATCH request will update a field type
 
-====== Path Parameters
+==== Field Type Update Request
 
 include::{snippets}/field-types-documentation/update-field-type-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Field Type Update Request
 
 include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-request.adoc[]
 
 
-====== Response Fields
+==== Field Type Update Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Field Type Update Response
 
 include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-response.adoc[]
 
-===== Removing A Field Type
+=== Removing A Field Type
 
-A DELETE request will remove a field type.
+A `DELETE /repo/fieldTypes/{fieldTypeId}` request will remove a field type.
 
-====== Path Parameters
+==== Delete Field Type Request
 
 include::{snippets}/field-types-documentation/delete-field-type-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Delete Field Type Request
 
 include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-request.adoc[]
 
-====== Response Fields
+==== Delete Field Type Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Delete Field Type Response
 
 include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-response.adoc[]
 
 
-==== Fields
+== Managing Fields
 
 Fields contain information used in rendering each field in a registration form. Fields utilize properties
 of their field types in order to render an adequate representation of the field. Fields also specify the user property
@@ -278,111 +280,108 @@ that the input field is bound to. Fields can override and extend certain propert
 
 See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize fields.
 
-===== Creating a field
+=== Creating a field
 
-A POST request will create a field
+A `POST /repo/fields` request will create a field.
 
-====== Request Fields
+==== Field Creation Request
 
 include::{snippets}/fields-documentation/create-fields/1/request-fields.adoc[]
 
-Example:
+==== Sample Field Creation Request
 
 include::{snippets}/fields-documentation/create-fields/1/http-request.adoc[]
 
-====== Response Fields
+==== Field Creation Response
 
 This API returns a HTTP 201 CREATED response with an empty body.
 
-===== Getting a field type with an ID
+=== Retrieving a Field
 
-A GET request will get a field with an ID.
+A `GET /repo/fields/{id}` request will get a field with an ID.
 
-====== Path Parameters
+==== Field Retrieval Request
 
 include::{snippets}/fields-documentation/get-field-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Field Retrieval Request
 
 include::{snippets}/fields-documentation/get-field-by-id/1/http-request.adoc[]
 
-
-====== Response Fields
+==== Field Retrieval Response
 
 This API returns a Field object with these fields:
 
 include::{snippets}/fields-documentation/get-field-by-id/1/response-fields.adoc[]
 
-Example:
+==== Sample Field Retrieval Response
 
 include::{snippets}/fields-documentation/get-field-by-id/1/http-response.adoc[]
 
-===== Getting All Fields in Domain
+=== Retrieving all Domain Fields
 
-A GET request will get all fields in a domain.
+A `GET /repo/fields/search/findByDomainId` request will get all fields in a domain.
 
-====== Request Parameters
+==== Domain Retrieval Request Query Parameter
 
 include::{snippets}/fields-documentation/get-fields-by-domain/1/request-parameters.adoc[]
 
-Example:
+==== Sample Domain Retrieval Request
 
 include::{snippets}/fields-documentation/get-fields-by-domain/1/http-request.adoc[]
 
-
-====== Response Fields
+==== Domain Retrieval Response
 
 This API returns a list of all fields with these properties:
 
 include::{snippets}/fields-documentation/get-fields-by-domain/1/response-fields.adoc[]
 
-Example:
+==== Sample Domain Retrieval Response
 
 include::{snippets}/fields-documentation/get-fields-by-domain/1/http-response.adoc[]
 
-===== Updating A Field
+=== Updating A Field
 
-A PATCH request will update a field
+A `PATCH /repo/fields/{id}` request will update a field
 
-====== Path Parameters
+==== Field Update Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Field Update Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
 
-
-====== Response Fields
+==== Field Update Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Field Update Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
 
-===== Removing A Field
+=== Removing A Field
 
-A DELETE request will remove a field.
+A `DELETE /repo/fields/{id}` request will remove a field.
 
-====== Path Parameters
+==== Field Removal Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Field Removal Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
 
-====== Response Fields
+==== Field Removal Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Field Removal Response
 
 include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
 
 [#defining-markup-for-fields]
-==== Defining Markup for Fields
+=== Defining Markup for Fields
 
 You define how you want your registration fields by configuring fields and field types. The markup property in
 the field type is used to define the markup of that specific field type. An age field type markup can be defined

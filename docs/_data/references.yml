@@ -1,4 +1,6 @@
 - name: api-documentation
   title: Api Convention Documentation
 - name: user-management
-  title: User Management
+  title: Mmadu User Service Documentation
+- name: registration
+  title: Mmadu Registration Service Documentation
