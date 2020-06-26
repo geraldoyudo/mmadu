@@ -10,9 +10,20 @@
 
 Mmadu can be easily started with docker compose.
 
-== Steps to Run Mmadu User Service
+== Using Mmadu
 
-To run Mmadu User service, take the following steps:
+Mmadu aims to be highly flexible and customizable. Mmadu is made up of different
+components that enables developers to pick and choose which one they need for their application.
+
+Currently, Mmadu is made up of the following:
+
+. Mmadu User Service
+. Mmadu Registration
+. Mmadu Identity
+
+== Getting Started with Docker
+
+To run Mmadu with all the services, use the docker-compose file:
 
 . Create a folder (we will use mmadu as the created folder)
 +

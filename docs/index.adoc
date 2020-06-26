@@ -51,6 +51,14 @@ https://tools.ietf.org/html/rfc6749#section-1.3.3[Resource owner Password Creden
 . https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html[UMA 2.0]
 . ... and many more as they come
 
+== Current Services
+
+Mmmadu is made up of the following standalone services:
+
+. Mmadu User Service - This handles domain, user, roles, authorities and management.
+. Mmadu Registration Service - This handles registration and other user flows
+. Mmadu Identity Service - An identity provider, for exposing Oauth 2.0 endpoints
+
 == Getting Started
 
 Click link:/guides[here] to get started
