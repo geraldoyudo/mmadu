@@ -22,7 +22,7 @@ To help developers (*of all walks of life*) eliminate user-management coding in 
 
 == Current Features
 
-. Multitenancy using Domains
+. Multi-tenancy using Domains
 . User Management
 . Role and Authority Management
 . Group Management
