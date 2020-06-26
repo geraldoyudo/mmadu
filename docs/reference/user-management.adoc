@@ -206,44 +206,47 @@ include::{snippets}/authentication-documentation/authentication/1/http-response.
 
 == Managing Users
 
-This contains user information for a specific user. A user could have a username, password, roles,
-authorities and any other properties that the client deems fit.
+The User management endpoints provide APi's for managing a user.
 
 
-==== Creating A User
+=== Creating A User
 
-A POST request will create a user.
+A `POST /domains/{domainId}/users/{userId}` request will create a user.
 
-===== Fixed Request Fields
+==== User Creation Request Body Fields
 
 include::{snippets}/user-management-documentation/create-user/1/request-fields.adoc[]
 
-Example:
+==== User Creation Request Path
+
+include::{snippets}/user-management-documentation/create-user/1/path-parameters.adoc[]
+
+==== Sample User Creation Request
 
 include::{snippets}/user-management-documentation/create-user/1/http-request.adoc[]
 
 As seen in the example,  you can also add custom properties like the "color" property.
 
 
-===== Response Fields
+==== User Creation Response
 
-This API returns a HTTP 201 CREATED response with an empty body.
+This API returns a `HTTP 201 CREATED` response with an empty body.
 
 
-==== Getting A User with an ID
+=== Retrieving A User
 
-A GET request will get a user with an ID.
+A `GET  /domains/{domainId}/users/{userId}` request will get a user with an ID.
 
-===== Path Parameters
+==== User Retrieval Request Path
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample User Retrieval Request
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-request.adoc[]
 
 
-===== Response Fields
+==== Sample User Retrieval Response
 
 This API returns an AppUser with these fields as well as custom fields provided by the client:
 
