@@ -9,6 +9,13 @@
 
 == Overview
 
+Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.
+
+Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
+a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
+care of registration work flows and exposes APIs for authentication.
+
+With Mmadu, you can have a dedicated system for managing users across all your applications.
 Mmadu is a set of tools and services that helps developers manage their application users. Applications are constantly
 being built on mobile, web and other devices and with these bring their own security challenges in authentication and
 authorization.

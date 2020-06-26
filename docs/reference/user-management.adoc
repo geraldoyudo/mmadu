@@ -1,11 +1,11 @@
-= Mmadu User Guide
+= Mmadu User Service Reference
 Oyudo Gerald <gerald.oyudo@gmail.com>
-v2.0.0, 2019-07-08
+v2.0.0, 2020-06-26
 :toc:
 :sectnums:
 :showtitle:
-:page-navtitle: Mmadu User Guide
-:page-excerpt: User Guide
+:page-navtitle: Mmadu User Service Reference
+:page-excerpt: Reference Documentation for Mmadu User Service
 :page-root: ../
 :imagesdir: {page-root}/images
 :permalink: /:title/
@@ -15,448 +15,184 @@ v2.0.0, 2019-07-08
 
 == Overview
 
-=== What is Mmadu?
+Mmadu User Service is an independent service for managing users. It exposes the following resources
+for managing users:
 
-Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.
+. AppDomains - This is a tenant, with its own users, groups, roles and authorities.
+. AppUsers - Representing users of client applications. Users can have custom properties defined by the domain.
+. Roles and Authorities - Enforcable user privileges.
+. Groups - Objects used to further categorize users in a tree hierarchy.
 
-Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
-a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
-care of registration work flows and exposes APIs for authentication.
+== Features
 
-With Mmadu, you can have a dedicated system for managing users across all your applications.
+Currently, mmadu user service provides the following:
 
-=== Features
+. Resource Management - Management of domains, users, roles, authorities and groups
+. Authentication - Provides an api that clients can use to Authenticate their users.
+. Password Hashing - Passwords of users are hashed and cannot be decrypted.
 
-==== User Authentication
+== Default Configuration
 
-By calling an API, you can authenticate users of your application with Mmmadu. By passing a username
-and (encrypted) password, the rest api can determine whether the username/password combination is correct.
-This provides a basic method of integration with web security frameworks.
+=== Default Port
 
-==== Domain Management
+Mmadu User Service listens to port 15551 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.
 
-By creating an managing domains, you can logically separate users. Users in a domain are typically used for one application.
-My storing users in multiple domains, you can use a single mmadu installation to
-manage users across multiple applications.
+== Managing Domains
 
-==== User Management
-
-The user service provides basic CRUD operations to help you manage and query your users.
-
-==== Token Management
-
-Mmadu utilizes tokens to secure its APIs. You can create tokens that grant access to one domain or utilize the admin token
-which has access to all domains.
-
-==== User Registration
-
-Mmadu provides the web logic for registering users. With configured fields and field types, the registration api generates
-dynamic and configurable registration forms that domain users fill to be registered in an application.
-
-=== What's New
-
-|===
-|Version |Features
-
-|v1.3.0
-|
-- Introduced user registration
-
-- Added docker installation features
-
-|v1.1.0
-|
-- User management API redesigned and made user friendly
-
-- Bug fixes
-
-
-|v1.0.0
-|
-- Domain and user management API was introduced
-
-- Token security for domain and user management API was introduced.
-
-|v0.0.1
-|
-- Api for creating and updating user information created.
-
-- Api for authenticating username and password information has been created.
-|===
-
-=== Getting Started
-
-Mmadu can be installed in a number of ways since it is built and distributed with jar files. The easiest way to install
-mmadu is using docker.
-
-====  Getting Started with Docker
-
-===== Requirements
-
-* Docker
-* Docker Compose
-
-===== Installation
-. Create a folder (we will use mmadu as the created folder)
-+
-[source,sh]
-----
-mkdir mmadu && cd mmadu
-----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
-----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
-----
-. Make the necessary modifications to suite your configuration (you can use it as is)
-. Start the services
-+
-[source,sh]
-----
-docker-compose up
-----
-
-===== Using the default settings
-
-The docker compose installation comes pre-configured with default settings. You can access the api from each service using
-the default admin token 2222. The user management service, registration service and token service are
-at ports 15551, 15552 and 15553 respectively.
-
-NOTE: Do not use default settings for configuration on production.
-
-===== Using the services
-
-To find out more about how to consume the service API, please see <<API>>
-
-== Architecture
-
-Mmadu is built using a service oriented architecture. Each basic functionality is encapsulated
-in an independent service.
-
-The core service is the user management service which handles authentication, user and domain management. The token service
-is used by all other services for token authentication.
-
-Currently, mmadu has the following services:
-
-
-|===
-|Service |Description
-
-|Token Service
-|Service for managing and checking tokens and permissions.
-
-|User management Service
-|Manages domain authentication as well as administration of domains and users.
-
-|Registration Service
-|Provides a dynamic registration form for each domain. Exposes API endpoints to configure registration form fields.
-|===
-
-== API
-
-=== Security
-
-If token security is enabled, you will need a token to access the api.
-
-Simply set the domain-auth-token header to the value of the token. For more information on tokens, see <<token-service, token management>>.
-
-==== Permissions
-
-A token has admin permissions, while others have domain permissions. The admin token can access all parts of the API,
-while domain tokens can only access parts of the api that returns resources pertaining to the domain.
-
-[#token-service]
-=== Token Service
-
-Mmadu service uses token based security. Access to API can be done using admin and domain tokens. The default
-port for the token service is 15553
-
-==== Admin Token
-
-An admin token is automatically created with an id "admin-token". This token will grant you access
-to all resources in the API.
-
-==== Domain Tokens
-
-Domain tokens are created and assigned to a domain configuration. Every domain can have one domain token.
-Multiple domains can share a domain token. Domain token grants the API user access to user resources for that domain.
-
-==== Token Encryption
-
-If encryption is enabled, the token values will be encrypted before storing in the database. It uses an AES CBC cipher to
-encrypt token values.
-
-Encryption can be enabled by setting the environment property `mmadu.domain.encrypt-keys` to `true`.
-
-Token values are encrypted under the master-key.
-
-===== Changing the Encryption Master Key
-
-To change the encryption master key, set the environment property `mmadu.security.master-key` to the desired value.
-
-==== Generating a Token
-
-A GET request will create a new token and return the token value. If token encryption is enabled, the token value returned is
-encrypted.
-
-===== Request
-
-include::{snippets}/token-management-documentation/generate-token/1/http-request.adoc[]
-
-===== Response Fields
-
-This API returns the newly generated token
-
-include::{snippets}/token-management-documentation/generate-token/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/generate-token/1/http-response.adoc[]
-
-==== Retrieving a Token
-
-A GET request will get a token with the ID.
-
-===== Path Parameters
-
-include::{snippets}/token-management-documentation/retrieve-token/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/retrieve-token/1/http-request.adoc[]
-
-
-===== Response Fields
-
-This API returns an AppUser with these fields:
-
-include::{snippets}/token-management-documentation/retrieve-token/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/retrieve-token/1/http-response.adoc[]
-
-==== Resetting a Token
-
-A GET request will generate a new token value for the token.
-
-===== Path Parameters
-
-include::{snippets}/token-management-documentation/reset-token/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/reset-token/1/http-request.adoc[]
-
-
-===== Response Fields
-
-This API returns a token with the following fields:
-
-include::{snippets}/token-management-documentation/reset-token/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/reset-token/1/http-response.adoc[]
-
-==== Setting a Domain Token
-
-A POST request will set a domain's token.
-
-===== Request Fields
-
-include::{snippets}/token-management-documentation/set-auth-token-for-domain/1/request-fields.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/set-auth-token-for-domain/1/http-request.adoc[]
-
-===== Response Fields
-
-This API returns a 204 no content response.
-
-Example:
-
-include::{snippets}/token-management-documentation/set-auth-token-for-domain/1/http-response.adoc[]
-
-==== Getting the token associated to a Domain
-
-A GET request will get a domain's token.
-
-===== Path Parameters
-
-include::{snippets}/token-management-documentation/get-auth-token-for-domain/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/get-auth-token-for-domain/1/http-request.adoc[]
-
-
-===== Response Fields
-
-This API returns a token with these fields:
-
-include::{snippets}/token-management-documentation/get-auth-token-for-domain/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/token-management-documentation/get-auth-token-for-domain/1/http-response.adoc[]
-
-
-=== User Management Service
-
-The user management service provides APIs for authentication and user management. The default port for
-the user management service is 15551
-
-==== Authentication
-
-Using the rest api, you can authenticate users given a username and
-password.
-
-A post request authenticates a user on a domain.
-
-===== Request Fields
-
-include::{snippets}/authentication-documentation/authentication/1/request-fields.adoc[]
-
-
-===== Path Parameters
-include::{snippets}/authentication-documentation/authentication/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/authentication-documentation/authentication/1/http-request.adoc[]
-
-===== Response Fields
-
-This API returns a JSON response with the following fields:
-
-include::{snippets}/authentication-documentation/authentication/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/authentication-documentation/authentication/1/http-response.adoc[]
-
-==== Managing Domains
+A domain is analogous to a realm. This represents a user pool with its own set of users, groups, roles, and authorities.
 
 A client application references users in one domain. A domain is referenced by a domain id. Applications
 can share the same user base by using the same domain id.
 
-===== Security
+=== Setting Up A Domain
 
-If token security is enabled, the domain api can be accessed with the admin token.
+With one API call, you can set up users, roles, authorities and groups needed for your domain. Domain configuration is done
+with a call to `POST /domains`.
 
-Token security is enabled by default. To disable, set the environment property `mmadu.domain.api-security-enabled`
-to `false`.
+Authority: `domain.initialize`
 
-===== Creating A domain
+==== Domain Setup Request Fields
 
-A POST request will create a domain
+include::{snippets}/batch-domain-creation-documentation/batch-create-domains/1/request-fields.adoc[]
 
-====== Request Fields
+==== Sample Domain Setup Request
+
+include::{snippets}/batch-domain-creation-documentation/batch-create-domains/1/http-request.adoc[]
+
+
+=== Creating A domain
+
+Instead of creating the entire domain environment at one go, you can opt to create just the domain object.
+
+A `POST /appDomains` request will create a domain.
+
+Authority: `domain.create`
+
+==== Domain Creation Request Body
 
 include::{snippets}/domain-management-documentation/create-a-domain/1/request-fields.adoc[]
 
-Example:
+==== Sample Domain Creation Request
 
 include::{snippets}/domain-management-documentation/create-a-domain/1/http-request.adoc[]
 
-====== Response Fields
+==== Domain Creation Response
 
-This API returns a HTTP 201 CREATED response with an empty body.
+This API returns a `HTTP 201 CREATED` response with an empty body.
 
-===== Getting a domain with an ID
+=== Retrieving a Domain
 
+A `GET /appDomains/<id>` request will get a domain with an ID.
 
-A GET request will get a domain with an ID.
-
-====== Path Parameters
+==== Domain Retrieval Path
 
 include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Domain Retrieval Request
 
 include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/http-request.adoc[]
 
+Authority: `domain.read`
 
-====== Response Fields
+==== Domain Retrieval Response Fields
 
 This API returns an AppDomain with these fields:
 
 include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/response-fields.adoc[]
 
-Example:
+==== Sample Domain Retrieval Response
 
 include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/http-response.adoc[]
 
-===== Getting All Domains
+=== Retrieving All Domains
 
-A GET request will get all domains.
+A `GET /appDomains` request will get all domains.
 
-Example:
+==== Retrieve All Domains Sample
 
 include::{snippets}/domain-management-documentation/getting-all-domains/1/http-request.adoc[]
 
 
-====== Response Fields
+==== Retrieve All Domains Response Body Fields
 
 This API returns a list of all domains with these fields:
 
 include::{snippets}/domain-management-documentation/getting-all-domains/1/response-fields.adoc[]
 
-Example:
+==== Retrieve All Domains Response Sample
 
 include::{snippets}/domain-management-documentation/getting-all-domains/1/http-response.adoc[]
 
-===== Updating A Domain with an ID
+=== Updating A Domain
 
-A PATCH request will update a domain with an ID.
+A `PATCH /appDomains/<id>` request will update a domain with an ID.
 
-====== Path Parameters
+==== Domain Update Request Path
 
 include::{snippets}/domain-management-documentation/updating-a-domain/1/path-parameters.adoc[]
 
-Example:
+==== Sample Domain Update Request
 
 include::{snippets}/domain-management-documentation/updating-a-domain/1/http-request.adoc[]
 
-
-====== Response Fields
+==== Domain Update Response
 
 This API returns a HTTP 204 NO CONTENT response.
 
-Example:
+==== Sample Domain Update Response
 
 include::{snippets}/domain-management-documentation/updating-a-domain/1/http-response.adoc[]
 
-===== Removing A Domain
+=== Removing A Domain
 
-A DELETE request will remove a domain with an ID.
+A `DELETE /appDomains/<id>` request will remove a domain with an ID.
 
-====== Path Parameters
+==== Domain Delete Request Path
 
 include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample Domain Delete Request
 
 include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/http-request.adoc[]
 
-====== Response Fields
+==== Delete Domain Response
 
-This API returns a HTTP 204 NO CONTENT response.
+This API returns a `HTTP 204 NO CONTENT` response.
 
-Example:
+==== Sample Delete Domain Response
 
 include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/http-response.adoc[]
+
+== Authentication
+
+Using the rest api, you can authenticate users given a username and password.
+
+A `POST /domains/{domainId}/authenticate` request authenticates a user on a domain.
+
+=== Authentication Request
+
+==== Request Body
+
+include::{snippets}/authentication-documentation/authentication/1/request-fields.adoc[]
+
+==== Authentication Request Path
+
+include::{snippets}/authentication-documentation/authentication/1/path-parameters.adoc[]
+
+==== Sample Authentication Request
+
+include::{snippets}/authentication-documentation/authentication/1/http-request.adoc[]
+
+=== Authentication Response
+
+This API returns a JSON response with the following fields:
+
+include::{snippets}/authentication-documentation/authentication/1/response-fields.adoc[]
+
+==== Sample Authentication Response
+
+include::{snippets}/authentication-documentation/authentication/1/http-response.adoc[]
 
 ==== Users
 
