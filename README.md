@@ -31,7 +31,7 @@ their desired management flows.
 Below are some of the features in the pipeline:
 
 1. User Account flows: Forgot Password, Reset Password e.t.c
-2. Oauth 2.0 https://tools.ietf.org/html/rfc6749#section-1.3.2[Implicit] and
+2. Oauth 2.0 [Implicit](https://tools.ietf.org/html/rfc6749#section-1.3.2) and
 [Resource owner Password Credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3) grant types
 (currently only Authorization Code, Client Credentials and Refresh Token are supported)
 3. Oauth 2.0 [Proof Key for Code Exchange](https://tools.ietf.org/html/rfc7636)
