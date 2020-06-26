@@ -118,6 +118,8 @@ include::{snippets}/domain-management-documentation/getting-all-domains/1/http-r
 
 This API returns a list of all domains with these fields:
 
+Authority: `domain.read`
+
 include::{snippets}/domain-management-documentation/getting-all-domains/1/response-fields.adoc[]
 
 ==== Retrieve All Domains Response Sample
@@ -127,6 +129,8 @@ include::{snippets}/domain-management-documentation/getting-all-domains/1/http-r
 === Updating A Domain
 
 A `PATCH /appDomains/<id>` request will update a domain with an ID.
+
+Authority: `domain.update`
 
 ==== Domain Update Request Path
 
@@ -148,6 +152,8 @@ include::{snippets}/domain-management-documentation/updating-a-domain/1/http-res
 
 A `DELETE /appDomains/<id>` request will remove a domain with an ID.
 
+Authority: `domain.delete`
+
 ==== Domain Delete Request Path
 
 include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/path-parameters.adoc[]
@@ -164,11 +170,14 @@ This API returns a `HTTP 204 NO CONTENT` response.
 
 include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/http-response.adoc[]
 
+
 == Authentication
 
 Using the rest api, you can authenticate users given a username and password.
 
 A `POST /domains/{domainId}/authenticate` request authenticates a user on a domain.
+
+Authority: `user.authenticate`
 
 === Authentication Request
 
@@ -194,7 +203,8 @@ include::{snippets}/authentication-documentation/authentication/1/response-field
 
 include::{snippets}/authentication-documentation/authentication/1/http-response.adoc[]
 
-==== Users
+
+== Managing Users
 
 This contains user information for a specific user. A user could have a username, password, roles,
 authorities and any other properties that the client deems fit.
