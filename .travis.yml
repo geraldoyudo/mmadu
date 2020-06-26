@@ -19,7 +19,7 @@ matrix:
       dist: trusty
       install: mvn clean
       script: mvn -q install
-      if: branch != master
+      if: branch = develop OR branch =~ ^mmadu\/.*$
       deploy:
         - provider: releases
           api_key: "$GITHUB_OAUTH_TOKEN"

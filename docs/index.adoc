@@ -1,4 +1,4 @@
-= Mmadu
+= A Multi-Tenant User and Identity Management Provider
 :showtitle:
 :page-title: Mmadu Service
 :page-description: User Management Service
@@ -7,46 +7,18 @@
 :imagesrootdir: {page-root}/images
 :version: master
 
-== Introduction
+== Overview
 
 Mmadu is a set of tools and services that helps developers manage their application users.
 
 == Getting Started
 
-Mmadu can be easily started with docker compose.
+Click link:/guides[here] to get started
 
-=== Steps to Run Mmadu User Service
+== Project Road Map
 
-To run Mmadu User service, take the following steps:
+Soon
 
-. Create a folder (we will use mmadu as the created folder)
-+
-[source,sh]
-----
-mkdir mmadu && cd mmadu
-----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
-----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
-----
-. Make the necessary modifications to suite your configuration (you can use it as is)
-. Start the services
-+
-[source,sh]
-----
-docker-compose up
-----
+== Contributing to Mmadu
 
-== User Guide
-
-Check https://geraldoyudo.github.io/mmadu/apis/mmadu-user-guide[here] for the user guide
+Soon

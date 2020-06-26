@@ -1,0 +1,14 @@
+= Api Convention Documentation
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v2.0.0, 2019-07-08
+:toc:
+:sectnums:
+:showtitle:
+:page-navtitle: Api Convention Documentation
+:page-excerpt: General Api Documentation Conventions
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: reference
+:snippets: ../apis/snippets
+:version: master

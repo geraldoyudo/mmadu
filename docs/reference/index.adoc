@@ -1,0 +1,29 @@
+= The Docs
+:showtitle:
+:page-title: Mmadu Service
+:page-description: User Management Service
+:icons: font
+:page-root: 
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: reference-list
+
+== 2.0.0-SNAPSHOT
+
+For in-depth documentation about api and architecture, check the side links.
+
+
+== Archives
+
+Check below for documentation for previous versions
+
+.Documentation Archives
+|===
+|Reference |Version |Doc (PDF) | Doc (HTML)
+
+|Mmadu User Management Documentation
+|v1.3.0
+|link:/docs/v1.3.0/mmadu-user-guide.pdf[PDF]
+|link:/docs/v1.3.0/mmadu-user-guide.html[html]
+
+|===

@@ -9,8 +9,8 @@ v2.0.0, 2019-07-08
 :page-root: ../
 :imagesdir: {page-root}/images
 :permalink: /:title/
-:page-layout: api
-:snippets: snippets
+:page-layout: reference
+:snippets: ../apis/snippets
 :version: master
 
 == Overview
