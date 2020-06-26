@@ -1,0 +1,13 @@
+= Authentication: Getting Started with Mmadu and Springboot
+:showtitle:
+:page-title: User Authentication with Mmadu and Spring Boot
+:page-description: Creating a simple application with authentication.
+:icons: font
+:page-root:
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: guide
+:language: java
+:framework: spring
+
+Coming Soon
