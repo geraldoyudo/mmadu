@@ -9,16 +9,53 @@
 
 == Overview
 
-Mmadu is a set of tools and services that helps developers manage their application users.
+Mmadu is a set of tools and services that helps developers manage their application users. Applications are constantly
+being built on mobile, web and other devices and with these bring their own security challenges in authentication and
+authorization.
+
+Different standards are being developed to handle user management, authorization and authentication like Oauth 2.0,
+Open ID and others. Mmadu aims to provide all the tools needed developers to implement these standards in their applications.
+
+== Vision
+
+To help developers (*of all walks of life*) eliminate user-management coding in applications forever.
+
+== Current Features
+
+. Multitenancy using Domains
+. User Management
+. Role and Authority Management
+. Group Management
+. Authentication
+. Dynamic User Registration Forms
+. Oauth 2.0
+. Jwt Token Security
+
+== Project Road Map
+
+We aim to provide an array of services and libraries to enable developers pick and choose to implement
+their desired management flows.
+
+Below are some of the features in the pipeline:
+
+. User Account flows: Forgot Password, Reset Password e.t.c
+. Oauth 2.0 https://tools.ietf.org/html/rfc6749#section-1.3.2[Implicit] and
+https://tools.ietf.org/html/rfc6749#section-1.3.3[Resource owner Password Credentials] grant types
+(currently only Authorization Code, Client Credentials and Refresh Token are supported)
+. Oauth 2.0 https://tools.ietf.org/html/rfc7636[Proof Key for Code Exchange]
+. Oauth 2.0 https://tools.ietf.org/html/rfc8628#section-3.4[Device Code Grant Type]
+. Oauth 2.0 https://tools.ietf.org/html/rfc8414[Authorization Server Metadata]
+. Oauth 2.0 https://tools.ietf.org/html/rfc7591[Dynamic Client Registration]
+. Oauth 2.0 https://tools.ietf.org/html/rfc7592[Dynamic Client Registration Management]
+. https://https://openid.net/connect/[Open ID Connect]
+. https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html[UMA 2.0]
+. ... and many more as they come
 
 == Getting Started
 
 Click link:/guides[here] to get started
 
-== Project Road Map
-
-Soon
-
 == Contributing to Mmadu
 
-Soon
+If you want to contribute to eliminate user management coding forever, mailto:mmadu.auth@gmail.com[send
+a mail to Mmadu]
