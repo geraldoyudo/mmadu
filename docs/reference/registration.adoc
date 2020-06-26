@@ -1,0 +1,429 @@
+= Mmadu Registration Service Reference
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v2.0.0, 2020-06-26
+:toc:
+:sectnums:
+:showtitle:
+:page-navtitle: Mmadu Registration Service Reference
+:page-excerpt: Reference Documentation for Mmadu Registration Service
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: reference
+:snippets: ../apis/snippets
+:version: master
+
+== Overview
+
+Mmadu User Service is an independent service for managing users. It exposes the following resources
+for managing users:
+
+. AppDomains - This is a tenant, with its own users, groups, roles and authorities.
+. AppUsers - Representing users of client applications. Users can have custom properties defined by the domain.
+. Roles and Authorities - Enforcable user privileges.
+. Groups - Objects used to further categorize users in a tree hierarchy.
+
+== Features
+
+Currently, mmadu user service provides the following:
+
+. Resource Management - Management of domains, users, roles, authorities and groups
+. Authentication - Provides an api that clients can use to Authenticate their users.
+. Password Hashing - Passwords of users are hashed and cannot be decrypted.
+
+== Default Configuration
+
+=== Default Port
+
+Mmadu User Service listens to port 15551 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.
+
+
+
+=== Registration Service
+
+The registration service provides an api to access the registration page for a domain. The registration page
+generates a form from the configured fields and field types of a domain.
+
+==== Displaying the registration form
+
+The registration form can be accessed in the browser using the url:
+
+----
+http://[registration-host]:[registration-port]/[domain-id]/register
+----
+
+For example, accessing the default domain with the default configuration can be done
+by entering the url below on your browser.
+
+----
+http://localhost:1552/0/register
+----
+
+The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
+this domain. To specify a url to redirect to, add the redirectUrl parameter
+
+----
+http://localhost:1552/0/register?redirectUrl=http://myapp.com
+----
+==== Customizing Registration Forms
+
+Registration forms for a domain can be customized by adding and removing fields and field types.
+The registration service ensures that form fields are created for each field.
+
+==== Registration Profiles
+
+Each domain has a registration profile object that is used for configuring the applications behaviour during
+registration.
+
+NOTE: There can be only one registration profile for a domain.
+
+===== Creating a Registration Profile
+
+A POST Request will create a registration profile.
+
+====== Fixed Request Fields
+
+include::{snippets}/registration-profile-documentation/create-registration-profile/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/create-registration-profile/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Obtaining Registration Profile by Profile ID
+
+A GET Request will return a registration profile with its ID
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-request.adoc[]
+
+
+===== Response Fields
+
+This API returns the registration profile with the following fields:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-response.adoc[]
+
+
+===== Updating Registration Profile by ID
+
+A PATCH Request will update a registration profile. The example below updates the defaultRegistrationUrl property.
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-response.adoc[]
+
+
+===== Deleting a Registration Profile by ID
+
+A DELETE request will delete a registration profile.
+
+WARNING: Deleting a registration profile will remote all fields associated with the profile and a registration page
+for that domain will be unavailable.
+
+====== Path Parameters
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-response.adoc[]
+
+==== Field Types
+
+Field type objects specify the properties of a field type in the registration form. You can create a field type that
+can be used by fields in a registration form.
+
+See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize field types.
+
+===== Creating a field Type
+
+A POST request will create a field type
+
+====== Request Fields
+
+include::{snippets}/field-types-documentation/create-field-types/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/create-field-types/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Getting a field type with an ID
+
+A GET request will get a field type with an ID.
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a FieldType object with these fields:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-response.adoc[]
+
+===== Getting All Field Types
+
+A GET request will get all field types.
+
+Example:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a list of all field types with these fields:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/get-all-field-types/1/http-response.adoc[]
+
+===== Updating A Field Type
+
+A PATCH request will update a field type
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-response.adoc[]
+
+===== Removing A Field Type
+
+A DELETE request will remove a field type.
+
+====== Path Parameters
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-response.adoc[]
+
+
+==== Fields
+
+Fields contain information used in rendering each field in a registration form. Fields utilize properties
+of their field types in order to render an adequate representation of the field. Fields also specify the user property
+that the input field is bound to. Fields can override and extend certain properties of the field types.
+
+See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize fields.
+
+===== Creating a field
+
+A POST request will create a field
+
+====== Request Fields
+
+include::{snippets}/fields-documentation/create-fields/1/request-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/create-fields/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+===== Getting a field type with an ID
+
+A GET request will get a field with an ID.
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/get-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a Field object with these fields:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-field-by-id/1/http-response.adoc[]
+
+===== Getting All Fields in Domain
+
+A GET request will get all fields in a domain.
+
+====== Request Parameters
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/request-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a list of all fields with these properties:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/response-fields.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/get-fields-by-domain/1/http-response.adoc[]
+
+===== Updating A Field
+
+A PATCH request will update a field
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
+
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
+
+===== Removing A Field
+
+A DELETE request will remove a field.
+
+====== Path Parameters
+
+include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
+
+====== Response Fields
+
+This API returns a HTTP 204 NO CONTENT response.
+
+Example:
+
+include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
+
+[#defining-markup-for-fields]
+==== Defining Markup for Fields
+
+You define how you want your registration fields by configuring fields and field types. The markup property in
+the field type is used to define the markup of that specific field type. An age field type markup can be defined
+as shown:
+
+[source,html]
+----
+<label for='$field.name' class='sr-only'>$field.label</label>
+<input type='number' id='$field.name' name='$field.name' class='form-control'
+placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >
+$errorDisplay"
+----
+
+Mmadu registration service uses apache velocity to generate markup for fields. It provies the following in
+the template context for use in defining fields. You reference context objects by adding the `$` prefix. For example,
+the `$field.name` returns the name property in the field object.
+
+|===
+|Object Name |Description
+
+|field
+|The field object
+
+|type
+|The field type object
+
+|inputField
+|Input attribute and value that marks an element as a model input
+
+|inputStyle
+|style attribute, any element with this property will have the field type style property appended to that element
+
+|errorStyle
+|style attribute, any element with this property will have the style appended with the error style when the field contains errors
+
+|errorDisplay
+|HTML markup for displaying field errors
+
+|maxValue
+|max attribute, any element with this will have the max attribute set to the max value of the field type
+
+|minValue
+|min attribute, any element with this will have the min attribute set to the min value of the field type
+|===

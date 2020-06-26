@@ -246,35 +246,35 @@ include::{snippets}/user-management-documentation/getting-a-user-by-id/1/path-pa
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-request.adoc[]
 
 
-==== Sample User Retrieval Response
+==== User Retrieval Response
 
 This API returns an AppUser with these fields as well as custom fields provided by the client:
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/response-fields.adoc[]
 
-Example:
+==== Sample User Retrieval Response
 
 include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-response.adoc[]
 
 As you can see, this user has two extra properties: `favourite-color` and  `country`.
 
 
-==== Getting All Users In a Domain
+==== Retrieving All Users In a Domain
 
-A GET request will get all users regardless of domains.
+A `GET /domains/{domainId}/users` request will get all users in a domain.
 
-===== Request Parameters
+==== Domain Users Retrieval Request Query Params
 
 The request includes page information to request for particular sets in the list.
 
 include::{snippets}/user-management-documentation/getting-all-users/1/request-parameters.adoc[]
 
-Example:
+==== Sample Users Retrieval Request
 
 include::{snippets}/user-management-documentation/getting-all-users/1/http-request.adoc[]
 
 
-===== Response Fields
+==== Users Retrieval Response
 
 This API returns a list of all users with the fields below. The response also has
 fields that display the page information of result. These fields are shown in the example
@@ -282,100 +282,100 @@ response and are self explanatory.
 
 include::{snippets}/user-management-documentation/getting-all-users/1/response-fields.adoc[]
 
-Example:
+==== Sample Retrieval Response
 
 include::{snippets}/user-management-documentation/getting-all-users/1/http-response.adoc[]
 
-==== Removing A User with an ID
+=== Removing A User with an ID
 
-A DELETE request will remove a user with an ID.
+A `DELETE /domains/{domainId}/users/{userId}` request will remove a user with an ID.
 
-===== Path Parameters
+==== User Deletion Request Path
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/path-parameters.adoc[]
 
-Example:
+==== Sample User Deletion Request
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-request.adoc[]
 
+==== User Deletion Response
 
-===== Response Fields
+This API returns a `HTTP 204 NO CONTENT` response.
 
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
+==== Sample User Deletion Response
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-response.adoc[]
 
 ==== Updating A User with an ID
 
-A PUT request will update a user with an ID. Not, this api will completely overwrite the properties of the
+A `PUT /domains/{domainId}/users/{userId}` request will update a user with an ID. This will completely overwrite the properties of the
 existing user. There are no partial updates.
 
-===== Path Parameters
+==== User Update Request Path
 
 include::{snippets}/user-management-documentation/updating-user-properties/1/path-parameters.adoc[]
 
-Example:
+==== Sample User Update Request
 
 include::{snippets}/user-management-documentation/updating-user-properties/1/http-request.adoc[]
 
 
-===== Response Fields
+==== User Update Response
 
-This API returns a HTTP 204 NO CONTENT response.
+This API returns a HTTP `204 NO CONTENT` response.
 
-Example:
+==== Sample User Update Response
 
 include::{snippets}/user-management-documentation/updating-user-properties/1/http-response.adoc[]
 
-==== Getting A User with a username and domain id
+=== Loading A User By Username
 
-A GET request will get a user with the specified username and domain id.
+A GET request will get a user with the specified username and domain id. This will return all roles, authorities and
+groups associated with that user.
 
-===== Path Parameters
+==== User Load Request Path Parameters
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/path-parameters.adoc[]
 
-===== Request Parameters
+==== User Load Request Query Parameters
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/request-parameters.adoc[]
 
-Example:
+==== Sample User Load Request
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-request.adoc[]
 
 
-===== Response Fields
+==== User Load Response
 
 This API returns an AppUser with the fields below and other custom fields provided by the domain client.
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/response-fields.adoc[]
 
-Example:
+==== Sample User Load Response
 
 include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-response.adoc[]
 
-==== Querying Users
+=== Querying Users
 
 A GET request can search for users by username, and other custom fields created by the client.
 
 NOTE: Query string can only support custom string, integer and boolean fields currently.
 
-WARNING: Ensure to put individual criteria in parenthesis
+WARNING: Ensure to put individual criteria in parentheses.
 
-===== Request Parameters
+==== User Query Request Query Parameters
 
 The request includes page information to request for particular sets in the list.
 
 include::{snippets}/user-management-documentation/querying-users/1/request-parameters.adoc[]
 
-Example:
+==== Sample User Query Request
 
 include::{snippets}/user-management-documentation/querying-users/1/http-request.adoc[]
 
 
-===== Response Fields
+==== User Query Response
 
 This API returns a list of all users with the fields below. The response also has
 fields that display the page information of result. These fields are shown in the example
@@ -383,426 +383,36 @@ response and are self explanatory.
 
 include::{snippets}/user-management-documentation/querying-users/1/response-fields.adoc[]
 
-Example:
+==== Sample User Query Response
 
 include::{snippets}/user-management-documentation/querying-users/1/http-response.adoc[]
 
-==== Partial User update
+=== Partial User Update
 
-A PATCH request can update users partially based on a query criteria
+A `PATCH /domains/{domainId}/users` request can update users partially based on a query criteria
 
 NOTE: Query string can only support custom string, integer and boolean fields currently.
 
-WARNING: Ensure to put individual criteria in parenthesis
+WARNING: Ensure to put individual criteria in parentheses.
 
-===== Path Parameters
+==== Partial User Update Request Parameter
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/path-parameters.adoc[]
 
-===== Request
+==== Partial User Update Request
 
-The PATCH request accepts a query string and an array of update operations.
+The PATCH request accepts a query string, and an array of update operations.
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/request-fields.adoc[]
 
-Example:
+==== Sample Partial User Update Request
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/http-request.adoc[]
 
-===== Response Fields
+==== Partial User Update Response
 
 The API returns 204 No content for a successful update.
 
-Example:
+==== Sample Partial User Update Response
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
-
-
-=== Registration Service
-
-The registration service provides an api to access the registration page for a domain. The registration page
-generates a form from the configured fields and field types of a domain.
-
-==== Displaying the registration form
-
-The registration form can be accessed in the browser using the url:
-
-----
-http://[registration-host]:[registration-port]/[domain-id]/register
-----
-
-For example, accessing the default domain with the default configuration can be done
-by entering the url below on your browser.
-
-----
-http://localhost:1552/0/register
-----
-
-The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
-this domain. To specify a url to redirect to, add the redirectUrl parameter
-
-----
-http://localhost:1552/0/register?redirectUrl=http://myapp.com
-----
-==== Customizing Registration Forms
-
-Registration forms for a domain can be customized by adding and removing fields and field types.
-The registration service ensures that form fields are created for each field.
-
-==== Registration Profiles
-
-Each domain has a registration profile object that is used for configuring the applications behaviour during
-registration.
-
-NOTE: There can be only one registration profile for a domain.
-
-===== Creating a Registration Profile
-
-A POST Request will create a registration profile.
-
-====== Fixed Request Fields
-
-include::{snippets}/registration-profile-documentation/create-registration-profile/1/request-fields.adoc[]
-
-Example:
-
-include::{snippets}/registration-profile-documentation/create-registration-profile/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 201 CREATED response with an empty body.
-
-===== Obtaining Registration Profile by Profile ID
-
-A GET Request will return a registration profile with its ID
-
-====== Path Parameters
-
-include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-request.adoc[]
-
-
-===== Response Fields
-
-This API returns the registration profile with the following fields:
-
-include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/registration-profile-documentation/get-registration-profile-by-id/1/http-response.adoc[]
-
-
-===== Updating Registration Profile by ID
-
-A PATCH Request will update a registration profile. The example below updates the defaultRegistrationUrl property.
-
-====== Path Parameters
-
-include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-response.adoc[]
-
-
-===== Deleting a Registration Profile by ID
-
-A DELETE request will delete a registration profile.
-
-WARNING: Deleting a registration profile will remote all fields associated with the profile and a registration page
-for that domain will be unavailable.
-
-====== Path Parameters
-
-include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/registration-profile-documentation/delete-registration-profile-by-id/1/http-response.adoc[]
-
-==== Field Types
-
-Field type objects specify the properties of a field type in the registration form. You can create a field type that
-can be used by fields in a registration form.
-
-See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize field types.
-
-===== Creating a field Type
-
-A POST request will create a field type
-
-====== Request Fields
-
-include::{snippets}/field-types-documentation/create-field-types/1/request-fields.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/create-field-types/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 201 CREATED response with an empty body.
-
-===== Getting a field type with an ID
-
-A GET request will get a field type with an ID.
-
-====== Path Parameters
-
-include::{snippets}/field-types-documentation/get-field-type-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a FieldType object with these fields:
-
-include::{snippets}/field-types-documentation/get-field-type-by-id/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-response.adoc[]
-
-===== Getting All Field Types
-
-A GET request will get all field types.
-
-Example:
-
-include::{snippets}/field-types-documentation/get-all-field-types/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a list of all field types with these fields:
-
-include::{snippets}/field-types-documentation/get-all-field-types/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/get-all-field-types/1/http-response.adoc[]
-
-===== Updating A Field Type
-
-A PATCH request will update a field type
-
-====== Path Parameters
-
-include::{snippets}/field-types-documentation/update-field-type-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-response.adoc[]
-
-===== Removing A Field Type
-
-A DELETE request will remove a field type.
-
-====== Path Parameters
-
-include::{snippets}/field-types-documentation/delete-field-type-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/field-types-documentation/delete-field-type-by-id/1/http-response.adoc[]
-
-
-==== Fields
-
-Fields contain information used in rendering each field in a registration form. Fields utilize properties
-of their field types in order to render an adequate representation of the field. Fields also specify the user property
-that the input field is bound to. Fields can override and extend certain properties of the field types.
-
-See <<defining-markup-for-fields, Defining Markup for fields>> for more information on how to customize fields.
-
-===== Creating a field
-
-A POST request will create a field
-
-====== Request Fields
-
-include::{snippets}/fields-documentation/create-fields/1/request-fields.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/create-fields/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 201 CREATED response with an empty body.
-
-===== Getting a field type with an ID
-
-A GET request will get a field with an ID.
-
-====== Path Parameters
-
-include::{snippets}/fields-documentation/get-field-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/get-field-by-id/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a Field object with these fields:
-
-include::{snippets}/fields-documentation/get-field-by-id/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/get-field-by-id/1/http-response.adoc[]
-
-===== Getting All Fields in Domain
-
-A GET request will get all fields in a domain.
-
-====== Request Parameters
-
-include::{snippets}/fields-documentation/get-fields-by-domain/1/request-parameters.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/get-fields-by-domain/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a list of all fields with these properties:
-
-include::{snippets}/fields-documentation/get-fields-by-domain/1/response-fields.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/get-fields-by-domain/1/http-response.adoc[]
-
-===== Updating A Field
-
-A PATCH request will update a field
-
-====== Path Parameters
-
-include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
-
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
-
-===== Removing A Field
-
-A DELETE request will remove a field.
-
-====== Path Parameters
-
-include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
-
-Example:
-
-include::{snippets}/fields-documentation/update-field-by-id/1/http-request.adoc[]
-
-====== Response Fields
-
-This API returns a HTTP 204 NO CONTENT response.
-
-Example:
-
-include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc[]
-
-[#defining-markup-for-fields]
-==== Defining Markup for Fields
-
-You define how you want your registration fields by configuring fields and field types. The markup property in
-the field type is used to define the markup of that specific field type. An age field type markup can be defined
-as shown:
-
-[source,html]
-----
-<label for='$field.name' class='sr-only'>$field.label</label>
-<input type='number' id='$field.name' name='$field.name' class='form-control'
-placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >
-$errorDisplay"
-----
-
-Mmadu registration service uses apache velocity to generate markup for fields. It provies the following in
-the template context for use in defining fields. You reference context objects by adding the `$` prefix. For example,
-the `$field.name` returns the name property in the field object.
-
-|===
-|Object Name |Description
-
-|field
-|The field object
-
-|type
-|The field type object
-
-|inputField
-|Input attribute and value that marks an element as a model input
-
-|inputStyle
-|style attribute, any element with this property will have the field type style property appended to that element
-
-|errorStyle
-|style attribute, any element with this property will have the style appended with the error style when the field contains errors
-
-|errorDisplay
-|HTML markup for displaying field errors
-
-|maxValue
-|max attribute, any element with this will have the max attribute set to the max value of the field type
-
-|minValue
-|min attribute, any element with this will have the min attribute set to the min value of the field type
-|===
-
