@@ -1,7 +1,6 @@
 package com.mmadu.registration.entities;
 
 import com.mmadu.security.api.DomainPayload;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -13,7 +12,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @Document
-@Builder
 public class RegistrationProfile implements DomainPayload {
     @Id
     private String id;

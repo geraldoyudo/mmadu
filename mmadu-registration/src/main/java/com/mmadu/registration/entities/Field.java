@@ -1,7 +1,6 @@
 package com.mmadu.registration.entities;
 
 import com.mmadu.security.api.DomainPayload;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -19,7 +18,6 @@ import java.io.Serializable;
         @CompoundIndex(name = "domain_property", def = "{'domainId': 1, 'property': 1}", unique = true)
 })
 @EqualsAndHashCode
-@Builder
 public class Field implements Serializable, DomainPayload {
     private String id;
     @NotEmpty

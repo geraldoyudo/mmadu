@@ -1,6 +1,5 @@
 package com.mmadu.registration.entities;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -14,7 +13,6 @@ import java.util.List;
 @Data
 @Document
 @EqualsAndHashCode
-@Builder
 public class FieldType implements Serializable {
     @Id
     private String id;

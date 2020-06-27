@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class DomainPopulator implements Populator {
+public class DomainFlowPopulator implements Populator {
     private DomainFlowConfiguration domainFlowConfiguration;
     private FieldTypeRepository fieldTypeRepository;
     private FieldRepository fieldRepository;

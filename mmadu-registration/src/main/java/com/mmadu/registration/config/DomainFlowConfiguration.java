@@ -5,7 +5,6 @@ import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -50,20 +49,20 @@ public class DomainFlowConfiguration {
         private String min;
 
         public FieldType toEntity() {
-            return FieldType.builder()
-                    .id(id)
-                    .name(name)
-                    .markup(markup)
-                    .fieldTypePattern(fieldTypePattern)
-                    .type(type)
-                    .enclosingElement(enclosingElement)
-                    .classes(classes)
-                    .style(style)
-                    .script(script)
-                    .css(css)
-                    .max(max)
-                    .min(min)
-                    .build();
+            FieldType fieldType = new FieldType();
+            fieldType.setId(id);
+            fieldType.setName(name);
+            fieldType.setMarkup(markup);
+            fieldType.setFieldTypePattern(fieldTypePattern);
+            fieldType.setType(type);
+            fieldType.setEnclosingElement(enclosingElement);
+            fieldType.setClasses(classes);
+            fieldType.setStyle(style);
+            fieldType.setScript(script);
+            fieldType.setCss(css);
+            fieldType.setMax(max);
+            fieldType.setMin(min);
+            return fieldType;
         }
     }
 
@@ -86,18 +85,18 @@ public class DomainFlowConfiguration {
         boolean required;
 
         public Field toEntity(String domainId) {
-            return Field.builder()
-                    .domainId(domainId)
-                    .name(name)
-                    .placeholder(placeholder)
-                    .property(property)
-                    .fieldTypeId(fieldTypeId)
-                    .style(style)
-                    .label(label)
-                    .order(order)
-                    .pattern(pattern)
-                    .required(required)
-                    .build();
+            Field field = new Field();
+            field.setDomainId(domainId);
+            field.setName(name);
+            field.setPlaceholder(placeholder);
+            field.setProperty(property);
+            field.setFieldTypeId(fieldTypeId);
+            field.setStyle(style);
+            field.setLabel(label);
+            field.setOrder(order);
+            field.setPattern(pattern);
+            field.setRequired(required);
+            return field;
         }
     }
 
@@ -113,17 +112,17 @@ public class DomainFlowConfiguration {
         private String submitButtonTitle;
 
         public RegistrationProfile toEntity(String domainId) {
-            return RegistrationProfile.builder()
-                    .domainId(domainId)
-                    .defaultRedirectUrl(defaultRedirectUrl)
-                    .defaultRoles(defaultRoles)
-                    .defaultAuthorities(defaultAuthorities)
-                    .headerOne(headerOne)
-                    .headerTwo(headerTwo)
-                    .headerThree(headerThree)
-                    .instruction(instruction)
-                    .submitButtonTitle(submitButtonTitle)
-                    .build();
+            RegistrationProfile profile = new RegistrationProfile();
+            profile.setDomainId(domainId);
+            profile.setDefaultRedirectUrl(defaultRedirectUrl);
+            profile.setDefaultRoles(defaultRoles);
+            profile.setDefaultAuthorities(defaultAuthorities);
+            profile.setHeaderOne(headerOne);
+            profile.setHeaderTwo(headerTwo);
+            profile.setHeaderThree(headerThree);
+            profile.setInstruction(instruction);
+            profile.setSubmitButtonTitle(submitButtonTitle);
+            return profile;
         }
     }
 }

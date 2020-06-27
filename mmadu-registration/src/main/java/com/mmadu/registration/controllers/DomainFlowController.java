@@ -1,7 +1,7 @@
 package com.mmadu.registration.controllers;
 
 import com.mmadu.registration.config.DomainFlowConfiguration;
-import com.mmadu.registration.populators.DomainPopulator;
+import com.mmadu.registration.populators.DomainFlowPopulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,15 +13,15 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/domains")
 public class DomainFlowController {
-    private DomainPopulator domainPopulator;
+    private DomainFlowPopulator domainFlowPopulator;
 
     @Autowired
-    public void setDomainPopulator(DomainPopulator domainPopulator) {
-        this.domainPopulator = domainPopulator;
+    public void setDomainFlowPopulator(DomainFlowPopulator domainFlowPopulator) {
+        this.domainFlowPopulator = domainFlowPopulator;
     }
 
     @PostMapping
     public void registerDomains(@RequestBody @Valid DomainFlowConfiguration configuration){
-        domainPopulator.initializeDomainEnvironment(configuration);
+        domainFlowPopulator.initializeDomainEnvironment(configuration);
     }
 }
