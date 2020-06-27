@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Component
 public class ClientDomainPopulatorFilter implements Filter {
+    public static final String MMADU_DOMAIN_COOKIE = "MmaduDomain";
     private MmaduClientService mmaduClientService;
 
     @Autowired
@@ -35,7 +36,7 @@ public class ClientDomainPopulatorFilter implements Filter {
     private void setDomainInformation(ServletRequest request, ServletResponse servletResponse, MmaduClient client) {
         request.setAttribute("domain", client.getDomainId());
         if (servletResponse instanceof HttpServletResponse) {
-            Cookie domainCookie = new Cookie("domain", client.getDomainId());
+            Cookie domainCookie = new Cookie(MMADU_DOMAIN_COOKIE, client.getDomainId());
             domainCookie.setSecure(false);
             domainCookie.setMaxAge(-1);
             domainCookie.setPath("/");

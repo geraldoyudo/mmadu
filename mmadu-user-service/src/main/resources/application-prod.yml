@@ -1,0 +1,41 @@
+mmadu:
+  admin:
+    username: ${MMADU_ADMIN_USERNAME:admin}
+    password: ${MMADU_ADMIN_PASSWORD:password}
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
+  identity:
+    jwt-auto-discovery: true
+    url: ${MMADU_IDENTITY_URL:http://localhost:10084}
+    jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
+  security:
+    domain-parsing:
+      path-keys: domain,domainId,domains,appDomains
+  domain-config:
+    domains:
+      - id: 0
+        name: mmadu
+        users:
+          - username: ${mmadu.admin.username}
+            password: ${mmadu.admin.password}
+            external-id: 1111
+        authorities:
+          - identifier: a.*.**
+            name: All
+            description: Access Everything
+        roles:
+          - identifier: r.super_admin
+            name: Super Admin
+            description: Access Everything
+        role-authorities:
+          - role: r.super_admin
+            authority: a.*.**
+        user-roles:
+          - user: ${mmadu.admin.username}
+            role: r.super_admin
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: ${MMADU_USER_DB_URI}

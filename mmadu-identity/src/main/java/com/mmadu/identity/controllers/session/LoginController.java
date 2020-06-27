@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
+import static com.mmadu.identity.providers.authorization.ClientDomainPopulatorFilter.MMADU_DOMAIN_COOKIE;
+
 @Controller
 @Slf4j
 public class LoginController {
@@ -15,7 +17,7 @@ public class LoginController {
     private String defaultDomain = "XXXX";
 
     @GetMapping("/login")
-    public String login(@CookieValue(name = "domain", required = false) String domain) {
+    public String login(@CookieValue(name = MMADU_DOMAIN_COOKIE, required = false) String domain) {
         log.info("Login called: domain = {}", Optional.ofNullable(domain).orElse(defaultDomain));
         return "login";
     }
