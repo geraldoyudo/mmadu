@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface RegistrationProfileRepository extends MongoRepository<RegistrationProfile, String> {
     Optional<RegistrationProfile> findByDomainId(@Param("domainId") String domainId);
+
+    boolean existsByDomainId(@Param("domainId") String domainId);
 }

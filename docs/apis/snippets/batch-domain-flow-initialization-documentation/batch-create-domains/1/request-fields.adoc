@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+fieldTypes+`
+|`+Array+`
+|Field Type List
+
+|`+domains.[].domainId+`
+|`+String+`
+|Domain ID to be configured
+
+|`+domains.[].registrationProfile+`
+|`+Object+`
+|Registration form configuration for domain
+
+|`+domains.[].fields+`
+|`+Array+`
+|List of fields in registration form
+
+|===

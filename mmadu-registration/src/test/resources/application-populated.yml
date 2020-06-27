@@ -1,37 +1,5 @@
-spring:
-  data:
-    rest:
-      base-path: /repo
-  main:
-    allow-bean-definition-overriding: true
-  jackson:
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
-  security:
-    oauth2:
-      client:
-        registration:
-          mmadu:
-            client-id: ${mmadu.admin.client}
-            client-secret: ${mmadu.admin.secret}
-            authorization-grant-type: client_credentials
-            scope: a.*.**, r.*.**
-        provider:
-          mmadu:
-            token-uri: http://localhost:10084/clients/token
 mmadu:
-  admin:
-    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
-    secret: ${MMADU_ADMIN_SECRET:1234567890}
-  home: ${user.home}/mmadu
-  identity:
-    public-key: 30820122300d06092a864886f70d01010105000382010f003082010a0282010100b4278f42c94340ca20f2921a91f3e9878596ebefea7727fb695b6472404db0200bd3709c32e31648d0a3cf81f26096669a93f3b7e42d9a9558d149203eeb215b2a0c0a464d0c98bd076d1c4c6c5b82958ea99cd737ebe5551b16af7b6f83538a60182164fd3b1609f75f84710a26c0ed0ab20a15540e9789bd4ddda892a25b4d2322319bf862e7e33b11f48125d781e2d95126b284f3f94df04e509d6b152ca48f27bf6bfecc4afdaf1cf060b4f961b0130d32ceacadc2ce90918480b79bc464ad2880a7d559342cfa9ec516f391c00b7b6b0054d8654f74ab225319dc6b7d9ac6e33fdb60e6fe5a315904241738e986110018b2d7ddc411cc657eca4d0684910203010001
-  domainKey: 2222
-  userService:
-    url: http://localhost:10080
   registration:
-    home: ${mmadu.home}/registration
-    templates: ${mmadu.registration.home}/templates
     domain-flow-config:
       field-types:
         - id: mmadu.fields.text
@@ -83,7 +51,7 @@ mmadu:
         - domainId: 0
           registrationProfile:
             defaultRedirectUrl: https://google.com
-            headerOne: Mmadu
+            headerOne: My App
             headerThree: Register
             instruction: Fill all the fields to register
             submitButtonTitle: GO!!
@@ -115,3 +83,33 @@ mmadu:
               fieldTypeId: mmadu.fields.password
               label: Password
               order: 4
+            - name: age
+              placeholder: Age
+              property: age
+              fieldTypeId: mmadu.fields.integer
+              label: Age
+              order: 5
+            - name: amount
+              placeholder: Amount
+              property: amount
+              fieldTypeId: mmadu.fields.amount
+              label: Amount
+              order: 6
+            - name: birthday
+              placeholder: Birthday
+              property: birthday
+              fieldTypeId: mmadu.fields.date
+              label: Birthday
+              order: 7
+            - name: openingTime
+              placeholder: Opening Time
+              property: openingTime
+              fieldTypeId: mmadu.fields.time
+              label: Opening Time
+              order: 8
+            - name: deliveryDate
+              placeholder: Delivery Date and Time
+              property: deliveryDate
+              fieldTypeId: mmadu.fields.datetime
+              label: Delivery Date and Time
+              order: 9
