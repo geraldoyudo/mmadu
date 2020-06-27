@@ -31,7 +31,7 @@ mmadu:
     url: http://localhost:10080
   registration:
     home: ${mmadu.home}/registration
-    templates: file://${mmadu.registration.home}/templates/
+    templates: ${mmadu.registration.home}/templates/
     domain-flow-config:
       field-types:
         - id: mmadu.fields.text

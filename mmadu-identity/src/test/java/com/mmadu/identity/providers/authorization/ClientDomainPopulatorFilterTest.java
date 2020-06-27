@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
+import static com.mmadu.identity.providers.authorization.ClientDomainPopulatorFilter.MMADU_DOMAIN_COOKIE;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,7 +41,7 @@ class ClientDomainPopulatorFilterTest {
         ).andExpect(
                 header().string("location", "http://localhost/login")
         ).andExpect(
-                cookie().value("domain", DOMAIN_ID)
+                cookie().value(MMADU_DOMAIN_COOKIE, DOMAIN_ID)
         );
     }
 }
