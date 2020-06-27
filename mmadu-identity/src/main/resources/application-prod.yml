@@ -19,7 +19,7 @@ spring:
             scope: a.*.**, r.*.**
         provider:
           mmadu:
-            token-uri: http://localhost:${server.port}/clients/token
+            token-uri: ${mmadu.identity.url}/clients/token
 management:
   endpoints:
     web:

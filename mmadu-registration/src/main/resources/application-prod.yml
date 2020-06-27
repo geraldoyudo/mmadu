@@ -2,6 +2,12 @@ spring:
   data:
     rest:
       base-path: /repo
+    mongodb:
+      database: ${MMADU_REGISTRATION_DB_NAME:mmadu_registration_db}
+      host: ${MMADU_REGISTRATION_DB_HOST}
+      username: ${MMADU_REGISTRATION_DB_USERNAME}
+      password: ${MMADU_REGISTRATION_DB_PASSWORD}
+      uri: ${MMADU_REGISTRATION_DB_URI}
   main:
     allow-bean-definition-overriding: true
   jackson:
