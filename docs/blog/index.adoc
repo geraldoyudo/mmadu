@@ -1,0 +1,10 @@
+= Blog
+:icons: font
+:page-root: 
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: blog-list
+
+== Blog
+
+Check out our blogs here

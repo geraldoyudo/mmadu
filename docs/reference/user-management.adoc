@@ -1,0 +1,430 @@
+= Mmadu User Service Reference
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v2.0.0, 2020-06-26
+:toc:
+:sectnums:
+:showtitle:
+:page-navtitle: Mmadu User Service Reference
+:page-excerpt: Reference Documentation for Mmadu User Service
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: reference
+:snippets: ../apis/snippets
+:version: master
+
+== Overview
+
+Mmadu User Service is an independent service for managing users. It exposes the following resources
+for managing users:
+
+. AppDomains - This is a tenant, with its own users, groups, roles and authorities.
+. AppUsers - Representing users of client applications. Users can have custom properties defined by the domain.
+. Roles and Authorities - Enforcable user privileges.
+. Groups - Objects used to further categorize users in a tree hierarchy.
+
+== Features
+
+Currently, mmadu user service provides the following:
+
+. Resource Management - Management of domains, users, roles, authorities and groups
+. Authentication - Provides an api that clients can use to Authenticate their users.
+. Password Hashing - Passwords of users are hashed and cannot be decrypted.
+
+== Default Configuration
+
+=== Default Port
+
+Mmadu User Service listens to port 15551 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.
+
+== Managing Domains
+
+A domain is analogous to a realm. This represents a user pool with its own set of users, groups, roles, and authorities.
+
+A client application references users in one domain. A domain is referenced by a domain id. Applications
+can share the same user base by using the same domain id.
+
+=== Setting Up A Domain
+
+With one API call, you can set up users, roles, authorities and groups needed for your domain. Domain configuration is done
+with a call to `POST /domains`.
+
+Authority: `domain.initialize`
+
+==== Domain Setup Request Fields
+
+include::{snippets}/batch-domain-creation-documentation/batch-create-domains/1/request-fields.adoc[]
+
+==== Sample Domain Setup Request
+
+include::{snippets}/batch-domain-creation-documentation/batch-create-domains/1/http-request.adoc[]
+
+
+=== Creating A domain
+
+Instead of creating the entire domain environment at one go, you can opt to create just the domain object.
+
+A `POST /appDomains` request will create a domain.
+
+Authority: `domain.create`
+
+==== Domain Creation Request Body
+
+include::{snippets}/domain-management-documentation/create-a-domain/1/request-fields.adoc[]
+
+==== Sample Domain Creation Request
+
+include::{snippets}/domain-management-documentation/create-a-domain/1/http-request.adoc[]
+
+==== Domain Creation Response
+
+This API returns a `HTTP 201 CREATED` response with an empty body.
+
+=== Retrieving a Domain
+
+A `GET /appDomains/<id>` request will get a domain with an ID.
+
+==== Domain Retrieval Path
+
+include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/path-parameters.adoc[]
+
+==== Sample Domain Retrieval Request
+
+include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/http-request.adoc[]
+
+Authority: `domain.read`
+
+==== Domain Retrieval Response Fields
+
+This API returns an AppDomain with these fields:
+
+include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/response-fields.adoc[]
+
+==== Sample Domain Retrieval Response
+
+include::{snippets}/domain-management-documentation/get-a-domain-by-id/1/http-response.adoc[]
+
+=== Retrieving All Domains
+
+A `GET /appDomains` request will get all domains.
+
+==== Retrieve All Domains Sample
+
+include::{snippets}/domain-management-documentation/getting-all-domains/1/http-request.adoc[]
+
+
+==== Retrieve All Domains Response Body Fields
+
+This API returns a list of all domains with these fields:
+
+Authority: `domain.read`
+
+include::{snippets}/domain-management-documentation/getting-all-domains/1/response-fields.adoc[]
+
+==== Retrieve All Domains Response Sample
+
+include::{snippets}/domain-management-documentation/getting-all-domains/1/http-response.adoc[]
+
+=== Updating A Domain
+
+A `PATCH /appDomains/<id>` request will update a domain with an ID.
+
+Authority: `domain.update`
+
+==== Domain Update Request Path
+
+include::{snippets}/domain-management-documentation/updating-a-domain/1/path-parameters.adoc[]
+
+==== Sample Domain Update Request
+
+include::{snippets}/domain-management-documentation/updating-a-domain/1/http-request.adoc[]
+
+==== Domain Update Response
+
+This API returns a HTTP 204 NO CONTENT response.
+
+==== Sample Domain Update Response
+
+include::{snippets}/domain-management-documentation/updating-a-domain/1/http-response.adoc[]
+
+=== Removing A Domain
+
+A `DELETE /appDomains/<id>` request will remove a domain with an ID.
+
+Authority: `domain.delete`
+
+==== Domain Delete Request Path
+
+include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/path-parameters.adoc[]
+
+==== Sample Domain Delete Request
+
+include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/http-request.adoc[]
+
+==== Delete Domain Response
+
+This API returns a `HTTP 204 NO CONTENT` response.
+
+==== Sample Delete Domain Response
+
+include::{snippets}/domain-management-documentation/deleting-a-domain-by-id/1/http-response.adoc[]
+
+
+== Authentication
+
+Using the rest api, you can authenticate users given a username and password.
+
+A `POST /domains/{domainId}/authenticate` request authenticates a user on a domain.
+
+Authority: `user.authenticate`
+
+=== Authentication Request
+
+==== Request Body
+
+include::{snippets}/authentication-documentation/authentication/1/request-fields.adoc[]
+
+==== Authentication Request Path
+
+include::{snippets}/authentication-documentation/authentication/1/path-parameters.adoc[]
+
+==== Sample Authentication Request
+
+include::{snippets}/authentication-documentation/authentication/1/http-request.adoc[]
+
+=== Authentication Response
+
+This API returns a JSON response with the following fields:
+
+include::{snippets}/authentication-documentation/authentication/1/response-fields.adoc[]
+
+==== Sample Authentication Response
+
+include::{snippets}/authentication-documentation/authentication/1/http-response.adoc[]
+
+
+== Managing Users
+
+The User management endpoints provide APi's for managing a user.
+
+
+=== Creating A User
+
+A `POST /domains/{domainId}/users/{userId}` request will create a user.
+
+==== User Creation Request Body Fields
+
+include::{snippets}/user-management-documentation/create-user/1/request-fields.adoc[]
+
+==== User Creation Request Path
+
+include::{snippets}/user-management-documentation/create-user/1/path-parameters.adoc[]
+
+==== Sample User Creation Request
+
+include::{snippets}/user-management-documentation/create-user/1/http-request.adoc[]
+
+As seen in the example,  you can also add custom properties like the "color" property.
+
+
+==== User Creation Response
+
+This API returns a `HTTP 201 CREATED` response with an empty body.
+
+
+=== Retrieving A User
+
+A `GET  /domains/{domainId}/users/{userId}` request will get a user with an ID.
+
+==== User Retrieval Request Path
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/path-parameters.adoc[]
+
+==== Sample User Retrieval Request
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-request.adoc[]
+
+
+==== User Retrieval Response
+
+This API returns an AppUser with these fields as well as custom fields provided by the client:
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/response-fields.adoc[]
+
+==== Sample User Retrieval Response
+
+include::{snippets}/user-management-documentation/getting-a-user-by-id/1/http-response.adoc[]
+
+As you can see, this user has two extra properties: `favourite-color` and  `country`.
+
+
+==== Retrieving All Users In a Domain
+
+A `GET /domains/{domainId}/users` request will get all users in a domain.
+
+==== Domain Users Retrieval Request Query Params
+
+The request includes page information to request for particular sets in the list.
+
+include::{snippets}/user-management-documentation/getting-all-users/1/request-parameters.adoc[]
+
+==== Sample Users Retrieval Request
+
+include::{snippets}/user-management-documentation/getting-all-users/1/http-request.adoc[]
+
+
+==== Users Retrieval Response
+
+This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.
+
+include::{snippets}/user-management-documentation/getting-all-users/1/response-fields.adoc[]
+
+==== Sample Retrieval Response
+
+include::{snippets}/user-management-documentation/getting-all-users/1/http-response.adoc[]
+
+=== Removing A User with an ID
+
+A `DELETE /domains/{domainId}/users/{userId}` request will remove a user with an ID.
+
+==== User Deletion Request Path
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/path-parameters.adoc[]
+
+==== Sample User Deletion Request
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-request.adoc[]
+
+==== User Deletion Response
+
+This API returns a `HTTP 204 NO CONTENT` response.
+
+==== Sample User Deletion Response
+
+include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-response.adoc[]
+
+==== Updating A User with an ID
+
+A `PUT /domains/{domainId}/users/{userId}` request will update a user with an ID. This will completely overwrite the properties of the
+existing user. There are no partial updates.
+
+==== User Update Request Path
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/path-parameters.adoc[]
+
+==== Sample User Update Request
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-request.adoc[]
+
+
+==== User Update Response
+
+This API returns a HTTP `204 NO CONTENT` response.
+
+==== Sample User Update Response
+
+include::{snippets}/user-management-documentation/updating-user-properties/1/http-response.adoc[]
+
+=== Loading A User By Username
+
+A GET request will get a user with the specified username and domain id. This will return all roles, authorities and
+groups associated with that user.
+
+==== User Load Request Path Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/path-parameters.adoc[]
+
+==== User Load Request Query Parameters
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/request-parameters.adoc[]
+
+==== Sample User Load Request
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-request.adoc[]
+
+
+==== User Load Response
+
+This API returns an AppUser with the fields below and other custom fields provided by the domain client.
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/response-fields.adoc[]
+
+==== Sample User Load Response
+
+include::{snippets}/user-management-documentation/getting-a-user-by-username-and-domain/1/http-response.adoc[]
+
+=== Querying Users
+
+A GET request can search for users by username, and other custom fields created by the client.
+
+NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+WARNING: Ensure to put individual criteria in parentheses.
+
+==== User Query Request Query Parameters
+
+The request includes page information to request for particular sets in the list.
+
+include::{snippets}/user-management-documentation/querying-users/1/request-parameters.adoc[]
+
+==== Sample User Query Request
+
+include::{snippets}/user-management-documentation/querying-users/1/http-request.adoc[]
+
+
+==== User Query Response
+
+This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.
+
+include::{snippets}/user-management-documentation/querying-users/1/response-fields.adoc[]
+
+==== Sample User Query Response
+
+include::{snippets}/user-management-documentation/querying-users/1/http-response.adoc[]
+
+=== Partial User Update
+
+A `PATCH /domains/{domainId}/users` request can update users partially based on a query criteria
+
+NOTE: Query string can only support custom string, integer and boolean fields currently.
+
+WARNING: Ensure to put individual criteria in parentheses.
+
+==== Partial User Update Request Parameter
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/path-parameters.adoc[]
+
+==== Partial User Update Request
+
+The PATCH request accepts a query string, and an array of update operations.
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/request-fields.adoc[]
+
+==== Sample Partial User Update Request
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-request.adoc[]
+
+==== Partial User Update Response
+
+The API returns 204 No content for a successful update.
+
+==== Sample Partial User Update Response
+
+include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
+
+== Managing Groups
+
+Coming Soon
+
+== Managing Roles
+
+Coming Soon
+
+== Managing Authorities
+
+Coming Soon

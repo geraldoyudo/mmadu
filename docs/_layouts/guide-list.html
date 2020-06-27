@@ -10,10 +10,11 @@
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
     <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
-    <link rel="stylesheet" href="{{page.root}}css/coderay.css">
-    <link rel="stylesheet" href="{{page.root}}css/asciidoctor.css">
-    <script src="{{page.root}}js/vendor/modernizr.js"></script>
-    <script src="{{page.root}}js/toc.js"></script>
+    <link rel="stylesheet" href="{{page.root}}../css/font-awesome.css">
+    <link rel="stylesheet" href="{{page.root}}../css/coderay.css">
+    <link rel="stylesheet" href="{{page.root}}../css/asciidoctor.css">
+    <script src="{{page.root}}../js/vendor/modernizr.js"></script>
+    <script src="{{page.root}}../js/toc.js"></script>
 </head>
 <body>
 
@@ -21,7 +22,7 @@
 <div class="top-bar">
     <div class="top-bar-left">
         <ul class="menu">
-            <a href="{{page.root}}">{{site.title}}</a>
+            <a href="{{page.root}}../">{{site.title}}</a>
         </ul>
     </div>
     <div class="top-bar-right">
@@ -48,24 +49,26 @@
 
     <!-- End Main Content -->
 
+    <!-- Sidebar -->
 
+    <aside class="large-3 columns">
+
+        <h4>Guides</h4>
+        <ul>
+            {% for guide in site.data.guides %}
+            <li><a href="{{ guide.name }}">{{ guide.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
 
 
-<!-- Footer -->
 
-<footer class="row">
-    <div class="large-12 columns">
-        <hr>
-        <div class="row">
-            <div class="large-12 columns">
-                <p>Footer</p>
-            </div>
-        </div>
-    </div>
-</footer>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>

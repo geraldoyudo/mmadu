@@ -1,4 +1,4 @@
-title: Mmadu Documentation
+title: Mmadu
 description: Documentation on all of Mmadu
 exclude:
   - LICENSE.adoc
@@ -16,3 +16,7 @@ asciidoctor:
     - icons=font
 include:
   - apis
+  - blog
+  - community
+  - guides
+  - reference
