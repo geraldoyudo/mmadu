@@ -17,7 +17,9 @@
       "name": "password",
       "type": "text",
       "markup": "<label for='$field.name' class='sr-only'>$field.label</label><div class='input-group' id='show_hide_password'><input class='form-control' id='$field.name' name='$field.name' placeholder='$field.placeholder' type='password' $required $inputField  $inputStyle $errorStyle> <div  class='input-group-addon'><a href><i class='fa fa-eye' aria-hidden='true'></i></a></div></div>",
-      "classes": "form-group",
+      "classes": [
+        "form-group"
+      ],
       "script": "$(document).ready(function() {$('#show_hide_password a').on('click', function(event) {event.preventDefault(); if($('#show_hide_password input').attr('type') == 'text'){$('#show_hide_password input').attr('type', 'password'); $('#show_hide_password i').addClass( 'fa-eye-slash' ); $('#show_hide_password i').removeClass( 'fa-eye' ); }else if($('#show_hide_password input').attr('type') == 'password'){$('#show_hide_password input').attr('type', 'text'); $('#show_hide_password i').removeClass( 'fa-eye-slash' ); $('#show_hide_password i').addClass( 'fa-eye' ); } }); });",
       "css": "#show_hide_password input {margin:0px;}"
     },
