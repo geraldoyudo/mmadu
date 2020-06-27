@@ -1,1 +1,0 @@
-docker run --name heroku-mmadu-token-service -p 8080:8080 geraldoyudo/mmadu-token-service-heroku-test:2.0.0-SNAPSHOT
