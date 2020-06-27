@@ -416,3 +416,15 @@ The API returns 204 No content for a successful update.
 ==== Sample Partial User Update Response
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
+
+== Managing Groups
+
+Coming Soon
+
+== Managing Roles
+
+Coming Soon
+
+== Managing Authorities
+
+Coming Soon

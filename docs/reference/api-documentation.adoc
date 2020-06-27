@@ -1,11 +1,11 @@
-= Api Convention Documentation
+= Api Convention Reference
 Oyudo Gerald <gerald.oyudo@gmail.com>
 v2.0.0, 2020-06-26
 :toc:
 :sectnums:
 :showtitle:
-:page-navtitle: API Convention Documentation
-:page-excerpt: General API Documentation Conventions
+:page-navtitle: API Convention Reference
+:page-excerpt: General API Documentation Refrence
 :page-root: ../
 :imagesdir: {page-root}/images
 :permalink: /:title/
