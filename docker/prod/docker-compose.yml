@@ -5,6 +5,8 @@ services:
     environment:
       - MMADU_USER_DB_HOST=mongodb
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_ADMIN_CLIENT=${MMADU_ADMIN_CLIENT:mmadu_admin}
+      - MMADU_ADMIN_SECRET=${MMADU_ADMIN_SECRET:1234567890}
     ports:
       - "15551:8080"
     depends_on:
@@ -16,6 +18,10 @@ services:
       - MMADU_USER_URL=http://mmadu-user-service:8080
       - MMADU_REGISTRATION_DB_HOST=mongodb
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_ADMIN_CLIENT=${MMADU_ADMIN_CLIENT:mmadu_admin}
+      - MMADU_ADMIN_SECRET=${MMADU_ADMIN_SECRET:1234567890}
+      - MMADU_REGISTRATION_ROOT_DIR=/root/mmadu
+      - MMADU_APPLICATION_URL=${MMADU_APPLICATION_URL:http://localhost:8080}
     ports:
       - "15552:8080"
     depends_on:
@@ -30,6 +36,7 @@ services:
       - MMADU_ADMIN_CLIENT=${MMADU_ADMIN_CLIENT:mmadu_admin}
       - MMADU_ADMIN_SECRET=${MMADU_ADMIN_SECRET:1234567890}
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_APPLICATION_URL=${MMADU_APPLICATION_URL:http://localhost:8080}
     ports:
       - "15553:8080"
     depends_on:
