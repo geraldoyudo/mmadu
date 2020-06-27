@@ -4,6 +4,10 @@ mmadu:
     password: ${MMADU_ADMIN_PASSWORD:password}
     client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
     secret: ${MMADU_ADMIN_SECRET:1234567890}
+  identity:
+    jwt-auto-discovery: true
+    url: ${MMADU_IDENTITY_URL:http://localhost:10084}
+    jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   security:
     domain-parsing:
       path-keys: domain,domainId,domains,appDomains
@@ -34,8 +38,4 @@ spring:
     allow-bean-definition-overriding: true
   data:
     mongodb:
-      database: ${MMADU_USER_DB_NAME:mmadu_user_db}
-      host: ${MMADU_USER_DB_HOST}
-      username: ${MMADU_USER_DB_USERNAME}
-      password: ${MMADU_USER_DB_PASSWORD}
       uri: ${MMADU_USER_DB_URI}
