@@ -11,6 +11,9 @@ mmadu:
   security:
     domain-parsing:
       path-keys: domain,domainId,domains,appDomains
+  user:
+    db:
+      uri: ${MMADU_USER_DB_URI}
   domain-config:
     domains:
       - id: 0
@@ -38,4 +41,4 @@ spring:
     allow-bean-definition-overriding: true
   data:
     mongodb:
-      uri: ${MMADU_USER_DB_URI}
+      uri: ${mmadu.user.db.uri}

@@ -3,7 +3,7 @@ spring:
     rest:
       base-path: /repo
     mongodb:
-      uri: ${MMADU_REGISTRATION_DB_URI}
+      uri: ${mmadu.registration.db.uri}
   main:
     allow-bean-definition-overriding: true
   jackson:
@@ -35,6 +35,8 @@ mmadu:
   userService:
     url: ${MMADU_USER_URL:http://localhost:10080}
   registration:
+    db:
+      uri: ${MMADU_REGISTRATION_DB_URI}
     home: ${mmadu.home}/registration
     templates: file://${mmadu.registration.home}/templates/
     domain-flow-config:

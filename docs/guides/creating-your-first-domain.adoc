@@ -1,0 +1,13 @@
+= Creating Your First Domain
+:showtitle:
+:page-title: Creating Your First Domain
+:page-description: How to create your first Domain
+:icons: font
+:page-root:
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: guide
+:language: universal
+:framework: universal
+
+Coming Soon
