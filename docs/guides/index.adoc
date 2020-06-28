@@ -8,8 +8,6 @@
 :version: master
 :page-layout: guide-list
 
-Mmadu can be easily started with docker compose.
-
 == Using Mmadu
 
 Mmadu aims to be highly flexible and customizable. Mmadu is made up of different
@@ -21,37 +19,138 @@ Currently, Mmadu is made up of the following:
 . Mmadu Registration
 . Mmadu Identity
 
+== Getting Started with the Jars
+
+This guide assumes that you have MongoDB running at local host (default mongodb port).
+
+=== Running the Identity Service
+. Download the identity jar from the releases page.
+
+. Run the following:
+
+[source,sh,options="nowrap"]
+----
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15553 -Dmmadu.identity.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-identity-2.0.0-SNAPSHOT.jar
+----
+
+=== Running the User Service
+. Download the user service jar from the releases page.
+
+. Run the following:
+
+[source,sh,options="nowrap"]
+----
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15551 -Dmmadu.registration.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-user-service-2.0.0-SNAPSHOT.jar
+----
+
+=== Running the Registration Service
+. Download the registration service jar from the releases page.
+
+. Run the following:
+
+[source,sh,options="nowrap"]
+----
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15552 -Dmmadu.user.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-registration-2.0.0-SNAPSHOT.jar
+----
+
 == Getting Started with Docker
+
+This guide assumes that you have MongoDB running at local host (default mongodb port).
+
+=== Running the Identity Service
+
+. Pull the Docker Image
+
+[source,sh,options="nowrap"]
+----
+docker pull geraldoyudo/mmadu-identity:2.0.0-SNAPSHOT
+----
+
+. Start the Identity Container
+
+[source,sh,options="nowrap"]
+----
+docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-identity:2.0.0-SNAPSHOT
+----
+
+=== Running the User Service
+
+. Pull the Docker Image
+
+[source,sh,options="nowrap"]
+----
+docker pull geraldoyudo/mmadu-user-service:2.0.0-SNAPSHOT
+----
+
+. Start the User Service Container
+
+[source,sh,options="nowrap"]
+----
+docker run -it -p 15551:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-user-service:2.0.0-SNAPSHOT
+----
+
+This also needs a reference to the identity provider.
+
+=== Running the Registration Service
+
+. Pull the Docker Image
+
+[source,sh,options="nowrap"]
+----
+docker pull geraldoyudo/mmadu-registration-service:2.0.0-SNAPSHOT
+----
+
+. Start the Registration Service Container
+
+[source,sh,options="nowrap"]
+----
+docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-registration:2.0.0-SNAPSHOT
+----
+
+This also needs a reference to the identity provider.
+
+== Getting Started with Docker Compose
 
 To run Mmadu with all the services, use the docker-compose file:
 
-. Create a folder (we will use mmadu as the created folder)
-+
-[source,sh]
+Create a docker compose file as shown below:
+
+[source,yaml,options="nowrap"]
 ----
-mkdir mmadu && cd mmadu
+include::../../docker/prod/docker-compose.yml[]
 ----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml[docker compose file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/docker-compose.yml
-----
-. Download the https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env[default environment file]
-+
-[source,sh]
-[subs="attributes"]
-----
-wget https://raw.githubusercontent.com/geraldoyudo/mmadu/{version}/docker/.env
-----
-. Make the necessary modifications to suite your configuration (you can use it as is)
-. Start the services
-+
-[source,sh]
-----
-docker-compose up
-----
+
+This starts up four services:
+
+. Mmadu User Management Service running at port 15551
+. Mmadu Registration Service running at 15552
+. Mmmadu Identity Service running at pot 15553
+. A mongo db database running at port 27017
+
+You can make modifications to the file to suite your needs. For example, If you want only the user
+management service, and you have your own mongo db, keep the mmadu user service and the mmadu identity.
+
+NOTE: The Mmadu User Service depends on the Mmadu Identity, and uses it as its Oauth 2.0 authorization provider.
+
+== System Initialization
+
+=== Identity Service
+
+This starts up an identity provider with an admin client with absolute privileges. The default client id is `mmadu_admin`
+and the default secret is `1234567890`. this can be changed by adding the `MMADU_ADMIN_CLIENT` and `MMADU_ADMIN_SECRET` environment
+variables to the `docker run` command.
+
+The environment variable MMADU_IDENTITY_URL is needed because it uses itself as an authorization provider.
+
+=== User Service
+
+Once the docker container starts up, it configures a default admin user with user name `admin`
+and the password, `password`. To change this, set the `MMADU_ADMIN_USERNAME` and `MMADU_ADMIN_PASSWORD`
+environment variables respectively.
+
+NOTE: At start up, all services configure data needed for the functioning of Mmadu. Domain with id `0`
+is reserved for Mmmadu operations.
+
 
 == Starting Your Journey
 

@@ -3,7 +3,7 @@ spring:
     rest:
       base-path: /admin/repo
     mongodb:
-      uri: ${MMADU_IDENTITY_DB_URI}
+      uri: ${mmadu.identity.db.uri}
   security:
     oauth2:
       client:
@@ -32,8 +32,10 @@ mmadu:
     domain-parsing:
       path-keys: domain,domainId,domains
   identity:
+    db:
+      uri: ${MMADU_IDENTITY_DB_URI}
     jwt-auto-discovery: true
-    url: ${MMADU_IDENTITY_URL:http://localhost:${server.port}}
+    url: ${MMADU_IDENTITY_URL:http://localhost:8080}
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
     url: ${MMADU_USER_URL:http://localhost:10080}
