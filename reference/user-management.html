@@ -1,0 +1,1784 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmadu User Service Reference</title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/coderay.css">
+    <link rel="stylesheet" href="../css/asciidoctor.css">
+    <script src="../../js/vendor/modernizr.js"></script>
+    <script src="../../js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="../../">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <h1>Mmadu User Service Reference</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#overview">1. Overview</a></li>
+<li><a href="#features">2. Features</a></li>
+<li><a href="#default_configuration">3. Default Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#default_port">3.1. Default Port</a></li>
+</ul>
+</li>
+<li><a href="#managing_domains">4. Managing Domains</a>
+<ul class="sectlevel2">
+<li><a href="#setting_up_a_domain">4.1. Setting Up A Domain</a></li>
+<li><a href="#creating_a_domain">4.2. Creating A domain</a></li>
+<li><a href="#retrieving_a_domain">4.3. Retrieving a Domain</a></li>
+<li><a href="#retrieving_all_domains">4.4. Retrieving All Domains</a></li>
+<li><a href="#updating_a_domain">4.5. Updating A Domain</a></li>
+<li><a href="#removing_a_domain">4.6. Removing A Domain</a></li>
+</ul>
+</li>
+<li><a href="#authentication">5. Authentication</a>
+<ul class="sectlevel2">
+<li><a href="#authentication_request">5.1. Authentication Request</a></li>
+<li><a href="#authentication_response">5.2. Authentication Response</a></li>
+</ul>
+</li>
+<li><a href="#managing_users">6. Managing Users</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_user">6.1. Creating A User</a></li>
+<li><a href="#retrieving_a_user">6.2. Retrieving A User</a></li>
+<li><a href="#removing_a_user_with_an_id">6.3. Removing A User with an ID</a></li>
+<li><a href="#loading_a_user_by_username">6.4. Loading A User By Username</a></li>
+<li><a href="#querying_users">6.5. Querying Users</a></li>
+<li><a href="#partial_user_update">6.6. Partial User Update</a></li>
+</ul>
+</li>
+<li><a href="#managing_groups">7. Managing Groups</a></li>
+<li><a href="#managing_roles">8. Managing Roles</a></li>
+<li><a href="#managing_authorities">9. Managing Authorities</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="overview">1. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mmadu User Service is an independent service for managing users. It exposes the following resources
+for managing users:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>AppDomains - This is a tenant, with its own users, groups, roles and authorities.</p>
+</li>
+<li>
+<p>AppUsers - Representing users of client applications. Users can have custom properties defined by the domain.</p>
+</li>
+<li>
+<p>Roles and Authorities - Enforcable user privileges.</p>
+</li>
+<li>
+<p>Groups - Objects used to further categorize users in a tree hierarchy.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features">2. Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, mmadu user service provides the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Resource Management - Management of domains, users, roles, authorities and groups</p>
+</li>
+<li>
+<p>Authentication - Provides an api that clients can use to Authenticate their users.</p>
+</li>
+<li>
+<p>Password Hashing - Passwords of users are hashed and cannot be decrypted.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="default_configuration">3. Default Configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="default_port">3.1. Default Port</h3>
+<div class="paragraph">
+<p>Mmadu User Service listens to port 15551 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_domains">4. Managing Domains</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A domain is analogous to a realm. This represents a user pool with its own set of users, groups, roles, and authorities.</p>
+</div>
+<div class="paragraph">
+<p>A client application references users in one domain. A domain is referenced by a domain id. Applications
+can share the same user base by using the same domain id.</p>
+</div>
+<div class="sect2">
+<h3 id="setting_up_a_domain">4.1. Setting Up A Domain</h3>
+<div class="paragraph">
+<p>With one API call, you can set up users, roles, authorities and groups needed for your domain. Domain configuration is done
+with a call to <code>POST /domains</code>.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.initialize</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_setup_request_fields">4.1.1. Domain Setup Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].users</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined authorities</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined roles</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].groups</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined groups (starting with parents)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].roleAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined role authority mappings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].userAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined user authority mappings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].userRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined user role mappings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].userGroups</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined user group mappings</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_setup_request">4.1.2. Sample Domain Setup Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbi5pbml0aWFsaXplIiwiZXhwIjoxNTkyOTE1ODQzLCJpYXQiOjE1OTI5MTU4MzgsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.F3D50yrXxMXpidJcT2Q-YNJDsazK49EPFpU-6vmXi9ZxYYwZ7Q_VhUGpSbau3TadW5-2JlHBC5TpkdT0peeucxYXZr_pIECoIBxCrAyfP7VOTX3PJSOW3tOzS_KFaztRSCzf5EEigtG2UBCEk6mUP9dbK83-tQhDnX4aHiZ7aTM8GPXQaGB9YSoA8c6U4TQ94p0L2GnMKukzSUbpY0j0TEdNOxOifNjBg69WyOZA5lwTXX0A01D1PrdJkytxCQK4FUpbFuwuH0EOrv3aI0B0J3JnP7neYBtdHlYu6nG64QoU7VJBueJMQ1NtTb5Q-E8pulCPzg0VssDUxK6wHrOQwA
+Content-Length: 1361
+Host: localhost:8080
+
+[
+  {
+    &quot;id&quot;: &quot;1312&quot;,
+    &quot;name&quot;: &quot;global-config&quot;,
+    &quot;users&quot;: [
+      {
+        &quot;username&quot;: &quot;test&quot;,
+        &quot;password&quot;: &quot;test&quot;,
+        &quot;externalId&quot;: 1111,
+        &quot;properties&quot;: {
+          &quot;country&quot;: &quot;nigerian&quot;
+        }
+      }
+    ],
+    &quot;authorities&quot;: [
+      {
+        &quot;identifier&quot;: &quot;read&quot;,
+        &quot;name&quot;: &quot;Read&quot;,
+        &quot;description&quot;: &quot;Read Things&quot;
+      },
+      {
+        &quot;identifier&quot;: &quot;execute&quot;,
+        &quot;name&quot;: &quot;Execute&quot;,
+        &quot;description&quot;: &quot;Execute Things&quot;
+      }
+    ],
+    &quot;roles&quot;: [
+      {
+        &quot;identifier&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;Admin&quot;,
+        &quot;description&quot;: &quot;admin&quot;
+      }
+    ],
+    &quot;roleAuthorities&quot;: [
+      {
+        &quot;role&quot;: &quot;admin&quot;,
+        &quot;authority&quot;: &quot;execute&quot;
+      }
+    ],
+    &quot;userAuthorities&quot;: [
+      {
+        &quot;user&quot;: &quot;test&quot;,
+        &quot;authority&quot;: &quot;read&quot;
+      }
+    ],
+    &quot;userRoles&quot;: [
+      {
+        &quot;user&quot;: &quot;test&quot;,
+        &quot;role&quot;: &quot;admin&quot;
+      }
+    ],
+    &quot;groups&quot;: [
+      {
+        &quot;identifier&quot;: &quot;workers&quot;,
+        &quot;name&quot;: &quot;Workers&quot;,
+        &quot;description&quot;: &quot;App Workers&quot;
+      },
+      {
+        &quot;identifier&quot;: &quot;lawyers&quot;,
+        &quot;name&quot;: &quot;Lawyers&quot;,
+        &quot;description&quot;: &quot;Law people&quot;,
+        &quot;parent&quot;: &quot;workers&quot;
+      }
+    ],
+    &quot;userGroups&quot;: [
+      {
+        &quot;user&quot;: &quot;test&quot;,
+        &quot;group&quot;: &quot;lawyers&quot;
+      }
+    ]
+  }
+]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating_a_domain">4.2. Creating A domain</h3>
+<div class="paragraph">
+<p>Instead of creating the entire domain environment at one go, you can opt to create just the domain object.</p>
+</div>
+<div class="paragraph">
+<p>A <code>POST /appDomains</code> request will create a domain.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_creation_request_body">4.2.1. Domain Creation Request Body</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID of the domain (optional, auto-generated)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_creation_request">4.2.2. Sample Domain Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /appDomains HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbi5jcmVhdGUiLCJleHAiOjE1OTI5MTU4MzAsImlhdCI6MTU5MjkxNTgyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZL-f7JTG4W1KPtb_r5fQAGHgbvGXHYswaBlNcqLebkX-3tMDm5nLBs-jfIFXYMKlM0Q7HNTOonM_aUJiH3_k-zMQyhAsvIhAz93PoHmgqGoOa6aNNQxYwQ4vwoboV0yPzVbB4MCsuIHsJw9cP2a-ecwdNJs942CTzbKYFQDtSiCLoznAeOjUItq6QFGYEWXTMjzfMB0hwuJwRfRpA9-LywDI5BJZTF6h-9SB9B8f3afPEB0i72382HFtegW2Th0iVBlWYyWN1EgCLDttEbiP6LvsW6GKpt0EXihBsaHnMxUAkZAgINZmbN5c9TOTOEnJ5ghSmrxWykMzCrrJoYVIkw
+Content-Length: 51
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;00111111&quot;,
+  &quot;name&quot; : &quot;new-domain&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_creation_response">4.2.3. Domain Creation Response</h4>
+<div class="paragraph">
+<p>This API returns a <code>HTTP 201 CREATED</code> response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_domain">4.3. Retrieving a Domain</h3>
+<div class="paragraph">
+<p>A <code>GET /appDomains/&lt;id&gt;</code> request will get a domain with an ID.</p>
+</div>
+<div class="sect3">
+<h4 id="domain_retrieval_path">4.3.1. Domain Retrieval Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_retrieval_request">4.3.2. Sample Domain Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /appDomains/00111111 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMDAxMTExMTEuZG9tYWluLnJlYWQiLCJleHAiOjE1OTI5MTU4MzAsImlhdCI6MTU5MjkxNTgyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.HGWvJeu0QrsuklZgG1mDzfTqY5D2zxSo7s4RMOvWtyzNPID_e3TyXUfRgZEFrsMQXQ6lO2VEAB_tiJOoZdy7GEI5sWzqBDayBL-B4ztU_iFaMuNjiRZ9hFVWapOAEQptLcZkLEYImQB3KaSCBuRNzr13fVRdcHIf45R121WyPjoPozXgtfb2MPUsCmbqcedN0tF8tIj84vVURnqGPnSyhNA68xe_Dp57ZX6Qr57cZgdlW2RmPfNwYK0T-18GxbdDPxR-XA4EAtz1PGiKJGOlbudknnoPmzjQStr0TZJsrZRz0VM7w8VKW7AKOAhMumhNUsZc5hz5Cce3vpJ1u4r1-g
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.read</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_retrieval_response_fields">4.3.3. Domain Retrieval Response Fields</h4>
+<div class="paragraph">
+<p>This API returns an AppDomain with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain item resource links</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_retrieval_response">4.3.4. Sample Domain Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 223
+
+{
+  &quot;name&quot; : &quot;new-domain&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/00111111&quot;
+    },
+    &quot;appDomain&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/00111111&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_all_domains">4.4. Retrieving All Domains</h3>
+<div class="paragraph">
+<p>A <code>GET /appDomains</code> request will get all domains.</p>
+</div>
+<div class="sect3">
+<h4 id="retrieve_all_domains_sample">4.4.1. Retrieve All Domains Sample</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /appDomains HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbi5yZWFkIiwiZXhwIjoxNTkyOTE1ODMwLCJpYXQiOjE1OTI5MTU4MjUsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.OoDfAg-WQr5aOMMjM54IRqi_3dkkIIdSR8A2GE5gEMY3J1BAwMlY5hwl_LGT21Q19L8J5WXanDXlLnVG3hLt9-VbHXRP6KNHe0-Urn5Rzkyg7rXbMfqdaXZFPBbEb5ER9lqY4N2_7TaQ8_zC7ezLq0_iTGgwxc5x2JmhbtKyhOzcL38Z-j5UlXfpytDTLPpG06hBOqPmY-ogE7UtyWKt48EhG2Rxza8WwMIbwDWxO0XtwqD4I0NjMKfVF_A1L2O44nfUy4JvZMzISeVOLd7pqGR_e8kMg_yjbQU3-jq5oqrvG60TIrwsLzBksz5WzrMN6kuazF868MxE50GObA1yzA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_all_domains_response_body_fields">4.4.2. Retrieve All Domains Response Body Fields</h4>
+<div class="paragraph">
+<p>This API returns a list of all domains with these fields:</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.read</code></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.appDomains.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the domain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.appDomains.[]._links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain item resource links</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_links</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource links</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page information</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="retrieve_all_domains_response_sample">4.4.3. Retrieve All Domains Response Sample</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1187
+
+{
+  &quot;_embedded&quot; : {
+    &quot;appDomains&quot; : [ {
+      &quot;name&quot; : &quot;global-config&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/0&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/0&quot;
+        }
+      }
+    }, {
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1&quot;
+        }
+      }
+    }, {
+      &quot;name&quot; : &quot;test-domain&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
+        },
+        &quot;appDomain&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains&quot;
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/profile/appDomains&quot;
+    },
+    &quot;search&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/search&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 3,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_domain">4.5. Updating A Domain</h3>
+<div class="paragraph">
+<p>A <code>PATCH /appDomains/&lt;id&gt;</code> request will update a domain with an ID.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_update_request_path">4.5.1. Domain Update Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_update_request">4.5.2. Sample Domain Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /appDomains/00111111 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMDAxMTExMTEuZG9tYWluLnVwZGF0ZSIsImV4cCI6MTU5MjkxNTgzMCwiaWF0IjoxNTkyOTE1ODI1LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.gbcM5uDRTJ4eV397R1DYXMs2iaNwRvWBQ7BZtV5VvE3GLu4Y6Voq_q_OYvq_BMCkrEaPIPGdxXFQSho2McCEOkvG2hAstYtDlY2NTe5kFhCo5GlJHm5x9VQ93XdpjTAnYWzrzRhmI1asVcPRQQbX3hzgkNgjXDcv9SD6PLLJQq5Wsue4icSmKNrgGXFqVMRjnGELsOqDdinTN2UjQwInB_XJ8rsU8_uGyo-jdrP8VUDwmYIg0UUxpm1IczWBE6QfrnbtnpfaE7foSBdk0QauyzULCTN6KghaSNfoHYh8ZoNPkkLUqn7ttGzoKIudwzgYAaytXntXsnt6vAPto6CRcw
+Content-Length: 23
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;changed-name&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_update_response">4.5.3. Domain Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_update_response">4.5.4. Sample Domain Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_domain">4.6. Removing A Domain</h3>
+<div class="paragraph">
+<p>A <code>DELETE /appDomains/&lt;id&gt;</code> request will remove a domain with an ID.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_delete_request_path">4.6.1. Domain Delete Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /appDomains/{domainId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_delete_request">4.6.2. Sample Domain Delete Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /appDomains/00111111 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMDAxMTExMTEuZG9tYWluLmRlbGV0ZSIsImV4cCI6MTU5MjkxNTgzMCwiaWF0IjoxNTkyOTE1ODI1LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.XSa-j33GhYhvxmTg918n0bzCLG8EO_86bbml8lBXEXk9mHLFzMh0ZytsPeUFmhKFRJhNA0NUZxZeHCBVsoq0J-Ufbc4xWSAAbKitr9R5zTiRgze05MkrWr5B0-RITvPGPMg7GkTuZLa0A-dQpM56oXnQ5WB6GlNzC4q5Jr453eDZpccP7CTNZ-dct9uQvIW6GW3WchF0amuJUnxhgmvIwgfhsb4XjNAoMRXAGbfsVK55Lck3QaKSRcHNHdz3wSJR9J_S5eviiHs0BPf0yqhDmiGcY-u-ZwRyZJ8j0DFmM6Cm0P_DLyID0nVEC7hlY6wBwDIijDWWiW5gzd9V11RH9A
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="delete_domain_response">4.6.3. Delete Domain Response</h4>
+<div class="paragraph">
+<p>This API returns a <code>HTTP 204 NO CONTENT</code> response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_delete_domain_response">4.6.4. Sample Delete Domain Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="authentication">5. Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using the rest api, you can authenticate users given a username and password.</p>
+</div>
+<div class="paragraph">
+<p>A <code>POST /domains/{domainId}/authenticate</code> request authenticates a user on a domain.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>user.authenticate</code></p>
+</div>
+<div class="sect2">
+<h3 id="authentication_request">5.1. Authentication Request</h3>
+<div class="sect3">
+<h4 id="request_body">5.1.1. Request Body</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s password</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="authentication_request_path">5.1.2. Authentication Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /domains/{domainId}/authenticate</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user authentication domain id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_authentication_request">5.1.3. Sample Authentication Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/authenticate HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5hdXRoZW50aWNhdGUiLCJleHAiOjE1OTI5MTU4NDMsImlhdCI6MTU5MjkxNTgzOCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.KfiLvGk81TCe4DZ27B39PmmiEW3aV2ftlHOZhUHXEEvB-IoD4AymKotBvT4c42gqnwWL1KZ3TxN0X-83P09KC58NE82iCA9MDUxpV5hLwS3C0FLIhXdTP2qttIm5zvaY9nIM9Qd2-dbI0N-UzcmFb0HotQrABUEeaNQLfMo5cPkoM90wlTvSMLLBllO_NQckpjYLOJ0TEWLJ8riTu_Jl4adUKQQjPWTfxr8tsNbGs-KGebjEWUUayJJ-XUJlNN3tLEQDTTERNJ0nftmkprHmi21x7MCX7-M8aM951z-TcJP6iTuxj4oeNRhTaFo4MvlTfwP1RK7gKTXGcKORGZN97Q
+Content-Length: 63
+Host: localhost:8080
+
+{
+  &quot;username&quot; : &quot;test-user&quot;,
+  &quot;password&quot; : &quot;my-password&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="authentication_response">5.2. Authentication Response</h3>
+<div class="paragraph">
+<p>This API returns a JSON response with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authentication status. One of the following: AUTHENTICATED, USERNAME_INVALID, PASSWORD_INVALID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="sample_authentication_response">5.2.1. Sample Authentication Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 26
+
+{&quot;status&quot;:&quot;AUTHENTICATED&quot;}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_users">6. Managing Users</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The User management endpoints provide APi&#8217;s for managing a user.</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_user">6.1. Creating A User</h3>
+<div class="paragraph">
+<p>A <code>POST /domains/{domainId}/users/{userId}</code> request will create a user.</p>
+</div>
+<div class="sect3">
+<h4 id="user_creation_request_body_fields">6.1.1. User Creation Request Body Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s username (must be unique)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id (unique identifier used to reference user in your application)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s password</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="user_creation_request_path">6.1.2. User Creation Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. /domains/{domainId}/users</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_creation_request">6.1.3. Sample User Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5jcmVhdGUiLCJleHAiOjE1OTI5MTU4NzQsImlhdCI6MTU5MjkxNTg2OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.hSzYf_jO3BxgSepRdJkgVgenUs0acWADEe_khpx3asH1fwU-kgEpwSQGEhovafjwuVcpUyGnq68MBTSA23zWaHfcnxeJ7Yl-XboakH5p04DhDoQyFA2xdnLWVEiKtq48fdHMA5dwDA4oL0f71YMC9tExCYNKWktmJRDeFnbC-mptQ4E-kOnY6-D3gM3YDYkBWa_nFJ36LpjCuzjFIRqYJroY1hUfdRjWf4vDGGxh-c5ip9DvE5RuQd8YDMfhcKGoL2hwtii48qi0tMMZX4KAKoRl2Mgt0zewOcn87SRDWRpBkxolpClMfhEfXMQyXxCKupJ4xh6VCBU3RXsj5ruveQ
+Content-Length: 67
+Host: localhost:8080
+
+{&quot;id&quot;:&quot;123&quot;,&quot;username&quot;:&quot;user&quot;,&quot;password&quot;:&quot;password&quot;,&quot;color&quot;:&quot;blue&quot;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As seen in the example,  you can also add custom properties like the "color" property.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_creation_response">6.1.4. User Creation Response</h4>
+<div class="paragraph">
+<p>This API returns a <code>HTTP 201 CREATED</code> response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_user">6.2. Retrieving A User</h3>
+<div class="paragraph">
+<p>A <code>GET  /domains/{domainId}/users/{userId}</code> request will get a user with an ID.</p>
+</div>
+<div class="sect3">
+<h4 id="user_retrieval_request_path">6.2.1. User Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_retrieval_request">6.2.2. Sample User Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/123453432 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5yZWFkIiwiZXhwIjoxNTkyOTE1ODc0LCJpYXQiOjE1OTI5MTU4NjksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.PNI5DZZAj1UJMj9XoueDKSgM8dBqGghTj2NM0I0bZ31GSL7DD6Q6cjm58T3dEC-EyHwyTdFiyvOISP68PjNrQcgPBJW7bt7reVKtFeRrMhKvUTpF6Z2io-61SuhMLk8zr4dxz07pXnFdocJOZcLw1wgpqx3MsBhokmi3cIr0G5OP5MZFcMVOJgxwOwUmRctTNMqb908rjO0ZTDQtpNk8IZUVpQ--ayKvnErti5N6U9VPyUYgXRxOGeSLRb_s0_OvzkpBx-AGoxuzFHWZ7SkGOXumgTLczxEYctyp3oiZPQ-SGuJ3IqjiwNLrVkZFCxaUXJuuBFEPlrFhZvIkvBYPaw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_retrieval_response">6.2.3. User Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns an AppUser with these fields as well as custom fields provided by the client:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_retrieval_response">6.2.4. Sample User Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 140
+
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user&quot;,&quot;password&quot;:&quot;my-password&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, this user has two extra properties: <code>favourite-color</code> and  <code>country</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieving_all_users_in_a_domain">6.2.5. Retrieving All Users In a Domain</h4>
+<div class="paragraph">
+<p>A <code>GET /domains/{domainId}/users</code> request will get all users in a domain.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_users_retrieval_request_query_params">6.2.6. Domain Users Retrieval Request Query Params</h4>
+<div class="paragraph">
+<p>The request includes page information to request for particular sets in the list.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">page number to request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum number of items in page</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_users_retrieval_request">6.2.7. Sample Users Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users?page=0&amp;size=10 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5yZWFkIiwiZXhwIjoxNTkyOTE1ODc0LCJpYXQiOjE1OTI5MTU4NjksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.PNI5DZZAj1UJMj9XoueDKSgM8dBqGghTj2NM0I0bZ31GSL7DD6Q6cjm58T3dEC-EyHwyTdFiyvOISP68PjNrQcgPBJW7bt7reVKtFeRrMhKvUTpF6Z2io-61SuhMLk8zr4dxz07pXnFdocJOZcLw1wgpqx3MsBhokmi3cIr0G5OP5MZFcMVOJgxwOwUmRctTNMqb908rjO0ZTDQtpNk8IZUVpQ--ayKvnErti5N6U9VPyUYgXRxOGeSLRb_s0_OvzkpBx-AGoxuzFHWZ7SkGOXumgTLczxEYctyp3oiZPQ-SGuJ3IqjiwNLrVkZFCxaUXJuuBFEPlrFhZvIkvBYPaw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="users_retrieval_response">6.2.8. Users Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s unique identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieval_response">6.2.9. Sample Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 606
+
+{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalPages&quot;:1,&quot;last&quot;:true,&quot;totalElements&quot;:3,&quot;number&quot;:0,&quot;size&quot;:10,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true,&quot;empty&quot;:true},&quot;first&quot;:true,&quot;numberOfElements&quot;:3,&quot;empty&quot;:false}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_user_with_an_id">6.3. Removing A User with an ID</h3>
+<div class="paragraph">
+<p>A <code>DELETE /domains/{domainId}/users/{userId}</code> request will remove a user with an ID.</p>
+</div>
+<div class="sect3">
+<h4 id="user_deletion_request_path">6.3.1. User Deletion Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_deletion_request">6.3.2. Sample User Deletion Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /domains/test-app/users/123453432 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5kZWxldGUiLCJleHAiOjE1OTI5MTU4NzMsImlhdCI6MTU5MjkxNTg2OCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.m0twhCFg17PhAjt2K64I7oM_CPQSAzZWQQfQHp3KGgnzB4YEQR9FN5epprbx0Yil6v8vZxgPSDiJkpefTVnOrHR8S0mDXNCazUHMbvBxjSz95pJf09LTLVYMVn2ovIGoRmF5GFIbXw7aFpOtAdewCt0giTfug6XUwSu7jtpdZ9DO7gjHuN-UBmhplIupxK-bfkehnZaS4k5ZrAgaF0OwMeVUk-FEDosfWx_7OgR6X-08fJSP-Xk2-6XezkKQfjYWwd4kjtFfL-_sUDkRyyuW_kIhi22Le9JUGlAl1CWUMLtqImo-oHIjGxwuqDcovoNLrmfi5ptjtC11v8u7K9Rnrw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_deletion_response">6.3.3. User Deletion Response</h4>
+<div class="paragraph">
+<p>This API returns a <code>HTTP 204 NO CONTENT</code> response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_user_deletion_response">6.3.4. Sample User Deletion Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="updating_a_user_with_an_id">6.3.5. Updating A User with an ID</h4>
+<div class="paragraph">
+<p>A <code>PUT /domains/{domainId}/users/{userId}</code> request will update a user with an ID. This will completely overwrite the properties of the
+existing user. There are no partial updates.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_update_request_path">6.3.6. User Update Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. /domains/{domainId}/users/{userId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_update_request">6.3.7. Sample User Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PUT /domains/test-app/users/123453432 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci51cGRhdGUiLCJleHAiOjE1OTI5MTU4NzQsImlhdCI6MTU5MjkxNTg2OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.I2gAWgp-VfndFnnJTh6hhOPXuu4FfPd0ijQHqPtfi5tfOaqwRDRQvKImiiKTWdTbrPEWZR5BOog-WgJn59S-XnEJDASOpscEjQjqTAWByqxsHqiq7J0gq4kI3yNNsQOUc73Wahn7l5o8Hjd9Z_Gl2pxJE3DJlHCTwE0Y9WJXlYaFG-GuDK74z-ZNesfRNN6lznQa27L5WPQrCj0W3WIMnV54In2AvHWg2U1TLf_GcptlMMrke_WR-7V6n6wxtHVnk1EjQHiRf8OVw4T8wjqXIf5n-MpKPNQ5mZko9jxB40MgzE38bc-e4JFaPsPXTmeKH6hrxyRzOJkoGb_cMw_fSA
+Content-Length: 75
+Host: localhost:8080
+
+{
+  &quot;username&quot; : &quot;changed-username&quot;,
+  &quot;password&quot; : &quot;changed-password&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_update_response">6.3.8. User Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP <code>204 NO CONTENT</code> response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_user_update_response">6.3.9. Sample User Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading_a_user_by_username">6.4. Loading A User By Username</h3>
+<div class="paragraph">
+<p>A GET request will get a user with the specified username and domain id. This will return all roles, authorities and
+groups associated with that user.</p>
+</div>
+<div class="sect3">
+<h4 id="user_load_request_path_parameters">6.4.1. User Load Request Path Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. /domains/{domainId}/users/load</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="user_load_request_query_parameters">6.4.2. User Load Request Query Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_load_request">6.4.3. Sample User Load Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/load?username=test-user HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5sb2FkIiwiZXhwIjoxNTkyOTE1ODc0LCJpYXQiOjE1OTI5MTU4NjksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.LbQxKFybLa4SnHPA7iioMro7Lf95EvjZkXlklYsehp0hlTxQQdCpjmwJUTaTqfc2uSRZuwibAxlUkttUTBIyp2xNHyWvfzwIvSHG6_hz_qWDKoun8wtIwMs2sQ420Cdj6-mpRKFv9clM83UgmVmKq7ERdPJfQ_WF514DU9P3ngboA9z-9yTbWGFB9-1SZEgzh2JjHvSnqKpYFd_TO3-n__EwRIfShnCAhHMC-KIaLu9m0-iOtv0okZYjipcfi0r5ZjUd-LLoB7bVAjyVTIWWNjhKznZl7fY8tFHbgUoz1i77EgumiuV2sW-FqHOnoo29MUx65M0-1_tKiu5tWF9fsA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_load_response">6.4.4. User Load Response</h4>
+<div class="paragraph">
+<p>This API returns an AppUser with the fields below and other custom fields provided by the domain client.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_load_response">6.4.5. Sample User Load Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 152
+
+{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user&quot;,&quot;password&quot;:&quot;my-password&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;groups&quot;:[],&quot;favourite-colour&quot;:&quot;blue&quot;,&quot;country&quot;:&quot;Nigeria&quot;}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="querying_users">6.5. Querying Users</h3>
+<div class="paragraph">
+<p>A GET request can search for users by username, and other custom fields created by the client.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Query string can only support custom string, integer and boolean fields currently.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Ensure to put individual criteria in parentheses.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="user_query_request_query_parameters">6.5.1. User Query Request Query Parameters</h4>
+<div class="paragraph">
+<p>The request includes page information to request for particular sets in the list.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The query search string. Use any of your custom properties for this search including username</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">page number to request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maximum number of items in page</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_query_request">6.5.2. Sample User Query Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /domains/test-app/users/search?page=0&amp;size=10&amp;query=%28country+equals+%27Nigeria%27%29+and+%28favourite-color+equals+%27blue%27%29 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5yZWFkIiwiZXhwIjoxNTkyOTE1ODc0LCJpYXQiOjE1OTI5MTU4NjksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.PNI5DZZAj1UJMj9XoueDKSgM8dBqGghTj2NM0I0bZ31GSL7DD6Q6cjm58T3dEC-EyHwyTdFiyvOISP68PjNrQcgPBJW7bt7reVKtFeRrMhKvUTpF6Z2io-61SuhMLk8zr4dxz07pXnFdocJOZcLw1wgpqx3MsBhokmi3cIr0G5OP5MZFcMVOJgxwOwUmRctTNMqb908rjO0ZTDQtpNk8IZUVpQ--ayKvnErti5N6U9VPyUYgXRxOGeSLRb_s0_OvzkpBx-AGoxuzFHWZ7SkGOXumgTLczxEYctyp3oiZPQ-SGuJ3IqjiwNLrVkZFCxaUXJuuBFEPlrFhZvIkvBYPaw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="user_query_response">6.5.3. User Query Response</h4>
+<div class="paragraph">
+<p>This API returns a list of all users with the fields below. The response also has
+fields that display the page information of result. These fields are shown in the example
+response and are self explanatory.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user&#8217;s unique identification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].username</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].password</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password of the user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].roles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of roles assigned to this user</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content.[].authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities given to ths user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_user_query_response">6.5.4. Sample User Query Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 606
+
+{&quot;content&quot;:[{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user0&quot;,&quot;password&quot;:&quot;my-password0&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user1&quot;,&quot;password&quot;:&quot;my-password1&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;},{&quot;id&quot;:&quot;123453432&quot;,&quot;username&quot;:&quot;test-user2&quot;,&quot;password&quot;:&quot;my-password2&quot;,&quot;roles&quot;:[],&quot;authorities&quot;:[],&quot;country&quot;:&quot;Nigeria&quot;,&quot;favourite-color&quot;:&quot;blue&quot;}],&quot;totalPages&quot;:1,&quot;last&quot;:true,&quot;totalElements&quot;:3,&quot;number&quot;:0,&quot;size&quot;:10,&quot;sort&quot;:{&quot;sorted&quot;:false,&quot;unsorted&quot;:true,&quot;empty&quot;:true},&quot;first&quot;:true,&quot;numberOfElements&quot;:3,&quot;empty&quot;:false}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="partial_user_update">6.6. Partial User Update</h3>
+<div class="paragraph">
+<p>A <code>PATCH /domains/{domainId}/users</code> request can update users partially based on a query criteria</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Query string can only support custom string, integer and boolean fields currently.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Ensure to put individual criteria in parentheses.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="partial_user_update_request_parameter">6.6.1. Partial User Update Request Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. /domains/{domainId}/users</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="partial_user_update_request">6.6.2. Partial User Update Request</h4>
+<div class="paragraph">
+<p>The PATCH request accepts a query string, and an array of update operations.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The query criteria for updating users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].operation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The kind of update operation to make: (SET, INCREMENT, ADD, REMOVE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The property to update</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updates.[].value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value used by the update operation</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_partial_user_update_request">6.6.3. Sample Partial User Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /domains/test-app/users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci51cGRhdGUiLCJleHAiOjE1OTI5MTU4NzQsImlhdCI6MTU5MjkxNTg2OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.I2gAWgp-VfndFnnJTh6hhOPXuu4FfPd0ijQHqPtfi5tfOaqwRDRQvKImiiKTWdTbrPEWZR5BOog-WgJn59S-XnEJDASOpscEjQjqTAWByqxsHqiq7J0gq4kI3yNNsQOUc73Wahn7l5o8Hjd9Z_Gl2pxJE3DJlHCTwE0Y9WJXlYaFG-GuDK74z-ZNesfRNN6lznQa27L5WPQrCj0W3WIMnV54In2AvHWg2U1TLf_GcptlMMrke_WR-7V6n6wxtHVnk1EjQHiRf8OVw4T8wjqXIf5n-MpKPNQ5mZko9jxB40MgzE38bc-e4JFaPsPXTmeKH6hrxyRzOJkoGb_cMw_fSA
+Content-Length: 105
+Host: localhost:8080
+
+{&quot;query&quot;:&quot;(country equals 'Nigeria')&quot;,&quot;updates&quot;:[{&quot;operation&quot;:&quot;SET&quot;,&quot;property&quot;:&quot;color&quot;,&quot;value&quot;:&quot;green&quot;}]}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="partial_user_update_response">6.6.4. Partial User Update Response</h4>
+<div class="paragraph">
+<p>The API returns 204 No content for a successful update.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_partial_user_update_response">6.6.5. Sample Partial User Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_groups">7. Managing Groups</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_roles">8. Managing Roles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_authorities">9. Managing Authorities</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+
+    <aside class="large-3 columns">
+
+        <h4>Reference Documentations</h4>
+        <ul>
+            
+            <li><a href="api-documentation">Api Convention Reference</a></li>
+            
+            <li><a href="user-management">Mmadu User Service Reference</a></li>
+            
+            <li><a href="registration">Mmadu Registration Service Reference</a></li>
+            
+            <li><a href="identity">Mmadu Identity Service Reference</a></li>
+            
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

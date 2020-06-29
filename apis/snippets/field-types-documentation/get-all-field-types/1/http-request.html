@@ -9,8 +9,7 @@
     <meta name="description" content="Documentation on all of Mmadu">
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" href="css/coderay.css">
     <link rel="stylesheet" href="css/asciidoctor.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -19,20 +18,21 @@
 <body>
 
 
-<!-- Nav Bar -->
-
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="">Mmadu Documentation</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-<!-- End Nav -->
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
 
 
 <!-- Main Page Content and Sidebar -->
@@ -45,7 +45,7 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes HTTP/1.1
-domain-auth-token: 2222
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5MjU1MjgzMSwiaWF0IjoxNTkyNTUyODI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fXkJ9An34zEuH2hghjaZWSW19kcWy3_qoM147jI4v8UeiDY9htMyoeHREt0XncyDI2KnrDuEnPQ3rtItNNBI9jRrxhUhnfPEWtJf7_i7A1ViYhRGdRhHTXL4fu9821AlrCeaQdAUcn7HO3UfE_vQMCUOQHbpwN7mCUQWbJ9RiWukfT8XpjuoN4V7HncDvq-k5KkUt2XfecsgTQeOa40Orx3E0h_xLs4SE27Oo1EG5wN-zYmkX9b3Y84VVinfvylVPlEsj3vgTDUXvOQjp5vtygKsyIifp8oNPc-oJfe3tcPF7tO9PADfwgRwtc0PbNO6os6WUSNNQU98Kvl8xmQEXQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -54,18 +54,7 @@ Host: localhost:8080</code></pre>
 
     <!-- End Main Content -->
 
-    <!-- Sidebar -->
 
-    <aside class="large-3 columns">
-
-        <h4>Documents</h4>
-        <ul id="posts" class="posts nav">
-            
-        </ul>
-
-    </aside>
-
-    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
@@ -84,8 +73,8 @@ Host: localhost:8080</code></pre>
     </div>
 </footer>
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
 <script>
 $(document).foundation();
 var doc = document.documentElement;

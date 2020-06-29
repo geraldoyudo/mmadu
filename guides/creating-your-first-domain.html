@@ -1,0 +1,818 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Your First Domain</title>
+    <meta name="description" content="How to create your first Domain">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/coderay.css">
+    <link rel="stylesheet" href="../css/asciidoctor.css">
+    <script src="../js/vendor/modernizr.js"></script>
+    <script src="../js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="../">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <h1>Creating Your First Domain</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A domain is where it all happens, your very own user real, or user pool. A domain
+is completely distinct from another domain with unique users, roles, authorities and groups.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="our_imaginary_app">Our Imaginary App</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s say we have an imaginary app hosted at <a href="http://localhost:8080" class="bare">http://localhost:8080</a>. We want this app
+to be able to have users and we want the app to be secure. Users should have the <code>view</code> authority
+while admin&#8217;s should have the <code>edit</code> authority.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s also say our app has a callback implemented for authorization code grant flow. The call back
+is at <code><a href="http://localhost:8080/oauth/callback" class="bare">http://localhost:8080/oauth/callback</a></code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting_an_access_token">Getting an Access Token</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we can access the domain creation api, we must first get a token. We are going to obtain
+a token with the <code>client_credentials</code> grant type from the identity provider, using the admin client id
+and admin client secret.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will return a response with an <code>access_token</code> that can be used to create a domain like the one below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODJiOWQxZmI2OTI3NDg3ODI3NmYwIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMjIzOTcsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMyNTk5NywiaWF0IjoxNTkzMzIyMzk3LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYTVkYzJjMzktZjc4Zi00ZWU4LWE4OGQtNTU5NGEzNGUyNzU0IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.TpsXmmqc8DKA-5lx12W6JK5QXpbzpjkqPEBgU5oj__I9151v9bXX16xGF2A_gGoHK7JunGZ7OjuPFaPyS7rahuq-9KNAjQ_ZbBncytkVtNUf-h0WS-E3zM-5qnMTf5THU0zeTgii04U-rMgOgr3Qy6LKnYZraA1iUakX-MmR1Vkubf807im3_YqfjP3w86Xv62ipUuWiL64d-PZiYnM20s3lp5wHAWsFTFJPVHMPk0K96CHppDzYHh6WZF_kF9c5lPxqZFBmu8QY3Xfz8somAEq4jbldB7GW2W72gs7MTXtkO0omdedf3cwFItfQFWCHhLg8EyWhXUZu4SFqV5uThA</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593325997</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">a5dc2c39-f78f-4ee8-a88d-5594a34e2754</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We are going to use the <code>access_token</code> property for subsequent requests.</p>
+</div>
+<div class="paragraph">
+<p>From now on we will use the &lt;token&gt; place holder to represent the access token.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating_a_domain">Creating A Domain</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create a domain, execute the following request to the user service (assuming the user service is at port 15552):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /domains HTTP/1.1
+Host: localhost:15551
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+[
+  {
+    &quot;id&quot;: &quot;my-app&quot;,
+    &quot;name&quot;: &quot;My Imaginary Application&quot;,
+    &quot;users&quot;: [
+      {
+        &quot;username&quot;: &quot;admin&quot;,
+        &quot;password&quot;: &quot;admin-password&quot;,
+        &quot;externalId&quot;: 1111111111,
+        &quot;properties&quot;: {
+          &quot;country&quot;: &quot;Nigeria&quot;,
+          &quot;email&quot;: &quot;email@myapp.com&quot;
+        }
+      }
+    ],
+    &quot;authorities&quot;: [
+      {
+        &quot;identifier&quot;: &quot;view&quot;,
+        &quot;name&quot;: &quot;View&quot;,
+        &quot;description&quot;: &quot;View Data&quot;
+      },
+      {
+        &quot;identifier&quot;: &quot;edit&quot;,
+        &quot;name&quot;: &quot;Edit&quot;,
+        &quot;description&quot;: &quot;Edit Data&quot;
+      }
+    ],
+    &quot;roles&quot;: [
+      {
+        &quot;identifier&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;Admin&quot;,
+        &quot;description&quot;: &quot;A My App Admin&quot;
+      },
+      {
+        &quot;identifier&quot;: &quot;user&quot;,
+        &quot;name&quot;: &quot;User&quot;,
+        &quot;description&quot;: &quot;A My App User&quot;
+      }
+    ],
+    &quot;roleAuthorities&quot;: [
+      {
+        &quot;role&quot;: &quot;admin&quot;,
+        &quot;authority&quot;: &quot;edit&quot;
+      },
+      {
+        &quot;role&quot;: &quot;admin&quot;,
+        &quot;authority&quot;: &quot;view&quot;
+      },
+      {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;authority&quot;: &quot;view&quot;
+      }
+    ],
+    &quot;userAuthorities&quot;: [],
+    &quot;userRoles&quot;: [
+      {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;role&quot;: &quot;admin&quot;
+      }
+    ],
+    &quot;groups&quot;: [],
+    &quot;userGroups&quot;: []
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations! We have now created a domain. You can access the authorize api
+and the load user api.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="application_authentication">Application Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we have a user, our imaginary application can use mmadu&#8217;s apis to check if a user/password
+credentials is valid and load the user.</p>
+</div>
+<div class="sect2">
+<h3 id="authenticating_a_user">Authenticating a user</h3>
+<div class="paragraph">
+<p>To authenticate a user, our imaginary app will make a call to the authenticate api.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /domains/my-app/authenticate HTTP/1.1
+Host: localhost:15551
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+    &quot;username&quot;: &quot;admin&quot;,
+    &quot;password&quot;: &quot;admin-password&quot;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This returns an authenticated response.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">AUTHENTICATED</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading_a_users_details">Loading a user&#8217;s details</h3>
+<div class="paragraph">
+<p>To load our <code>admin</code> user in or <code>my-app</code> domain, make the following request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">GET /domains/my-app/users/load?username=admin HTTP/1.1
+Host: localhost:15551
+Authorization: Bearer &lt;token&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The api returns a json response as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">1111111111</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">username</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">admin</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">password</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">admin-password</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">roles</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">admin</span><span class="delimiter">&quot;</span></span>
+    ],
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">authorities</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">view</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">edit</span><span class="delimiter">&quot;</span></span>
+    ],
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">groups</span><span class="delimiter">&quot;</span></span>: [],
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">country</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Nigeria</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">email</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">email@myapp.com</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that we have created our application domain, let us configure this
+domain on the identity provider to secure our imaginary app with Oauth 2.0.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring_a_domain_on_the_identity_provider">Configuring a Domain on the Identity Provider</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We have a domain, but we also want to be able to issue access tokens to clients of
+our imaginary app. We want those tokens to contain authorities so that they can be used
+to access our <strong>secure imaginary app</strong>.</p>
+</div>
+<div class="paragraph">
+<p>To configure domain <code>my-app</code> on the identity provider, we make this <code>POST</code> call.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/domains HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer &lt;token&gt;
+Host: localhost:15553
+
+[
+  {
+    &quot;domainId&quot;: &quot;my-app&quot;,
+    &quot;authorizationCodeType&quot;: &quot;alphanumeric&quot;,
+    &quot;authorizationCodeTTLSeconds&quot;: 600,
+    &quot;maxAuthorizationTTLSeconds&quot;: 3600,
+    &quot;authorizationCodeTypeProperties&quot;: {},
+    &quot;refreshTokenEnabled&quot;: true,
+    &quot;refreshTokenProperties&quot;: {},
+    &quot;accessTokenProvider&quot;: &quot;jwt&quot;,
+    &quot;accessTokenProperties&quot;: {
+      &quot;credentialId&quot;: {
+        &quot;type&quot;: &quot;rsa&quot;
+      }
+    },
+    &quot;issuerId&quot;: &quot;myapp.com&quot;,
+    &quot;clients&quot;: [
+      {
+        &quot;name&quot;: &quot;my-app&quot;,
+        &quot;code&quot;: &quot;my.app.1111&quot;,
+        &quot;applicationUrl&quot;: &quot;http://localhost:8080&quot;,
+        &quot;logoUrl&quot;: &quot;http://localhost:8080/logo.png&quot;,
+        &quot;tags&quot;: [&quot;self&quot;]
+      }
+    ],
+    &quot;clientInstances&quot;: [
+      {
+        &quot;clientCode&quot;: &quot;my.app.1111&quot;,
+        &quot;clientType&quot;: &quot;CONFIDENTIAL&quot;,
+        &quot;clientProfile&quot;: &quot;web_app&quot;,
+        &quot;credentials&quot;: {
+          &quot;type&quot;: &quot;secret&quot;,
+          &quot;secret&quot;: &quot;1234567890&quot;
+        },
+        &quot;identifier&quot;: &quot;my.app.admin&quot;,
+        &quot;tlsEnabled&quot;: true,
+        &quot;supportedGrantTypes&quot;: [
+          &quot;authorization_code&quot;,
+          &quot;client_credentials&quot;
+        ],
+        &quot;scopes&quot;: [
+            &quot;admin&quot;
+        ],
+        &quot;authorities&quot;: [
+            &quot;view&quot;, &quot;edit&quot;
+        ],
+        &quot;resources&quot;: [
+            &quot;my.app.service&quot;
+        ]
+      }
+    ],
+    &quot;resources&quot;: [
+      {
+        &quot;identifier&quot;: &quot;my.app.service&quot;,
+        &quot;name&quot;: &quot;My Imaginary Application Service&quot;,
+        &quot;description&quot;: &quot;My Imaginary Application Service&quot;
+      }
+    ],
+    &quot;scopes&quot;: [
+      {
+        &quot;code&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;admin&quot;,
+        &quot;description&quot;: &quot;Admin Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;view&quot;,
+          &quot;edit&quot;
+        ]
+      }
+    ]
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What did we just do?</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>We configured an identity provider for <code>my-app</code> with the following properties:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>The <code>authorizationCodeType</code> sets the authorization code generation type to <code>alphanumeric</code> to generate random alphanumeric
+strings as the authorization code in authorization code grant type flow.</p>
+</li>
+<li>
+<p>The <code>authorizationCodeTTLSeconds</code> configures the authorization code to expire after 600 seconds (10 minutes);</p>
+</li>
+<li>
+<p>The <code>maxAuthorizationTTLSeconds</code> configures the maximum authorization validity (i.e. how long a user will stay signed in) to one hour.</p>
+</li>
+<li>
+<p>The <code>refreshTokenEnabled</code> property enables refresh tokens. Refresh tokens will be added to access tokens during authorization
+code grant flow.</p>
+</li>
+<li>
+<p>We set the <code>accessTokenProvider</code> property to jwt to use jwt access tokens.</p>
+</li>
+<li>
+<p>We configure the <code>accessTokenProperties</code> to create jwt access token using a generated rsa key. This rsa key is generated,
+and the id of the key becomes the <code>credentialId</code> property.</p>
+</li>
+<li>
+<p>We set the <code>issuerId</code> property to or domain name <code>myapp.com</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In the <code>clients</code> property, we configure our own Client to be used to create our own client instances. A client can represent you or any third party company
+that wants to access your service.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>We give our client a unique code to be referenced when we create client instances.</p>
+</li>
+<li>
+<p>We specify the application url to let mmadu know where our application is.</p>
+</li>
+<li>
+<p>We set our <code>logoUrl</code> and also add a tag <code>self</code> to signify that this client represents us.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In the <code>clientInstances</code> property, we create client instances. Client instances are actual oauth 2.0 clients that
+contain credentials used to access our secured apis.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>The <code>clientCode</code> is set to our client&#8217;s unique.</p>
+</li>
+<li>
+<p>The <code>clientType</code> is set to <code>CONFIDENTIAL</code> telling oauth that this client requires authentication
+with specified credentials</p>
+</li>
+<li>
+<p>The <code>clientProfile</code> is set to "web_app" to let Mmadu know what kind of app is accessing its api.</p>
+</li>
+<li>
+<p>The <code>credentials</code> is set to a secret to be used during authentication.</p>
+</li>
+<li>
+<p>We set the <code>identitier</code> property to <code>my.app.admin</code>. This is what we will use as the oauth <code>client_id</code> in Oauth flows.</p>
+</li>
+<li>
+<p>We specify the supported grant types, scopes, authorities and resources that this client has access to.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now that we have configured our app on the identity provider, we can now test it out.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="accessing_our_imaginary_app">Accessing our Imaginary App</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="using_client_credentials">Using Client Credentials</h3>
+<div class="paragraph">
+<p>If we want to access our client app through its api, we use the client id and secret that we just created.
+Our <code>client_id</code> is <code>my.app.admin</code>, and our <code>client_secret</code> is <code>1234567890</code>.</p>
+</div>
+<div class="paragraph">
+<p>We use the client_credentials grant flow to obtain an access token with the credentials above:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: 192.168.99.100:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This returns</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiJteS1hcHAiLCJzdWIiOiI1ZWY4NTJjOTY4N2JkMjYyZTc2OThjYWUiLCJhdWQiOiJteS5hcHAuc2VydmljZSIsIm5iZiI6MTU5MzMzMjQyNSwiaXNzIjoibW1hZHUuY29tIiwiZXhwIjoxNTkzMzM2MDI1LCJpYXQiOjE1OTMzMzI0MjUsImF1dGhvcml0aWVzIjpbInZpZXciLCJlZGl0Il0sImp0aSI6IjIzZTBjMTMzLWJiNjgtNGYzZi1iNzYzLTNlOTk0ZTkyNTgwMSIsImNsaWVudF9pZCI6Im15LmFwcC5hZG1pbiJ9.FzrdQwAWZ9N3PHL0SeEKOwucTniUiSLjRvYlx2M5izx4Fu_x7JWhA0IzBOOQrb16A_lbcTz1TVr55ADw30C2ifkGudHdounG1OCxMbTFTaaLk1nNdjcRP3uqL10MaBD1ofuutn-aLxsJQtyHkW9Jk-BWCEIU0tKAxLdceF3aPsGEsHiA62oCr9_mNJOTatvYcubm_BwpE_-j0LGZK0QLLZNk6GSsn_WxLXVqhX0SiNG38kNTB3W07Nj1lUpudSEOUu84Veay-HyK-hgSVUTqVIe5Yn-rS2At8KWdn0Oxed4a2DS57indb0h30OGjcGCXQHYXPUASTcbDOhMyg_ZavA</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593336025</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">23e0c133-bb68-4f3f-b763-3e994e925801</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A quick inspection of the access_token will reveal the following claims:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">domain_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my-app</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">sub</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">5ef852c9687bd262e7698cae</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">aud</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my.app.service</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">nbf</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593332425</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">iss</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mmadu.com</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">exp</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593336025</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">iat</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593332425</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">authorities</span><span class="delimiter">&quot;</span></span>: [
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">view</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">edit</span><span class="delimiter">&quot;</span></span>
+  ],
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">23e0c133-bb68-4f3f-b763-3e994e925801</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">client_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my.app.admin</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <code>domain_id</code> claim is set to the domain id.</p>
+</li>
+<li>
+<p>The <code>sub</code> claim is set to the id of the authorization</p>
+</li>
+<li>
+<p>The <code>aud</code> claim is set to the resource the token will will be used to consume <code>my.app.service</code></p>
+</li>
+<li>
+<p>The <code>exp</code> claim is the expiry time</p>
+</li>
+<li>
+<p>The <code>iat</code> claim is the issued at time</p>
+</li>
+<li>
+<p>The <code>nbf</code> claim states that this token should not be used before this time.</p>
+</li>
+<li>
+<p>The <code>authorities</code> claim returns a list of authorites for this client. This is provided on creation
+of the client instance.</p>
+</li>
+<li>
+<p>The <code>jti</code> is the token identifier</p>
+</li>
+<li>
+<p>The <code>client_id</code> is the client instance identifier</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using_authorization_code">Using Authorization Code</h3>
+<div class="paragraph">
+<p>Supposing our admin user wants to access our app, he clicks on a <code>Login</code> button
+which is designed to redirect to the authorization page. Below is an example of
+such a login button</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:15553/oauth/authorize?client_id=my.app.admin</span><span class="content">&amp;</span><span class="content">response_type=code</span><span class="content">&amp;</span><span class="content">redirect_uri=http://localhost:8080/oauth/callback</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Login<span class="tag">&lt;/a&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In practice your button should make a post request to a login endpoint implemented by you, in
+which you redirect to the authorize endpoint
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This will redirect you to a login screen if you have not logged in.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/login_screen.png" alt="login screen">
+</div>
+<div class="title">Figure 1. Mmadu Login Screen</div>
+</div>
+<div class="paragraph">
+<p>Enter the admin user name and password (admin/admin-password in this case).
+If successful, you will be redirected to the authorization page.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/authorize_screen.PNG" alt="authorize screen">
+</div>
+</div>
+<div class="paragraph">
+<p>The authorize screen lets you know that a client application wants to access
+certain scopes you possess. Select the ones you want to grant (in this case admin).</p>
+</div>
+<div class="paragraph">
+<p>Check the "I want to authorize this application", and click confirm.</p>
+</div>
+<div class="paragraph">
+<p>You will be redirected to the back to the configured call back with a code in the query param.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/oauth/callback?code=K5s0BKyfF4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Your application should be configured to listen to the callback, retrieve the authorization code, and
+make a call to the /clients/token endpoint to get the token</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;code=K5s0BKyfF4</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If authorization is successful, an access_token and a refresh token is returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODVkMzQ2ODdiZDI2MmU3Njk4Y2IyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMzUzMjEsInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJhLiouKiogc3VwZXJfYWRtaW4gci5zdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMzNTYyMSwiaWF0IjoxNTkzMzM1MzIxLCJqdGkiOiIxNWMzMjJlZC02MWI1LTQzNWEtOWVmMy02YzBjOThhMDQ4OTYiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.hdgo4JnswWI63N-vI-BDEgukBaVsHttqRw3s_JCLmbjISzU3z9fOq4y8y_mZa4sZc3tVHf9xETVefBfjLZl2pIGMRLdjYZac0_iPcOYzmXjP9eOcnYCjhjMTb02ZYhYpWRQt83gWUt1U4apoxQstXW0sKbdaqCa_oaDbg0drW-ComCg0cssgXsePMHqlvQUjn6GC7IdYgNh-FBSpNOiQ1XLOS4O62EgA75nO6OOwt4bTRdNLM9mBFRb8av89W4fzAKnL0l4_KXZM6hmFamvfCLS4FRBegBy463zvRSSHodhx75Q6r5kn_MgXToMWOt-urOjXiCehB2E7boynw9tbmw</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593335621</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">refresh_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">oxz46a4uaq11oC47FWQy</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">15c322ed-61b5-435a-9ef3-6c0c98a04896</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An inspection of the token reveals the following claims.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">domain_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my-app</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">sub</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">5ef85d34687bd262e7698cb2</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">aud</span><span class="delimiter">&quot;</span></span>: [
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">my.app.service</span><span class="delimiter">&quot;</span></span>
+  ],
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">nbf</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593335321</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">user_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">1111111111</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">scope</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">admin view edit</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">iss</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mmadu.com</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">exp</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593335621</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">iat</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593335321</span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">15c322ed-61b5-435a-9ef3-6c0c98a04896</span><span class="delimiter">&quot;</span></span>,
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">client_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my.app.admin</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we can see, for authorization grant type, we do not have the <code>authorities</code> property (because those are authorities
+granted to the client and not the user). We have two new properties:
+. The <code>user_id</code> representing the logged in user
+. The <code>scope</code> properties containing the approved scopes with roles and authorities.</p>
+</div>
+<div class="paragraph">
+<p>Once this <code>access_token</code> has expired, we can get a new token using the refresh token endpoint.
+This enpoint returns a new <code>access_token</code> and <code>refresh_token</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: 192.168.99.100:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&amp;refresh_token=oxz46a4uaq11oC47FWQy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This returns a new pair of <code>access_token</code> and <code>refresh_token</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">{
+    &quot;access_token&quot;: &quot;eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODVkMzQ2ODdiZDI2MmU3Njk4Y2IyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMzYwMTUsInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJhLiouKiogc3VwZXJfYWRtaW4gci5zdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMzNjMxNSwiaWF0IjoxNTkzMzM2MDE1LCJqdGkiOiJjYjg0ZDZhZi03YTM1LTQ5YTgtYTcxZS00MmZlNGUyN2RkM2UiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.cKyNSzmeJB8aMGrJozM2uw_hpfJxoNimmcZJMgmz6pkuUE0O8xnXYShuLmYZSJJ_UeOgLS8mLDsg2fuBALsfbY0JqGprmRaYDh_f03hX9SQri4apvLIoi4O5WfoNzAmk0cgKSBDUrIEr-AaE8htOCln8SDrCdU3yLRbOPkRQsSe3C_Tl7buSD4aMZMxyWk2zOgMqQYnKAFEju-GrYoWYcu1tIiBthDN2YHLQaWjLQ22j0qGnV4Efpjmgi6Y-ZykFivp-WsSg6ruha0EPaVDQ4w0sNS39d2KScAh4ZsOh_UcW-meuhkYLc35oz-UN9pum88iJroLuQcvcCks9_AVEXg&quot;,
+    &quot;token_type&quot;: &quot;bearer&quot;,
+    &quot;expires_in&quot;: 1593336315,
+    &quot;refresh_token&quot;: &quot;hhju7LmcPRA39BDCZwrk&quot;,
+    &quot;jti&quot;: &quot;cb84d6af-7a35-49a8-a71e-42fe4e27dd3e&quot;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations, you have configured your domain with mmadu identity.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring_a_domain_for_user_registration">Configuring a Domain for User Registration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We need to create a means for new users to register. Let us provision our
+<code>my-app</code> domain for registration. Let our users register with a username, email, password and country fields.</p>
+</div>
+<div class="sect2">
+<h3 id="configuring_a_domain_with_a_registration_profile">Configuring a Domain with a Registration Profile</h3>
+<div class="paragraph">
+<p>Make a <code>POST /domains</code> request to the registration service below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer &lt;token&gt;
+Host: localhost:15552
+
+{
+  &quot;domains&quot;: [
+    {
+      &quot;domainId&quot;: &quot;my-app&quot;,
+      &quot;registrationProfile&quot;: {
+        &quot;defaultRedirectUrl&quot;: &quot;https://localhost.8080&quot;,
+        &quot;headerOne&quot;: &quot;My App&quot;,
+        &quot;headerThree&quot;: &quot;Register&quot;,
+        &quot;instruction&quot;: &quot;Fill all the fields to register&quot;,
+        &quot;submitButtonTitle&quot;: &quot;GO!!&quot;
+      },
+      &quot;fields&quot;: [
+        {
+          &quot;name&quot;: &quot;email&quot;,
+          &quot;placeholder&quot;: &quot;Email&quot;,
+          &quot;property&quot;: &quot;email&quot;,
+          &quot;fieldTypeId&quot;: &quot;mmadu.fields.email&quot;,
+          &quot;label&quot;: &quot;Email&quot;,
+          &quot;order&quot;: 1,
+          &quot;required&quot;: true
+        },
+        {
+          &quot;name&quot;: &quot;Country&quot;,
+          &quot;placeholder&quot;: &quot;Country&quot;,
+          &quot;property&quot;: &quot;country&quot;,
+          &quot;fieldTypeId&quot;: &quot;mmadu.fields.text&quot;,
+          &quot;label&quot;: &quot;Country&quot;,
+          &quot;order&quot;: 2,
+          &quot;required&quot;: true
+        },
+        {
+          &quot;name&quot;: &quot;username&quot;,
+          &quot;placeholder&quot;: &quot;Username&quot;,
+          &quot;property&quot;: &quot;username&quot;,
+          &quot;fieldTypeId&quot;: &quot;mmadu.fields.text&quot;,
+          &quot;label&quot;: &quot;Username&quot;,
+          &quot;order&quot;: 3,
+          &quot;required&quot;: true
+        },
+        {
+          &quot;name&quot;: &quot;password&quot;,
+          &quot;placeholder&quot;: &quot;Password&quot;,
+          &quot;property&quot;: &quot;password&quot;,
+          &quot;fieldTypeId&quot;: &quot;mmadu.fields.password&quot;,
+          &quot;label&quot;: &quot;Password&quot;,
+          &quot;order&quot;: 4
+        }
+      ]
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When that&#8217;s done, we can now register new users by going to the registration link</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:15553/my-app/register</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/registration_screen.PNG" alt="registration screen">
+</div>
+</div>
+<div class="paragraph">
+<p>It directs you to a registration form where you a new user can fill. Once completed and user presses
+Go!!!, it saves the user to the user service and you now have a new user!</p>
+</div>
+<div class="paragraph">
+<p>Now that you have created a domain, lets work on real apps with the other guides.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+
+    <aside class="large-3 columns">
+
+        <h4>Guides</h4>
+        <ul>
+            
+            <li><a href="creating-your-first-domain">Creating Your First Domain</a></li>
+            
+            <li><a href="user-auth-mmadu-springboot">Authentication - Getting Started with Mmadu And Springboot</a></li>
+            
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

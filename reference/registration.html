@@ -1,0 +1,1842 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmadu Registration Service Reference</title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/coderay.css">
+    <link rel="stylesheet" href="../css/asciidoctor.css">
+    <script src="../../js/vendor/modernizr.js"></script>
+    <script src="../../js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="../../">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <h1>Mmadu Registration Service Reference</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#overview">1. Overview</a></li>
+<li><a href="#features">2. Features</a></li>
+<li><a href="#default_configuration">3. Default Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#default_port">3.1. Default Port</a></li>
+</ul>
+</li>
+<li><a href="#user_registration">4. User Registration</a>
+<ul class="sectlevel2">
+<li><a href="#displaying_the_registration_form">4.1. Displaying the registration form</a></li>
+</ul>
+</li>
+<li><a href="#customizing_registration_forms">5. Customizing Registration Forms</a></li>
+<li><a href="#registration_profiles">6. Registration Profiles</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_registration_profile">6.1. Creating a Registration Profile</a></li>
+<li><a href="#retrieving_a_registration_profile">6.2. Retrieving a Registration Profile</a></li>
+<li><a href="#updating_registration_profile_by_id">6.3. Updating Registration Profile by ID</a></li>
+<li><a href="#deleting_a_registration_profile_by_id">6.4. Deleting a Registration Profile by ID</a></li>
+</ul>
+</li>
+<li><a href="#managing_field_types">7. Managing Field Types</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_field_type">7.1. Creating a field Type</a></li>
+<li><a href="#retrieving_a_field_type">7.2. Retrieving a Field Type</a></li>
+<li><a href="#getting_all_field_types">7.3. Getting All Field Types</a></li>
+<li><a href="#updating_a_field_type">7.4. Updating A Field Type</a></li>
+<li><a href="#removing_a_field_type">7.5. Removing A Field Type</a></li>
+</ul>
+</li>
+<li><a href="#managing_fields">8. Managing Fields</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_field">8.1. Creating a field</a></li>
+<li><a href="#retrieving_a_field">8.2. Retrieving a Field</a></li>
+<li><a href="#retrieving_all_domain_fields">8.3. Retrieving all Domain Fields</a></li>
+<li><a href="#updating_a_field">8.4. Updating A Field</a></li>
+<li><a href="#removing_a_field">8.5. Removing A Field</a></li>
+<li><a href="#defining-markup-for-fields">8.6. Defining Markup for Fields</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="overview">1. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mmadu Registration Service is an independent service for managing user flows.</p>
+</div>
+<div class="paragraph">
+<p>For now, only user registration flow issupported.</p>
+</div>
+<div class="paragraph">
+<p>It exposes the following resources for handling dynamic generation of registration forms:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Domain Registration Profile - Handles registration service configuration for the domain</p>
+</li>
+<li>
+<p>Field Types - Global field types supported by the registration service</p>
+</li>
+<li>
+<p>Field - Domain Fields supported by a domain</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features">2. Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Currently, mmadu user service provides the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Resource Management - Management of registration profiles, fields, and field types.</p>
+</li>
+<li>
+<p>Registration - Provides a dynamic registration form to register users.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="default_configuration">3. Default Configuration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="default_port">3.1. Default Port</h3>
+<div class="paragraph">
+<p>Mmadu Registration Service listens to port 15552 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="user_registration">4. User Registration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The registration service provides an api to access the registration page for a domain. The registration service
+generates a form from the configured fields and field types of a domain.</p>
+</div>
+<div class="sect2">
+<h3 id="displaying_the_registration_form">4.1. Displaying the registration form</h3>
+<div class="paragraph">
+<p>The registration form can be accessed in the browser using the url:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://[registration-host]:[registration-port]/[domain-id]/register</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, accessing the default domain with the default configuration can be done
+by entering the url below on your browser.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:1552/0/register</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
+this domain. To specify a url to redirect to, add the redirectUrl parameter</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:1552/0/register?redirectUrl=http://myapp.com</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="customizing_registration_forms">5. Customizing Registration Forms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Registration forms for a domain can be customized by adding and removing fields and field types.
+The registration service ensures that form fields are created for each field.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="registration_profiles">6. Registration Profiles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each domain has a registration profile object that is used for configuring the applications behaviour during
+registration.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There can be only one registration profile for a domain.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="creating_a_registration_profile">6.1. Creating a Registration Profile</h3>
+<div class="paragraph">
+<p>A <code>POST /repo/registrationProfiles</code> Request will create a registration profile.</p>
+</div>
+<div class="sect3">
+<h4 id="create_registration_profile_request_body">6.1.1. Create Registration Profile Request Body</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration profile ID (auto generated if absent)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roles assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerOne</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main registration page title - h1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerTwo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secondary registration page title - h2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerThree</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tertiary registration page title - h3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>instruction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction message for registering users displayed at the top of the form</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>submitButtonTitle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Submit button text</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_create_registration_profile_request">6.1.2. Sample Create Registration Profile Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/registrationProfiles HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5jcmVhdGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZdV3guyfYWBZHjEw87hJLgWuF_Ig_Sx-lWCfcYMIOBG2Awv6tsRETM-JD_E4S6X2CTGX7cZldelDTug40Ls2LeNwbnROZD5f-aOHAHgeldsFB1dXPwPmww-e60oOuMkiF-fpJkdka7MMJIaPNqT-KsxwD2PU_OLtdlG6BGMM4VV-uXEP5rleKp9jGUKH9IJddbnrd2tWCFMq6t6_9M07IKZws9deUZi70okV3n292fdVyxWMhraKtBUq6SChXi25iO8aFH84OvbC4aFRLxzaVw5MaoHFABx9zPnWajvaMcmDOnayv_PjazrueeVYBIPwLxtzGPGUS8pT0NrC40UNbw
+Content-Length: 358
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;0&quot;,
+  &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
+  &quot;defaultRoles&quot; : [ &quot;member&quot; ],
+  &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;headerOne&quot; : &quot;My App&quot;,
+  &quot;headerTwo&quot; : &quot;Register&quot;,
+  &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
+  &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
+  &quot;submitButtonTitle&quot; : &quot;Go&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create_registration_profile_response">6.1.3. Create Registration Profile Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_registration_profile">6.2. Retrieving a Registration Profile</h3>
+<div class="paragraph">
+<p>A GET Request will return a registration profile with its ID</p>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_retrieval_path_parameter">6.2.1. Registration Profile Retrieval Path Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_retrieval_request">6.2.2. Sample Registration Profile Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/registrationProfiles/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlZ19wcm9maWxlLnJlYWQiLCJleHAiOjE1OTI1NTI4MjEsImlhdCI6MTU5MjU1MjgxNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GACNmS2BZKoZ_TPfo5CV_qWE3-QpbNjI6m99PogScAjPNkgyKm5ICOEmfXQCt8T5q-s10_3DtkOZ3cWKB_1DObUhE1xhJ96iXf3JGdgGYYUtgbJFS1mAnlPi3SspKLvWWkdE-ACNCyWobWRP6lYoLQZ-vXQzTN6zmVRkzZv0IrafyE2lZGYKx-jLVkEt1pEt-A2EItXyIBQGEQflqUmVLiNa-mjUj4GJ8cep18jJirC0j5bvQGLwDGOfnO2GM73XuI9Q6mG_M-FYMH0O-4EjWeLn4O90khPLPfP3FiWcG1CdpxSlR1gD8RXL5UM_iACtybL0YtaTgGTK5jSxhNFPHA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_retrieval_response">6.2.3. Registration Profile Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns the registration profile with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration profile ID (auto generated if absent)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roles assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerOne</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main registration page title - h1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerTwo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Secondary registration page title - h2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>headerThree</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tertiary registration page title - h3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>instruction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction message for registering users displayed at the top of the form</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>submitButtonTitle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Submit button text</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_retrieval_response">6.2.4. Sample Registration Profile Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 563
+
+{
+  &quot;domainId&quot; : &quot;0&quot;,
+  &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
+  &quot;defaultRoles&quot; : [ &quot;member&quot; ],
+  &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;headerOne&quot; : &quot;My App&quot;,
+  &quot;headerTwo&quot; : &quot;Register&quot;,
+  &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
+  &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
+  &quot;submitButtonTitle&quot; : &quot;Go&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+    },
+    &quot;registrationProfile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_registration_profile_by_id">6.3. Updating Registration Profile by ID</h3>
+<div class="paragraph">
+<p>A <code>PATCH /repo/registrationProfiles/{profileId}</code> Request will update a registration profile.
+The example below updates the defaultRegistrationUrl property.</p>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_update_request_path_parameter">6.3.1. Registration Profile Update Request Path Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_update_request">6.3.2. Sample Registration Profile Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/registrationProfiles/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS51cGRhdGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.LCS-4RGzCClDTI84vC47iGCN4Etk-Tt998lmMNrSEZuhMVrAdBSRHw60e43vuhHfzOlUyd-JSdWXXzM0Nec09Q--Dp-sv61zmaK78zjD6OHOywAuofkANANqbFWwvBEWLfgyJcGdcYuPDMjCTmko45B0zrrU_0RR2Qp3f1mBDF3dkH0alNWpBJPFl8jBwmsXWn4m7LI0L3YC9nYV7BRnhTLj8aLijAWRPHOv_D6WJnxFc83aSiQOJ2qsIYL16jSWN4THMUDVjZ6dFkcOVETUtuYDYyAjXGTciVi-s6VvJN2ek5s2liBaM0t8CUkfxCIi4IUorbot-yfkS_UYtYsoOQ
+Content-Length: 48
+Host: localhost:8080
+
+{&quot;defaultRedirectUrl&quot;:&quot;http://modified.app.com&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_update_response">6.3.3. Registration Profile Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_update_response">6.3.4. Sample Registration Profile Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting_a_registration_profile_by_id">6.4. Deleting a Registration Profile by ID</h3>
+<div class="paragraph">
+<p>A <code>DELETE /repo/registrationProfiles/{profileId}</code> request will delete a registration profile.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Deleting a registration profile will remote all fields associated with the profile and a registration page
+for that domain will be unavailable.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_delete_request_path">6.4.1. Registration Profile Delete Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /repo/registrationProfiles/{profileId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profileId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registration profile ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_delete_request">6.4.2. Sample Registration Profile Delete Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/registrationProfiles/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5kZWxldGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.HzcDR7r_M56Eks1UWt4TO4nrKalMJdxk1AolYUsrZAqxHotFJB2K9MBSJRsmyiOiU7fmm95dnkxNhm6lhxSyrK9S4226ypN_q-5lq4JDB11Q0qUVDU8PpIBQwlfxW50Ck6St7Co1yyOEkv5QFX6h_w-I0lwRd2cxf-GRpvqbJreg7T6nZTFFMlSI_dfKodhQT7lg2DQ_YhwESyIaK89fflqWqahLVyaoAQUey9J4ctWV7g4Pyg7zcsIsUPGAXAlP4uGlRghgNLnZ5q_GtBFD3uZ4el6UoL6S24Mto7sxGy5q7w1zChAkLBifjRxvC-E7oDiZtu5dc1aVFK0_9WYaew
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="registration_profile_delete_response">6.4.3. Registration Profile Delete Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_registration_profile_delete_response">6.4.4. Sample Registration Profile Delete Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_field_types">7. Managing Field Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Field type objects specify the properties of a field type in the registration form. You can create a field type that
+can be used by fields in a registration form. Field types are global and can be used by any domain.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize field types.</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_field_type">7.1. Creating a field Type</h3>
+<div class="paragraph">
+<p>A <code>POST /repo/fieldTypes</code> request will create a field type</p>
+</div>
+<div class="sect3">
+<h4 id="field_type_creation_request_body">7.1.1. Field Type Creation Request Body</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field Type ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Style applied to all fields of the type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_type_creation_request">7.1.2. Sample Field Type Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fieldTypes HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuY3JlYXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.E6K2RoPCGHWT7WYZPPHYpXkRqFDTTrLsrIoa1UkYUnvajXLvqIpj1Nf2LB11p9t5CEWouMaQrS7PYIF6o2-iPofdb_7BiLyJP5jJsNGtUgOxD5_r2lIwIu20rYRBNme4KG7RLInqn8hrtQPHHRd28GYTF_PMbpMIxGpaEf4g--af5_yxHI1lk4-Zp0HtppGu5SWDOie4OLYMGWWokp8LwAubqVMbOyLwxkbG0dZdgXYasBWjNIYWjreg8WEMSJnla-rcws3JCyh24VOgkhj9RPsafddoCfIHgqO2cKcVXuOE3aZNmPH9NGZg6iXQsuU2sC2zSrG04KfVEEkAwtz_7g
+Content-Length: 521
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;Age&quot;,
+  &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+  &quot;fieldTypePattern&quot; : &quot;&quot;,
+  &quot;type&quot; : &quot;integer&quot;,
+  &quot;enclosingElement&quot; : &quot;div&quot;,
+  &quot;classes&quot; : [ &quot;form-control&quot; ],
+  &quot;style&quot; : null,
+  &quot;script&quot; : &quot;&quot;,
+  &quot;css&quot; : &quot;&quot;,
+  &quot;max&quot; : &quot;100&quot;,
+  &quot;min&quot; : &quot;10&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_type_creation_response">7.1.3. Field Type Creation Response</h4>
+<div class="paragraph">
+<p>This API returns a <code>HTTP 201 CREATED</code> response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_field_type">7.2. Retrieving a Field Type</h3>
+<div class="paragraph">
+<p>A `GET /repo/fieldTypes/{fieldTypeId} `request will get a field type with an ID.</p>
+</div>
+<div class="sect3">
+<h4 id="field_type_retrieval_request_path">7.2.1. Field Type Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_type_retrieval_request">7.2.2. Sample Field Type Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5MjU1MjgzMSwiaWF0IjoxNTkyNTUyODI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fXkJ9An34zEuH2hghjaZWSW19kcWy3_qoM147jI4v8UeiDY9htMyoeHREt0XncyDI2KnrDuEnPQ3rtItNNBI9jRrxhUhnfPEWtJf7_i7A1ViYhRGdRhHTXL4fu9821AlrCeaQdAUcn7HO3UfE_vQMCUOQHbpwN7mCUQWbJ9RiWukfT8XpjuoN4V7HncDvq-k5KkUt2XfecsgTQeOa40Orx3E0h_xLs4SE27Oo1EG5wN-zYmkX9b3Y84VVinfvylVPlEsj3vgTDUXvOQjp5vtygKsyIifp8oNPc-oJfe3tcPF7tO9PADfwgRwtc0PbNO6os6WUSNNQU98Kvl8xmQEXQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_type_retrieval_response">7.2.3. Field Type Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns a FieldType object with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field Type ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Style applied to all fields of the type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_type_retrieval_response">7.2.4. Sample Field Type Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 696
+
+{
+  &quot;name&quot; : &quot;Age&quot;,
+  &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+  &quot;fieldTypePattern&quot; : &quot;&quot;,
+  &quot;type&quot; : &quot;integer&quot;,
+  &quot;enclosingElement&quot; : &quot;div&quot;,
+  &quot;classes&quot; : [ &quot;form-control&quot; ],
+  &quot;style&quot; : null,
+  &quot;script&quot; : &quot;&quot;,
+  &quot;css&quot; : &quot;&quot;,
+  &quot;max&quot; : &quot;100&quot;,
+  &quot;min&quot; : &quot;10&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+    },
+    &quot;fieldType&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="getting_all_field_types">7.3. Getting All Field Types</h3>
+<div class="paragraph">
+<p>A <code>GET /repo/fieldTypes</code> request will get all field types.</p>
+</div>
+<div class="sect3">
+<h4 id="sample_all_fields_retrieval_request">7.3.1. Sample All Fields Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5MjU1MjgzMSwiaWF0IjoxNTkyNTUyODI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fXkJ9An34zEuH2hghjaZWSW19kcWy3_qoM147jI4v8UeiDY9htMyoeHREt0XncyDI2KnrDuEnPQ3rtItNNBI9jRrxhUhnfPEWtJf7_i7A1ViYhRGdRhHTXL4fu9821AlrCeaQdAUcn7HO3UfE_vQMCUOQHbpwN7mCUQWbJ9RiWukfT8XpjuoN4V7HncDvq-k5KkUt2XfecsgTQeOa40Orx3E0h_xLs4SE27Oo1EG5wN-zYmkX9b3Y84VVinfvylVPlEsj3vgTDUXvOQjp5vtygKsyIifp8oNPc-oJfe3tcPF7tO9PADfwgRwtc0PbNO6os6WUSNNQU98Kvl8xmQEXQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="all_fields_retrieval_response">7.3.2. All Fields Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns a list of all field types with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].fieldTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].min</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Minimum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].max</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum value for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data type of to field type (integer, date, time, datetime, string, decimal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css for all fields with this type (can be overriden by field css)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].script</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Script for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].classes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css classes for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].markup</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fieldTypes.[].enclosingElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The element enclosing the field</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_all_fields_retrieval_response">7.3.3. Sample All Fields Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1126
+
+{
+  &quot;_embedded&quot; : {
+    &quot;fieldTypes&quot; : [ {
+      &quot;name&quot; : &quot;Age&quot;,
+      &quot;markup&quot; : &quot;&lt;label for='$field.name' class='sr-only'&gt;$field.label&lt;/label&gt;&lt;input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle &gt;$errorDisplay&quot;,
+      &quot;fieldTypePattern&quot; : &quot;&quot;,
+      &quot;type&quot; : &quot;integer&quot;,
+      &quot;enclosingElement&quot; : &quot;div&quot;,
+      &quot;classes&quot; : [ &quot;form-control&quot; ],
+      &quot;style&quot; : null,
+      &quot;script&quot; : &quot;&quot;,
+      &quot;css&quot; : &quot;&quot;,
+      &quot;max&quot; : &quot;100&quot;,
+      &quot;min&quot; : &quot;10&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+        },
+        &quot;fieldType&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes/1&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fieldTypes&quot;
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/profile/fieldTypes&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 1,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_field_type">7.4. Updating A Field Type</h3>
+<div class="paragraph">
+<p>A PATCH request will update a field type</p>
+</div>
+<div class="sect3">
+<h4 id="field_type_update_request">7.4.1. Field Type Update Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_type_update_request">7.4.2. Sample Field Type Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fieldTypes/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUudXBkYXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.ShA2kxUAgEIyxA7d28teBNnMRK_uoiFn_QWLfqaaPjDTOpkX-PW_pLTJmoqWoK6HBJTHkXuPoD7-kXuIA6R959cgACd-mW6magQLjNJ_5N4khSav8Lr5QZRS9Cl4mFc-kXxcbOIrYIDuqCHx1oaOxDFK9K0kWIn0W5IY4VisLawr-KZLc-sf9yYBsr-s0QN2Y5fnPNehJcZSb3_AGWO3RXDD_zyhnmq65ZYwDn1nB2GwnUufQmQKRvoFA702GbeXJcEOQWfKDGR4_stmCaP9DWW0MwRvVaZhcKbYZD4HHJx1-VTDGqSFmko0JdZZwXBeG_XeczxGRw_4vmidev9Rrw
+Content-Length: 19
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;New Type&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_type_update_response">7.4.3. Field Type Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_field_type_update_response">7.4.4. Sample Field Type Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_field_type">7.5. Removing A Field Type</h3>
+<div class="paragraph">
+<p>A <code>DELETE /repo/fieldTypes/{fieldTypeId}</code> request will remove a field type.</p>
+</div>
+<div class="sect3">
+<h4 id="delete_field_type_request">7.5.1. Delete Field Type Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. /repo/fieldTypes/{fieldTypeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_delete_field_type_request">7.5.2. Sample Delete Field Type Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/fieldTypes/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuZGVsZXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.X_z8-R_uunmmYMWsIAQNsj6W-o_N8tlkP7E1yOhPbHQNRZ0YULnILuHrQR0hPwSFmrx8p10cbOcgT4pQiCyfXRdQPaCaS1Wb-QeJqa67OS_txP0lAPPteWa70549WJC_bfLoQiVZMzW338GyRcs6PrRYrh8yZS-vHHpL8cW6cQ-VwUyFbduCn2hw51vnlurwjVXvwTqn0ckCKPXb8VfpqnYhIz2fUD89xBbjJLojgRbHCAo7rA3e2I6jEXRv9KvUETCXt2hxwKrLDiLG1xhzgQmaKAAWmj5N2AaSsQxzYSyOu9mVlDNxntoM5anFfTfB9-gXAFwI_CaNvquAld1-yw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="delete_field_type_response">7.5.3. Delete Field Type Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_delete_field_type_response">7.5.4. Sample Delete Field Type Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_fields">8. Managing Fields</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fields contain information used in rendering each field in a registration form. Fields utilize properties
+of their field types in order to render an adequate representation of the field. Fields also specify the user property
+that the input field is bound to. Fields can override and extend certain properties of the field types.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize fields.</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_field">8.1. Creating a field</h3>
+<div class="paragraph">
+<p>A <code>POST /repo/fields</code> request will create a field.</p>
+</div>
+<div class="sect3">
+<h4 id="field_creation_request">8.1.1. Field Creation Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_creation_request">8.1.2. Sample Field Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fields HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5jcmVhdGUiLCJleHAiOjE1OTI1NTI4MTUsImlhdCI6MTU5MjU1MjgxMCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZiY6grnbKnqk03vB-jwyXMsMPLxboYbngFllXGdMDHPI6jUl_k6zsZaeX5Wl_bvA5mW1ubFRcH0Ap5k2O9O2hIsDF5Eh0704R6-7gBYnvuBZCoffG3G284KhWCI-QqALfgbwqvEJMyYk66BL5PsVbH2kj4LCpbWq-e-fCmDGgjYIrZdG9pcN8Cp7ijIt1v3vB5nIoDfSRDWWJA9KiksQwvS0_aJX8yo6IpQvzM0dYNofBa8HOxaCh1Y5yoz9Vbd8ysKgE7rxUiezLhZdQuNqvNf8-BpDHZV2ZZdpZerhOHKiGxBT8FyTZMKDhlGSLVuqSX4i2MobXJd-qz1wojBAwg
+Content-Length: 251
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;username&quot;,
+  &quot;placeholder&quot; : &quot;Enter Username&quot;,
+  &quot;property&quot; : &quot;username&quot;,
+  &quot;fieldTypeId&quot; : &quot;1&quot;,
+  &quot;style&quot; : &quot;&quot;,
+  &quot;label&quot; : &quot;Username&quot;,
+  &quot;order&quot; : 1,
+  &quot;pattern&quot; : &quot;&quot;,
+  &quot;required&quot; : true
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_creation_response">8.1.3. Field Creation Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_field">8.2. Retrieving a Field</h3>
+<div class="paragraph">
+<p>A <code>GET /repo/fields/{id}</code> request will get a field with an ID.</p>
+</div>
+<div class="sect3">
+<h4 id="field_retrieval_request">8.2.1. Field Retrieval Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_retrieval_request">8.2.2. Sample Field Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkLnJlYWQiLCJleHAiOjE1OTI1NTI4MTUsImlhdCI6MTU5MjU1MjgxMCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.gz4JJOQ079Yw-47N7qAxYAopZEqw4MCUfxt4MZ2_yzZXUgYwxvILH-xHc-EKbTEyZRHU6eq9iXs4HF--pudjoPSg80vDzsBKxS21myfbzbgIIzdmMQhbGbP5TomirqbX_9RXhfw-OB-7lfQksfLis4noixK1GgoleeSrO03RdKs5o5ZnaICC0nDI3N5S7DyRmDpcnsfp-4ATCaEayXPh1vTKbRWwfrTqd0_GxPne50w7eJz_Jl5nEprZw9_3kRNbJcVro-7i8Y6Q_5wnwxymeOdT8-nk5P3NABnOd-pykRCU7uIhnLCczgwRVljr7_m_1O59MzAREXFwHH1rnjmLJQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_retrieval_response">8.2.3. Field Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns a Field object with these fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_retrieval_response">8.2.4. Sample Field Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 414
+
+{
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;username&quot;,
+  &quot;placeholder&quot; : &quot;Enter Username&quot;,
+  &quot;property&quot; : &quot;username&quot;,
+  &quot;fieldTypeId&quot; : &quot;1&quot;,
+  &quot;style&quot; : &quot;&quot;,
+  &quot;label&quot; : &quot;Username&quot;,
+  &quot;order&quot; : 1,
+  &quot;pattern&quot; : &quot;&quot;,
+  &quot;required&quot; : true,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+    },
+    &quot;field&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_all_domain_fields">8.3. Retrieving all Domain Fields</h3>
+<div class="paragraph">
+<p>A <code>GET /repo/fields/search/findByDomainId</code> request will get all fields in a domain.</p>
+</div>
+<div class="sect3">
+<h4 id="domain_retrieval_request_query_parameter">8.3.1. Domain Retrieval Request Query Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the request</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_retrieval_request">8.3.2. Sample Domain Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5yZWFkIiwiZXhwIjoxNTkyNTUyODE0LCJpYXQiOjE1OTI1NTI4MDksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.YaTCq97hlL_cQy_MLl8iggnjYB74IfyI8OMuIVs_BneIv_6z0EUVzuINeMKBf2mW3A2ORxAz94L9n_i6nP994oZm0XpPsJCnIkBPioBvXbGqS5KYNeweKZIjQ-rjCmMji3kGcvd9LQgJXez6qCgNEKSc71F4SjDgfAYadIT4kpmUTyMu4iQWloy0BNs0xjMd7Gq5CIA88E-bQLTpYbqvW6hRPQsUPJ9nU5zpil4uxO5f4-mRx9wVnXZdEX-gymdCJunxZujZdzUSp7NiMgoKIuR_BXoSYHRC21cPD-jNkFMPHdbn_ah4AEy1ct_unYr9IgL-A-vGURmm5p8Qhu55sw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_retrieval_response">8.3.3. Domain Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns a list of all fields with these properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allowed string pattern for field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].style</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">css style for input element in field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].label</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input field label</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].placeholder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">input field placeholder</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].fieldTypeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Id of the field&#8217;s type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].property</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User property that the field will set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].order</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order of the field in Layout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].required</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the field input is required or not</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_retrieval_response">8.3.4. Sample Domain Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 658
+
+{
+  &quot;_embedded&quot; : {
+    &quot;fields&quot; : [ {
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;username&quot;,
+      &quot;placeholder&quot; : &quot;Enter Username&quot;,
+      &quot;property&quot; : &quot;username&quot;,
+      &quot;fieldTypeId&quot; : &quot;1&quot;,
+      &quot;style&quot; : &quot;&quot;,
+      &quot;label&quot; : &quot;Username&quot;,
+      &quot;order&quot; : 1,
+      &quot;pattern&quot; : &quot;&quot;,
+      &quot;required&quot; : true,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+        },
+        &quot;field&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/fields/1&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/fields/search/findByDomainId&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_field">8.4. Updating A Field</h3>
+<div class="paragraph">
+<p>A <code>PATCH /repo/fields/{id}</code> request will update a field</p>
+</div>
+<div class="sect3">
+<h4 id="field_update_request">8.4.1. Field Update Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_update_request">8.4.2. Sample Field Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTI1NTI4MTQsImlhdCI6MTU5MjU1MjgwOSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GnB1fczo6U4j77TbaBu4j4oZTMrzzVRDDGS8wzRAR5xS8qDHNLmLM5NdcNeExK15GaSKuhX6OdEMlUnfd_XCQXoOdzrdxBSlqp6bQQIIxb1_rJqyZ-AO2Wgagwtso9DzKdrcf5N155KgnaQf7jQzehuxOoUAqLHtUp_6FlYFV8oeCQY-NSphRYv7aUbVm-dg5bCiW1LL6LG-mnw9R_ZpHBnYa8z4l3zYxV7iIIuohgIOIceyOge5R8XsFhTu1x_pcmbB_3Mrl7-k4a7VJy6gOveYasOntSCLvB3apexWrTmBl8sFg3h6s_7012IS3cErfW_Mckk0qbnACRlshJxORQ
+Content-Length: 34
+Host: localhost:8080
+
+{&quot;placeholder&quot;:&quot;Enter a Username&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_update_response">8.4.3. Field Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_field_update_request_2">8.4.4. Sample Field Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_field">8.5. Removing A Field</h3>
+<div class="paragraph">
+<p>A <code>DELETE /repo/fields/{id}</code> request will remove a field.</p>
+</div>
+<div class="sect3">
+<h4 id="field_removal_request">8.5.1. Field Removal Request</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. /repo/fields/{fieldId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fieldId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_field_removal_request">8.5.2. Sample Field Removal Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTI1NTI4MTQsImlhdCI6MTU5MjU1MjgwOSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GnB1fczo6U4j77TbaBu4j4oZTMrzzVRDDGS8wzRAR5xS8qDHNLmLM5NdcNeExK15GaSKuhX6OdEMlUnfd_XCQXoOdzrdxBSlqp6bQQIIxb1_rJqyZ-AO2Wgagwtso9DzKdrcf5N155KgnaQf7jQzehuxOoUAqLHtUp_6FlYFV8oeCQY-NSphRYv7aUbVm-dg5bCiW1LL6LG-mnw9R_ZpHBnYa8z4l3zYxV7iIIuohgIOIceyOge5R8XsFhTu1x_pcmbB_3Mrl7-k4a7VJy6gOveYasOntSCLvB3apexWrTmBl8sFg3h6s_7012IS3cErfW_Mckk0qbnACRlshJxORQ
+Content-Length: 34
+Host: localhost:8080
+
+{&quot;placeholder&quot;:&quot;Enter a Username&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="field_removal_response">8.5.3. Field Removal Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_field_removal_response">8.5.4. Sample Field Removal Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="defining-markup-for-fields">8.6. Defining Markup for Fields</h3>
+<div class="paragraph">
+<p>You define how you want your registration fields by configuring fields and field types. The markup property in
+the field type is used to define the markup of that specific field type. An age field type markup can be defined
+as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="html"><span class="tag">&lt;label</span> <span class="attribute-name">for</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">sr-only</span><span class="delimiter">'</span></span><span class="tag">&gt;</span>$field.label<span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;input</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">'</span><span class="content">number</span><span class="delimiter">'</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.name</span><span class="delimiter">'</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">'</span><span class="content">form-control</span><span class="delimiter">'</span></span>
+<span class="attribute-name">placeholder</span>=<span class="string"><span class="delimiter">'</span><span class="content">$field.placeholder</span><span class="delimiter">'</span></span> <span class="error">$</span><span class="attribute-name">maxValue</span> <span class="error">$</span><span class="attribute-name">minValue</span> <span class="attribute-name">autofocus</span> <span class="error">$</span><span class="attribute-name">required</span> <span class="error">$</span><span class="attribute-name">inputField</span> <span class="error">$</span><span class="attribute-name">inputStyle</span> <span class="error">$</span><span class="attribute-name">errorStyle</span> <span class="tag">&gt;</span>
+$errorDisplay&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Mmadu registration service uses apache velocity to generate markup for fields. It provies the following in
+the template context for use in defining fields. You reference context objects by adding the <code>$</code> prefix. For example,
+the <code>$field.name</code> returns the name property in the field object.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Object Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">field</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field object</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The field type object</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inputField</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input attribute and value that marks an element as a model input</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inputStyle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">style attribute, any element with this property will have the field type style property appended to that element</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorStyle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">style attribute, any element with this property will have the style appended with the error style when the field contains errors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">errorDisplay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTML markup for displaying field errors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max attribute, any element with this will have the max attribute set to the max value of the field type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min attribute, any element with this will have the min attribute set to the min value of the field type</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+
+    <aside class="large-3 columns">
+
+        <h4>Reference Documentations</h4>
+        <ul>
+            
+            <li><a href="api-documentation">Api Convention Reference</a></li>
+            
+            <li><a href="user-management">Mmadu User Service Reference</a></li>
+            
+            <li><a href="registration">Mmadu Registration Service Reference</a></li>
+            
+            <li><a href="identity">Mmadu Identity Service Reference</a></li>
+            
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

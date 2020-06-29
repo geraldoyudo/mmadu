@@ -1,0 +1,149 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="css/coderay.css">
+    <link rel="stylesheet" href="css/asciidoctor.css">
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/admin/domains' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI4MjUwOTQsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9pZGVudGl0eS5pbml0aWFsaXplIiwiZXhwIjoxNTkyODI1MDk5LCJpYXQiOjE1OTI4MjUwOTQsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.dHI_0exOeE773Xefp1tvXfTXPRBfq1LEPP4ODogcLsfvKJ4k2dW5_RewsMzJ_DcQ-ewgQRMMJiCtEVLxgwNknQi9LT15Em-L5pi5Tbp-IwMfrPZ5grLwzHXcGtmd-Uxg56N-uDU2kpIaIemtJ8LNsfFCfJDptFDyIjLKRZlRfoKd4HzlvDOFDBcJ7LB3xPQIt3ObY4SqeUqK1-EClKzFWv-CimwxBKZy9E-DSXJ8pX258XOGzDB2JzZZ9gJj10uq11B4HWywN07GWT850Y7Gfi9X-LbwWFMWGjKRqNEYB_hp3gPswRbz57sx5v7qwuPDmnzmDYyymaq3riPMJuy9rg' \
+    -d '[
+  {
+    &quot;domainId&quot;: 1212,
+    &quot;authorizationCodeType&quot;: &quot;alphanumeric&quot;,
+    &quot;authorizationCodeTTLSeconds&quot;: 600,
+    &quot;maxAuthorizationTTLSeconds&quot;: 3600,
+    &quot;authorizationCodeTypeProperties&quot;: {},
+    &quot;refreshTokenEnabled&quot;: true,
+    &quot;refreshTokenProperties&quot;: {},
+    &quot;accessTokenProvider&quot;: &quot;jwt&quot;,
+    &quot;accessTokenProperties&quot;: {
+      &quot;credentialId&quot;: {
+        &quot;type&quot;: &quot;rsa&quot;
+      }
+    },
+    &quot;issuerId&quot;: &quot;mmadu.com&quot;,
+    &quot;clients&quot;: [
+      {
+        &quot;name&quot;: &quot;mmadu&quot;,
+        &quot;code&quot;: 1111,
+        &quot;applicationUrl&quot;: &quot;http://localhost:18000&quot;,
+        &quot;logoUrl&quot;: &quot;http://logo.com/logo.png&quot;,
+        &quot;tags&quot;: [
+          &quot;primary&quot;,
+          &quot;test&quot;
+        ]
+      }
+    ],
+    &quot;clientInstances&quot;: [
+      {
+        &quot;clientCode&quot;: 1111,
+        &quot;clientType&quot;: &quot;CONFIDENTIAL&quot;,
+        &quot;clientProfile&quot;: &quot;web_app&quot;,
+        &quot;credentials&quot;: {
+          &quot;type&quot;: &quot;secret&quot;,
+          &quot;secret&quot;: &quot;1234567890&quot;
+        },
+        &quot;identifier&quot;: &quot;mmadu-admin&quot;,
+        &quot;tlsEnabled&quot;: true,
+        &quot;supportedGrantTypes&quot;: [
+          &quot;authorization_code&quot;,
+          &quot;client_credentials&quot;
+        ]
+      }
+    ],
+    &quot;resources&quot;: [
+      {
+        &quot;identifier&quot;: &quot;user-management-service&quot;,
+        &quot;name&quot;: &quot;User Management Service&quot;,
+        &quot;description&quot;: &quot;User Management Service for Mmadu&quot;
+      }
+    ],
+    &quot;scopes&quot;: [
+      {
+        &quot;code&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;admin&quot;,
+        &quot;description&quot;: &quot;Admin Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;a.*.**&quot;,
+          &quot;r.*.**&quot;
+        ]
+      }
+    ]
+  }
+]'</code></pre>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-12 columns">
+                <p>Footer</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

@@ -9,8 +9,7 @@
     <meta name="description" content="Documentation on all of Mmadu">
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" href="css/coderay.css">
     <link rel="stylesheet" href="css/asciidoctor.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -19,20 +18,21 @@
 <body>
 
 
-<!-- Nav Bar -->
-
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="">Mmadu Documentation</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-<!-- End Nav -->
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
 
 
 <!-- Main Page Content and Sidebar -->
@@ -45,18 +45,18 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Pragma: no-cache
+Content-Type: application/json
+X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
 Content-Length: 314
-Content-Type: application/json;charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 
 {
-  &quot;id&quot; : &quot;5d1dd7316fc6c30f1c2fa625&quot;,
-  &quot;value&quot; : &quot;2613ec6bcf71f75a1f02f5ddb44092c800ea97417ee78724f2e043eb19f53c8a870f00cde4fb798434aaa0d130dd76285b4dfc57b6eb7bd62eca82763a773dfc2f5d9468ef90a88c23db432a6077377aaaaff8cce4e954ddd9206e2ee7f6c73a8e3d06e4957d461657b87857a1e2c8ea1bc7d3064531fb9cef7fb0f1a65cd95e&quot;
+  &quot;id&quot; : &quot;5eccf456775f7f1b469d5052&quot;,
+  &quot;value&quot; : &quot;e8a5a0e6d5148ef20322bcc6c4a5d74145306155069f35215f6f8555a38536e6c416335339a75adec813faeffcf6d8f1a432a4763cb9bb67651ac0c1c8eb71e9150e663df04303c89fa2428dfa2e2b913338c2f92f90ac713cd72fa70790b34b2f646b9cebc106ebacc2f62ba7c20583cfc7e43e92470446a3945dc9ddf656fc&quot;
 }</code></pre>
 </div>
 </div>
@@ -65,18 +65,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 
     <!-- End Main Content -->
 
-    <!-- Sidebar -->
 
-    <aside class="large-3 columns">
-
-        <h4>Documents</h4>
-        <ul id="posts" class="posts nav">
-            
-        </ul>
-
-    </aside>
-
-    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
@@ -95,8 +84,8 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
     </div>
 </footer>
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
 <script>
 $(document).foundation();
 var doc = document.documentElement;

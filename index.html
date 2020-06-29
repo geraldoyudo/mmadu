@@ -9,8 +9,7 @@
     <meta name="description" content="User Management Service">
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" href="css/coderay.css">
     <link rel="stylesheet" href="css/asciidoctor.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -19,20 +18,21 @@
 <body>
 
 
-<!-- Nav Bar -->
-
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="">Mmadu Documentation</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-<!-- End Nav -->
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
 
 
 <!-- Main Page Content and Sidebar -->
@@ -42,12 +42,137 @@
     <!-- Main Blog Content -->
     <div class="large-9 columns" role="content">
 
-        <h1>Mmadu</h1>
+        <h1>A Multi-Tenant User and Identity Management Provider</h1>
 <div class="sect1">
-<h2 id="introduction">Introduction</h2>
+<h2 id="overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mmadu is a set of tools and services that helps developers manage their application users.</p>
+<p>Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.</p>
+</div>
+<div class="paragraph">
+<p>Have you ever found yourself in a state of deja-vu when ever you write user management logic? Mmadu provides
+a set of tools that ensures that you never have to repeat user management logic. It helps to manage users, takes
+care of registration work flows and exposes APIs for authentication.</p>
+</div>
+<div class="paragraph">
+<p>With Mmadu, you can have a dedicated system for managing users across all your applications.
+Mmadu is a set of tools and services that helps developers manage their application users. Applications are constantly
+being built on mobile, web and other devices and with these bring their own security challenges in authentication and
+authorization.</p>
+</div>
+<div class="paragraph">
+<p>Different standards are being developed to handle user management, authorization and authentication like Oauth 2.0,
+Open ID and others. Mmadu aims to provide all the tools needed developers to implement these standards in their applications.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="vision">Vision</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To help developers (<strong>of all walks of life</strong>) eliminate user-management coding in applications forever.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="current_features">Current Features</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Multi-tenancy using Domains</p>
+</li>
+<li>
+<p>User Management</p>
+</li>
+<li>
+<p>Role and Authority Management</p>
+</li>
+<li>
+<p>Group Management</p>
+</li>
+<li>
+<p>Authentication</p>
+</li>
+<li>
+<p>Dynamic User Registration Forms</p>
+</li>
+<li>
+<p>Oauth 2.0</p>
+</li>
+<li>
+<p>Jwt Token Security</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="project_road_map">Project Road Map</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We aim to provide an array of services and libraries to enable developers pick and choose to implement
+their desired management flows.</p>
+</div>
+<div class="paragraph">
+<p>Below are some of the features in the pipeline:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User Account flows: Forgot Password, Reset Password e.t.c</p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc6749#section-1.3.2">Implicit</a> and
+<a href="https://tools.ietf.org/html/rfc6749#section-1.3.3">Resource owner Password Credentials</a> grant types
+(currently only Authorization Code, Client Credentials and Refresh Token are supported)</p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc7636">Proof Key for Code Exchange</a></p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc8628#section-3.4">Device Code Grant Type</a></p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc8414">Authorization Server Metadata</a></p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc7591">Dynamic Client Registration</a></p>
+</li>
+<li>
+<p>Oauth 2.0 <a href="https://tools.ietf.org/html/rfc7592">Dynamic Client Registration Management</a></p>
+</li>
+<li>
+<p><a href="https://https://openid.net/connect/">Open ID Connect</a></p>
+</li>
+<li>
+<p><a href="https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html">UMA 2.0</a></p>
+</li>
+<li>
+<p>&#8230;&#8203; and many more as they come</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="current_services">Current Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mmmadu is made up of the following standalone services:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Mmadu User Service - This handles domain, user, roles, authorities and management.</p>
+</li>
+<li>
+<p>Mmadu Registration Service - This handles registration and other user flows</p>
+</li>
+<li>
+<p>Mmadu Identity Service - An identity provider, for exposing Oauth 2.0 endpoints</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -55,60 +180,16 @@
 <h2 id="getting_started">Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mmadu can be easily started with docker compose.</p>
-</div>
-<div class="sect2">
-<h3 id="steps_to_run_mmadu_user_service">Steps to Run Mmadu User Service</h3>
-<div class="paragraph">
-<p>To run Mmadu User service, take the following steps:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Create a folder (we will use mmadu as the created folder)</p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sh">mkdir mmadu &amp;&amp; cd mmadu</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml">docker compose file</a></p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/docker-compose.yml</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Download the <a href="https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env">default environment file</a></p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sh">wget https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/.env</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p>Make the necessary modifications to suite your configuration (you can use it as is)</p>
-</li>
-<li>
-<p>Start the services</p>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sh">docker-compose up</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
+<p>Click <a href="/guides">here</a> to get started</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="user_guide">User Guide</h2>
+<h2 id="contributing_to_mmadu">Contributing to Mmadu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Check <a href="https://geraldoyudo.github.io/mmadu/apis/mmadu-user-guide">here</a> for the user guide</p>
+<p>If you want to contribute to eliminate user management coding forever, <a href="mailto:mmadu.auth@gmail.com">send
+a mail to Mmadu</a></p>
 </div>
 </div>
 </div>
@@ -117,18 +198,7 @@
 
     <!-- End Main Content -->
 
-    <!-- Sidebar -->
 
-    <aside class="large-3 columns">
-
-        <h4>Documents</h4>
-        <ul id="posts" class="posts nav">
-            
-        </ul>
-
-    </aside>
-
-    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
@@ -147,8 +217,8 @@
     </div>
 </footer>
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
 <script>
 $(document).foundation();
 var doc = document.documentElement;

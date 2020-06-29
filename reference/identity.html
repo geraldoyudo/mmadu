@@ -1,0 +1,384 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmadu Identity Provider Documentation</title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/coderay.css">
+    <link rel="stylesheet" href="../css/asciidoctor.css">
+    <script src="../../js/vendor/modernizr.js"></script>
+    <script src="../../js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="../../">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <h1>Mmadu Identity Provider Documentation</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#overview">1. Overview</a></li>
+<li><a href="#features">2. Features</a></li>
+<li><a href="#key_concepts">3. Key Concepts</a>
+<ul class="sectlevel2">
+<li><a href="#oauth_2_0">3.1. Oauth 2.0</a></li>
+<li><a href="#clients_and_authorization">3.2. Clients and Authorization</a></li>
+<li><a href="#resources_and_scopes">3.3. Resources and Scopes</a></li>
+</ul>
+</li>
+<li><a href="#default_configuration">4. Default Configuration</a></li>
+<li><a href="#managing_domains">5. Managing Domains</a>
+<ul class="sectlevel2">
+<li><a href="#configuring_an_identity_provider_for_a_domain">5.1. Configuring an Identity Provider for a Domain</a></li>
+<li><a href="#creating_a_domain_configuration">5.2. Creating a Domain Configuration</a></li>
+<li><a href="#retrieving_a_domain_configuration">5.3. Retrieving a Domain Configuration</a></li>
+<li><a href="#retrieving_all_domain_configurations">5.4. Retrieving all Domain Configurations</a></li>
+<li><a href="#updating_a_domain_configuration">5.5. Updating a Domain Configuration</a></li>
+<li><a href="#removing_a_domain_configuration">5.6. Removing a Domain Configuration</a></li>
+</ul>
+</li>
+<li><a href="#managing_clients">6. Managing Clients</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_client">6.1. Creating a Client</a></li>
+<li><a href="#retrieving_a_client">6.2. Retrieving a Client</a></li>
+<li><a href="#updating_a_client">6.3. Updating a Client</a></li>
+<li><a href="#removing_a_client">6.4. Removing a Client</a></li>
+</ul>
+</li>
+<li><a href="#managing_client_instances">7. Managing Client Instances</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_client_instance">7.1. Creating a Client Instance</a></li>
+<li><a href="#retrieving_a_client_instance">7.2. Retrieving a Client Instance</a></li>
+<li><a href="#updating_a_client_instance">7.3. Updating a Client Instance</a></li>
+<li><a href="#removing_a_client_instance">7.4. Removing a Client Instance</a></li>
+</ul>
+</li>
+<li><a href="#managing_scopes">8. Managing Scopes</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_scope">8.1. Creating a Scope</a></li>
+<li><a href="#retrieving_a_scope">8.2. Retrieving a Scope</a></li>
+<li><a href="#updating_a_scope">8.3. Updating a Scope</a></li>
+<li><a href="#removing_a_scope">8.4. Removing a Scope</a></li>
+</ul>
+</li>
+<li><a href="#managing_resources">9. Managing Resources</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_resource">9.1. Creating a Resource</a></li>
+<li><a href="#retrieving_a_resource">9.2. Retrieving a Resource</a></li>
+<li><a href="#updating_a_resource">9.3. Updating a Resource</a></li>
+<li><a href="#removing_a_resource">9.4. Removing a Resource</a></li>
+</ul>
+</li>
+<li><a href="#oauth_2_0_authorization_flows_for_mmadu_identity">10. Oauth 2.0 Authorization Flows for Mmadu Identity</a>
+<ul class="sectlevel2">
+<li><a href="#authorization_code_grant_flow">10.1. Authorization Code Grant Flow</a></li>
+<li><a href="#client_credentials_grant_flow">10.2. Client Credentials Grant Flow</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="overview">1. Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features">2. Features</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="key_concepts">3. Key Concepts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="oauth_2_0">3.1. Oauth 2.0</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clients_and_authorization">3.2. Clients and Authorization</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources_and_scopes">3.3. Resources and Scopes</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="default_configuration">4. Default Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_domains">5. Managing Domains</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="sect2">
+<h3 id="configuring_an_identity_provider_for_a_domain">5.1. Configuring an Identity Provider for a Domain</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating_a_domain_configuration">5.2. Creating a Domain Configuration</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_domain_configuration">5.3. Retrieving a Domain Configuration</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_all_domain_configurations">5.4. Retrieving all Domain Configurations</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_domain_configuration">5.5. Updating a Domain Configuration</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_domain_configuration">5.6. Removing a Domain Configuration</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_clients">6. Managing Clients</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_client">6.1. Creating a Client</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_client">6.2. Retrieving a Client</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_client">6.3. Updating a Client</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_client">6.4. Removing a Client</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_client_instances">7. Managing Client Instances</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_client_instance">7.1. Creating a Client Instance</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_client_instance">7.2. Retrieving a Client Instance</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_client_instance">7.3. Updating a Client Instance</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_client_instance">7.4. Removing a Client Instance</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_scopes">8. Managing Scopes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_scope">8.1. Creating a Scope</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_scope">8.2. Retrieving a Scope</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_scope">8.3. Updating a Scope</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_scope">8.4. Removing a Scope</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing_resources">9. Managing Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_resource">9.1. Creating a Resource</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_resource">9.2. Retrieving a Resource</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_resource">9.3. Updating a Resource</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_resource">9.4. Removing a Resource</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth_2_0_authorization_flows_for_mmadu_identity">10. Oauth 2.0 Authorization Flows for Mmadu Identity</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="authorization_code_grant_flow">10.1. Authorization Code Grant Flow</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="client_credentials_grant_flow">10.2. Client Credentials Grant Flow</h3>
+<div class="paragraph">
+<p>Coming Soon</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+
+    <aside class="large-3 columns">
+
+        <h4>Reference Documentations</h4>
+        <ul>
+            
+            <li><a href="api-documentation">Api Convention Reference</a></li>
+            
+            <li><a href="user-management">Mmadu User Service Reference</a></li>
+            
+            <li><a href="registration">Mmadu Registration Service Reference</a></li>
+            
+            <li><a href="identity">Mmadu Identity Service Reference</a></li>
+            
+        </ul>
+
+    </aside>
+
+    <!-- End Sidebar -->
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

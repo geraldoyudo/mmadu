@@ -9,8 +9,7 @@
     <meta name="description" content="Documentation on all of Mmadu">
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" href="css/coderay.css">
     <link rel="stylesheet" href="css/asciidoctor.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -19,20 +18,21 @@
 <body>
 
 
-<!-- Nav Bar -->
-
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="">Mmadu Documentation</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-<!-- End Nav -->
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
 
 
 <!-- Main Page Content and Sidebar -->
@@ -46,9 +46,9 @@
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains/test-app/authenticate HTTP/1.1
 Content-Type: application/json
-domain-auth-token: 1234
-Host: localhost:8080
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5hdXRoZW50aWNhdGUiLCJleHAiOjE1OTI5MTU4NDMsImlhdCI6MTU5MjkxNTgzOCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.KfiLvGk81TCe4DZ27B39PmmiEW3aV2ftlHOZhUHXEEvB-IoD4AymKotBvT4c42gqnwWL1KZ3TxN0X-83P09KC58NE82iCA9MDUxpV5hLwS3C0FLIhXdTP2qttIm5zvaY9nIM9Qd2-dbI0N-UzcmFb0HotQrABUEeaNQLfMo5cPkoM90wlTvSMLLBllO_NQckpjYLOJ0TEWLJ8riTu_Jl4adUKQQjPWTfxr8tsNbGs-KGebjEWUUayJJ-XUJlNN3tLEQDTTERNJ0nftmkprHmi21x7MCX7-M8aM951z-TcJP6iTuxj4oeNRhTaFo4MvlTfwP1RK7gKTXGcKORGZN97Q
 Content-Length: 63
+Host: localhost:8080
 
 {
   &quot;username&quot; : &quot;test-user&quot;,
@@ -61,18 +61,7 @@ Content-Length: 63
 
     <!-- End Main Content -->
 
-    <!-- Sidebar -->
 
-    <aside class="large-3 columns">
-
-        <h4>Documents</h4>
-        <ul id="posts" class="posts nav">
-            
-        </ul>
-
-    </aside>
-
-    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
@@ -91,8 +80,8 @@ Content-Length: 63
     </div>
 </footer>
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
 <script>
 $(document).foundation();
 var doc = document.documentElement;

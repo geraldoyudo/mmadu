@@ -1,0 +1,85 @@
+<!doctype html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description" content="Documentation on all of Mmadu">
+    <meta name="author" content="Your name goes here">
+    <meta name="copyright" content="Maybe consider a Creative Commons license">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="css/coderay.css">
+    <link rel="stylesheet" href="css/asciidoctor.css">
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/toc.js"></script>
+</head>
+<body>
+
+
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Main Page Content and Sidebar -->
+
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns" role="content">
+
+        <div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/domains/test-app/groups' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAuZ3JvdXAuY3JlYXRlIiwiZXhwIjoxNTkyOTE1ODQzLCJpYXQiOjE1OTI5MTU4MzgsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.JX3SFil9rFEPoLwBczE6YL94s9jIjBEmNQmGh4GcEaDHOZ8_6Go2gd94PsCWN3typF1u5sDR3_bz4xegtc2X6XIi0F0hZFdBbpyMsXgGou9UeMs7UF2RBZvuOZ8Dz88eM4h4Cr6OKOoOzpDsyB8GEBXsNw6OqqlraeedogWwk2mEh9nyX9kRftwdx28KR4x5_WrjoxotNl2i-I2r6WcpFb_8sjz3is3mq_PTHoqvtUrFDBHSGeA19yKhWly0Nt6e0D3l4U2s7kfkRsCjV8YDgx0eNWjeVLMknWUoogSjnoAhWPIEttGzXZgrQG6f52JhHTLjUVGyuSdvuEsgWSdL1Q' \
+    -d '{&quot;identifier&quot;:&quot;test&quot;,&quot;name&quot;:&quot;Test Group&quot;,&quot;description&quot;:&quot;A test Group&quot;,&quot;parentGroup&quot;:&quot;sample&quot;}'</code></pre>
+</div>
+</div>
+
+    </div>
+
+    <!-- End Main Content -->
+
+
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-12 columns">
+                <p>Footer</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+<script>
+$(document).foundation();
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>

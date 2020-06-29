@@ -9,8 +9,7 @@
     <meta name="description" content="Documentation on all of Mmadu">
     <meta name="author" content="Your name goes here">
     <meta name="copyright" content="Maybe consider a Creative Commons license">
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" href="css/coderay.css">
     <link rel="stylesheet" href="css/asciidoctor.css">
     <script src="js/vendor/modernizr.js"></script>
@@ -19,20 +18,21 @@
 <body>
 
 
-<!-- Nav Bar -->
-
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-            <h1>
-                <a href="">Mmadu Documentation</a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
-</nav>
-<!-- End Nav -->
+<div class="top-bar">
+    <div class="top-bar-left">
+        <ul class="menu">
+            <a href="">Mmadu</a>
+        </ul>
+    </div>
+    <div class="top-bar-right">
+        <ul class="menu">
+            <li><a href="/guides">GETTING STARTED</a></li>
+            <li><a href="/reference">DOCS</a></li>
+            <li><a href="/community">COMMUNITY</a></li>
+            <li><a href="/blog">BLOG</a></li>
+        </ul>
+    </div>
+</div>
 
 
 <!-- Main Page Content and Sidebar -->
@@ -45,14 +45,17 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/hal+json;charset=UTF-8
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1421
+Content-Length: 1187
 
 {
   &quot;_embedded&quot; : {
@@ -77,39 +80,31 @@ Content-Length: 1421
         }
       }
     }, {
-      &quot;name&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test-domain&quot;,
       &quot;_links&quot; : {
         &quot;self&quot; : {
           &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
         },
         &quot;appDomain&quot; : {
           &quot;href&quot; : &quot;http://localhost:8080/appDomains/test-app&quot;
-        }
-      }
-    }, {
-      &quot;name&quot; : &quot;Test domain For Config&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1111111111&quot;
-        },
-        &quot;appDomain&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/appDomains/1111111111&quot;
         }
       }
     } ]
   },
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/appDomains{?page,size,sort}&quot;,
-      &quot;templated&quot; : true
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains&quot;
     },
     &quot;profile&quot; : {
       &quot;href&quot; : &quot;http://localhost:8080/profile/appDomains&quot;
+    },
+    &quot;search&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/appDomains/search&quot;
     }
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 4,
+    &quot;totalElements&quot; : 3,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
@@ -121,18 +116,7 @@ Content-Length: 1421
 
     <!-- End Main Content -->
 
-    <!-- Sidebar -->
 
-    <aside class="large-3 columns">
-
-        <h4>Documents</h4>
-        <ul id="posts" class="posts nav">
-            
-        </ul>
-
-    </aside>
-
-    <!-- End Sidebar -->
 </div>
 
 <!-- End Main Content and Sidebar -->
@@ -151,8 +135,8 @@ Content-Length: 1421
     </div>
 </footer>
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/foundation.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
 <script>
 $(document).foundation();
 var doc = document.documentElement;
