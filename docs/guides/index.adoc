@@ -104,7 +104,7 @@ docker pull geraldoyudo/mmadu-registration-service:2.0.0-SNAPSHOT
 
 [source,sh,options="nowrap"]
 ----
-docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-registration:2.0.0-SNAPSHOT
+docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 -e MMADU_USER_URL=http://localhost:15551 geraldoyudo/mmadu-registration:2.0.0-SNAPSHOT
 ----
 
 This also needs a reference to the identity provider.
