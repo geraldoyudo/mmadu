@@ -1,0 +1,58 @@
+[source,options="nowrap"]
+----
+{
+  "_embedded" : {
+    "scopes" : [ {
+      "id" : "5eed8d1efb781170c68bafa6",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "Email Scope",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+        }
+      }
+    }, {
+      "id" : "5eed8d1efb781170c68bafa8",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "New Email",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+        }
+      }
+    }, {
+      "id" : "5eed8d1efb781170c68bafa9",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "Email Scope",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/scopes/search/findByDomainId"
+    }
+  }
+}
+----

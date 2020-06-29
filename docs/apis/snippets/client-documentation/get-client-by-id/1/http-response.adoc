@@ -1,0 +1,34 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 516
+
+{
+  "id" : "5eec5caed4de4b28a4a41c7a",
+  "domainId" : "1",
+  "name" : "Email Client",
+  "code" : "A12345",
+  "applicationUrl" : "http://an.email.com",
+  "logoUrl" : "http://an.email.com/favicon",
+  "category" : "third_party",
+  "tags" : [ "email", "communications" ],
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+    },
+    "client" : {
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+    }
+  }
+}
+----

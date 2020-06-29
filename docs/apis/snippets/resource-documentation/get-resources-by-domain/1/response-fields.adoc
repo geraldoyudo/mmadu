@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.resources.[].id+`
+|`+String+`
+|The resource id
+
+|`+_embedded.resources.[].domainId+`
+|`+String+`
+|the resource domain id
+
+|`+_embedded.resources.[].name+`
+|`+String+`
+|The resource name
+
+|`+_embedded.resources.[].identifier+`
+|`+String+`
+|The resource identifier
+
+|`+_embedded.resources.[].description+`
+|`+String+`
+|A description of the resource
+
+|===

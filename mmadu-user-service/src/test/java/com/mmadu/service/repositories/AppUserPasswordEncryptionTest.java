@@ -7,28 +7,25 @@ import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.repositories.AppUserPasswordEncryptionTest.TestConfig;
 import com.mmadu.service.utilities.AppUserPasswordHashUpdater;
 import com.mmadu.service.utilities.TestPasswordHasher;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @DataMongoTest
-@RunWith(SpringRunner.class)
 @Import({
         AppUserSaveListener.class,
         AppUserPasswordHashUpdater.class,
         TestConfig.class,
         DatabaseConfig.class
 })
-public class AppUserPasswordEncryptionTest {
+class AppUserPasswordEncryptionTest {
     private static final String USER = "user";
     private static final String PASSWORD = "password";
     private static final String DOMAIN = "domain";
@@ -40,7 +37,7 @@ public class AppUserPasswordEncryptionTest {
 
     private AppUser user;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         appUserRepository.deleteAll();
         user = new AppUser();

@@ -1,0 +1,71 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1628
+
+{
+  "_embedded" : {
+    "scopes" : [ {
+      "id" : "5eed8d1efb781170c68bafa6",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "Email Scope",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+        }
+      }
+    }, {
+      "id" : "5eed8d1efb781170c68bafa8",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "New Email",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+        }
+      }
+    }, {
+      "id" : "5eed8d1efb781170c68bafa9",
+      "domainId" : "1",
+      "code" : "test.mail",
+      "name" : "Email Scope",
+      "description" : "Email Contacts",
+      "authorities" : [ "view_users" ],
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+        },
+        "scope" : {
+          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/scopes/search/findByDomainId"
+    }
+  }
+}
+----

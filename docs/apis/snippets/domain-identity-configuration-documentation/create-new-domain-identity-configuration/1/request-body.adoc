@@ -1,0 +1,16 @@
+[source,options="nowrap"]
+----
+{
+  "domainId" : "1",
+  "authorizationCodeType" : "alphanumeric",
+  "authorizationCodeTTLSeconds" : 600,
+  "maxAuthorizationTTLSeconds" : 86400,
+  "refreshTokenEnabled" : true,
+  "accessTokenProvider" : "jwt",
+  "refreshTokenProvider" : "alphanumeric",
+  "issuerId" : "mmadu.com",
+  "authorizationCodeTypeProperties" : { },
+  "accessTokenProperties" : { },
+  "refreshTokenProperties" : { }
+}
+----

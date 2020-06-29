@@ -1,0 +1,17 @@
+{
+  "id": "0c76dbb1c4234404be8b1b051937de77",
+  "username": "test",
+  "password": "password",
+  "roles": [
+    "admin"
+  ],
+  "authorities": [
+    "edit"
+  ],
+  "groups": [
+    "test",
+    "sample"
+  ],
+  "color": "brown",
+  "email": "gsoid@email.com"
+}

@@ -1,15 +1,16 @@
 package com.mmadu.registration.providers;
 
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -20,7 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DomainRegistrationFormFieldsManageTest {
     public static final String USER_HOME = System.getProperty("user.home");
     @Value("${mmadu.registration.templates}")
@@ -35,23 +36,23 @@ public class DomainRegistrationFormFieldsManageTest {
 
     private static File file;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         file = new File(USER_HOME + "/mmadu-test/templates/domain");
         file.mkdirs();
     }
 
-    @Before
-    public void setUp() {
-        formFieldsManager.setTemplatesFolder(USER_HOME + "/mmadu-test/templates");
-        doReturn(asList("1", "2", "3")).when(domainService).getDomainIds();
-        doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
-        doReturn("fields-2").when(formFieldsGenerator).generateFormFieldsForDomain("2");
-        doReturn("fields-3").when(formFieldsGenerator).generateFormFieldsForDomain("3");
+    @BeforeEach
+    void setUp() {
+        formFieldsManager.setTemplatesDirectoryResource(new FileSystemResource(USER_HOME + "/mmadu-test/templates"));
+        lenient().doReturn(asList("1", "2", "3")).when(domainService).getDomainIds();
+        lenient().doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
+        lenient().doReturn("fields-2").when(formFieldsGenerator).generateFormFieldsForDomain("2");
+        lenient().doReturn("fields-3").when(formFieldsGenerator).generateFormFieldsForDomain("3");
     }
 
     @Test
-    public void onStartUpManagerShouldGenerateAllFormFieldFragments() throws Exception {
+    void onStartUpManagerShouldGenerateAllFormFieldFragments() throws Exception {
         formFieldsManager.startMonitoring();
         assertThat(FileCopyUtils.copyToString(new FileReader(new File(file, "register-1.html"))),
                 equalTo("fields-1"));
@@ -62,7 +63,7 @@ public class DomainRegistrationFormFieldsManageTest {
     }
 
     @Test
-    public void testFieldChangeListening() throws Exception {
+    void testFieldChangeListening() throws Exception {
         DomainRegistrationFormFieldsManager spyManager = spy(formFieldsManager);
         spyManager.subscribeToEvent();
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
@@ -72,7 +73,7 @@ public class DomainRegistrationFormFieldsManageTest {
     }
 
     @Test
-    public void testDebounceOfEvents() throws Exception {
+    void testDebounceOfEvents() throws Exception {
         DomainRegistrationFormFieldsManager spyManager = spy(formFieldsManager);
         spyManager.subscribeToEvent();
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
@@ -88,7 +89,7 @@ public class DomainRegistrationFormFieldsManageTest {
                 .handleEvent(eq(new RegistrationFieldModifiedEvent("2")));
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         File file = new File(System.getProperty("user.home") + "/mmadu-test/domain");
         file.delete();

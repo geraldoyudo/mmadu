@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+content.[].name+`
+|`+String+`
+|The name of the role
+
+|`+content.[].identifier+`
+|`+String+`
+|The role identifier
+
+|`+content.[].description+`
+|`+String+`
+|A brief description of the role
+
+|===

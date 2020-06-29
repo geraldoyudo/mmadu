@@ -7,12 +7,9 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 @Configuration
 public class SerializationConfig {
@@ -34,9 +31,4 @@ public class SerializationConfig {
         return converter;
     }
 
-    @Bean
-    public RestTemplate restTemplate(List<HttpMessageConverter<?>> messageConverters) {
-        RestTemplate restTemplate = new RestTemplate(messageConverters);
-        return restTemplate;
-    }
 }

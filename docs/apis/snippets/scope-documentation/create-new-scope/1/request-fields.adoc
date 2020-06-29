@@ -1,0 +1,28 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Scope ID
+
+|`+name+`
+|`+String+`
+|The scope's name
+
+|`+code+`
+|`+String+`
+|The scopes identification code
+
+|`+authorities+`
+|`+Array+`
+|List of authorities and roles associated with this scope
+
+|`+description+`
+|`+String+`
+|The scopes description
+
+|`+domainId+`
+|`+String+`
+|The domain id of the scope
+
+|===

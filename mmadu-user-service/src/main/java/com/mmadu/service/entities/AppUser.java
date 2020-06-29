@@ -1,20 +1,26 @@
 package com.mmadu.service.entities;
 
+import com.mmadu.security.api.DomainPayload;
 import com.mmadu.service.models.UserView;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Document
 @CompoundIndexes({
         @CompoundIndex(name = "domain_external_id", def = "{'domainId': 1, 'externalId': 1}", unique = true),
         @CompoundIndex(name = "domain_username", def = "{'domainId': 1, 'username': 1}", unique = true)
 })
-public class AppUser {
+public class AppUser implements DomainPayload {
 
     @Id
     private String id;
@@ -26,8 +32,6 @@ public class AppUser {
     private String password;
     @NotEmpty
     private String domainId;
-    private Collection<String> roles = new HashSet<>();
-    private Collection<String> authorities = new HashSet<>();
     private Map<String, Object> properties = new HashMap<>();
 
     public AppUser() {
@@ -39,8 +43,6 @@ public class AppUser {
         this.domainId = domainId;
         this.username = userView.getUsername();
         this.password = userView.getPassword();
-        this.roles = new ArrayList<>(userView.getRoles());
-        this.authorities = new ArrayList<>(userView.getAuthorities());
         this.properties = new HashMap<>(userView.getProperties());
     }
 
@@ -68,22 +70,6 @@ public class AppUser {
         this.password = password;
     }
 
-    public Collection<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
-
-    public Collection<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
     public Map<String, Object> getProperties() {
         return properties;
     }
@@ -99,14 +85,6 @@ public class AppUser {
 
     public void set(String property, Object value) {
         properties.put(property, value);
-    }
-
-    public void addRoles(String... rolesArray) {
-        roles.addAll(Arrays.asList(rolesArray));
-    }
-
-    public void addAuthorities(String... authoritiesArray) {
-        authorities.addAll(Arrays.asList(authoritiesArray));
     }
 
     public String getDomainId() {
@@ -134,9 +112,39 @@ public class AppUser {
                 externalId,
                 username,
                 password,
-                new ArrayList<>(roles),
-                new ArrayList<>(authorities),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 new HashMap<>(properties)
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AppUser appUser = (AppUser) o;
+
+        return new EqualsBuilder()
+                .append(id, appUser.id)
+                .append(externalId, appUser.externalId)
+                .append(username, appUser.username)
+                .append(password, appUser.password)
+                .append(domainId, appUser.domainId)
+                .append(properties, appUser.properties)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(externalId)
+                .append(username)
+                .append(password)
+                .append(domainId)
+                .append(properties)
+                .toHashCode();
     }
 }

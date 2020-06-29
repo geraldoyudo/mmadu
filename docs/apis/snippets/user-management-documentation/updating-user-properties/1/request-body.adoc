@@ -1,4 +1,7 @@
 [source,options="nowrap"]
 ----
-{"id":"123453432","username":"changed-username","password":"changed-password","roles":["admin-role"],"authorities":["admin"],"favourite-colour":"blue","country":"Nigeria"}
+{
+  "username" : "changed-username",
+  "password" : "changed-password"
+}
 ----

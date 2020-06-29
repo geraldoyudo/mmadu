@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+identifier+`
+|`+String+`
+|The group identifier
+
+|`+name+`
+|`+String+`
+|The name of the group
+
+|`+description+`
+|`+String+`
+|A brief description of the group
+
+|`+parentGroup+`
+|`+String+`
+|The parent group of the group (if a sub group is being created)
+
+|===

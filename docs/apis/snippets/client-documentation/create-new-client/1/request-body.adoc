@@ -1,0 +1,12 @@
+[source,options="nowrap"]
+----
+{
+  "name" : "Email Client",
+  "category" : "third_party",
+  "logoUrl" : "http://an.email.com/favicon",
+  "applicationUrl" : "http://an.email.com",
+  "code" : "A12345",
+  "domainId" : "1",
+  "tags" : [ "email", "communications" ]
+}
+----

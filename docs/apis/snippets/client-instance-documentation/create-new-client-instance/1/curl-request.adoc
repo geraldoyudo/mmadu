@@ -1,0 +1,23 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/admin/repo/clientInstances' -i -X POST \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.Gxk6RZrTXuOXoH1e228tYAl6y9EWeJGLJC97sp33b_HPymsKQYkrN3OWXQzq_N6Eut1WqE8gIfN-7f5XVfP88wAz_2BoPBEJGVeyOHua6ybp1vJdz0TJOcCyrJGlA7G1cYakP28s7ypY9zYO7FdBGso3J3s0eZtsabBG7ama3rN-TaHn2p6XKCv2xh4O5nSkBu2OzrqyW6060gBOU3YgMm9fG_5bCVPBM83EKw9UWxinjkj5YeSQFT5bf-a0cNJJUJIKzVO693oJXQcXLPWhGWf-ygUwv5G2hZQZAadeJW0z_8CgJfNlteAmpiqFXlJ32AOa76SgorIiCdgaSkRqTQ' \
+    -d '{
+  "clientId" : "5eec5c83d4de4b28a4a41c57",
+  "clientType" : "CONFIDENTIAL",
+  "clientProfile" : "web_app",
+  "tlsEnabled" : true,
+  "includeUserRoles" : true,
+  "includeUserAuthorities" : true,
+  "domainId" : "1",
+  "resources" : [ "test" ],
+  "authorities" : [ "admin" ],
+  "redirectionUris" : [ "https://myapp.com/callback", "https://localhost:8080/callback" ],
+  "allowedHosts" : [ "localhost", "teamapt.com", "32.32.182.34" ],
+  "supportedGrantTypes" : [ "authentication_code", "client_credentials" ],
+  "credentials" : {
+    "type" : "secret",
+    "secret" : "1234"
+  }
+}'
+----

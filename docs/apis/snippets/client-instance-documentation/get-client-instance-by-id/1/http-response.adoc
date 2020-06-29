@@ -1,0 +1,50 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1135
+
+{
+  "id" : "5eec5c83d4de4b28a4a41c56",
+  "clientId" : "5eec5c83d4de4b28a4a41c54",
+  "clientType" : "CONFIDENTIAL",
+  "clientProfile" : "web_app",
+  "credentials" : {
+    "secret" : "1234",
+    "type" : "secret"
+  },
+  "identifier" : "1111",
+  "redirectionUris" : [ "https://redirect.com/callback", "https://localhost:832/callback" ],
+  "allowedHosts" : [ "192.168.99.100" ],
+  "tlsEnabled" : true,
+  "supportedGrantTypes" : [ "authorization_code", "client_credentials" ],
+  "domainId" : "1",
+  "resources" : [ "test" ],
+  "authorities" : [ "admin" ],
+  "issueRefreshTokens" : true,
+  "authorizationCodeGrantTypeTTLSeconds" : 86400,
+  "accessTokenTTLSeconds" : 300,
+  "refreshTokenTTLSeconds" : 3600,
+  "clientCredentialsGrantTypeTTLSeconds" : 86400,
+  "includeUserRoles" : false,
+  "includeUserAuthorities" : false,
+  "includeUserGroups" : false,
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
+    },
+    "clientInstance" : {
+      "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
+    }
+  }
+}
+----

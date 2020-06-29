@@ -5,8 +5,8 @@ import com.mmadu.service.models.PatchOperation;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserUpdateRequest;
 import com.mmadu.service.models.UserView;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,19 +28,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserManagementDocumentation extends AbstractDocumentation {
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         appUserRepository.deleteAll();
     }
 
     @Test
-    public void createUser() throws Exception {
-        UserView user = new UserView("user", "password",
-                asList("admin"), asList("manage-users"), newHashMap("color", "blue"));
+    void createUser() throws Exception {
+        UserView user = new UserView("user", "password", newHashMap("color", "blue"));
         user.setId("123");
         mockMvc.perform(post("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.create"))
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isCreated())
                 .andDo(document(DOCUMENTATION_NAME, relaxedRequestFields(
@@ -48,22 +47,20 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                         fieldWithPath("id")
                                 .description("The user's id " +
                                         "(unique identifier used to reference user in your application)"),
-                        fieldWithPath("password").description("The user's password"),
-                        fieldWithPath("roles").description("The user's assigned roles"),
-                        fieldWithPath("authorities").description("The user's granted authorities")
+                        fieldWithPath("password").description("The user's password")
                 ), pathParameters(
                         parameterWithName("domainId").description("The domain id of the user")
                 )));
     }
 
     @Test
-    public void gettingAllUsers() throws Exception {
+    void gettingAllUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .param("page", "0")
                 .param("size", "10")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -87,11 +84,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAUserById() throws Exception {
+    void gettingAUserById() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -117,11 +114,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deletingAUserById() throws Exception {
+    void deletingAUserById() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.delete"))
         )
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -132,15 +129,16 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updatingUserProperties() throws Exception {
+    void updatingUserProperties() throws Exception {
         createAUserAndSave();
-        UserView userView = appUserRepository.findById(TEST_USER_ID).get().userView();
-        userView.setUsername("changed-username");
-        userView.setPassword("changed-password");
         mockMvc.perform(RestDocumentationRequestBuilders.put("/domains/{domainId}/users/{userId}",
                 USER_DOMAIN_ID, USER_EXTERNAL_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
-                .content(objectMapper.writeValueAsString(userView))
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.update"))
+                .content(objectMapper.createObjectNode()
+                        .put("username", "changed-username")
+                        .put("password", "changed-password")
+                        .toPrettyString()
+                )
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -151,11 +149,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void gettingAUserByUsernameAndDomain() throws Exception {
+    void gettingAUserByUsernameAndDomain() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/load",
                 USER_DOMAIN_ID)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.load"))
                 .param("username", USERNAME))
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME, userResponseFields(),
@@ -169,7 +167,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void queryingUsers() throws Exception {
+    void queryingUsers() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.get("/domains/{domainId}/users/search",
@@ -177,7 +175,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .param("page", "0")
                 .param("size", "10")
                 .param("query", "(country equals 'Nigeria') and (favourite-color equals 'blue')")
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.read"))
         )
                 .andExpect(status().isOk())
                 .andDo(document(DOCUMENTATION_NAME,
@@ -191,7 +189,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updatingUsersByQuery() throws Exception {
+    void updatingUsersByQuery() throws Exception {
         List<AppUser> appUserList = createMultipleUsers(3);
         UserUpdateRequest request = new UserUpdateRequest();
         request.setQuery("(country equals 'Nigeria')");
@@ -199,7 +197,7 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         appUserRepository.saveAll(appUserList);
         mockMvc.perform(RestDocumentationRequestBuilders.patch("/domains/{domainId}/users", USER_DOMAIN_ID)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(DOMAIN_AUTH_TOKEN_FIELD, DOMAIN_TOKEN)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.update"))
                 .content(objectMapper.writeValueAsString(request))
         )
                 .andExpect(status().isNoContent())

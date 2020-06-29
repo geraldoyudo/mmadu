@@ -3,9 +3,10 @@ package com.mmadu.registration.documentation;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.providers.DomainRegistrationFormFieldsManager;
 import com.mmadu.registration.repositories.FieldTypeRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -30,11 +31,11 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     private DomainRegistrationFormFieldsManager domainRegistrationFormFieldsManager;
 
     @Test
-    public void createFieldTypes() throws Exception {
+    void createFieldTypes() throws Exception {
         FieldType fieldType = createNewFieldType();
         mockMvc.perform(
                 post("/repo/fieldTypes")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.create"))
                         .content(objectMapper.writeValueAsString(fieldType))
         ).andExpect(status().isCreated())
                 .andDo(
@@ -82,12 +83,12 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getFieldTypeById() throws Exception {
+    void getFieldTypeById() throws Exception {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes/{fieldTypeId}",
                         fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(
@@ -103,11 +104,11 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void getAllFieldTypes() throws Exception {
+    void getAllFieldTypes() throws Exception {
         fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/repo/fieldTypes")
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.read"))
         ).andExpect(status().isOk())
                 .andDo(
                         document(DOCUMENTATION_NAME, relaxedResponseFields(
@@ -135,12 +136,12 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void updateFieldTypeById() throws Exception {
+    void updateFieldTypeById() throws Exception {
         final String modifiedName = "New Type";
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.update"))
                         .content(
                                 objectMapper.createObjectNode()
                                         .put("name", modifiedName)
@@ -156,11 +157,11 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     }
 
     @Test
-    public void deleteFieldTypeById() throws Exception {
+    void deleteFieldTypeById() throws Exception {
         FieldType fieldType = fieldTypeRepository.save(createNewFieldType());
         mockMvc.perform(
                 RestDocumentationRequestBuilders.delete("/repo/fieldTypes/{fieldTypeId}", fieldType.getId())
-                        .header(DOMAIN_AUTH_TOKEN_FIELD, ADMIN_TOKEN)
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.global.field_type.delete"))
         ).andExpect(status().isNoContent())
                 .andDo(
                         document(DOCUMENTATION_NAME, pathParameters(

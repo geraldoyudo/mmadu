@@ -6,16 +6,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.mmadu.service.config.DatabaseConfig;
 import com.mmadu.service.entities.AppDomain;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @DataMongoTest
-@RunWith(SpringRunner.class)
 @Import(DatabaseConfig.class)
 public class AppDomainRepositoryTest {
 
@@ -25,8 +22,8 @@ public class AppDomainRepositoryTest {
     @Autowired
     private AppDomainRepository appDomainRepository;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+   void setUp() {
         appDomainRepository.deleteById(DOMAIN_ID);
         AppDomain domain = new AppDomain();
         domain.setId(DOMAIN_ID);
@@ -35,12 +32,12 @@ public class AppDomainRepositoryTest {
     }
 
     @Test
-    public void existByIdShouldReturnTrueIfContains() {
+   void existByIdShouldReturnTrueIfContains() {
         assertThat(appDomainRepository.existsById(DOMAIN_ID), is(equalTo(true)));
     }
 
     @Test
-    public void existByIdShouldReturnFalseIfNotContains() {
+   void existByIdShouldReturnFalseIfNotContains() {
         assertThat(appDomainRepository.existsById("invalid-domain"), is(equalTo(false)));
     }
 

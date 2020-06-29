@@ -1,0 +1,21 @@
+[source,options="nowrap"]
+----
+{
+  "id" : "5eec5caed4de4b28a4a41c7a",
+  "domainId" : "1",
+  "name" : "Email Client",
+  "code" : "A12345",
+  "applicationUrl" : "http://an.email.com",
+  "logoUrl" : "http://an.email.com/favicon",
+  "category" : "third_party",
+  "tags" : [ "email", "communications" ],
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+    },
+    "client" : {
+      "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+    }
+  }
+}
+----

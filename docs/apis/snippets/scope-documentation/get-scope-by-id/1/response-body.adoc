@@ -1,0 +1,19 @@
+[source,options="nowrap"]
+----
+{
+  "id" : "5eed8d1efb781170c68bafaa",
+  "domainId" : "1",
+  "code" : "test.mail",
+  "name" : "Email Scope",
+  "description" : "Email Contacts",
+  "authorities" : [ "view_users" ],
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
+    },
+    "scope" : {
+      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
+    }
+  }
+}
+----

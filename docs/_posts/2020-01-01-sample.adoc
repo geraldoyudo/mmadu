@@ -1,0 +1,10 @@
+= Welcome To Mmadu
+:icons: font
+:page-root:
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: blog
+:title: A Sample Blog
+:nav-title: A Sample Blog
+
+== What is Mmadu?

@@ -1,17 +1,17 @@
 [source,http,options="nowrap"]
 ----
 HTTP/1.1 200 OK
-Pragma: no-cache
+Content-Type: application/json
+X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
 Content-Length: 291
-Content-Type: application/json;charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 
 {
   "id" : "1",
-  "value" : "4ae568b84d271d8c34c5146fefbf46a47614d33b212a9525985eb895a70e2cb186a3c6bddd062088430ce6c9a8bb458798edb1cedb2067c82dd3c5ed4a9b5664ba1742181d7d12a32703fcc12b43da2ed495a34f5c2fd6d365a0d0ec668f49a8c4994b10600441e43c61a59204c70542cad0c6f992fd1aeb2b44a7f8b2136db3"
+  "value" : "36da46b163ab9b74d9272bc48821f4fccd187b330f5abf2663dff78e5f087a7ee691976d7332ad29aaf144660a091f5d78a77adcda7909027a98574e2d164e52ca81324586b23d2346a604ad4c9891ea6a59a17b8c50cde2356376794987e2c763ecc7acfc58462381a7ca202b181122ae922540444f7a0f01c7c7f22003e41f"
 }
 ----

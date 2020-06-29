@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: mmadu_registration_db
+      host: localhost

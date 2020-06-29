@@ -1,0 +1,11 @@
+= Community
+:showtitle:
+:page-title: Community
+:page-description: Community
+:icons: font
+:page-root: 
+:imagesrootdir: {page-root}/images
+:version: master
+:page-layout: community
+
+Work In Progress... We'll Keep You Posted

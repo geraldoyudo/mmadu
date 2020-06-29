@@ -3,11 +3,11 @@ package com.mmadu.service.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.service.models.UserView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class UserViewTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -34,13 +34,11 @@ public class UserViewTest {
     public void testDeserialization() throws Exception {
         UserView object = objectMapper
                 .readValue("{\"username\":\"username\",\"password\":\"password\"," +
-                                "\"roles\":[\"admin\"],\"authorities\":[\"manage-users\"],\"property\":\"one\"}",
+                                "\"property\":\"one\"}",
                 UserView.class);
         assertThat(object.getPassword(), equalTo("password"));
         assertThat(object.getUsername(), equalTo("username"));
         assertThat(object.getProperty("property").get(), equalTo("one"));
-        assertThat(object.getRoles(), equalTo(asList("admin")));
-        assertThat(object.getAuthorities(), equalTo(asList("manage-users")));
     }
 
 }

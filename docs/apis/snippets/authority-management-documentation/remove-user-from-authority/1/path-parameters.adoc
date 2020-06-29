@@ -1,0 +1,11 @@
+.+/domains/{domainId}/authorities/users/{userId}/removeAuthorities+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id of the authority
+
+|`+userId+`
+|The id of the user
+
+|===

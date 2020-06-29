@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ echo '[ {
+  "identifier" : "app.view.authority",
+  "name" : "View Entities",
+  "description" : "View all Entities"
+} ]' | http POST 'http://localhost:8080/domains/test-app/authorities' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAuYXV0aG9yaXR5LnVwZGF0ZSIsImV4cCI6MTU5MjkxNTg0NCwiaWF0IjoxNTkyOTE1ODM5LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.LK-le2Y6Swpxr5XXWt5R5b2MQgVIL9y28TpcCSUtRhisg8G1pjhjiI1TRRuIW1b51CndpZLXQ2XFuEoR0ri8xst0WdvhvtKbqY0O4zIQWDHXKo9v9Oc86G7F8OBrrKKaehbmyIgP57VSz9_gnR3cmI-To7WzZskISARSn92sZAUK-kEMo2MRW0RK1t-e_5Y9FRR0IqaZyn4-tyKTZxkFjrTxMUuJfXZCMgFbqa59yLwJfY5m4Zp9hzq3YZM7T6QWjn3JA9-IXe4hvT9e3kappwH8wYk9GDKYYKk6MNgmElZryTz4jiQWYH6bCe4QO7sag6fqMxxSTBuSSZimTrE5og'
+----

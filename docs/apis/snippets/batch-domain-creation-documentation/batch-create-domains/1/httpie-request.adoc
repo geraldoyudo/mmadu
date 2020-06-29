@@ -1,0 +1,78 @@
+[source,bash]
+----
+$ echo '[
+  {
+    "id": "1312",
+    "name": "global-config",
+    "users": [
+      {
+        "username": "test",
+        "password": "test",
+        "externalId": 1111,
+        "properties": {
+          "country": "nigerian"
+        }
+      }
+    ],
+    "authorities": [
+      {
+        "identifier": "read",
+        "name": "Read",
+        "description": "Read Things"
+      },
+      {
+        "identifier": "execute",
+        "name": "Execute",
+        "description": "Execute Things"
+      }
+    ],
+    "roles": [
+      {
+        "identifier": "admin",
+        "name": "Admin",
+        "description": "admin"
+      }
+    ],
+    "roleAuthorities": [
+      {
+        "role": "admin",
+        "authority": "execute"
+      }
+    ],
+    "userAuthorities": [
+      {
+        "user": "test",
+        "authority": "read"
+      }
+    ],
+    "userRoles": [
+      {
+        "user": "test",
+        "role": "admin"
+      }
+    ],
+    "groups": [
+      {
+        "identifier": "workers",
+        "name": "Workers",
+        "description": "App Workers"
+      },
+      {
+        "identifier": "lawyers",
+        "name": "Lawyers",
+        "description": "Law people",
+        "parent": "workers"
+      }
+    ],
+    "userGroups": [
+      {
+        "user": "test",
+        "group": "lawyers"
+      }
+    ]
+  }
+]
+' | http POST 'http://localhost:8080/domains' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4MzgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbi5pbml0aWFsaXplIiwiZXhwIjoxNTkyOTE1ODQzLCJpYXQiOjE1OTI5MTU4MzgsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.F3D50yrXxMXpidJcT2Q-YNJDsazK49EPFpU-6vmXi9ZxYYwZ7Q_VhUGpSbau3TadW5-2JlHBC5TpkdT0peeucxYXZr_pIECoIBxCrAyfP7VOTX3PJSOW3tOzS_KFaztRSCzf5EEigtG2UBCEk6mUP9dbK83-tQhDnX4aHiZ7aTM8GPXQaGB9YSoA8c6U4TQ94p0L2GnMKukzSUbpY0j0TEdNOxOifNjBg69WyOZA5lwTXX0A01D1PrdJkytxCQK4FUpbFuwuH0EOrv3aI0B0J3JnP7neYBtdHlYu6nG64QoU7VJBueJMQ1NtTb5Q-E8pulCPzg0VssDUxK6wHrOQwA'
+----

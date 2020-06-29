@@ -1,0 +1,9 @@
+[source,options="nowrap"]
+----
+{
+  "name" : "email",
+  "identifier" : "email-service",
+  "description" : "Email Microservice",
+  "domainId" : "1"
+}
+----

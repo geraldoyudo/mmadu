@@ -1,0 +1,44 @@
+|===
+|Path|Type|Description
+
+|`+[].id+`
+|`+String+`
+|Domain id
+
+|`+[].name+`
+|`+String+`
+|Domain Name
+
+|`+[].users+`
+|`+Array+`
+|List of predefined users
+
+|`+[].authorities+`
+|`+Array+`
+|List of predefined authorities
+
+|`+[].roles+`
+|`+Array+`
+|List of predefined roles
+
+|`+[].groups+`
+|`+Array+`
+|List of predefined groups (starting with parents)
+
+|`+[].roleAuthorities+`
+|`+Array+`
+|List of predefined role authority mappings
+
+|`+[].userAuthorities+`
+|`+Array+`
+|List of predefined user authority mappings
+
+|`+[].userRoles+`
+|`+Array+`
+|List of predefined user role mappings
+
+|`+[].userGroups+`
+|`+Array+`
+|List of predefined user group mappings
+
+|===

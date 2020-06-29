@@ -1,14 +1,17 @@
 [source,http,options="nowrap"]
 ----
 HTTP/1.1 200 OK
-Pragma: no-cache
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
-Content-Length: 1170
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Content-Type: application/hal+json;charset=UTF-8
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Content-Length: 1126
 
 {
   "_embedded" : {
@@ -36,8 +39,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
   },
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/repo/fieldTypes{?page,size,sort}",
-      "templated" : true
+      "href" : "http://localhost:8080/repo/fieldTypes"
     },
     "profile" : {
       "href" : "http://localhost:8080/repo/profile/fieldTypes"

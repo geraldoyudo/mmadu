@@ -1,0 +1,8 @@
+.+/admin/repo/clients/{clientId}+
+|===
+|Parameter|Description
+
+|`+clientId+`
+|The client ID
+
+|===

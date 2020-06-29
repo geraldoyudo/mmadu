@@ -1,0 +1,162 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/domains' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTMyNDE3NjEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9mbG93LmluaXRpYWxpemUiLCJleHAiOjE1OTMyNDE3NjYsImlhdCI6MTU5MzI0MTc2MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.kpbIMv4mYid4nypo-po60rrxEe_wt7BESICFORaaH8qKKAijMYyaxPVw1fanqx8q9RYzyHOvWGmu0VWIad7mqgBzfxDEHwSicnXRIGY0Z5qps84KxRthDMh7VrPQ9NwICBW2R0S4fy-SGFoQ7PMz9AEBpuOkMcE36QVB65VsY_y6iFQD0K1-PMvBSUUV7rQouyuYtpi6maGwrqgE4E1jIcku6s0mjVmhgND0hwIvTjzvlF6Mn6ogd8-giRiORO8n3EkJ7ZlMKr3BSFy33YnCRPpgPQtjsGD9HKBaLZ6IFWtaFKoG6r-vOI3e5QEdCdIepKirac6sIQyr6l39Dg9LPQ' \
+    -d '{
+  "fieldTypes": [
+    {
+      "id": "mmadu.fields.text",
+      "name": "text",
+      "type": "text",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='text' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+    },
+    {
+      "id": "mmadu.fields.email",
+      "name": "email",
+      "type": "text",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='email' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
+    },
+    {
+      "id": "mmadu.fields.password",
+      "name": "password",
+      "type": "text",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><div class='input-group' id='show_hide_password'><input class='form-control' id='$field.name' name='$field.name' placeholder='$field.placeholder' type='password' $required $inputField  $inputStyle $errorStyle> <div  class='input-group-addon'><a href><i class='fa fa-eye' aria-hidden='true'></i></a></div></div>",
+      "classes": [
+        "form-group"
+      ],
+      "script": "$(document).ready(function() {$('#show_hide_password a').on('click', function(event) {event.preventDefault(); if($('#show_hide_password input').attr('type') == 'text'){$('#show_hide_password input').attr('type', 'password'); $('#show_hide_password i').addClass( 'fa-eye-slash' ); $('#show_hide_password i').removeClass( 'fa-eye' ); }else if($('#show_hide_password input').attr('type') == 'password'){$('#show_hide_password input').attr('type', 'text'); $('#show_hide_password i').removeClass( 'fa-eye-slash' ); $('#show_hide_password i').addClass( 'fa-eye' ); } }); });",
+      "css": "#show_hide_password input {margin:0px;}"
+    },
+    {
+      "id": "mmadu.fields.integer",
+      "name": "integer",
+      "type": "integer",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "min": 10,
+      "max": 100
+    },
+    {
+      "id": "mmadu.fields.amount",
+      "name": "decimal",
+      "type": "decimal",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='number' step='any' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "min": 1,
+      "max": 1000
+    },
+    {
+      "id": "mmadu.fields.date",
+      "name": "date",
+      "type": "date",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='date' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "min": "1990-01-01T00:00:00.000Z",
+      "max": "2022-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "mmadu.fields.time",
+      "name": "time",
+      "type": "time",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='time' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $maxValue $minValue $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "min": "09:30",
+      "max": "22:30"
+    },
+    {
+      "id": "mmadu.fields.datetime",
+      "name": "datetime",
+      "type": "datetime",
+      "markup": "<label for='$field.name' class='sr-only'>$field.label</label><input type='datetime-local' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay",
+      "min": "2011-08-19T13:45:00.000Z",
+      "max": "2020-08-19T13:45:00.000Z"
+    }
+  ],
+  "domains": [
+    {
+      "domainId": "0",
+      "registrationProfile": {
+        "defaultRedirectUrl": "https://google.com",
+        "headerOne": "My App",
+        "headerThree": "Register",
+        "instruction": "Fill all the fields to register",
+        "submitButtonTitle": "GO!!"
+      },
+      "fields": [
+        {
+          "name": "email",
+          "placeholder": "Email",
+          "property": "email",
+          "fieldTypeId": "mmadu.fields.email",
+          "label": "Email",
+          "order": 1,
+          "required": true
+        },
+        {
+          "name": "full-name",
+          "placeholder": "Full Name",
+          "property": "fullName",
+          "fieldTypeId": "mmadu.fields.text",
+          "label": "Full Name",
+          "order": 2,
+          "required": true
+        },
+        {
+          "name": "username",
+          "placeholder": "Username",
+          "property": "username",
+          "fieldTypeId": "mmadu.fields.text",
+          "label": "Username",
+          "order": 3,
+          "required": true
+        },
+        {
+          "name": "password",
+          "placeholder": "Password",
+          "property": "password",
+          "fieldTypeId": "mmadu.fields.password",
+          "label": "Password",
+          "order": 4
+        },
+        {
+          "name": "age",
+          "placeholder": "Age",
+          "property": "age",
+          "fieldTypeId": "mmadu.fields.integer",
+          "label": "Age",
+          "order": 5
+        },
+        {
+          "name": "amount",
+          "placeholder": "Amount",
+          "property": "amount",
+          "fieldTypeId": "mmadu.fields.amount",
+          "label": "Amount",
+          "order": 6
+        },
+        {
+          "name": "birthday",
+          "placeholder": "Birthday",
+          "property": "birthday",
+          "fieldTypeId": "mmadu.fields.date",
+          "label": "Birthday",
+          "order": 7
+        },
+        {
+          "name": "openingTime",
+          "placeholder": "Opening Time",
+          "property": "openingTime",
+          "fieldTypeId": "mmadu.fields.time",
+          "label": "Opening Time",
+          "order": 8
+        },
+        {
+          "name": "deliveryDate",
+          "placeholder": "Delivery Date and Time",
+          "property": "deliveryDate",
+          "fieldTypeId": "mmadu.fields.datetime",
+          "label": "Delivery Date and Time",
+          "order": 9
+        }
+      ]
+    }
+  ]
+}'
+----

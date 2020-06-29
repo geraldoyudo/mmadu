@@ -1,0 +1,159 @@
+= Mmadu Identity Provider Documentation
+Oyudo Gerald <gerald.oyudo@gmail.com>
+v2.0.0, 2020-06-26
+:toc:
+:sectnums:
+:showtitle:
+:page-navtitle: Mmadu Identity Provider Reference
+:page-excerpt:
+:page-root: ../
+:imagesdir: {page-root}/images
+:permalink: /:title/
+:page-layout: reference
+:snippets: ../apis/snippets
+:version: master
+
+== Overview
+
+Coming Soon
+
+== Features
+
+Coming Soon
+
+== Key Concepts
+
+=== Oauth 2.0
+
+Coming Soon 
+
+=== Clients and Authorization 
+
+Coming Soon
+
+=== Resources and Scopes
+
+Coming Soon
+
+== Default Configuration
+
+Coming Soon
+
+== Managing Domains
+
+Coming Soon
+
+=== Configuring an Identity Provider for a Domain
+
+Coming Soon
+
+=== Creating a Domain Configuration
+
+Coming Soon
+
+=== Retrieving a Domain Configuration
+
+Coming Soon
+
+=== Retrieving all Domain Configurations
+
+Coming Soon
+
+=== Updating a Domain Configuration 
+
+Coming Soon 
+
+=== Removing a Domain Configuration
+
+Coming Soon
+
+
+== Managing Clients
+
+Coming Soon
+
+=== Creating a Client 
+
+Coming Soon 
+
+=== Retrieving a Client
+
+Coming Soon 
+
+=== Updating a Client 
+
+Coming Soon
+
+=== Removing a Client 
+
+Coming Soon
+
+== Managing Client Instances
+
+Coming Soon
+
+=== Creating a Client Instance 
+
+Coming Soon
+
+=== Retrieving a Client Instance
+
+Coming Soon
+
+=== Updating a Client Instance 
+
+Coming Soon
+
+=== Removing a Client Instance 
+
+Coming Soon
+
+== Managing Scopes
+
+Coming Soon
+
+=== Creating a Scope 
+
+Coming Soon
+
+=== Retrieving a Scope
+
+Coming Soon
+
+=== Updating a Scope 
+
+Coming Soon
+
+=== Removing a Scope 
+
+Coming Soon
+
+== Managing Resources
+
+Coming Soon
+
+=== Creating a Resource 
+
+Coming Soon
+
+=== Retrieving a Resource
+
+Coming Soon
+
+=== Updating a Resource 
+
+Coming Soon
+
+=== Removing a Resource 
+
+Coming Soon
+
+== Oauth 2.0 Authorization Flows for Mmadu Identity
+
+=== Authorization Code Grant Flow
+
+Coming Soon
+
+=== Client Credentials Grant Flow
+
+Coming Soon

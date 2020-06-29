@@ -1,0 +1,54 @@
+version: '2'
+services:
+  mmadu-user-service:
+    image: geraldoyudo/mmadu-user-service:2.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - MMADU_USER_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_ADMIN_CLIENT=mmadu_admin
+      - MMADU_ADMIN_SECRET=1234567890
+      - MMADU_ADMIN_USERNAME=admin
+      - MMADU_ADMIN_PASSWORD=password
+    ports:
+      - "15551:8080"
+    depends_on:
+      - mongodb
+      - mmadu-identity
+  mmadu-registration:
+    image: geraldoyudo/mmadu-registration:2.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - MMADU_USER_URL=http://mmadu-user-service:8080
+      - MMADU_REGISTRATION_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_ADMIN_CLIENT=mmadu_admin
+      - MMADU_ADMIN_SECRET=1234567890
+      - MMADU_REGISTRATION_ROOT_DIR=/home/mmadu
+      - MMADU_APPLICATION_URL=http://localhost:8080
+    volumes:
+      - /home/mmadu:/home/mmadu:rw
+    ports:
+      - "15552:8080"
+    depends_on:
+      - mongodb
+      - mmadu-identity
+      - mmadu-user-service
+  mmadu-identity:
+    image: geraldoyudo/mmadu-identity:2.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - MMADU_IDENTITY_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_USER_URL=http://mmadu-user-service:8080
+      - MMADU_ADMIN_CLIENT=mmadu_admin
+      - MMADU_ADMIN_SECRET=1234567890
+      - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_APPLICATION_URL=http://localhost:8080
+    ports:
+      - "15553:8080"
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:3.4.20-xenial
+    ports:
+      - "27017:27017"

@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+content.[].name+`
+|`+String+`
+|The name of the authority
+
+|`+content.[].identifier+`
+|`+String+`
+|The authority identifier
+
+|`+content.[].description+`
+|`+String+`
+|A brief description of the authority
+
+|===

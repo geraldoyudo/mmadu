@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"id":"123","username":"user","password":"password","roles":["admin"],"authorities":["manage-users"],"color":"blue"}' | http POST 'http://localhost:8080/domains/test-app/users' \
+$ echo '{"id":"123","username":"user","password":"password","color":"blue"}' | http POST 'http://localhost:8080/domains/test-app/users' \
     'Content-Type:application/json' \
-    'domain-auth-token:1234'
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI5MTU4NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5jcmVhdGUiLCJleHAiOjE1OTI5MTU4NzQsImlhdCI6MTU5MjkxNTg2OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.hSzYf_jO3BxgSepRdJkgVgenUs0acWADEe_khpx3asH1fwU-kgEpwSQGEhovafjwuVcpUyGnq68MBTSA23zWaHfcnxeJ7Yl-XboakH5p04DhDoQyFA2xdnLWVEiKtq48fdHMA5dwDA4oL0f71YMC9tExCYNKWktmJRDeFnbC-mptQ4E-kOnY6-D3gM3YDYkBWa_nFJ36LpjCuzjFIRqYJroY1hUfdRjWf4vDGGxh-c5ip9DvE5RuQd8YDMfhcKGoL2hwtii48qi0tMMZX4KAKoRl2Mgt0zewOcn87SRDWRpBkxolpClMfhEfXMQyXxCKupJ4xh6VCBU3RXsj5ruveQ'
 ----

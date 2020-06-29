@@ -1,0 +1,68 @@
+[source,options="nowrap"]
+----
+[
+  {
+    "domainId": 1212,
+    "authorizationCodeType": "alphanumeric",
+    "authorizationCodeTTLSeconds": 600,
+    "maxAuthorizationTTLSeconds": 3600,
+    "authorizationCodeTypeProperties": {},
+    "refreshTokenEnabled": true,
+    "refreshTokenProperties": {},
+    "accessTokenProvider": "jwt",
+    "accessTokenProperties": {
+      "credentialId": {
+        "type": "rsa"
+      }
+    },
+    "issuerId": "mmadu.com",
+    "clients": [
+      {
+        "name": "mmadu",
+        "code": 1111,
+        "applicationUrl": "http://localhost:18000",
+        "logoUrl": "http://logo.com/logo.png",
+        "tags": [
+          "primary",
+          "test"
+        ]
+      }
+    ],
+    "clientInstances": [
+      {
+        "clientCode": 1111,
+        "clientType": "CONFIDENTIAL",
+        "clientProfile": "web_app",
+        "credentials": {
+          "type": "secret",
+          "secret": "1234567890"
+        },
+        "identifier": "mmadu-admin",
+        "tlsEnabled": true,
+        "supportedGrantTypes": [
+          "authorization_code",
+          "client_credentials"
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "identifier": "user-management-service",
+        "name": "User Management Service",
+        "description": "User Management Service for Mmadu"
+      }
+    ],
+    "scopes": [
+      {
+        "code": "admin",
+        "name": "admin",
+        "description": "Admin Privileges",
+        "authorities": [
+          "a.*.**",
+          "r.*.**"
+        ]
+      }
+    ]
+  }
+]
+----

@@ -1,26 +1,22 @@
 package com.mmadu.encryption;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.rule.OutputCapture;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class EmptyPropertyDefaultPropertiesMasterKeyResolverTest {
-    @Rule
-    public final OutputCapture outputCapture = new OutputCapture();
-    @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
-
+    public static final String MASTER_KEY = "11111111111111111111111111111111";
     @InjectMocks
     private DefaultPropertiesMasterKeyResolver masterKeyResolver;
 
@@ -28,16 +24,14 @@ public class EmptyPropertyDefaultPropertiesMasterKeyResolverTest {
     private MasterKeyGenerator masterKeyGenerator;
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        doReturn("11111111111111111111111111111111").when(masterKeyGenerator).generateMasterKey();
+        doReturn(MASTER_KEY).when(masterKeyGenerator).generateMasterKey();
     }
 
     @Test
     public void givenNoMasterKeyInPropertiesMasterKeyShouldBeGenerated() {
         String masterKey = masterKeyResolver.getMasterKey();
-        errorCollector.checkThat(masterKey, notNullValue());
-        errorCollector.checkThat(masterKey, is(not(equalTo(""))));
-        errorCollector.checkThat(outputCapture.toString(), containsString(masterKey));
+        assertEquals(masterKey, MASTER_KEY);
     }
 }
