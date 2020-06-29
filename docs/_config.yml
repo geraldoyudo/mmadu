@@ -20,3 +20,5 @@ include:
   - community
   - guides
   - reference
+site:
+  url: https://geraldoyudo.github.io/mmadu/
