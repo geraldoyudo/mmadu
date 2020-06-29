@@ -24,4 +24,4 @@ mmadu:
     url: http://localhost:10080
   registration:
     home: ${mmadu.home}/registration
-    templates: ${mmadu.registration.home}/templates
+    templates: file:${mmadu.registration.home}/templates

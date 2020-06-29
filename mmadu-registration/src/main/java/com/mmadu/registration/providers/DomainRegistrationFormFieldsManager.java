@@ -2,6 +2,7 @@ package com.mmadu.registration.providers;
 
 import com.mmadu.registration.exceptions.FormFieldsGenerationException;
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
@@ -58,10 +59,7 @@ public class DomainRegistrationFormFieldsManager {
         }
         templateDirectory = new File(templateDirectoryRoot, "domain");
         if (!templateDirectory.exists()) {
-            boolean successful = templateDirectory.mkdirs();
-            if (!successful) {
-                throw new IllegalStateException("could not create directory " + templateDirectory.getAbsolutePath());
-            }
+            FileUtils.forceMkdir(templateDirectory);
         }
         generateFormFieldsForAllDomains();
         subscribeToEvent();
