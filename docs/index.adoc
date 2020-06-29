@@ -68,7 +68,7 @@ Mmmadu is made up of the following standalone services:
 
 == Getting Started
 
-Click link:/guides[here] to get started
+Click link:{page-root}guides[here] to get started
 
 == Contributing to Mmadu
 
