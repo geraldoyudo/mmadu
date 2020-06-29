@@ -393,7 +393,7 @@ such a login button
 
 [source,html]
 ----
-<a href="http://localhost:15553/oauth/authorize?client_id=my.app.admin&response_type=code">Login</a>
+<a href="http://localhost:15553/oauth/authorize?client_id=my.app.admin&response_type=code&redirect_uri=http://localhost:8080/oauth/callback">Login</a>
 ----
 
 NOTE: In practice your button should make a post request to a login endpoint implemented by you, in
@@ -516,7 +516,7 @@ Make a `POST /domains` request to the registration service below:
 POST /domains HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer <token>
-Host: localhost:15553
+Host: localhost:15552
 
 {
   "domains": [
@@ -577,5 +577,10 @@ When that's done, we can now register new users by going to the registration lin
 http://localhost:15553/my-app/register
 ----
 
+image::images/registration_screen.PNG[]
+
 It directs you to a registration form where you a new user can fill. Once completed and user presses
 Go!!!, it saves the user to the user service and you now have a new user!
+
+
+Now that you have created a domain, lets work on real apps with the other guides.
