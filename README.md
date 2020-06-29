@@ -53,7 +53,7 @@ Below are some of the features in the pipeline:
 
 ## Getting Started
 
-Click [here to get started with mmadu](https://geraldoyudo.github.io/mmadu)
+Click [here to get started with mmadu](https://geraldoyudo.github.io/mmadu/guides/)
 
 ## Contributing to Mmadu
 
