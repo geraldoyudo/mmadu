@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class DomainRegistrationFormFieldsManageTest {
 
     @BeforeEach
     void setUp() {
-        formFieldsManager.setTemplatesFolder(USER_HOME + "/mmadu-test/templates");
+        formFieldsManager.setTemplatesDirectoryResource(new FileSystemResource(USER_HOME + "/mmadu-test/templates"));
         lenient().doReturn(asList("1", "2", "3")).when(domainService).getDomainIds();
         lenient().doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
         lenient().doReturn("fields-2").when(formFieldsGenerator).generateFormFieldsForDomain("2");

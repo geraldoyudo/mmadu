@@ -5,6 +5,7 @@ import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import reactor.core.publisher.FluxSink;
@@ -20,7 +21,6 @@ import static com.mmadu.registration.models.RegistrationFieldModifiedEvent.ALL_D
 
 @Component
 public class DomainRegistrationFormFieldsManager {
-    private String templatesFolder;
     private int sampleTimeInSeconds = 5;
     private DomainService domainService;
     private FormFieldsGenerator formFieldsGenerator;
@@ -29,9 +29,11 @@ public class DomainRegistrationFormFieldsManager {
     private FluxSink<RegistrationFieldModifiedEvent> sink = processor.serialize().sink();
     private File templateDirectory;
 
+    private Resource templatesDirectoryResource;
+
     @Value("${mmadu.registration.templates}")
-    public void setTemplatesFolder(String templatesFolder) {
-        this.templatesFolder = templatesFolder;
+    public void setTemplatesDirectoryResource(Resource templatesDirectoryResource) {
+        this.templatesDirectoryResource = templatesDirectoryResource;
     }
 
     @Value("${mmadu.registration.fields-sample-time:5}")
@@ -50,9 +52,16 @@ public class DomainRegistrationFormFieldsManager {
     }
 
     public void startMonitoring() throws Exception {
-        templateDirectory = new File(templatesFolder + "/domain");
+        File templateDirectoryRoot = templatesDirectoryResource.getFile();
+        if (templateDirectoryRoot.exists() && !templateDirectoryRoot.isDirectory()) {
+            throw new IllegalArgumentException("Template directory resource is not a directory");
+        }
+        templateDirectory = new File(templateDirectoryRoot, "domain");
         if (!templateDirectory.exists()) {
-            templateDirectory.mkdirs();
+            boolean successful = templateDirectory.mkdirs();
+            if (!successful) {
+                throw new IllegalStateException("could not create directory " + templateDirectory.getAbsolutePath());
+            }
         }
         generateFormFieldsForAllDomains();
         subscribeToEvent();

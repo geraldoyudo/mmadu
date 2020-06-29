@@ -38,7 +38,7 @@ mmadu:
     db:
       uri: ${MMADU_REGISTRATION_DB_URI}
     home: ${mmadu.home}/registration
-    templates: file://${mmadu.registration.home}/templates/
+    templates: file:${mmadu.registration.home}/templates/
     domain-flow-config:
       field-types:
         - id: mmadu.fields.text
