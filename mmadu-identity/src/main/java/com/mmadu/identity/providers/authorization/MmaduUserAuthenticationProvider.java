@@ -12,18 +12,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 
 @Component
 @Qualifier("mmaduUser")
 public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
-    private HttpServletRequest httpRequest;
+    private HttpSession httpSession;
     private MmaduUserService mmaduUserService;
 
     @Autowired
-    public void setHttpRequest(HttpServletRequest httpRequest) {
-        this.httpRequest = httpRequest;
+    public void setHttpSession(HttpSession httpSession) {
+        this.httpSession = httpSession;
     }
 
     @Autowired
@@ -38,7 +39,7 @@ public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
         }
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-        String domain = (String) Optional.ofNullable(httpRequest.getAttribute("domain")).orElse("0");
+        String domain = (String) Optional.ofNullable(httpSession.getAttribute("domain")).orElse("0");
 
         mmaduUserService.authenticate(domain, username, password);
         MmaduUser user = mmaduUserService.loadUserByUsernameAndDomainId(username, domain)
