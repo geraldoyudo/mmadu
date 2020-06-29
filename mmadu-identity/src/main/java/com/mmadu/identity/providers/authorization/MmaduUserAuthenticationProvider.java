@@ -4,6 +4,7 @@ import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.services.user.MmaduUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Component
 @Qualifier("mmaduUser")
 public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
+    private String defaultDomain;
     private HttpSession httpSession;
     private MmaduUserService mmaduUserService;
 
@@ -32,6 +34,11 @@ public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
         this.mmaduUserService = mmaduUserService;
     }
 
+    @Value("${mmadu.identity.default-domain:0}")
+    public void setDefaultDomain(String defaultDomain) {
+        this.defaultDomain = defaultDomain;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         if(authentication instanceof MmaduUserAuthenticationToken){
@@ -39,7 +46,7 @@ public class MmaduUserAuthenticationProvider implements AuthenticationProvider {
         }
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-        String domain = (String) Optional.ofNullable(httpSession.getAttribute("domain")).orElse("0");
+        String domain = (String) Optional.ofNullable(httpSession.getAttribute("domain")).orElse(defaultDomain);
 
         mmaduUserService.authenticate(domain, username, password);
         MmaduUser user = mmaduUserService.loadUserByUsernameAndDomainId(username, domain)
