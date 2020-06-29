@@ -10,7 +10,7 @@ matrix:
         - 2.2.0
       sudo: false
       before_install: cd docs
-      script: bundle exec rake deploy
+      script: bundle exec rake deploy --baseurl https://geraldoyudo.github.io/mmadu/
       if: branch = master && type = push
     - language: java
       name: "Run Tests"
