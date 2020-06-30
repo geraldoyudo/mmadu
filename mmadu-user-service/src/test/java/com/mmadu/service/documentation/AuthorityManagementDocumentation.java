@@ -107,7 +107,12 @@ public class AuthorityManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/authorities/{authorityIdentifier}",
                 USER_DOMAIN_ID, authority.getIdentifier())
                 .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.authority.delete"))
-        ).andExpect(status().isNoContent());
+        ).andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME,
+                        pathParameters(
+                                parameterWithName("domainId").description("The domain id"),
+                                parameterWithName("authorityIdentifier").description("The role identifier")
+                        )));
         assertTrue(
                 authorityRepository.findById(authority.getId()).isEmpty()
         );

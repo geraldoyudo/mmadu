@@ -211,7 +211,9 @@ The User management endpoints provide APi's for managing a user.
 
 === Creating A User
 
-A `POST /domains/{domainId}/users/{userId}` request will create a user.
+A `POST /domains/{domainId}/users` request will create a user.
+
+Authority: `user.create`
 
 ==== User Creation Request Body Fields
 
@@ -236,6 +238,8 @@ This API returns a `HTTP 201 CREATED` response with an empty body.
 === Retrieving A User
 
 A `GET  /domains/{domainId}/users/{userId}` request will get a user with an ID.
+
+Authority: `user.read`
 
 ==== User Retrieval Request Path
 
@@ -262,6 +266,8 @@ As you can see, this user has two extra properties: `favourite-color` and  `coun
 ==== Retrieving All Users In a Domain
 
 A `GET /domains/{domainId}/users` request will get all users in a domain.
+
+Authority: `user.read`
 
 ==== Domain Users Retrieval Request Query Params
 
@@ -290,6 +296,8 @@ include::{snippets}/user-management-documentation/getting-all-users/1/http-respo
 
 A `DELETE /domains/{domainId}/users/{userId}` request will remove a user with an ID.
 
+Authority: `user.delete`
+
 ==== User Deletion Request Path
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/path-parameters.adoc[]
@@ -306,10 +314,12 @@ This API returns a `HTTP 204 NO CONTENT` response.
 
 include::{snippets}/user-management-documentation/deleting-a-user-by-id/1/http-response.adoc[]
 
-==== Updating A User with an ID
+=== Updating A User with an ID
 
 A `PUT /domains/{domainId}/users/{userId}` request will update a user with an ID. This will completely overwrite the properties of the
 existing user. There are no partial updates.
+
+Authority: `user.update`
 
 ==== User Update Request Path
 
@@ -332,6 +342,8 @@ include::{snippets}/user-management-documentation/updating-user-properties/1/htt
 
 A GET request will get a user with the specified username and domain id. This will return all roles, authorities and
 groups associated with that user.
+
+Authority: `user.load`
 
 ==== User Load Request Path Parameters
 
@@ -359,6 +371,8 @@ include::{snippets}/user-management-documentation/getting-a-user-by-username-and
 === Querying Users
 
 A GET request can search for users by username, and other custom fields created by the client.
+
+Authority: `user.read`
 
 NOTE: Query string can only support custom string, integer and boolean fields currently.
 
@@ -391,6 +405,8 @@ include::{snippets}/user-management-documentation/querying-users/1/http-response
 
 A `PATCH /domains/{domainId}/users` request can update users partially based on a query criteria
 
+Authority: `user.update`
+
 NOTE: Query string can only support custom string, integer and boolean fields currently.
 
 WARNING: Ensure to put individual criteria in parentheses.
@@ -419,12 +435,415 @@ include::{snippets}/user-management-documentation/updating-users-by-query/1/http
 
 == Managing Groups
 
-Coming Soon
+Users can be categorized into groups and groups can be a parent or a child of another group. This
+makes is possible to create nested hierarchies of users.
+
+For instance, to model an office application you can have a root group called `Staff` and other sub groups
+like `cleaners`, `receptionists`, `managers`, `technicians` and so on. Under `managers`, you can have
+`regional_managers` and `country_managers`.
+
+In the hierarchy above, adding a user to the `country_managers` group means that the user is also in the `managers`
+group and the `staff` group.
+
+Removal of the user from the `country managers` group removes the user from all parent groups. You have to
+explicitly add the user in the `staff` group if you want the user to remain in that group.
+
+Groups can also be used to implement multi-tenant solutions. Group information is added to the jwt token so that services
+can know which groups a user belongs.
+
+=== Creating A Group
+
+A 'POST /domains/{domainId}/groups' request will create a group.
+
+Authority: `group.create`
+
+==== Group Creation Request Body Fields
+
+include::{snippets}/group-management-documentation/create-group/1/request-fields.adoc[]
+
+==== Group Creation Request Path
+
+include::{snippets}/group-management-documentation/create-group/1/path-parameters.adoc[]
+
+==== Sample Group Creation Request
+
+include::{snippets}/group-management-documentation/create-group/1/http-request.adoc[]
+
+Here we create a group with identifier `test` and set the parent to a group with identifier `sample`.
+Adding a parent is optional. Create top level groups by setting the parent to null or omitting the property.
+
+==== Group Creation Response
+
+This API returns a `HTTP 201 CREATED` response with an empty body.
+
+=== Adding User To A Group
+
+You can add user to a group by making a `POST` call.
+
+Authority: `group.add_user`
+
+==== User Group Addition Request Path
+
+include::{snippets}/group-management-documentation/add-user-to-group/1/path-parameters.adoc[]
+
+==== Sample User Group Addition Request
+
+include::{snippets}/group-management-documentation/add-user-to-group/1/http-request.adoc[]
+
+==== User Group Addition Response
+
+The api responds with a `HTTP 204 No Content` response.
+
+==== Sample Group addition Response
+
+include::{snippets}/group-management-documentation/add-user-to-group/1/http-response.adoc[]
+
+==== Removing a User From a Group
+
+You remove a user from a group by making a `DELETE` call below:
+
+Authority: `group.remove_user`
+
+include::{snippets}/group-management-documentation/remove-user-from-group/1/path-parameters.adoc[]
+
+==== Sample User Group Removal Request
+
+include::{snippets}/group-management-documentation/remove-user-from-group/1/http-request.adoc[]
+
+==== User Group Removal Response
+
+The server responds with a `HTTP 204 No Content` if successful.
+
+==== Sample User Group Removal Response
+
+include::{snippets}/group-management-documentation/remove-user-from-group/1/http-response.adoc[]
+
+=== Getting all Users In Groups
+
+A `GET` request returns all users in a group.
+
+Authority: `group.read`
+
+==== User Group Retrieval Request
+
+include::{snippets}/group-management-documentation/getting-all-users-in-a-group/1/path-parameters.adoc[]
+
+==== Sample Group Retrieval Request Body Fields
+
+include::{snippets}/group-management-documentation/getting-all-users-in-a-group/1/http-request.adoc[]
+
+==== Sample Group Retrieval Request Query Parameters
+
+include::{snippets}/group-management-documentation/getting-all-users-in-a-group/1/request-parameters.adoc[]
+
+==== Group Retrieval Response
+
+The server responds with a `HTTP 200 OK` with a paginated list of users.
+
+include::{snippets}/group-management-documentation/getting-all-users-in-a-group/1/response-fields.adoc[]
+
+==== Sample Group Retrieval Response
+
+include::{snippets}/group-management-documentation/getting-all-users-in-a-group/1/http-response.adoc[]
 
 == Managing Roles
 
-Coming Soon
+Roles are a way to batch authorities. When a role is mapped to some certain privileges/authorities, 
+a user with that role automatically has those privileges. 
+
+=== Creating A Role
+
+A 'POST /domains/{domainId}/roles' request will create a role. Roles that already
+exists will be updated. With this api, you can create multiple roles and initialize them
+with their respective authorities. This is useful for initializing all the roles and authorities
+an application needs in one step.
+
+Authority: `role.create`
+
+==== Role Creation Request Body Fields
+
+include::{snippets}/role-management-documentation/create-role/1/request-fields.adoc[]
+
+==== Role Creation Request Path
+
+include::{snippets}/role-management-documentation/create-role/1/path-parameters.adoc[]
+
+==== Sample Role Creation Request
+
+include::{snippets}/role-management-documentation/create-role/1/http-request.adoc[]
+
+Here we create a role with identifier `test` and set the parent to a role with identifier `sample`.
+Adding a parent is optional. Create top level roles by setting the parent to null or omitting the property.
+
+==== Role Creation Response
+
+This API returns a `HTTP 201 CREATED` response with an empty body.
+
+=== Granting a Role to a User
+
+You can grant a role to auser by making a `POST` call. In the body we specify an array
+of roles the user is to have.
+
+Authority: `role.grant_user`
+
+==== User Role Addition Request Path
+
+include::{snippets}/role-management-documentation/grant-user-role/1/path-parameters.adoc[]
+
+==== Sample User Role Addition Request
+
+include::{snippets}/role-management-documentation/grant-user-role/1/http-request.adoc[]
+
+==== User Role Addition Response
+
+The api responds with a `HTTP 204 No Content` response.
+
+==== Sample Role addition Response
+
+include::{snippets}/role-management-documentation/grant-user-role/1/http-response.adoc[]
+
+==== Revoke User Role
+
+You remove a role from a user by making a `DELETE` call below:
+
+Authority: `role.revoke_user`
+
+include::{snippets}/role-management-documentation/remove-user-from-role/1/path-parameters.adoc[]
+
+==== Sample User Role Removal Request
+
+include::{snippets}/role-management-documentation/remove-user-from-role/1/http-request.adoc[]
+
+==== User Role Removal Response
+
+The server responds with a `HTTP 204 No Content` if successful.
+
+==== Sample User Role Removal Response
+
+include::{snippets}/role-management-documentation/remove-user-from-role/1/http-response.adoc[]
+
+=== Getting all Roles In a Domain
+
+A `GET` request returns all roles.
+
+Authority: `role.read`
+
+==== All Roles Retrieval Request
+
+include::{snippets}/role-management-documentation/get-all-roles-in-a-domain/1/path-parameters.adoc[]
+
+==== Sample All Roles Retrieval Request Query Parameters
+
+include::{snippets}/role-management-documentation/get-all-roles-in-a-domain/1/request-parameters.adoc[]
+
+==== Sample  All Role Retrieval Request
+
+include::{snippets}/role-management-documentation/get-all-roles-in-a-domain/1/http-request.adoc[]
+
+==== All Role Retrieval Response
+
+The server responds with a `HTTP 200 OK` with a paginated list of roles.
+
+==== All Role Retrieval Response Fields
+
+include::{snippets}/role-management-documentation/get-all-roles-in-a-domain/1/response-fields.adoc[]
+
+==== Sample All Role Retrieval Response
+
+include::{snippets}/role-management-documentation/get-all-roles-in-a-domain/1/http-response.adoc[]
+
+=== Removing a Role
+
+A `DELETE` Request will remove a role from the domain.
+
+Authority: `role.delete`
+
+==== Delete Role Request Path Parameters
+
+include::{snippets}/role-management-documentation/delete-role/1/path-parameters.adoc[]
+
+==== Sample Delete Role Request
+
+include::{snippets}/role-management-documentation/delete-role/1/http-request.adoc[]
+
+==== Delete Role Response
+
+The server responds with a `204 No Content Response`
+
+include::{snippets}/role-management-documentation/delete-role/1/http-response.adoc[]
+
+
+=== Adding Authorities to a Role
+
+You can add new authorities to a role. Make a `POST` request with an array of roles
+and their additional authorities.
+
+Authority: `role.add_authority`
+
+==== Role Authority Addition Request Path Parameters
+
+include::{snippets}/role-management-documentation/add-authorities-to-role/1/path-parameters.adoc[]
+
+==== Sample Role Authority Addition Request Body
+
+include::{snippets}/role-management-documentation/add-authorities-to-role/1/http-request.adoc[]
+
+==== Role Authority Addition Response
+
+The server responds with a `204 No Content` Response.
+
+==== Sample Role Authority Addition Response
+
+include::{snippets}/role-management-documentation/add-authorities-to-role/1/http-response.adoc[]
+
+=== Removing Authorities from a Role
+
+You can remove authorities from a role. Make a `POST` request with an array of roles
+and the authorities to remove.
+
+Authority: `role.remove_authority`
+
+==== Role Authority Removal Request Path Parameters
+
+include::{snippets}/role-management-documentation/remove-authorities-from-role/1/path-parameters.adoc[]
+
+==== Sample Role Authority Removal Request Body
+
+include::{snippets}/role-management-documentation/remove-authorities-from-role/1/http-request.adoc[]
+
+==== Role Authority Removal Response
+
+The server responds with a `204 No Content` Response.
+
+==== Sample Role Authority Removal Response
+
+include::{snippets}/role-management-documentation/remove-authorities-from-role/1/http-response.adoc[]
+
 
 == Managing Authorities
 
-Coming Soon
+Authorities represent privileges granted to the user.
+
+=== Creating an Authority
+
+A `POST` request will create an authority.
+
+Authority: `authority.create`
+
+==== Create Authority Request Path
+
+include::{snippets}/authority-management-documentation/create-authority/1/path-parameters.adoc[]
+
+==== Create Authority Request Body Fields
+
+include::{snippets}/authority-management-documentation/create-authority/1/request-fields.adoc[]
+
+==== Sample Create Authority Request
+
+include::{snippets}/authority-management-documentation/create-authority/1/http-request.adoc[]
+
+==== Create Authority Response
+
+The server responds with a `HTTP 201 Created` response.
+
+==== Sample Create Authority Response
+
+include::{snippets}/authority-management-documentation/create-authority/1/http-response.adoc[]
+
+
+=== Get All Authorities in a Domain
+
+A `GET` request will get all authorities in a domain.
+
+Authority: `authority.read`
+
+==== All Authorities Retrieval Request
+
+include::{snippets}/authority-management-documentation/get-all-authorities-in-a-domain/1/path-parameters.adoc[]
+
+==== Sample All Authorities Retrieval Request Query Parameters
+
+include::{snippets}/authority-management-documentation/get-all-authorities-in-a-domain/1/request-parameters.adoc[]
+
+==== Sample  All Authorities Retrieval Request
+
+include::{snippets}/authority-management-documentation/get-all-authorities-in-a-domain/1/http-request.adoc[]
+
+==== All Role Authorities Response
+
+The server responds with a `HTTP 200 OK` with a paginated list of authorities.
+
+==== All Authorities Retrieval Response Fields
+
+include::{snippets}/authority-management-documentation/get-all-authorities-in-a-domain/1/response-fields.adoc[]
+
+==== Sample All Authorities Retrieval Response
+
+include::{snippets}/authority-management-documentation/get-all-authorities-in-a-domain/1/http-response.adoc[]
+
+=== Removing an Authority
+
+Authority: `authority.delete`
+
+A `DELETE` Request will remove an authority from the domain.
+
+==== Delete Authority Request Path Parameters
+
+include::{snippets}/authority-management-documentation/delete-authority/1/path-parameters.adoc[]
+
+==== Sample Delete Authority Request
+
+include::{snippets}/authority-management-documentation/delete-authority/1/http-request.adoc[]
+
+==== Delete Authority Response
+
+The server responds with a `204 No Content Response`
+
+include::{snippets}/authority-management-documentation/delete-authority/1/http-response.adoc[]
+
+=== Granting an Authority to a User
+
+A user can be granted an authority without being attached to a role. Make a `POST` request to add an
+authority to a user.
+
+Authority: `authority.grant_user`
+
+==== User Authority Addition Request Path Parameters
+
+include::{snippets}/authority-management-documentation/grant-user-authority/1/path-parameters.adoc[]
+
+==== Sample User Authority Addition Request Body
+
+include::{snippets}/authority-management-documentation/grant-user-authority/1/http-request.adoc[]
+
+==== User Authority Addition Response
+
+The server responds with a `204 No Content` Response.
+
+==== Sample User Authority Addition Response
+
+include::{snippets}/authority-management-documentation/grant-user-authority/1/http-response.adoc[]
+
+
+=== Revoking User Authorities
+
+You can revoke authorities for a user. Make a `POST` request with the authority identifier and the user id.
+
+Authority: `authority.revoke_user`
+
+==== User Authority Removal Request Path Parameters
+
+include::{snippets}/authority-management-documentation/remove-user-from-authority/1/path-parameters.adoc[]
+
+==== Sample User Authority Removal Request Body
+
+include::{snippets}/authority-management-documentation/remove-user-from-authority/1/http-request.adoc[]
+
+==== User Authority Removal Response
+
+The server responds with a `204 No Content` Response.
+
+==== Sample User Authority Removal Response
+
+include::{snippets}/authority-management-documentation/remove-user-from-authority/1/http-response.adoc[]
+
