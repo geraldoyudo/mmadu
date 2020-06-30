@@ -6,7 +6,7 @@ v2.0.1-SNAPSHOT, 2020-06-26
 :showtitle:
 :page-navtitle: API Convention Reference
 :page-excerpt: General API Documentation Refrence
-:page-root: ../
+:page-root:
 :imagesdir: {page-root}/images
 :permalink: /:title/
 :page-layout: reference

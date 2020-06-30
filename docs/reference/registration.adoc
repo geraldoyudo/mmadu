@@ -6,7 +6,7 @@ v2.0.1-SNAPSHOT, 2020-06-26
 :showtitle:
 :page-navtitle: Mmadu Registration Service Reference
 :page-excerpt: Reference Documentation for Mmadu Registration Service
-:page-root: ../
+:page-root:
 :imagesdir: {page-root}/images
 :permalink: /:title/
 :page-layout: reference

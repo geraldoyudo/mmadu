@@ -6,7 +6,7 @@ v2.0.1-SNAPSHOT, 2020-06-26
 :showtitle:
 :page-navtitle: Mmadu User Service Reference
 :page-excerpt: Reference Documentation for Mmadu User Service
-:page-root: ../
+:page-root:
 :imagesdir: {page-root}/images
 :permalink: /:title/
 :page-layout: reference
