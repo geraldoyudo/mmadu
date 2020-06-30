@@ -128,7 +128,12 @@ public class RoleManagementDocumentation extends AbstractDocumentation {
         mockMvc.perform(RestDocumentationRequestBuilders.delete("/domains/{domainId}/roles/{roleIdentifier}",
                 USER_DOMAIN_ID, role.getIdentifier())
                 .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.role.delete"))
-        ).andExpect(status().isNoContent());
+        ).andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME,
+                        pathParameters(
+                                parameterWithName("domainId").description("The domain id"),
+                                parameterWithName("roleIdentifier").description("The role identifier")
+                        )));
         assertTrue(
                 roleRepository.findById(role.getId()).isEmpty()
         );

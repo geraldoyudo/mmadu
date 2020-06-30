@@ -1,0 +1,11 @@
+.+/domains/{domainId}/roles/{roleIdentifier}+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id
+
+|`+roleIdentifier+`
+|The role identifier
+
+|===
