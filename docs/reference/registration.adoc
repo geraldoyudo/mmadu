@@ -17,7 +17,7 @@ v2.0.1-SNAPSHOT, 2020-06-26
 
 Mmadu Registration Service is an independent service for managing user flows.
 
-For now, only user registration flow issupported.
+For now, only user registration flow is supported.
 
 It exposes the following resources for handling dynamic generation of registration forms:
 
@@ -39,6 +39,27 @@ Currently, mmadu user service provides the following:
 Mmadu Registration Service listens to port 15552 by default and this can be configured using the SERVER_PORT environment variable
 or the server.port SpringBoot property.
 
+== Setting Up A Domain
+
+A domain can be initialized for handling user registration by making a `POST /domains` call with the required
+fields and profile configuration needed to form your registration page.
+
+Authority: `domain_flow.initialize`
+
+NOTE: This api is only used for initial domain setup.
+
+=== Domain Setup Request Fields
+
+include::{snippets}/batch-domain-flow-initialization-documentation/batch-create-domains/1/request-fields.adoc[]
+
+This api first creates the field types, and then the domain registration profile and fields. Any field type or domain
+that exists previously will be ignored.
+
+=== Domain Setup Response
+
+The api responds with a `HTTP 201 CREATED` response.
+
+
 == User Registration
 
 The registration service provides an api to access the registration page for a domain. The registration service
@@ -56,11 +77,11 @@ For example, accessing the default domain with the default configuration can be 
 by entering the url below on your browser.
 
 ----
-http://localhost:1552/0/register
+http://localhost:15552/0/register
 ----
 
 The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
-this domain. To specify a url to redirect to, add the redirectUrl parameter
+this domain. To specify a url to redirect to, add the redirectUrl parameter.
 
 ----
 http://localhost:1552/0/register?redirectUrl=http://myapp.com
@@ -84,6 +105,8 @@ NOTE: There can be only one registration profile for a domain.
 
 A `POST /repo/registrationProfiles` Request will create a registration profile.
 
+Authority: `reg_profile.create`
+
 ==== Create Registration Profile Request Body
 
 include::{snippets}/registration-profile-documentation/create-registration-profile/1/request-fields.adoc[]
@@ -100,6 +123,8 @@ This API returns a HTTP 201 CREATED response with an empty body.
 === Retrieving a Registration Profile
 
 A GET Request will return a registration profile with its ID
+
+Authority: `reg_profile.read`
 
 ==== Registration Profile Retrieval Path Parameter
 
@@ -126,6 +151,8 @@ include::{snippets}/registration-profile-documentation/get-registration-profile-
 A `PATCH /repo/registrationProfiles/{profileId}` Request will update a registration profile.
 The example below updates the defaultRegistrationUrl property.
 
+Authority: `reg_profile.update`
+
 ==== Registration Profile Update Request Path Parameter
 
 include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/path-parameters.adoc[]
@@ -141,6 +168,8 @@ This API returns a HTTP 204 NO CONTENT response.
 
 ==== Sample Registration Profile Update Response
 
+Authority: `reg_profile.update`
+
 include::{snippets}/registration-profile-documentation/update-registration-profile-by-id/1/http-response.adoc[]
 
 
@@ -150,6 +179,8 @@ A `DELETE /repo/registrationProfiles/{profileId}` request will delete a registra
 
 WARNING: Deleting a registration profile will remote all fields associated with the profile and a registration page
 for that domain will be unavailable.
+
+Authority: `reg_profile.delete`
 
 ==== Registration Profile Delete Request Path
 
@@ -178,6 +209,8 @@ See <<defining-markup-for-fields, Defining Markup for fields>> for more informat
 
 A `POST /repo/fieldTypes` request will create a field type
 
+Authority: `field_type.create`
+
 ==== Field Type Creation Request Body
 
 include::{snippets}/field-types-documentation/create-field-types/1/request-fields.adoc[]
@@ -193,6 +226,8 @@ This API returns a `HTTP 201 CREATED` response with an empty body.
 === Retrieving a Field Type
 
 A `GET /repo/fieldTypes/{fieldTypeId} `request will get a field type with an ID.
+
+Authority: `field_type.read`
 
 ==== Field Type Retrieval Request Path
 
@@ -216,6 +251,8 @@ include::{snippets}/field-types-documentation/get-field-type-by-id/1/http-respon
 
 A `GET /repo/fieldTypes` request will get all field types.
 
+Authority: `field_type.read`
+
 ==== Sample All Fields Retrieval Request
 
 include::{snippets}/field-types-documentation/get-all-field-types/1/http-request.adoc[]
@@ -233,6 +270,8 @@ include::{snippets}/field-types-documentation/get-all-field-types/1/http-respons
 === Updating A Field Type
 
 A PATCH request will update a field type
+
+Authority: `field_type.update`
 
 ==== Field Type Update Request
 
@@ -254,6 +293,8 @@ include::{snippets}/field-types-documentation/update-field-type-by-id/1/http-res
 === Removing A Field Type
 
 A `DELETE /repo/fieldTypes/{fieldTypeId}` request will remove a field type.
+
+Authority: `field_type.delete`
 
 ==== Delete Field Type Request
 
@@ -284,6 +325,8 @@ See <<defining-markup-for-fields, Defining Markup for fields>> for more informat
 
 A `POST /repo/fields` request will create a field.
 
+Authority: `field.create`
+
 ==== Field Creation Request
 
 include::{snippets}/fields-documentation/create-fields/1/request-fields.adoc[]
@@ -299,6 +342,8 @@ This API returns a HTTP 201 CREATED response with an empty body.
 === Retrieving a Field
 
 A `GET /repo/fields/{id}` request will get a field with an ID.
+
+Authority: `field.read`
 
 ==== Field Retrieval Request
 
@@ -322,6 +367,8 @@ include::{snippets}/fields-documentation/get-field-by-id/1/http-response.adoc[]
 
 A `GET /repo/fields/search/findByDomainId` request will get all fields in a domain.
 
+Authority: `field.read`
+
 ==== Domain Retrieval Request Query Parameter
 
 include::{snippets}/fields-documentation/get-fields-by-domain/1/request-parameters.adoc[]
@@ -344,6 +391,8 @@ include::{snippets}/fields-documentation/get-fields-by-domain/1/http-response.ad
 
 A `PATCH /repo/fields/{id}` request will update a field
 
+Authority: `field.update`
+
 ==== Field Update Request
 
 include::{snippets}/fields-documentation/update-field-by-id/1/path-parameters.adoc[]
@@ -363,6 +412,8 @@ include::{snippets}/fields-documentation/update-field-by-id/1/http-response.adoc
 === Removing A Field
 
 A `DELETE /repo/fields/{id}` request will remove a field.
+
+Authority: `field.delete`
 
 ==== Field Removal Request
 

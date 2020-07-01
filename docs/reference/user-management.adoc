@@ -50,6 +50,9 @@ can share the same user base by using the same domain id.
 With one API call, you can set up users, roles, authorities and groups needed for your domain. Domain configuration is done
 with a call to `POST /domains`.
 
+NOTE: This api is only used for initial domain setup.
+
+
 Authority: `domain.initialize`
 
 ==== Domain Setup Request Fields
