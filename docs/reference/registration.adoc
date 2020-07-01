@@ -17,7 +17,7 @@ v2.0.1-SNAPSHOT, 2020-06-26
 
 Mmadu Registration Service is an independent service for managing user flows.
 
-For now, only user registration flow issupported.
+For now, only user registration flow is supported.
 
 It exposes the following resources for handling dynamic generation of registration forms:
 
@@ -38,6 +38,24 @@ Currently, mmadu user service provides the following:
 
 Mmadu Registration Service listens to port 15552 by default and this can be configured using the SERVER_PORT environment variable
 or the server.port SpringBoot property.
+
+== Setting Up A Domain
+
+A domain can be initialized for handling user registration by making a `POST /domains` call with the required
+fields and profile configuration needed to form your registration page.
+
+NOTE: This api is only used for initial domain setup.
+
+=== Domain Setup Request Fields
+
+include::{snippets}/batch-domain-flow-initialization-documentation/batch-create-domains/1/request-fields.adoc[]
+
+This api first creates the field types, and then the domain registration profile and fields. Any field type or domain
+that exists previously will be ignored.
+
+=== Domain Setup Response
+
+The api responds with a `HTTP 201 CREATED` response.
 
 == User Registration
 
