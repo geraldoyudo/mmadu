@@ -15,145 +15,898 @@ v2.0.1-SNAPSHOT, 2020-06-26
 
 == Overview
 
-Coming Soon
+Mmadu Identity is an authorization server used to grant authorizations to clients of an application. Authorization Servers
+make it possible for a resource owner delegate authorization to clients. Mmadu Identity aims to support most authorization standards
+like Oauth 2.0 and OIDC.
 
 == Features
 
-Coming Soon
+. Authorization Grant Type Flow
+. Client Credentials Grant Type Flow
+. Jwt Token Generation
 
 == Key Concepts
 
 === Oauth 2.0
 
-Coming Soon 
-
-=== Clients and Authorization 
-
-Coming Soon
+Oauth 2.0 is a popular authorization framework for creating interoperable and secure services. To know more about this
+visit the https://oauth.net/[Oauth 2.0 Website].
 
 === Resources and Scopes
 
-Coming Soon
+Resources represent API's that another service can utilize. Resources are usually secured and restrict access to users
+with specific authorities.
+
+Scopes are a set of authorities that are granted to the client by the user. These authorities are enforced by the
+resource servers. Users delegate authorities to clients in the form of scopes.
+
+=== Clients and Authorization 
+
+A client can be a user interface or another service that wants to consume a resource. In order to consume a protected resource,
+that client has to obtain an authorization. There are different ways by which a client can obtain an authorization and these ways
+are defined in authorization standards such as Oauth 2.0 and OIDC. Propietary ways of obtaining authorization can also be possible
+but this makes systems not interoperable with other third party systems.
+
+Oauth 2.0 provides four basic ways of obtaining an authorization:
+
+1. Authorization Code Grant Type
+2. Implicit Grant Type
+3. Client Credentials Grant Type
+4. Resource Owner Credentials.
+
+All these can be found in the Oauth 2.0 specification.
+
+NOTE: Currently, only Authorization Code Grant Type and Client Credentials Grant Type are supported
+
+Third party (or first party) users of a service consume a service with client credentials. A `Client` represents
+details of an application or a company. This `Client` can have several `ClientInstance` objects. a `ClientInstance`
+object is analogous to the Oauth 2 client. This holds credentials and declares a specified and agreed way of accessing
+authorization apis.
+
+Based on the Oauth 2.0 specification, `ClientInstances` can be `PUBLIC` or `CONFIDENTIAL`. This states how authentication should be
+handled. `PUBLIC` clients are not authenticated when they access client apis, while authentication is required for
+`CONFIDENTIAL` clients.
+
+Settings like token expiry or type and allowed grant types can be configured on the `ClientInstance`. See <<_creating_a_client_instance>>.
 
 == Default Configuration
 
-Coming Soon
+=== Default Port
+
+Mmadu Registration Service listens to port 15553 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.
+
+=== Admin Client Credentials
+
+A default admin client is created at start up with the client identifier and secret gotten from the environment
+variables `MMADU_ADMIN_CLIENT` and `MMADU_ADMIN_SECRET`, or the configuration properties `mmadu.admin.client`
+and `mmadu.admin.secret`. The defaults are as follows:
+
+- Default Admin Client Identifier - `mmadu_admin`
+- Default Admin Client Secret - `1234567890`
 
 == Managing Domains
 
-Coming Soon
+You can integrate a domain to an identity provider by setting up that domain. The Mmadu Identity service provides
+a one step configuration for setting up a domain.
 
 === Configuring an Identity Provider for a Domain
 
-Coming Soon
+A `POST /admin/domains` api call to the domain setup api will configure all entities needed to provision an authorization server for a domain.
+
+Authority: `domain_identity.initialize`
+
+==== Identity Setup Request Body Fields
+
+include::{snippets}/batch-domain-identity-initialization-documentation/batch-create-domains/1/request-fields.adoc[]
+
+==== Sample Identity Setup Request
+
+include::{snippets}/batch-domain-identity-initialization-documentation/batch-create-domains/1/http-request.adoc[]
+
+==== Sample Identity Setup Response
+
+The server responds with a `HTTP 204 CREATED` response.
+
+
+In addition to one time setup, we have individual apis for configuring and creating different entities.
+
 
 === Creating a Domain Configuration
 
-Coming Soon
+A domain configuration contains settings on how to properly manage authorization on your domain. A domain can be
+configured by creating a domain configuration object. A `POST /admin/repo/domainIdentityConfigurations` will create a
+domain configuration.
 
-=== Retrieving a Domain Configuration
+Authority: `identity_config.create`
 
-Coming Soon
+==== Domain Configuration Creation Request Fields
+
+include::{snippets}/domain-identity-configuration-documentation/create-new-domain-identity-configuration/1/request-fields.adoc[]
+
+==== Sample Domain Configuration Creation Request
+
+include::{snippets}/domain-identity-configuration-documentation/create-new-domain-identity-configuration/1/http-request.adoc[]
+
+==== Sample Domain Configuration Creation Response
+
+include::{snippets}/domain-identity-configuration-documentation/create-new-domain-identity-configuration/1/http-response.adoc[]
+
+=== Retrieving a Domain Configuration by ID
+
+A `GET` request will retrieve a domain configuration by id.
+
+Authority: `identity_config.read`
+
+==== Sample Retrieve Domain Configuration by ID
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-id/1/http-request.adoc[]
+
+==== Retrieve Domain Configuration By ID Path Parameters
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-id/1/path-parameters.adoc[]
+
+==== Sample Retrieve Domain Configuration By ID Response
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-id/1/http-response.adoc[]
+
+==== Retrieve Domain Configuration By ID Response Fields
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-id/1/response-fields.adoc[]
+
+=== Retrieving a Domain Configuration by Domain ID
+
+A `GET` request will retrieve a domain configuration by id.
+
+Authority: `identity_config.read`
+
+==== Sample Retrieve Domain Configuration by Domain ID
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-domain-id/1/http-request.adoc[]
+
+==== Retrieve Domain Configuration By Domain ID Query Parameters
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-domain-id/1/request-parameters.adoc[]
+
+==== Sample Retrieve Domain Configuration By Domain ID Response
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-domain-id/1/http-response.adoc[]
+
+==== Retrieve Domain Configuration By Domain ID Response Fields
+
+include::{snippets}/domain-identity-configuration-documentation/get-domain-identity-configuration-by-domain-id/1/response-fields.adoc[]
+
 
 === Retrieving all Domain Configurations
 
-Coming Soon
+A `GET /admin/repo/domainIdentityConfigurations` request will retrieve all domain configurations.
+
+Authority `identity_config.read`
+
+==== Sample Retrieve All Domains
+
+include::{snippets}/domain-identity-configuration-documentation/get-all-domain-identity-configurations/1/http-request.adoc[]
+
+==== Sample Retrieve All Domains Response
+
+include::{snippets}/domain-identity-configuration-documentation/get-all-domain-identity-configurations/1/http-response.adoc[]
+
+==== Retrieve All Domains Response Fields
+
+include::{snippets}/domain-identity-configuration-documentation/get-all-domain-identity-configurations/1/response-fields.adoc[]
+
 
 === Updating a Domain Configuration 
 
-Coming Soon 
+A `PATCH` request can be used to partially update a domain configuration.
+
+Authority `identity_config.update`
+
+==== Sample Retrieve All Domains
+
+include::{snippets}/domain-identity-configuration-documentation/update-domain-identity-configuration-by-id/1/http-request.adoc[]
+
+==== Sample Retrieve All Domains Response
+
+include::{snippets}/domain-identity-configuration-documentation/update-domain-identity-configuration-by-id/1/http-response.adoc[]
 
 === Removing a Domain Configuration
 
-Coming Soon
+A `DELETE` request can be used to remove a domain configuration.
+
+Authority `identity_config.delete`
+
+==== Sample Domain Configuration Delete Request
+
+include::{snippets}/domain-identity-configuration-documentation/delete-domain-identity-configuration-by-id/1/http-request.adoc[]
+
+==== Domain Configuration Delete Path Variables
+
+include::{snippets}/domain-identity-configuration-documentation/delete-domain-identity-configuration-by-id/1/path-parameters.adoc[]
+
+==== Sample Delete Domain Configuration Response
+
+include::{snippets}/domain-identity-configuration-documentation/delete-domain-identity-configuration-by-id/1/http-response.adoc[]
 
 
 == Managing Clients
 
-Coming Soon
+Clients hold information about an application. A `Client` object is a convenient way to group Client Instances.
 
 === Creating a Client 
 
-Coming Soon 
+A `POST` request will create a client.
+
+Authority: `client.create`
+
+==== Sample Client Creation Request
+
+include::{snippets}/client-documentation/create-new-client/1/http-request.adoc[]
+
+==== Client Creation Request Fields
+
+include::{snippets}/client-documentation/create-new-client/1/request-fields.adoc[]
+
+==== Sample Client Creation Response
+
+include::{snippets}/client-documentation/create-new-client/1/http-response.adoc[]
 
 === Retrieving a Client
 
-Coming Soon 
+A `GET` request will retrieve a client by id.
+
+Authority: `client.read`
+
+==== Sample Client Retrieval Request
+
+include::{snippets}/client-documentation/get-client-by-id/1/http-request.adoc[]
+
+==== Client Retrieval Request Path
+
+include::{snippets}/client-documentation/get-client-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Retrieval Response
+
+include::{snippets}/client-documentation/get-client-by-id/1/http-response.adoc[]
+
+=== Retrieving Clients By Domain ID
+
+A `GET` request will retrieve clients by domain id.
+
+Authority: `client.read`
+
+==== Sample Client Retrieval by Domain Request
+
+include::{snippets}/client-documentation/get-clients-by-domain/1/http-request.adoc[]
+
+==== Client Retrieval By Domain Query Parameters
+
+include::{snippets}/client-documentation/get-clients-by-domain/1/request-parameters.adoc[]
+
+==== Sample Client Retrieval Response
+
+include::{snippets}/client-documentation/get-clients-by-domain/1/http-response.adoc[]
 
 === Updating a Client 
 
-Coming Soon
+A `PATCH` request will update a client.
+
+Authority: `client.update`
+
+==== Sample Client Update Request
+
+include::{snippets}/client-documentation/update-client-by-id/1/http-request.adoc[]
+
+==== Sample Client Update Path
+
+include::{snippets}/client-documentation/update-client-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Update Response
+
+include::{snippets}/client-documentation/update-client-by-id/1/http-response.adoc[]
 
 === Removing a Client 
 
-Coming Soon
+A `DELETE` request will delete a client.
+
+Authority: `client.delete`
+
+==== Sample Client Removal Request
+
+include::{snippets}/client-documentation/delete-client-by-id/1/http-request.adoc[]
+
+==== Sample Client Removal Path
+
+include::{snippets}/client-documentation/delete-client-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Removal Response
+
+include::{snippets}/client-documentation/delete-client-by-id/1/http-response.adoc[]
+
 
 == Managing Client Instances
 
-Coming Soon
+A Client Instance represents an oauth client. An application can have several client instances for its different
+components if needed.
 
 === Creating a Client Instance 
 
-Coming Soon
+A `POST` request will create a client instance.
+
+Authority: `client_instance.create`
+
+==== Sample Client Instance Creation Request
+
+include::{snippets}/client-instance-documentation/create-new-client-instance/1/http-request.adoc[]
+
+==== Client Instance Creation Request Fields
+
+include::{snippets}/client-instance-documentation/create-new-client-instance/1/request-fields.adoc[]
+
+==== Sample Client Instance Creation Response
+
+include::{snippets}/client-instance-documentation/create-new-client-instance/1/http-response.adoc[]
+
 
 === Retrieving a Client Instance
 
-Coming Soon
+A `GET` request will retrieve a client instance by id.
+
+Authority: `client_instance.read`
+
+==== Sample Client Instance Retrieval Request
+
+include::{snippets}/client-instance-documentation/get-client-instance-by-id/1/http-request.adoc[]
+
+==== Client Instance Retrieval Request Path
+
+include::{snippets}/client-instance-documentation/get-client-instance-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Instance Retrieval Response
+
+include::{snippets}/client-instance-documentation/get-client-instance-by-id/1/http-response.adoc[]
+
+=== Retrieving Clients Instances By Domain ID
+
+A `GET` request will retrieve client instances by domain id.
+
+Authority: `client_instane.read`
+
+==== Sample Client Instance Retrieval by Domain Request
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain/1/http-request.adoc[]
+
+==== Client Instances Retrieval By Domain Query Parameters
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain/1/request-parameters.adoc[]
+
+==== Sample Client Instance Retrieval by Domain Response
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain/1/http-response.adoc[]
+
+=== Retrieving Clients Instances By Domain ID and Client ID
+
+A `GET` request will retrieve client instances by domain id and client id.
+
+Authority: `client_instane.read`
+
+==== Sample Client Instance Retrieval by Domain and Client Request
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain-and-client/1/http-request.adoc[]
+
+==== Client Instances Retrieval By Domain and Client Query Parameters
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain-and-client/1/request-parameters.adoc[]
+
+==== Sample Client Instance Retrieval by Domain and Client Response
+
+include::{snippets}/client-instance-documentation/get-client-instances-by-domain-and-client/1/http-response.adoc[]
 
 === Updating a Client Instance 
 
-Coming Soon
+A `PATCH` request will update a client instance.
+
+Authority: `client_instance.update`
+
+==== Sample Client Instance Update Request
+
+include::{snippets}/client-instance-documentation/update-client-instance-by-id/1/http-request.adoc[]
+
+==== Sample Client Instance Update Path
+
+include::{snippets}/client-instance-documentation/update-client-instance-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Instance Update Response
+
+include::{snippets}/client-instance-documentation/update-client-instance-by-id/1/http-response.adoc[]
+
 
 === Removing a Client Instance 
 
-Coming Soon
+A `DELETE` request will delete a client instance.
+
+Authority: `client_instance.delete`
+
+==== Sample Client Instance Removal Request
+
+include::{snippets}/client-instance-documentation/delete-client-by-id/1/http-request.adoc[]
+
+==== Sample Client Instance Removal Path
+
+include::{snippets}/client-instance-documentation/delete-client-by-id/1/path-parameters.adoc[]
+
+==== Sample Client Instance Removal Response
+
+include::{snippets}/client-instance-documentation/delete-client-by-id/1/http-response.adoc[]
+
 
 == Managing Scopes
 
-Coming Soon
+Scopes are sets of authorities that the user can grant to a client. In Mmadu, a scope contains an array
+of authorities (can be roles or authorities) that the client wants to obtain from the user. The user sees
+the list of scopes at the authorization page and can select which scopes to approve and which to reject.
+
+Linking scopes to authorities provide a convenient way of grouping authorities in a manner that is presentable to the user.
+
+Assuming a client is requesting for four authorities from the user `create_book`, `edit_book`, `create_class` and `edit_class`.
+To present this to the user, an admin can create two scopes: `manage_book` and `manage_class`. The `manage_book` will be linked
+to the `create_book` and `edit_book` authorities while the `manage_class` will be linked to the `create_class` and `edit_class` authority.
+
+At the authorizaton page, the user will see that he needs to select from two scopes `manage_class` and `manage_book` instead of looking through
+four authorities. Any scope that the user approves, the authorities are automatically approved. The scope code and authority identifiers will be
+added to the scope field in the authorization.
 
 === Creating a Scope 
 
-Coming Soon
+A `POST` request will create a scope.
+
+Authority: `scope.create`
+
+==== Sample Scope Creation Request
+
+include::{snippets}/scope-documentation/create-new-scope/1/http-request.adoc[]
+
+==== Scope Creation Request Fields
+
+include::{snippets}/scope-documentation/create-new-scope/1/request-fields.adoc[]
+
+==== Sample Scope Creation Response
+
+include::{snippets}/scope-documentation/create-new-scope/1/http-response.adoc[]
+
 
 === Retrieving a Scope
 
-Coming Soon
+A `GET` request will retrieve a client by id.
+
+Authority: `scope.read`
+
+==== Sample Scope Retrieval Request
+
+include::{snippets}/scope-documentation/get-scope-by-id/1/http-request.adoc[]
+
+==== Scope Retrieval Request Path
+
+include::{snippets}/scope-documentation/get-scope-by-id/1/path-parameters.adoc[]
+
+==== Sample Scope Retrieval Response
+
+include::{snippets}/scope-documentation/get-scope-by-id/1/http-response.adoc[]
+
+=== Retrieving all Scopes in Domain
+
+A `GET` request will retrieve all scopes in a domain
+
+Authority: `scope.read`
+
+==== Sample All Domain Scopes Retrieval Request
+
+include::{snippets}/scope-documentation/get-scopes-by-domain/1/http-request.adoc[]
+
+==== Scope All Domain Scopes Retrieval Query Parameter
+
+include::{snippets}/scope-documentation/get-scopes-by-domain/1/request-parameters.adoc[]
+
+==== Sample All Domain Scopes Retrieval Response
+
+include::{snippets}/scope-documentation/get-scopes-by-domain/1/http-response.adoc[]
+
 
 === Updating a Scope 
 
-Coming Soon
+A `PATCH` request will update a scope.
+
+Authority: `scope.update`
+
+==== Sample Scope Update Request
+
+include::{snippets}/scope-documentation/update-scope-by-id/1/http-request.adoc[]
+
+==== Sample Scope Update Path
+
+include::{snippets}/scope-documentation/update-scope-by-id/1/path-parameters.adoc[]
+
+==== Sample Scope Update Response
+
+include::{snippets}/scope-documentation/update-scope-by-id/1/http-response.adoc[]
+
 
 === Removing a Scope 
 
-Coming Soon
+A `DELETE` request will delete a scope.
+
+Authority: `scope.delete`
+
+==== Sample Scope Removal Request
+
+include::{snippets}/scope-documentation/delete-scope-by-id/1/http-request.adoc[]
+
+==== Sample Scope Removal Path
+
+include::{snippets}/scope-documentation/delete-scope-by-id/1/path-parameters.adoc[]
+
+==== Sample Scope Removal Response
+
+include::{snippets}/scope-documentation/delete-scope-by-id/1/http-response.adoc[]
+
 
 == Managing Resources
 
-Coming Soon
+Resources represent individual API's or services that clients can access. Every client instance specifies a
+list of resource identifiers that it is supposed to utilize. These resources must be created and maintained using these apis.
+On authorization, the list of resource identifiers that the client has access to will be included in the `aud` claim
+of the tokens. This claim can be enforced by resource servers by checking that its resource identifier is contained in the
+`aud` claim before processing the request.
 
 === Creating a Resource 
 
-Coming Soon
+A `POST` request will create a resource.
+
+Authority: `resource.create`
+
+==== Sample Resource Creation Request
+
+include::{snippets}/resource-documentation/create-new-resource/1/http-request.adoc[]
+
+==== Resource Creation Request Fields
+
+include::{snippets}/resource-documentation/create-new-resource/1/request-fields.adoc[]
+
+==== Sample Resource Creation Response
+
+include::{snippets}/resource-documentation/create-new-resource/1/http-response.adoc[]
+
 
 === Retrieving a Resource
 
-Coming Soon
+A `GET` request will retrieve a client by id.
+
+Authority: `resource.read`
+
+==== Sample Resource Retrieval Request
+
+include::{snippets}/resource-documentation/get-resource-by-id/1/http-request.adoc[]
+
+==== Resource Retrieval Request Path
+
+include::{snippets}/resource-documentation/get-resource-by-id/1/path-parameters.adoc[]
+
+==== Sample Resource Retrieval Response
+
+include::{snippets}/resource-documentation/get-resource-by-id/1/http-response.adoc[]
+
+=== Retrieving all Resources in Domain
+
+A `GET` request will retrieve all resources in a domain
+
+Authority: `resource.read`
+
+==== Sample All Domain Resources Retrieval Request
+
+include::{snippets}/resource-documentation/get-resources-by-domain/1/http-request.adoc[]
+
+==== Resource All Domain Resources Retrieval Query Parameter
+
+include::{snippets}/resource-documentation/get-resources-by-domain/1/request-parameters.adoc[]
+
+==== Sample All Domain Resources Retrieval Response
+
+include::{snippets}/resource-documentation/get-resources-by-domain/1/http-response.adoc[]
+
 
 === Updating a Resource 
 
-Coming Soon
+A `PATCH` request will update a resource.
+
+Authority: `resource.update`
+
+==== Sample Resource Update Request
+
+include::{snippets}/resource-documentation/update-resource-by-id/1/http-request.adoc[]
+
+==== Sample Resource Update Path
+
+include::{snippets}/resource-documentation/update-resource-by-id/1/path-parameters.adoc[]
+
+==== Sample Resource Update Response
+
+include::{snippets}/resource-documentation/update-resource-by-id/1/http-response.adoc[]
+
 
 === Removing a Resource 
 
-Coming Soon
+A `DELETE` request will delete a resource.
+
+Authority: `resource.delete`
+
+==== Sample Resource Removal Request
+
+include::{snippets}/resource-documentation/delete-resource-by-id/1/http-request.adoc[]
+
+==== Sample Resource Removal Path
+
+include::{snippets}/resource-documentation/delete-resource-by-id/1/path-parameters.adoc[]
+
+==== Sample Resource Removal Response
+
+include::{snippets}/resource-documentation/delete-resource-by-id/1/http-response.adoc[]
+
+
+== Managing Credentials
+
+Credentials are secrets that are used for encryption, hashing or signature creation and verification. Credentials are
+used in different aspects of Mmadu Identity, so it is important to know how to manage them.
+
+=== Generating a Credential
+
+To Generate a credential, we make a `POST` request with the type and properties of the credential we want to generate.
+
+include::{snippets}/credential-creation-documentation/create-new-credential/1/http-request.adoc[]
+
+NOTE: Only RSA Keys are supported at this time.
+
+
+=== Obtaining a Credential Verification Key
+
+A credential verification key is a key used for verifying signatures created by its counter part private key.
+
+A `GET` request will obtain a credential verification key by credential id. A hex encoded string is returned.
+
+include::{snippets}/credential-management-documentation/get-credential-verification-key/1/http-request.adoc[]
+
+include::{snippets}/credential-management-documentation/get-credential-verification-key/1/path-parameters.adoc[]
+
 
 == Oauth 2.0 Authorization Flows for Mmadu Identity
 
+Here, we will itemize the steps to utilize the various grants. For each of these flows, you must have
+a client identifier, `client_id` and a client secret `client_secret`.
+
 === Authorization Code Grant Flow
 
-Coming Soon
+* Redirect to user the authorize endpoint: `+++http://<host>:<port>/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>+++`
+The `redirect_uri` parameter may be omitted if you have configured *one and only one* `redirect_uri` on the `ClientInstance`.
+
+* The user will first sign in if a session does not exist. After this, an authorization page will be displayed.
+* The user selects the scopes to be approved, and checks the "I want to authorize this application" and clicks "Submit".
+* The user is redirected to a the callback uri specified in the `redirect_uri` parameter or in the configuration of the `ClientInstance`.
+    Here, a `code` query parameter is passed to the client as shown:
+[source,http]
+----
+http://localhost:8080/oauth/callback?code=sdAd2adsfWaC
+----
+*  The client implements the callback to extract the authorization code in the `code` query param and use it to request for an access token. This is as
+shown below:
+
+.Confidential Client Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=K5s0BKyfF4
+----
+
+NOTE: CONFIDENTIAL clients are required to provide an authentication when accessing the token api. PUBLIC clients are not
+required to do so. If no authentication is provided, you need to add the `client_id` parameter as shown below:
+
+.Public Client Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=K5s0BKyfF4&client_id=sample.client
+----
+
+NOTE: If a `redirect_uri` was specified, then a `redirect_uri` parameter is required.
+
+
+. If authorization is successful, an access_token and a refresh token is returned.
+
+[source,json]
+----
+{
+    "access_token": "eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODVkMzQ2ODdiZDI2MmU3Njk4Y2IyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMzUzMjEsInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJhLiouKiogc3VwZXJfYWRtaW4gci5zdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMzNTYyMSwiaWF0IjoxNTkzMzM1MzIxLCJqdGkiOiIxNWMzMjJlZC02MWI1LTQzNWEtOWVmMy02YzBjOThhMDQ4OTYiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.hdgo4JnswWI63N-vI-BDEgukBaVsHttqRw3s_JCLmbjISzU3z9fOq4y8y_mZa4sZc3tVHf9xETVefBfjLZl2pIGMRLdjYZac0_iPcOYzmXjP9eOcnYCjhjMTb02ZYhYpWRQt83gWUt1U4apoxQstXW0sKbdaqCa_oaDbg0drW-ComCg0cssgXsePMHqlvQUjn6GC7IdYgNh-FBSpNOiQ1XLOS4O62EgA75nO6OOwt4bTRdNLM9mBFRb8av89W4fzAKnL0l4_KXZM6hmFamvfCLS4FRBegBy463zvRSSHodhx75Q6r5kn_MgXToMWOt-urOjXiCehB2E7boynw9tbmw",
+    "token_type": "bearer",
+    "expires_in": 1593335621,
+    "refresh_token": "oxz46a4uaq11oC47FWQy",
+    "jti": "15c322ed-61b5-435a-9ef3-6c0c98a04896"
+}
+----
+
+=== Refresh Token
+
+The refresh token grant type is used for requesting new `access_tokens`. If a `refresh_token` is included in the `access_token` response
+then you can use the refresh token to obtain a new `access_token` once the old one expires. This endpoint generates a new `access_token` and
+`refresh_token`. This also supports Public and Confidential Clients.
+
+.Confidential Client Refresh Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token=oxz46a4uaq11oC47FWQy
+----
+
+.Public Client Refresh Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token=oxz46a4uaq11oC47FWQy&client_id=sample.client
+----
+
 
 === Client Credentials Grant Flow
 
-Coming Soon
+In client credentials, the client requests a token on behalf of itself.
+
+* Make a request to the token endpoint as shown:
+
+.Confidential Client Credentials Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+----
+
+.Public Client Credentials Token Request
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=sample.client
+----
+
+A token response will be returned if authentication is successful.
+
+[source,json]
+----
+{
+    "access_token": "eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODJiOWQxZmI2OTI3NDg3ODI3NmYwIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMjIzOTcsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMyNTk5NywiaWF0IjoxNTkzMzIyMzk3LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYTVkYzJjMzktZjc4Zi00ZWU4LWE4OGQtNTU5NGEzNGUyNzU0IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.TpsXmmqc8DKA-5lx12W6JK5QXpbzpjkqPEBgU5oj__I9151v9bXX16xGF2A_gGoHK7JunGZ7OjuPFaPyS7rahuq-9KNAjQ_ZbBncytkVtNUf-h0WS-E3zM-5qnMTf5THU0zeTgii04U-rMgOgr3Qy6LKnYZraA1iUakX-MmR1Vkubf807im3_YqfjP3w86Xv62ipUuWiL64d-PZiYnM20s3lp5wHAWsFTFJPVHMPk0K96CHppDzYHh6WZF_kF9c5lPxqZFBmu8QY3Xfz8somAEq4jbldB7GW2W72gs7MTXtkO0omdedf3cwFItfQFWCHhLg8EyWhXUZu4SFqV5uThA",
+    "token_type": "bearer",
+    "expires_in": 1593325997,
+    "jti": "a5dc2c39-f78f-4ee8-a88d-5594a34e2754"
+}
+----
+
+NOTE: Refresh tokens are not enabled for client_credentials grant type.
+
+== Token Verification
+
+Once access tokens are issued to a client, the client uses the access token to access a resource. A resource needs to be able to:
+
+. Verify that the token comes from the correct source
+. Verify that the token has sufficient claims to access the resource.
+
+=== JWT Token Signature Verification
+
+Mmmadu Identity provides two approaches to obtaining verification keys.
+
+==== From Credentials
+
+1. Retrieve the <<_retrieving_a_domain_configuration_by_domain_id, domain configuration by domain id>>
+2. Get the `credentialId` property of the `accessTokenProperties` and use this to obtain the verification key using the
+<<_obtaining_a_credential_verification_key, credential verification key retrieval api>>
+
+==== From Authorization Server Metadata
+
+Mmadu Identity exposes a JWK uri for clients to dynamically obtain the verification key. A `GET` request will obtain
+the jwk set needed to verify the access tokens.
+
+[source,http]
+----
+GET /metadata/my-domain-id/jwks.json HTTP/1.1
+Host: localhost:15553
+----
+
+This returns a standard JWK set JSON response that can be used to create the verification key.
+
+[source,json]
+----
+{
+    "keys": [
+        {
+            "kty": "RSA",
+            "e": "AQAB",
+            "kid": "123",
+            "n": "3bXAtU2gab_UTpVIOXA-bnJ8eJwhuClodIQyYiy3-mZIMJ3Bzh5nh017lDzma0HySzSZEfNcwiCeYXZ8EVcMNskT794FjCdMgXA_wcfr_A58d1trSr43_u5z3C5HaBF_AIU5vMLiLgi7-HpAoXB1gjFuPY6Rlr0O46dqZVoNpKq3Xo9KMe_FK6sTYneimDdcgDgyv60_CmysKGx4HGae0floU1Kad7YfCUw_K6yAJS-d4UvDte0IVYqdAC-kee-07nwFVq3OSO3L6wtVz_KSST4-wafNiBwhkqdhPS2VBhacUZWH7LAKDEeYvH14J7Knk2ZoAkMO_Ng9fMnwux-26w"
+        }
+    ]
+}
+----
+
+=== Claim Verification
+
+Cliams are associated with each token generated.  The resource server can read these claims and use it to authenticate a
+client request. The following are the supported claims:
+
+.Token Claims
+|===
+|Claim |Description |Supported Grant Types
+
+|`domain_id`
+|The domain id of the user and the client
+|All
+
+|sub
+|The Authorization ID
+|All
+
+|aud
+|Audience, the list of resource identifiers that this token is meant for
+|All
+
+|iss
+|The issuer of this token
+|All
+
+|exp
+|The expiry date of this token
+|All
+
+|iat
+|The time at which the token was issued
+|All
+
+|nbf
+|The time at which the token becomes active
+|All
+
+|authorities
+|The authorities of the client instance (configured when creating the client instance)
+|Client Credentials
+
+|jti
+|The token identifier
+|All
+
+|client_id
+|The client identifier
+|All
+
+|user_id
+|The user id of the user that granted the authority
+|Authorization Code, Implicit
+
+|scopes
+|A space delimited list of roles, scopes and authorities granted to the client by the user
+|Authorization Code, Implicit
+|===
