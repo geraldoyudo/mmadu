@@ -117,4 +117,9 @@ public class MmaduClientImpl implements MmaduClient {
     public List<String> getSupportedGrantTypes() {
         return clientInstance.getSupportedGrantTypes();
     }
+
+    @Override
+    public Long getPasswordGrantTypeTTLSeconds() {
+        return clientInstance.getPasswordGrantTypeTTLSeconds();
+    }
 }

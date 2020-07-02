@@ -60,6 +60,10 @@ public interface MmaduClient {
         return 0L;
     }
 
+    default Long getPasswordGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
     default String getInstanceId() {
         return "";
     }
@@ -72,7 +76,7 @@ public interface MmaduClient {
         return 0L;
     }
 
-    default List<String> getSupportedGrantTypes(){
+    default List<String> getSupportedGrantTypes() {
         return Collections.emptyList();
     }
 }
