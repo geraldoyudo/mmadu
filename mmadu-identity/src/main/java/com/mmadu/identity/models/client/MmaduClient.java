@@ -55,4 +55,16 @@ public interface MmaduClient {
     default String getTokenCategory() {
         return TokenCategoryUtils.CATEGORY_BEARER;
     }
+
+    default Long getImplicitGrantTypeTTLSeconds() {
+        return 60 * 60L;
+    }
+
+    default String getInstanceId() {
+        return "";
+    }
+
+    default String getId() {
+        return "";
+    }
 }

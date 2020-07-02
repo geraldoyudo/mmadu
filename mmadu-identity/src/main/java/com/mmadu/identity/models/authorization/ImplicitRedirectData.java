@@ -1,5 +1,7 @@
 package com.mmadu.identity.models.authorization;
 
+import com.mmadu.identity.entities.GrantAuthorization;
+import com.mmadu.identity.entities.Token;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +13,6 @@ import java.util.Optional;
 
 import static com.mmadu.identity.utils.MapUtils.putIfNotEmpty;
 import static com.mmadu.identity.utils.MapUtils.putMandatory;
-import static java.util.Collections.emptyList;
 
 @Data
 @Builder
@@ -46,5 +47,15 @@ public class ImplicitRedirectData implements RedirectData {
         } else {
             return String.join(" ", scopes);
         }
+    }
+
+    public static ImplicitRedirectData fromTokenAndAuthorization(Token token, GrantAuthorization authorization) {
+        return ImplicitRedirectData.builder()
+                .accessToken(token.getTokenString())
+                .expiryTimestamp(token.getExpiryTime())
+                .scopes(token.getScopes())
+                .state(authorization.getState())
+                .tokenType(token.getCategory())
+                .build();
     }
 }
