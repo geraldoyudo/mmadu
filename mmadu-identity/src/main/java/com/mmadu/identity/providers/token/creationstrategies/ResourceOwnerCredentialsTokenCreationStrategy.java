@@ -12,6 +12,8 @@ import com.mmadu.identity.models.token.error.UnauthorizedClient;
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.token.TokenFactory;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
+import com.mmadu.identity.services.authorization.ApprovedScopeService;
+import com.mmadu.identity.services.authorization.ProposedScopeLimitService;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.services.user.MmaduUserService;
 import com.mmadu.identity.utils.GrantTypeUtils;
@@ -35,6 +37,8 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     private GrantAuthorizationRepository grantAuthorizationRepository;
     private TokenFactory tokenFactory;
     private DomainIdentityConfigurationService domainIdentityConfigurationService;
+    private ProposedScopeLimitService proposedScopeLimitService;
+    private ApprovedScopeService approvedScopeService;
 
     @Autowired
     public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
@@ -49,6 +53,16 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     @Autowired
     public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
         this.domainIdentityConfigurationService = domainIdentityConfigurationService;
+    }
+
+    @Autowired
+    public void setProposedScopeLimitService(ProposedScopeLimitService proposedScopeLimitService) {
+        this.proposedScopeLimitService = proposedScopeLimitService;
+    }
+
+    @Autowired
+    public void setApprovedScopeService(ApprovedScopeService approvedScopeService) {
+        this.approvedScopeService = approvedScopeService;
     }
 
     @Autowired
@@ -91,6 +105,8 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     private GrantAuthorization createAuthorization(TokenRequest request, DomainIdentityConfiguration configuration, MmaduClient client) {
         MmaduUser authorizer = mmaduUserService.loadUserByUsernameAndDomainId(request.getUsername(), client.getDomainId())
                 .orElseThrow(TokenErrorUtils::invalidClient);
+        List<String> limitedScopes = proposedScopeLimitService.limitScopesForUser(StringListUtils.toList(request.getScope()), authorizer, client);
+        List<String> approvedScopes = approvedScopeService.processScopesForUser(limitedScopes, authorizer, client);
         GrantAuthorization grantAuthorization = new GrantAuthorization();
         grantAuthorization.setClientInstanceId(client.getInstanceId());
         grantAuthorization.setClientId(client.getId());
@@ -100,7 +116,7 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
         grantAuthorization.setUserRoles(authorizer.getRoles());
         grantAuthorization.setUserGroups(authorizer.getGroups());
         grantAuthorization.setUserAuthorities(authorizer.getAuthorities());
-        grantAuthorization.setScopes(StringListUtils.toList(request.getScope()));
+        grantAuthorization.setScopes(approvedScopes);
         grantAuthorization.setClientIdentifier(client.getClientIdentifier());
         grantAuthorization.setGrantType(GrantTypeUtils.PASSWORD);
         grantAuthorization.setData(noGrantData());
