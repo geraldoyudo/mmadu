@@ -5,7 +5,7 @@ import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.error.InvalidRequest;
 import com.mmadu.identity.models.token.error.TokenError;
-import com.mmadu.identity.services.TokenService;
+import com.mmadu.identity.services.token.TokenService;
 import com.mmadu.identity.validators.token.TokenRequestValidator;
 import com.mmadu.identity.validators.token.ValidationErrorProcessor;
 import lombok.extern.slf4j.Slf4j;

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Component
 public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
     private static final List<String> USER_GRANTS = List.of(
-            GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.IMPLICIT
+            GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.IMPLICIT, GrantTypeUtils.PASSWORD
     );
 
     private MmaduClientService mmaduClientService;

@@ -63,9 +63,12 @@ public class ImplicitStrategy implements AuthorizationStrategy {
         grantAuthorization.setExpiryTime(
                 now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), client.getImplicitGrantTypeTTLSeconds()))
         );
+        grantAuthorization.setData(noGrantData());
         grantAuthorization = grantAuthorizationRepository.save(grantAuthorization);
         Token token = generateAccessTokenFromAuthorization(grantAuthorization, configuration, client);
-        grantAuthorization.setData(noGrantData());
+        grantAuthorization.addAccessToken(token);
+        grantAuthorization.setActive(true);
+        grantAuthorizationRepository.save(grantAuthorization);
         context.succeed(ImplicitRedirectData.fromTokenAndAuthorization(token, grantAuthorization));
     }
 
