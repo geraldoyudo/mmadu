@@ -24,6 +24,7 @@ like Oauth 2.0 and OIDC.
 . Authorization Grant Type Flow
 . Client Credentials Grant Type Flow
 . Jwt Token Generation
+. Implicit Flow
 
 == Key Concepts
 
@@ -56,7 +57,7 @@ Oauth 2.0 provides four basic ways of obtaining an authorization:
 
 All these can be found in the Oauth 2.0 specification.
 
-NOTE: Currently, only Authorization Code Grant Type and Client Credentials Grant Type are supported
+NOTE: Currently, only Authorization Code Grant Type, Client Credentials Grant Type and Implicit Grant Type are supported.
 
 Third party (or first party) users of a service consume a service with client credentials. A `Client` represents
 details of an application or a company. This `Client` can have several `ClientInstance` objects. a `ClientInstance`
@@ -808,6 +809,33 @@ A token response will be returned if authentication is successful.
 ----
 
 NOTE: Refresh tokens are not enabled for client_credentials grant type.
+
+=== Implicit Flow
+
+In implicit flow, the token details are returned in the redirect uri. The second step
+of obtaining a token is removed. This grant type requires no authorization.
+
+The state parameter is required and should be set by the client. This value is opaque and is
+returned when calling the redirect uri.
+
+* The client is redirected to the authorization page as shown below:
+
+.Implicit Authorization Endpoint example
+[source,http]
+----
+http://localhost:15553/oauth/authorize?client_id=mmadu_admin&response_type=token&state=di298383sdfad
+----
+
+After the user authorizes the request, the user is redirected back to the client redirect uri with token parameters
+as shown below:
+
+.Implicit Authorization Endpoint Redirection Url Example
+[source,http]
+----
+http://localhost:18005/oauth/callback?access_token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZGUzNWYyOWU0OTM0MmY2ODhkZjQ4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM2OTcxMTksInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJzdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzY5NzQxOSwiaWF0IjoxNTkzNjk3MTE5LCJqdGkiOiJlYWU3ZjYwNS0zNzc1LTQ4NzAtOWVkNC1mNzAyNzEwNWEzOWUiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.l3UXI10Wwh6JTstziv_IXaVBDV0HGUKzDAK8nbnLEd2uprWcF40h8y34QCIrvuKRW0y9XzMf5d77kMJeCsGyCG_HWEquEBZdecawlpR3R9cuSZNsK96qO3grltms2xHP0FwMXvu2hAZEdJHIBSqf5ECwjYM_8kqVzxU8h5yQyBFUwVKgS0clqcHg7nn_hT8JETicptBLVgxR6vCH8H9a5qIS5LNu_7vxrwp5nMlE7oXbbcgb6NHqYvdhEy9aby6gwJ-zbpMBidHT65rQGS8AakS03d21GfJmUTwPw9yszXyF6JrrI5aTL-4FCV72WknIprZKryjVRwy2TsAvUia6AQ&scope=super_admin&state=di298383sdfad&token_type=bearer&expires_in=1593697419
+----
+
+The client should implement the call back to extract the token details and clear the sensitive details from the url.
 
 == Token Verification
 
