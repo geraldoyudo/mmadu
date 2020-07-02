@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.mmadu.identity.entities.NoGrantData.noGrantData;
+import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.ObjectUtils.min;
 
 @Component
@@ -66,7 +67,9 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
 
     @Override
     public boolean apply(TokenRequest request, TokenContext context) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type());
+        return GrantTypeUtils.PASSWORD.equals(request.getGrant_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                .orElse(emptyList()).contains(GrantTypeUtils.PASSWORD);
     }
 
     @Override

@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.ObjectUtils.min;
 
 @Component
@@ -45,7 +46,9 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
 
     @Override
     public boolean apply(TokenRequest request, TokenContext context) {
-        return GrantTypeUtils.CLIENT_CREDENTIALS.equals(request.getGrant_type());
+        return GrantTypeUtils.CLIENT_CREDENTIALS.equals(request.getGrant_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                        .orElse(emptyList()).contains(GrantTypeUtils.CLIENT_CREDENTIALS);
     }
 
     @Override

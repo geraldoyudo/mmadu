@@ -23,9 +23,11 @@ import org.springframework.util.StringUtils;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.mmadu.identity.utils.TokenErrorUtils.*;
 import static com.mmadu.identity.utils.ZoneDateTimeUtils.min;
+import static java.util.Collections.emptyList;
 
 @Component
 public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStrategy {
@@ -44,7 +46,9 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
 
     @Override
     public boolean apply(TokenRequest request, TokenContext context) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type());
+        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                        .orElse(emptyList()).contains(GrantTypeUtils.AUTHORIZATION_CODE);
     }
 
     @Override
