@@ -120,6 +120,7 @@ public class DomainIdentityConfigurationList {
         private List<String> authorities = Collections.emptyList();
         private boolean issueRefreshTokens = true;
         private Long authorizationCodeGrantTypeTTLSeconds = 24 * 60 * 60l;
+        private Long implicitGrantTypeTTLSeconds =  60 * 60L;
         private Long accessTokenTTLSeconds = 300L;
         private Long refreshTokenTTLSeconds = 60 * 60L;
         private Long clientCredentialsGrantTypeTTLSeconds = 24 * 60 * 60l;
@@ -149,6 +150,7 @@ public class DomainIdentityConfigurationList {
             instance.setAuthorities(authorities);
             instance.setIssueRefreshTokens(issueRefreshTokens);
             instance.setAuthorizationCodeGrantTypeTTLSeconds(authorizationCodeGrantTypeTTLSeconds);
+            instance.setImplicitGrantTypeTTLSeconds(implicitGrantTypeTTLSeconds);
             instance.setAccessTokenTTLSeconds(accessTokenTTLSeconds);
             instance.setRefreshTokenTTLSeconds(refreshTokenTTLSeconds);
             instance.setClientCredentialsGrantTypeTTLSeconds(clientCredentialsGrantTypeTTLSeconds);

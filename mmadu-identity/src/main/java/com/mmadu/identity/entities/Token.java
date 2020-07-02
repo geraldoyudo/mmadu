@@ -36,4 +36,5 @@ public class Token implements DomainPayload {
     private String tokenIdentifier;
     private String tokenString;
     private String category;
+    private String authorizationGrantType;
 }

@@ -40,7 +40,8 @@ public class ClientInstance implements HasDomain {
     private List<String> resources = Collections.emptyList();
     private List<String> authorities = Collections.emptyList();
     private boolean issueRefreshTokens = true;
-    private Long authorizationCodeGrantTypeTTLSeconds = 24 * 60 * 60l;
+    private Long authorizationCodeGrantTypeTTLSeconds = 24 * 60 * 60L;
+    private Long implicitGrantTypeTTLSeconds =  60 * 60L;
     private Long accessTokenTTLSeconds = 300L;
     private Long refreshTokenTTLSeconds = 60 * 60L;
     private Long clientCredentialsGrantTypeTTLSeconds = 24 * 60 * 60l;

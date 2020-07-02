@@ -25,7 +25,7 @@ public class SetRedirectionUrl implements AuthorizationStrategy {
     }
 
     @Override
-    public boolean apply(AuthorizationRequest request, AuthorizationResponse response) {
+    public boolean apply(AuthorizationRequest request, AuthorizationResponse response, AuthorizationContext context) {
         return true;
     }
 
@@ -36,14 +36,18 @@ public class SetRedirectionUrl implements AuthorizationStrategy {
             throw new AuthorizationException("client not found");
         }
         String redirectUri = request.getRedirect_uri();
+        List<String> clientRedirectUris = clientOptional.get().getRedirectUris();
         if (StringUtils.isEmpty(redirectUri)) {
-            List<String> redirectUris = clientOptional.get().getRedirectUris();
-            if (redirectUris.size() != 1) {
+            if (clientRedirectUris.size() != 1) {
                 throw new AuthorizationException("multiple redirect uris are configured, ensure redirect_uri key is present");
             }
-            context.setRedirectUri(redirectUris.get(0), false);
+            context.setRedirectUri(clientRedirectUris.get(0), false);
         } else {
-            context.setRedirectUri(redirectUri, true);
+            if (clientRedirectUris.isEmpty() || clientRedirectUris.contains(redirectUri)) {
+                context.setRedirectUri(redirectUri, true);
+            } else {
+                throw new AuthorizationException("invalid redirect uri");
+            }
         }
     }
 }

@@ -51,6 +51,7 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setClientIdentifier(specification.getGrantAuthorization().getClientIdentifier());
         token.setUserId(specification.getGrantAuthorization().getUserId());
         token.setGrantAuthorizationId(specification.getGrantAuthorization().getId());
+        token.setAuthorizationGrantType(specification.getGrantAuthorization().getGrantType());
         token.setLabels(specification.getLabels());
         if(specification.getScopes() == null || specification.getScopes().isEmpty()){
             token.setScopes(specification.getGrantAuthorization().getScopes());

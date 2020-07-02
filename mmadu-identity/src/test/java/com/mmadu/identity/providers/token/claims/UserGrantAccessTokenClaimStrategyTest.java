@@ -20,10 +20,10 @@ import java.util.List;
 
 @SpringBootTest(classes = {
         TokenCreationConfig.class,
-        AuthorizationCodeGrantAccessTokenClaimStrategy.class
+        UserGrantAccessTokenClaimStrategy.class
 
 })
-class AuthorizationCodeGrantAccessTokenClaimStrategyTest {
+class UserGrantAccessTokenClaimStrategyTest {
 
     @Value("classpath:claims/authentication-code-grant-access-token-claims.json")
     private Resource resource;
@@ -38,7 +38,7 @@ class AuthorizationCodeGrantAccessTokenClaimStrategyTest {
     @Test
     void claimSerializationTest() throws Exception {
         ZonedDateTime testTime = ZonedDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
-        var claims = AuthorizationCodeGrantAccessTokenClaimStrategy.AuthorizationCodeAccessTokenClaim.builder()
+        var claims = UserGrantAccessTokenClaimStrategy.UserAccessTokenClaim.builder()
                 .activationTime(testTime)
                 .clientIdentifier("122333")
                 .audience(List.of("service-1", "service-2"))

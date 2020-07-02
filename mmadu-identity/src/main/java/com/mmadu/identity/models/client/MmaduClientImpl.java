@@ -92,4 +92,29 @@ public class MmaduClientImpl implements MmaduClient {
     public String getTokenCategory() {
         return clientInstance.getTokenCategory();
     }
+
+    @Override
+    public Long getImplicitGrantTypeTTLSeconds() {
+        return clientInstance.getImplicitGrantTypeTTLSeconds();
+    }
+
+    @Override
+    public String getInstanceId() {
+        return clientInstance.getId();
+    }
+
+    @Override
+    public String getId() {
+        return client.getId();
+    }
+
+    @Override
+    public Long getAuthorizationCodeGrantTypeTTLSeconds() {
+        return clientInstance.getAuthorizationCodeGrantTypeTTLSeconds();
+    }
+
+    @Override
+    public List<String> getSupportedGrantTypes() {
+        return clientInstance.getSupportedGrantTypes();
+    }
 }
