@@ -23,7 +23,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
+public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
+    private static final List<String> USER_GRANTS = List.of(
+            GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.IMPLICIT
+    );
+
     private MmaduClientService mmaduClientService;
 
     @Autowired
@@ -33,7 +37,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
 
     @Override
     public boolean apply(TokenSpecification tokenSpecs, ClaimSpecs specs) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(tokenSpecs.getGrantAuthorization().getGrantType()) &&
+        return USER_GRANTS.contains(tokenSpecs.getGrantAuthorization().getGrantType()) &&
                 "access_token".equals(specs.getType());
     }
 
@@ -49,7 +53,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         } else {
             scopes = tokenSpecs.getScopes();
         }
-        return AuthorizationCodeAccessTokenClaim.builder()
+        return UserAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
                 .activationTime(tokenSpecs.getActivationTime())
@@ -74,7 +78,7 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
     @Data
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class AuthorizationCodeAccessTokenClaim implements TokenClaim {
+    public static class UserAccessTokenClaim implements TokenClaim {
         private String issuer;
         private String subject;
         private List<String> audience;
