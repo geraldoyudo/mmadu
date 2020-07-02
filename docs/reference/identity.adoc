@@ -57,8 +57,6 @@ Oauth 2.0 provides four basic ways of obtaining an authorization:
 
 All these can be found in the Oauth 2.0 specification.
 
-NOTE: Currently, only Authorization Code Grant Type, Client Credentials Grant Type and Implicit Grant Type are supported.
-
 Third party (or first party) users of a service consume a service with client credentials. A `Client` represents
 details of an application or a company. This `Client` can have several `ClientInstance` objects. a `ClientInstance`
 object is analogous to the Oauth 2 client. This holds credentials and declares a specified and agreed way of accessing
@@ -680,7 +678,7 @@ include::{snippets}/credential-management-documentation/get-credential-verificat
 
 == Oauth 2.0 Authorization Flows for Mmadu Identity
 
-Here, we will itemize the steps to utilize the various grants. For each of these flows, you must have
+Here, we will itemize the steps to utilize the various grants.For each of these flows, you must have
 a client identifier, `client_id` and a client secret `client_secret`.
 
 === Authorization Code Grant Flow
@@ -688,15 +686,15 @@ a client identifier, `client_id` and a client secret `client_secret`.
 * Redirect to user the authorize endpoint: `+++http://<host>:<port>/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri>+++`
 The `redirect_uri` parameter may be omitted if you have configured *one and only one* `redirect_uri` on the `ClientInstance`.
 
-* The user will first sign in if a session does not exist. After this, an authorization page will be displayed.
+* The user will first sign in if a session does not exist.After this, an authorization page will be displayed.
 * The user selects the scopes to be approved, and checks the "I want to authorize this application" and clicks "Submit".
 * The user is redirected to a the callback uri specified in the `redirect_uri` parameter or in the configuration of the `ClientInstance`.
-    Here, a `code` query parameter is passed to the client as shown:
+Here, a `code` query parameter is passed to the client as shown:
 [source,http]
 ----
 http://localhost:8080/oauth/callback?code=sdAd2adsfWaC
 ----
-*  The client implements the callback to extract the authorization code in the `code` query param and use it to request for an access token. This is as
+* The client implements the callback to extract the authorization code in the `code` query param and use it to request for an access token.This is as
 shown below:
 
 .Confidential Client Token Request
@@ -710,8 +708,8 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code&code=K5s0BKyfF4
 ----
 
-NOTE: CONFIDENTIAL clients are required to provide an authentication when accessing the token api. PUBLIC clients are not
-required to do so. If no authentication is provided, you need to add the `client_id` parameter as shown below:
+NOTE: CONFIDENTIAL clients are required to provide an authentication when accessing the token api.PUBLIC clients are not
+required to do so.If no authentication is provided, you need to add the `client_id` parameter as shown below:
 
 .Public Client Token Request
 [source,http]
@@ -739,11 +737,12 @@ NOTE: If a `redirect_uri` was specified, then a `redirect_uri` parameter is requ
 }
 ----
 
+[#refresh_token]
 === Refresh Token
 
-The refresh token grant type is used for requesting new `access_tokens`. If a `refresh_token` is included in the `access_token` response
-then you can use the refresh token to obtain a new `access_token` once the old one expires. This endpoint generates a new `access_token` and
-`refresh_token`. This also supports Public and Confidential Clients.
+The refresh token grant type is used for requesting new `access_tokens`.If a `refresh_token` is included in the `access_token` response
+then you can use the refresh token to obtain a new `access_token` once the old one expires.This endpoint generates a new `access_token` and
+`refresh_token`.This also supports Public and Confidential Clients.
 
 .Confidential Client Refresh Token Request
 [source,http]
@@ -836,6 +835,58 @@ http://localhost:18005/oauth/callback?access_token=eyJraWQiOiIxMjMiLCJhbGciOiJSU
 ----
 
 The client should implement the call back to extract the token details and clear the sensitive details from the url.
+
+=== Resource Owner Credentials Flow
+
+This flow involves making a token request with the credentials of the resource owner. This is useful
+in creating custom login screens that reside on third party applications. Because credentials are collected
+in third party applications there is a risk of exposing user credentials.
+
+The flow is as follows:
+
+* The client displays a form for the user to input credentials.
+
+* The client collects this input and makes a token request to authenticate user and obtain tokens.
+
+.Confidential Client Resource Owner Token Request
+[source, http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=admin&password=password&scope=super_admin+visitor
+----
+
+.Public Client Resource Owner Token Request
+[source, http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=admin&password=password&scope=super_admin+visitor&client_id=my.client
+----
+
+* If Authorization succeds a token response is returned. A `refresh_token` is added to the
+response if the domain supports it.
+
+[source,json]
+----
+{
+    "access_token": "eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZTA1YjUyMGVhMWEzZWZlODFjMDEyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3MDU5MDksInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiIiLCJpc3MiOiJtbWFkdS5jb20iLCJleHAiOjE1OTM3MDYyMDksImlhdCI6MTU5MzcwNTkwOSwianRpIjoiNjliN2JjMDUtMGQ1OC00ZjQyLTg4YzUtYzg0ZDYwMzhiMWViIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.xndAPkdwanAgwDE1LC2RuzaVLjbwwwgcBAnrUg49VLheOXBKcNPzPno4OlYXnSjl1zG9tIo-DocdNiFpsV34Fv41jIm_TcmzY8lmHEs1eznrolk1wcvze5Hjg9omD1smQMNgUUhTONOnJRDy-MXK3cmfgacQHb8Tlx94GfYxv611YsArLhHBhY_RN4-ClRtdsHP06Qndt8n5Mteo0QFxDc_UcdUfCXQ13WRG0JBIILq8yuqnVJ7jRrzxsvQpPyN0lpE79a4lvONJhxshy3Nwy4iCIkL9ONSmNiwHgrIaRWc-1gfRSGJYYf7z2DpS7PzEZlFeQhVSipPCA86WZWx0wg",
+    "token_type": "bearer",
+    "expires_in": 1593706209,
+    "refresh_token": "Os3v8kb4RZYMEBxERly4",
+    "jti": "69b7bc05-0d58-4f42-88c5-c84d6038b1eb"
+}
+----
+
+* If a `refresh_token` is returned, the client can request for a new access token once the old one expires
+using the <<refresh_token, refresh token grant>>.
 
 == Token Verification
 
