@@ -122,4 +122,9 @@ public class MmaduClientImpl implements MmaduClient {
     public Long getPasswordGrantTypeTTLSeconds() {
         return clientInstance.getPasswordGrantTypeTTLSeconds();
     }
+
+    @Override
+    public Long getClientCredentialsGrantTypeTTLSeconds() {
+        return clientInstance.getClientCredentialsGrantTypeTTLSeconds();
+    }
 }

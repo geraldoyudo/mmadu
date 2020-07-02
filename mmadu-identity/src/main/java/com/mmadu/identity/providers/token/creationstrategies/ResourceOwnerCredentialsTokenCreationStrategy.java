@@ -5,6 +5,7 @@ import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.token.TokenContext;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.TokenSpecification;
@@ -14,7 +15,6 @@ import com.mmadu.identity.providers.token.TokenFactory;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import com.mmadu.identity.services.authorization.ApprovedScopeService;
 import com.mmadu.identity.services.authorization.ProposedScopeLimitService;
-import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.services.user.MmaduUserService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import com.mmadu.identity.utils.StringListUtils;
@@ -36,7 +36,6 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     private MmaduUserService mmaduUserService;
     private GrantAuthorizationRepository grantAuthorizationRepository;
     private TokenFactory tokenFactory;
-    private DomainIdentityConfigurationService domainIdentityConfigurationService;
     private ProposedScopeLimitService proposedScopeLimitService;
     private ApprovedScopeService approvedScopeService;
 
@@ -48,11 +47,6 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     @Autowired
     public void setTokenFactory(TokenFactory tokenFactory) {
         this.tokenFactory = tokenFactory;
-    }
-
-    @Autowired
-    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
-        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
     }
 
     @Autowired
@@ -71,14 +65,14 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
     }
 
     @Override
-    public boolean apply(TokenRequest request, MmaduClient client) {
-        return GrantTypeUtils.PASSWORD.equals(request.getGrant_type());
+    public boolean apply(TokenRequest request, TokenContext context) {
+        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type());
     }
 
     @Override
-    public TokenResponse getToken(TokenRequest request, MmaduClient client) {
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
-                .orElseThrow(TokenErrorUtils::invalidClient);
+    public TokenResponse getToken(TokenRequest request, TokenContext context) {
+        MmaduClient client = context.getClient();
+        DomainIdentityConfiguration configuration = context.getConfiguration();
         authenticateOwnerCredentials(request, client);
         GrantAuthorization authorization = createAuthorization(request, configuration, client);
         Token accessToken = createAccessToken(authorization, client, configuration);

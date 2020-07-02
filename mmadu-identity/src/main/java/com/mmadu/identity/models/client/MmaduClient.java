@@ -64,6 +64,10 @@ public interface MmaduClient {
         return 0L;
     }
 
+    default Long getClientCredentialsGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
     default String getInstanceId() {
         return "";
     }
