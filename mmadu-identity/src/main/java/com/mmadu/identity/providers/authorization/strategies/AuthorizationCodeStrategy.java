@@ -83,6 +83,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         grantAuthorization.setRedirectUriSpecified(context.getResult().isRedirectUriSpecified());
         grantAuthorization.setClientIdentifier(clientInstance.getIdentifier());
         grantAuthorization.setGrantType(GrantTypeUtils.AUTHORIZATION_CODE);
+        grantAuthorization.setState(request.getState());
         ZonedDateTime now = ZonedDateTime.now();
         grantAuthorization.setIssuedTime(now);
         grantAuthorization.setExpiryTime(
