@@ -57,7 +57,7 @@ public interface MmaduClient {
     }
 
     default Long getImplicitGrantTypeTTLSeconds() {
-        return 60 * 60L;
+        return 0L;
     }
 
     default String getInstanceId() {
@@ -66,5 +66,13 @@ public interface MmaduClient {
 
     default String getId() {
         return "";
+    }
+
+    default Long getAuthorizationCodeGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
+    default List<String> getSupportedGrantTypes(){
+        return Collections.emptyList();
     }
 }

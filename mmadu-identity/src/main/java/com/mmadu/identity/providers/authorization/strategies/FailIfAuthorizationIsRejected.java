@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Order(30)
 public class FailIfAuthorizationIsRejected implements AuthorizationStrategy {
     @Override
-    public boolean apply(AuthorizationRequest request, AuthorizationResponse response) {
+    public boolean apply(AuthorizationRequest request, AuthorizationResponse response, AuthorizationContext context) {
         return true;
     }
 

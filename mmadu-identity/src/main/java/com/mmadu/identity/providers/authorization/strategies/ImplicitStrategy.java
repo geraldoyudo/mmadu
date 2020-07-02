@@ -3,8 +3,6 @@ package com.mmadu.identity.providers.authorization.strategies;
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.entities.Token;
-import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
-import com.mmadu.identity.exceptions.DomainNotFoundException;
 import com.mmadu.identity.models.authorization.AuthorizationContext;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
@@ -12,11 +10,8 @@ import com.mmadu.identity.models.authorization.ImplicitRedirectData;
 import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.TokenSpecification;
 import com.mmadu.identity.models.user.MmaduUser;
-import com.mmadu.identity.providers.authorization.code.DomainAuthorizationCodeGenerator;
 import com.mmadu.identity.providers.token.TokenFactory;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
-import com.mmadu.identity.services.client.MmaduClientService;
-import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.AuthorizationUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import com.mmadu.identity.utils.ZoneDateTimeUtils;
@@ -25,38 +20,22 @@ import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.mmadu.identity.entities.NoGrantData.noGrantData;
+import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.ObjectUtils.min;
 
 @Component
 public class ImplicitStrategy implements AuthorizationStrategy {
     private static final String TOKEN_RESPONSE_TYPE = "token";
 
-    private MmaduClientService mmaduClientService;
-    private DomainAuthorizationCodeGenerator authorizationCodeGenerator;
     private GrantAuthorizationRepository grantAuthorizationRepository;
-    private DomainIdentityConfigurationService domainIdentityConfigurationService;
     private TokenFactory tokenFactory;
-
-    @Autowired
-    public void setAuthorizationCodeGenerator(DomainAuthorizationCodeGenerator authorizationCodeGenerator) {
-        this.authorizationCodeGenerator = authorizationCodeGenerator;
-    }
-
-    @Autowired
-    public void setMmaduClientService(MmaduClientService mmaduClientService) {
-        this.mmaduClientService = mmaduClientService;
-    }
 
     @Autowired
     public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
         this.grantAuthorizationRepository = grantAuthorizationRepository;
-    }
-
-    @Autowired
-    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
-        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
     }
 
     @Autowired
@@ -65,18 +44,19 @@ public class ImplicitStrategy implements AuthorizationStrategy {
     }
 
     @Override
-    public boolean apply(AuthorizationRequest request, AuthorizationResponse response) {
-        return TOKEN_RESPONSE_TYPE.equals(request.getResponse_type());
+    public boolean apply(AuthorizationRequest request, AuthorizationResponse response, AuthorizationContext context) {
+        return TOKEN_RESPONSE_TYPE.equals(request.getResponse_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                        .orElse(emptyList())
+                        .contains(GrantTypeUtils.IMPLICIT);
     }
 
     @Override
     public void authorize(AuthorizationRequest request, AuthorizationResponse response, AuthorizationContext context) {
         AuthorizationUtils.ensureMmaduUserAuthorizer(context);
         MmaduUser authorizer = (MmaduUser) context.getAuthorizer();
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(authorizer.getDomainId())
-                .orElseThrow(() -> new DomainNotFoundException("domain not found"));
-        MmaduClient client = mmaduClientService.loadClientByIdentifier(request.getClient_id())
-                .orElseThrow(() -> new ClientInstanceNotFoundException("client instance not found"));
+        DomainIdentityConfiguration configuration = context.getDomainConfiguration();
+        MmaduClient client = context.getClient();
         GrantAuthorization grantAuthorization = createBaseAuthorization(request, response, context, authorizer, client);
         ZonedDateTime now = ZonedDateTime.now();
         grantAuthorization.setIssuedTime(now);
@@ -129,5 +109,10 @@ public class ImplicitStrategy implements AuthorizationStrategy {
                         .active(true)
                         .build()
         );
+    }
+
+    @Override
+    public boolean isGrantType() {
+        return true;
     }
 }

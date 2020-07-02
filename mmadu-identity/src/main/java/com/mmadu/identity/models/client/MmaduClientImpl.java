@@ -107,4 +107,14 @@ public class MmaduClientImpl implements MmaduClient {
     public String getId() {
         return client.getId();
     }
+
+    @Override
+    public Long getAuthorizationCodeGrantTypeTTLSeconds() {
+        return clientInstance.getAuthorizationCodeGrantTypeTTLSeconds();
+    }
+
+    @Override
+    public List<String> getSupportedGrantTypes() {
+        return clientInstance.getSupportedGrantTypes();
+    }
 }
