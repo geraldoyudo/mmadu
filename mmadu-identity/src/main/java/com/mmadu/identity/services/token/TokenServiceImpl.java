@@ -1,4 +1,4 @@
-package com.mmadu.identity.services;
+package com.mmadu.identity.services.token;
 
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
@@ -7,6 +7,7 @@ import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.error.InvalidClient;
 import com.mmadu.identity.providers.token.TokenCreationProvider;
 import com.mmadu.identity.services.client.MmaduClientService;
+import com.mmadu.identity.services.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
