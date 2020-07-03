@@ -73,6 +73,8 @@ grant_type=client_credentials
 . An `access_token` will be returned which you can now use to access protected resources. The authorities
 embedded in the `access_token` are those you set in the `authorities` property of your `ClientInstance`.
 
+NOTE: To to access Mmadu Resource Api's you need to use a client created at the mmadu domain (domain `0`).
+
 == Roles and Authorities
 
 All Mmadu resources are protected by authorities. At startup, Mmadu user service creates

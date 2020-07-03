@@ -10,4 +10,327 @@
 :language: java
 :framework: spring
 
-Coming Soon
+== Overview
+
+Springboot is a framework used for building enterprise applications in java. We are going
+to show you how to easily integrate your springboot applications with Mmadu.
+
+This sample uses a simple html page to demonstrate how to secure your webpage and access is
+using Oauth 2.0 with Mmadu. This sample is implemented using the native OAuth 2.0 support in Spring Boot.
+
+== The Code
+
+You can find the link:../../samples/java/authorization-springboot/[sample code here]
+
+== Dependencies
+
+* Spring Boot 2.3.1
+* Spring Boot Starter Oauth2 Client 2.3.1
+* WebJars (jquery and bootstrap)
+
+== Approach
+
+To implement a simple grant authorization code flow with spring boot, we take
+the following steps:
+
+. Start up Mmadu User Service and Mmadu Identity
+. Configure a domain (app)
+. Create A Spring Boot App
+. Register Mmadu Oauth Client and Provider
+. Configure Http Security
+. Implement a Jwt User Service
+
+=== Starting up the Services
+
+Here we will use docker-compose to start up the service. See link:creating-your-first-domain.html[creating your first domain]
+for how to start up the services.
+
+=== Configure the Domain
+
+Here we configure the user service and identity service with the configurations below:
+
+NOTE: Obtain an access token before configuring the domain. See link:creating-your-first-domain.html[creating your first domain].
+
+* First, we configure the user service. Here we create two users `admin` with role `admin` and `user1` with role
+`user`.
+
+.App Domain User Configuration
+.[source,http]
+----
+POST /domains HTTP/1.1
+Host: localhost:15551
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZjBkZjA2ZTQ1NWU0ODJmM2I0YmVkIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3NzM1NTIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5Mzc3NzE1MiwiaWF0IjoxNTkzNzczNTUyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYzcwYTkyNDctNTBjYy00OTUxLWJlY2QtYzdiOTQ3NjAwZjEzIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.ZscT3iKtKHRfPKmr96nFWZRVNCCdoBgdy508jaPRMg7ZhlPh3FgPxo4UxuTWUHx2W3BSQAYpMxNGxmdCVmJmzNAWwNdKkdzwhCpgkNCw-PT1JrWcjuij19XKnGJJ3qV_j2KY72-MfUIpc_3XQcTVkH2AhR9BE7ZZ5HdvDxQ9slqR1YyIryWM5zHcbeJ34VR0UdaRFNhct7VRG6mK9LDtxFQVfnLXf1XJvUH6kq9f-kV9cfn0F3GOvhG4dX4LIXlgqM7vj-tvB8EmjyoRKBmjvymDTGyac8__v5l870v_jEeQgOxssWAhEbCf5jEDEUAQuYiAbdRw9mkhstBVcFpK8A
+Content-Type: application/json
+
+[
+  {
+    "id": "app",
+    "name": "A Sample App",
+    "users": [
+      {
+        "username": "admin",
+        "password": "admin-password",
+        "externalId": 1111111111,
+        "properties": {
+          "nickname": "admin",
+          "email": "admin@myapp.com"
+        }
+      },
+       {
+        "username": "user1",
+        "password": "password",
+        "externalId": 2222222222,
+        "properties": {
+          "nickname": "admin",
+          "email": "user.one@myapp.com"
+        }
+      }
+    ],
+    "authorities": [
+      {
+        "identifier": "view",
+        "name": "View",
+        "description": "View Data"
+      },
+      {
+        "identifier": "edit",
+        "name": "Edit",
+        "description": "Edit Data"
+      }
+    ],
+    "roles": [
+      {
+        "identifier": "admin",
+        "name": "Admin",
+        "description": "A My App Admin"
+      },
+      {
+        "identifier": "user",
+        "name": "User",
+        "description": "A My App User"
+      }
+    ],
+    "roleAuthorities": [
+      {
+        "role": "admin",
+        "authority": "edit"
+      },
+      {
+        "role": "admin",
+        "authority": "view"
+      },
+      {
+        "role": "user",
+        "authority": "view"
+      }
+    ],
+    "userAuthorities": [],
+    "userRoles": [
+      {
+        "user": "admin",
+        "role": "admin"
+      },
+      {
+        "user": "user1",
+        "role": "user"
+      }
+    ],
+    "groups": [],
+    "userGroups": []
+  }
+]
+----
+
+* And then the Identity Service. Here we configure a domain with a client instance with the credentials:
+
+Client Identifier: `app.client.instance.1`
+Client Secret: `1111111111`
+
+We configure the client identifier to support only the `admin` scope and not any other.
+So when the authorize page is displayed, only the admin scope will be requested.
+
+Here also, we do not configure any redirect url for the client, since this is a confidential client, we are allowed to
+specify any redirect uri. If we want to restrict the uri choices, we can add a redirectUri to the
+client instance configuration.
+
+The spring boot default redirect uri template is `{baseUrl}/login/oauth2/code/{registrationId}`, for
+our registration id of `mmadu`, this means `http://localhost:8080/login/oauth2/code/mmad`.
+
+.App Domain Identity Service Configuration
+[source,http]
+----
+POST /admin/domains HTTP/1.1
+Host: localhost:10084
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZjBkZjA2ZTQ1NWU0ODJmM2I0YmVkIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3NzM1NTIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5Mzc3NzE1MiwiaWF0IjoxNTkzNzczNTUyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYzcwYTkyNDctNTBjYy00OTUxLWJlY2QtYzdiOTQ3NjAwZjEzIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.ZscT3iKtKHRfPKmr96nFWZRVNCCdoBgdy508jaPRMg7ZhlPh3FgPxo4UxuTWUHx2W3BSQAYpMxNGxmdCVmJmzNAWwNdKkdzwhCpgkNCw-PT1JrWcjuij19XKnGJJ3qV_j2KY72-MfUIpc_3XQcTVkH2AhR9BE7ZZ5HdvDxQ9slqR1YyIryWM5zHcbeJ34VR0UdaRFNhct7VRG6mK9LDtxFQVfnLXf1XJvUH6kq9f-kV9cfn0F3GOvhG4dX4LIXlgqM7vj-tvB8EmjyoRKBmjvymDTGyac8__v5l870v_jEeQgOxssWAhEbCf5jEDEUAQuYiAbdRw9mkhstBVcFpK8A
+Content-Type: application/json
+
+[
+  {
+    "domainId": "app",
+    "authorizationCodeType": "alphanumeric",
+    "authorizationCodeTTLSeconds": 600,
+    "maxAuthorizationTTLSeconds": 3600,
+    "authorizationCodeTypeProperties": {},
+    "refreshTokenEnabled": true,
+    "refreshTokenProperties": {},
+    "accessTokenProvider": "jwt",
+    "accessTokenProperties": {
+      "credentialId": {
+        "type": "rsa"
+      }
+    },
+    "issuerId": "myapp.com",
+    "clients": [
+      {
+        "name": "app.client",
+        "code": "app.client.1",
+        "applicationUrl": "http://localhost:8080",
+        "logoUrl": "http://localhost:8080/logo.png",
+        "tags": [
+          "self"
+        ]
+      }
+    ],
+    "clientInstances": [
+      {
+        "clientCode": "app.client.1",
+        "clientType": "CONFIDENTIAL",
+        "clientProfile": "web_app",
+        "credentials": {
+          "type": "secret",
+          "secret": "1111111111"
+        },
+        "identifier": "app.client.instance.1",
+        "tlsEnabled": true,
+        "supportedGrantTypes": [
+          "authorization_code"
+        ],
+        "scopes": [
+          "admin"
+        ],
+        "resources": [
+          "app.resource"
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "identifier": "app.resource",
+        "name": "Sample App Service",
+        "description": "Sample App Service"
+      }
+    ],
+    "scopes": [
+      {
+        "code": "view",
+        "name": "view",
+        "description": "View Privileges",
+        "authorities": [
+          "edit"
+        ]
+      },
+      {
+        "code": "edit",
+        "name": "edit",
+        "description": "Edit Privileges",
+        "authorities": [
+          "view"
+        ]
+      },
+      {
+        "code": "admin",
+        "name": "admin",
+        "description": "Admin Privileges",
+        "authorities": [
+          "view",
+          "edit"
+        ]
+      }
+    ]
+  }
+]
+----
+
+Now that we have a domain, we can now create our app.
+
+=== Creating a Spring boot App
+
+You can use maven or gradle to create your app. Our sample app has a static html
+located in the `src/main/resource/static` folder.
+
+The pom is shown below:
+
+.Sample Dependencies
+[source,xml]
+----
+include::../../samples/java/authorization-springboot/pom.xml[]
+----
+
+=== Configuring Oauth Client And Provider
+
+We create an `application.yml` and add the following configurations:
+
+.Spring Boot Configuration for Mmadu Oauth Client and Provider
+[source,yaml]
+----
+include::../../samples/java/authorization-springboot/src/main/resources/application.yml[]
+----
+
+Here, we create a client registration with a registration id of `mmadu`. We specify the following:
+
+The Oauth 2 Client:
+. `client-id`: Our Client Identifier
+. `client-secret`: Our Client Secret
+. `authorization-grant-type`: The grant types supported. We only need authorization code.
+. `scope`: The scopes that the app will request from the user.
+. `redirect-uri`: Here we are telling the authorization server where to redirect back to after authorization.
+
+The Oauth 2 Provider:
+. `authorization-uri`: Url of the authorization endpoint
+. `token-uri`: Url to request tokens.
+
+NOTE: The Oauth provider stores session in cookies, because of this, you need to give the identity provider
+a different domain. Add a `mmadu.com` entity in your `etc/hosts` to point to `127.0.0.1`.
+
+Once we hae configured this, we hae successfully integrated to Mmadu Identity.
+
+=== Configure Http Security
+
+We declare two pages, an admin page and an page. Admin page is secured with the `edit` authority
+while the index page is secured with the `view` authority.
+
+.Sample Web Security Configuration
+[source,java]
+----
+include::../../samples/java/authorization-springboot/src/main/java/com/gerald/samples/mmadu/springboot/SecurityConfig.java[]
+----
+
+We create an Oauth2 Security Configuration with a custom jwt user service.
+
+=== Creating the JWT User Service
+
+Mmadu Identity was configured to issue jwt tokens, so we can extract the username and authorities
+from the token claims.
+
+.Sample Jwt User Service
+[source,java]
+----
+include::../../samples/java/authorization-springboot/src/main/java/com/gerald/samples/mmadu/springboot/JwtUserService.java[]
+----
+
+=== Running the Application
+
+We can now run the app.
+
+[source,http]
+----
+mvn spring-boot:run
+----
+
+It starts up on port `8080`.
+
+We can login as the `admin` user or `user1`. We will notice that `admin` user
+has access to the index page and the edit page while `user1` has access to the
+index page only.
+
+Congratulations, you have create your first Mmadu Springboot App!

@@ -5,15 +5,13 @@ spring:
       client:
         registration:
           mmadu:
-            client-id: mmadu_admin
-            client-secret: 1234567890
+            client-id: app.client.instance.1
+            client-secret: 1111111111
             authorization-grant-type: authorization_code
-            scope: super_admin
+            scope:
+              - admin
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           mmadu:
-            jwk-set-uri: http://mmadu.com:10084/metadata/0/jwks.json
             authorization-uri: http://mmadu.com:10084/oauth/authorize
             token-uri: http://mmadu.com:10084/clients/token
-server:
-  port: 9050
