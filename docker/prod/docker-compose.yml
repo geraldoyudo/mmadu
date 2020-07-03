@@ -1,7 +1,7 @@
 version: '2'
 services:
   mmadu-user-service:
-    image: geraldoyudo/mmadu-user-service:2.0.1-SNAPSHOT
+    image: geraldoyudo/mmadu-user-service:2.0.1
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - MMADU_USER_DB_URI=mongodb://mongodb/mmadu_db
@@ -16,7 +16,7 @@ services:
       - mongodb
       - mmadu-identity
   mmadu-registration:
-    image: geraldoyudo/mmadu-registration:2.0.1-SNAPSHOT
+    image: geraldoyudo/mmadu-registration:2.0.1
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - MMADU_USER_URL=http://mmadu-user-service:8080
@@ -35,7 +35,7 @@ services:
       - mmadu-identity
       - mmadu-user-service
   mmadu-identity:
-    image: geraldoyudo/mmadu-identity:2.0.1-SNAPSHOT
+    image: geraldoyudo/mmadu-identity:2.0.1
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - MMADU_IDENTITY_DB_URI=mongodb://mongodb/mmadu_db
