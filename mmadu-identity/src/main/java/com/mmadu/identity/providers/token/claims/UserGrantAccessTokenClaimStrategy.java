@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.models.client.MmaduClient;
-import com.mmadu.identity.models.token.ClaimConfiguration;
-import com.mmadu.identity.models.token.ClaimSpecs;
-import com.mmadu.identity.models.token.TokenClaim;
-import com.mmadu.identity.models.token.TokenSpecification;
+import com.mmadu.identity.models.token.*;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import lombok.Builder;
@@ -42,7 +39,7 @@ public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrateg
     }
 
     @Override
-    public TokenClaim generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+    public TokenClaimCreationResult generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
         GrantAuthorization authorization = tokenSpecs.getGrantAuthorization();
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
@@ -53,17 +50,18 @@ public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrateg
         } else {
             scopes = tokenSpecs.getScopes();
         }
-        return UserAccessTokenClaim.builder()
+        TokenClaim claim =  UserAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
                 .activationTime(tokenSpecs.getActivationTime())
                 .expirationTime(tokenSpecs.getExpirationTime())
                 .issueTime(tokenSpecs.getIssueTime())
                 .clientIdentifier(authorization.getClientIdentifier())
-                .audience(client.getResources())
+                .audience(tokenSpecs.getAudience())
                 .tokenIdentifier(specs.getId())
                 .domainId(authorization.getDomainId())
                 .userId(authorization.getUserId())
+                .username(authorization.getUsername())
                 .scope(
                         Optional.ofNullable(scopes).orElse(Collections.emptyList())
                                 .stream()
@@ -72,6 +70,10 @@ public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrateg
                 .authorities(client.isIncludeUserAuthorities() ? authorization.getUserAuthorities() : null)
                 .roles(client.isIncludeUserRoles() ? authorization.getUserRoles() : null)
                 .groups(client.isIncludeUserGroups() ? authorization.getUserGroups() : null)
+                .build();
+        return TokenClaimCreationResult.builder()
+                .specification(tokenSpecs)
+                .claim(claim)
                 .build();
     }
 
@@ -91,6 +93,8 @@ public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrateg
         private String scope;
         @JsonProperty("user_id")
         private String userId;
+        @JsonProperty("username")
+        private String username;
         private List<String> authorities;
         private List<String> roles;
         private List<String> groups;

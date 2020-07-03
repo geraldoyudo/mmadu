@@ -3,6 +3,7 @@ package com.mmadu.identity.providers.token;
 import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.exceptions.TokenCreationException;
+import com.mmadu.identity.models.token.TokenCreationResult;
 import com.mmadu.identity.models.token.TokenSpecification;
 import com.mmadu.identity.providers.token.providers.TokenProvider;
 import com.mmadu.identity.repositories.TokenRepository;
@@ -33,10 +34,12 @@ public class TokenFactoryImpl implements TokenFactory {
 
     @Override
     public Token createToken(TokenSpecification spec) {
-        TokenCredentials credentials = Optional.ofNullable(tokenProviderMap.get(spec.getProvider()))
+        TokenCreationResult result = Optional.ofNullable(tokenProviderMap.get(spec.getProvider()))
                 .orElseThrow(() -> new TokenCreationException("provider not found"))
                 .create(spec);
-        Token token = createBaseToken(spec);
+        TokenSpecification resultantSpec = result.getSpecification();
+        TokenCredentials credentials = result.getCredentials();
+        Token token = createBaseToken(resultantSpec);
         token.setCredentials(credentials);
         token.setTokenIdentifier(credentials.getTokenIdentifier());
         token.setTokenString(credentials.getTokenString());
@@ -50,6 +53,7 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setClientInstanceId(specification.getGrantAuthorization().getClientInstanceId());
         token.setClientIdentifier(specification.getGrantAuthorization().getClientIdentifier());
         token.setUserId(specification.getGrantAuthorization().getUserId());
+        token.setUsername(specification.getGrantAuthorization().getUsername());
         token.setGrantAuthorizationId(specification.getGrantAuthorization().getId());
         token.setAuthorizationGrantType(specification.getGrantAuthorization().getGrantType());
         token.setLabels(specification.getLabels());
@@ -64,6 +68,8 @@ public class TokenFactoryImpl implements TokenFactory {
         token.setActivationTime(specification.getActivationTime());
         token.setActive(specification.isActive());
         token.setCategory(specification.getCategory());
+        token.setIssuer(specification.getIssuer());
+        token.setAudience(specification.getAudience());
         return token;
     }
 }

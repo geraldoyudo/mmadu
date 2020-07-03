@@ -94,6 +94,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
                         .type("access_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         grantAuthorization.addAccessToken(accessToken);

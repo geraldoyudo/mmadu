@@ -3,10 +3,7 @@ package com.mmadu.identity.providers.token.claims;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.models.client.MmaduClient;
-import com.mmadu.identity.models.token.ClaimConfiguration;
-import com.mmadu.identity.models.token.ClaimSpecs;
-import com.mmadu.identity.models.token.TokenClaim;
-import com.mmadu.identity.models.token.TokenSpecification;
+import com.mmadu.identity.models.token.*;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import lombok.Builder;
@@ -33,13 +30,13 @@ public class ClientCredentialsGrantAccessTokenClaimStrategy implements ClaimGene
     }
 
     @Override
-    public TokenClaim generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+    public TokenClaimCreationResult generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
         GrantAuthorization authorization = tokenSpecs.getGrantAuthorization();
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
         ClaimConfiguration configuration = specs.getConfiguration();
 
-        return ClientCredentialsAccessTokenClaim.builder()
+        TokenClaim claim =  ClientCredentialsAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
                 .activationTime(tokenSpecs.getActivationTime())
@@ -50,6 +47,10 @@ public class ClientCredentialsGrantAccessTokenClaimStrategy implements ClaimGene
                 .tokenIdentifier(specs.getId())
                 .domainId(authorization.getDomainId())
                 .authorities(client.getAuthorities())
+                .build();
+        return TokenClaimCreationResult.builder()
+                .specification(tokenSpecs)
+                .claim(claim)
                 .build();
     }
 

@@ -143,6 +143,7 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
                         .type("access_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addAccessToken(accessToken);
@@ -170,6 +171,7 @@ public class ResourceOwnerCredentialsTokenCreationStrategy implements TokenCreat
                         .type("refresh_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addRefreshToken(refreshToken);

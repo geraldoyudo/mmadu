@@ -1,9 +1,8 @@
 package com.mmadu.identity.providers.token.claims;
 
-import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.TokenCreationException;
 import com.mmadu.identity.models.token.ClaimSpecs;
-import com.mmadu.identity.models.token.TokenClaim;
+import com.mmadu.identity.models.token.TokenClaimCreationResult;
 import com.mmadu.identity.models.token.TokenSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class ClaimGeneratorImpl implements ClaimGenerator {
     }
 
     @Override
-    public TokenClaim generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+    public TokenClaimCreationResult generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
         Optional<ClaimGenerationStrategy> strategyOptional = strategies.stream()
                 .filter(s -> s.apply(tokenSpecs, specs))
                 .findFirst();

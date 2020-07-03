@@ -983,7 +983,11 @@ client request. The following are the supported claims:
 
 |user_id
 |The user id of the user that granted the authority
-|Authorization Code, Implicit
+|Authorization Code, Implicit, Password
+
+|username
+|The username of the user that granted the authority
+|Authorization Code, Implicit, Password
 
 |scopes
 |A space delimited list of roles, scopes and authorities granted to the client by the user
