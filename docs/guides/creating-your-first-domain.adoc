@@ -321,6 +321,7 @@ with specified credentials
 
 Now that we have configured our app on the identity provider, we can now test it out.
 
+
 == Accessing our Imaginary App
 
 === Using Client Credentials
