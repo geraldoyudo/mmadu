@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class DefaultOauth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class JwtUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {

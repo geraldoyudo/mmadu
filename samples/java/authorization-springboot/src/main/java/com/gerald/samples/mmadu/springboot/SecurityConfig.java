@@ -8,14 +8,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private DefaultOauth2UserService defaultOauth2UserService;
+    private JwtUserService jwtUserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().hasAuthority("super_admin")
+        http.authorizeRequests()
+                .antMatchers("/edit.html")
+                .hasAuthority("edit")
+                .anyRequest()
+                .hasAuthority("view")
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(defaultOauth2UserService);
+                .userService(jwtUserService);
     }
 }
