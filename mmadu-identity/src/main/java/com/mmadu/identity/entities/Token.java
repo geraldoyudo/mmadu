@@ -22,6 +22,7 @@ public class Token implements DomainPayload {
     private String clientIdentifier;
     private String clientId;
     private String userId;
+    private String username;
     private ZonedDateTime expiryTime;
     private ZonedDateTime activationTime;
     private ZonedDateTime revokedTime;
@@ -36,5 +37,7 @@ public class Token implements DomainPayload {
     private String tokenIdentifier;
     private String tokenString;
     private String category;
+    private String issuer;
+    private List<String> audience;
     private String authorizationGrantType;
 }

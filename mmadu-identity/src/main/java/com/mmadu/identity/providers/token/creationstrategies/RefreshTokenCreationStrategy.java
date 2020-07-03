@@ -103,6 +103,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                         .category(client.getTokenCategory())
                         .scopes(scopes)
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addAccessToken(newAccessToken);
@@ -126,6 +127,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                             .type("refresh_token")
                             .category(client.getTokenCategory())
                             .active(true)
+                            .audience(client.getResources())
                             .build()
             );
 

@@ -87,6 +87,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                         .type("access_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addAccessToken(accessToken);
@@ -108,6 +109,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                             .type("refresh_token")
                             .category(client.getTokenCategory())
                             .active(true)
+                            .audience(client.getResources())
                             .build()
             );
             refreshTokenString = refreshToken.getCredentials().getTokenString();

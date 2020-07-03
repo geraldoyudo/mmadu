@@ -3,11 +3,8 @@ package com.mmadu.identity.providers.token.providers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mmadu.identity.entities.token.JwtTokenCredentials;
-import com.mmadu.identity.entities.token.TokenCredentials;
 import com.mmadu.identity.exceptions.TokenCreationException;
-import com.mmadu.identity.models.token.ClaimConfiguration;
-import com.mmadu.identity.models.token.ClaimSpecs;
-import com.mmadu.identity.models.token.TokenSpecification;
+import com.mmadu.identity.models.token.*;
 import com.mmadu.identity.providers.credentials.CredentialsLoader;
 import com.mmadu.identity.providers.token.claims.ClaimGenerator;
 import com.mmadu.identity.services.security.CredentialService;
@@ -66,7 +63,8 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public TokenCredentials create(TokenSpecification specification) {
+    public TokenCreationResult create(TokenSpecification tokenSpecs) {
+        TokenSpecification specification = tokenSpecs;
         Map<String, Object> properties = Optional.ofNullable(specification.getConfiguration())
                 .orElse(Collections.emptyMap());
         String credentialId = (String) Optional.ofNullable(properties.get(CREDENTIAL_ID_PROPERTY))
@@ -76,12 +74,14 @@ public class JwtTokenProvider implements TokenProvider {
             JWSSigner signer = new RSASSASigner(rsaKey);
             ClaimConfiguration claimConfiguration = (ClaimConfiguration) Optional.ofNullable(properties.get("claim"))
                     .orElse(new ClaimConfiguration());
-            JWTClaimsSet claimsSet = convertToClaimSet(claimGenerator.generateClaim(
+            TokenClaimCreationResult claimResult = claimGenerator.generateClaim(
                     specification, ClaimSpecs.builder()
                             .type(specification.getType())
                             .configuration(claimConfiguration)
                             .build()
-            ));
+            );
+            specification = claimResult.getSpecification();
+            JWTClaimsSet claimsSet = convertToClaimSet(claimResult.getClaim());
 
             SignedJWT signedJWT = new SignedJWT(
                     new JWSHeader.Builder(JWSAlgorithm.RS256)
@@ -92,7 +92,13 @@ public class JwtTokenProvider implements TokenProvider {
             JwtTokenCredentials credentials = new JwtTokenCredentials();
             credentials.setToken(signedJWT.serialize());
             credentials.setJti(claimsSet.getJWTID());
-            return credentials;
+            return TokenCreationResult.builder()
+                    .credentials(credentials)
+                    .specification(
+                            specification.toBuilder()
+                                    .issuer(claimConfiguration.getIssuer())
+                                    .build()
+                    ).build();
         } catch (JOSEException ex) {
             throw new TokenCreationException("could not create token", ex);
         }
