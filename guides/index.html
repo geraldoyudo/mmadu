@@ -27,10 +27,10 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            <li><a href="guides">GETTING STARTED</a></li>
-            <li><a href="reference">DOCS</a></li>
-            <li><a href="community">COMMUNITY</a></li>
-            <li><a href="blog">BLOG</a></li>
+            <li><a href="../guides">GETTING STARTED</a></li>
+            <li><a href="../reference">DOCS</a></li>
+            <li><a href="../community">COMMUNITY</a></li>
+            <li><a href="../blog">BLOG</a></li>
         </ul>
     </div>
 </div>
@@ -89,7 +89,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15553 -Dmmadu.identity.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-identity-2.0.0.jar</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15553 -Dmmadu.identity.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-identity-2.0.1.jar</code></pre>
 </div>
 </div>
 </div>
@@ -107,7 +107,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15551 -Dmmadu.registration.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-user-service-2.0.0.jar</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15551 -Dmmadu.registration.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-user-service-2.0.1.jar</code></pre>
 </div>
 </div>
 </div>
@@ -125,7 +125,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15552 -Dmmadu.user.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-registration-2.0.0.jar</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15552 -Dmmadu.user.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-registration-2.0.1.jar</code></pre>
 </div>
 </div>
 </div>
@@ -148,7 +148,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-identity:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-identity:2.0.1</code></pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -160,7 +160,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-identity:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-identity:2.0.1</code></pre>
 </div>
 </div>
 </div>
@@ -175,7 +175,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-user-service:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-user-service:2.0.1</code></pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -187,7 +187,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15551:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-user-service:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15551:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-user-service:2.0.1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -205,7 +205,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-registration-service:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker pull geraldoyudo/mmadu-registration-service:2.0.1</code></pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -217,7 +217,7 @@ components that enables developers to pick and choose which one they need for th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 -e MMADU_USER_URL=http://localhost:15551 geraldoyudo/mmadu-registration:2.0.0</code></pre>
+<pre class="CodeRay highlight nowrap"><code data-lang="sh">docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 -e MMADU_USER_URL=http://localhost:15551 geraldoyudo/mmadu-registration:2.0.1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -240,7 +240,7 @@ components that enables developers to pick and choose which one they need for th
 <pre class="CodeRay highlight nowrap"><code data-lang="yaml"><span class="key">version</span>: <span class="string"><span class="content">'2'</span></span>
 <span class="key">services</span>:
   <span class="key">mmadu-user-service</span>:
-    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-user-service:2.0.0</span></span>
+    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-user-service:2.0.1</span></span>
     <span class="key">environment</span>:
       - <span class="string"><span class="content">SPRING_PROFILES_ACTIVE=prod</span></span>
       - <span class="string"><span class="content">MMADU_USER_DB_URI=mongodb://mongodb/mmadu_db</span></span>
@@ -255,7 +255,7 @@ components that enables developers to pick and choose which one they need for th
       - <span class="string"><span class="content">mongodb</span></span>
       - <span class="string"><span class="content">mmadu-identity</span></span>
   <span class="key">mmadu-registration</span>:
-    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-registration:2.0.0</span></span>
+    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-registration:2.0.1</span></span>
     <span class="key">environment</span>:
       - <span class="string"><span class="content">SPRING_PROFILES_ACTIVE=prod</span></span>
       - <span class="string"><span class="content">MMADU_USER_URL=http://mmadu-user-service:8080</span></span>
@@ -274,7 +274,7 @@ components that enables developers to pick and choose which one they need for th
       - <span class="string"><span class="content">mmadu-identity</span></span>
       - <span class="string"><span class="content">mmadu-user-service</span></span>
   <span class="key">mmadu-identity</span>:
-    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-identity:2.0.0</span></span>
+    <span class="key">image</span>: <span class="string"><span class="content">geraldoyudo/mmadu-identity:2.0.1</span></span>
     <span class="key">environment</span>:
       - <span class="string"><span class="content">SPRING_PROFILES_ACTIVE=prod</span></span>
       - <span class="string"><span class="content">MMADU_IDENTITY_DB_URI=mongodb://mongodb/mmadu_db</span></span>

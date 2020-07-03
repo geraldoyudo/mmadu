@@ -27,10 +27,10 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            <li><a href="guides">GETTING STARTED</a></li>
-            <li><a href="reference">DOCS</a></li>
-            <li><a href="community">COMMUNITY</a></li>
-            <li><a href="blog">BLOG</a></li>
+            <li><a href="../guides">GETTING STARTED</a></li>
+            <li><a href="../reference">DOCS</a></li>
+            <li><a href="../community">COMMUNITY</a></li>
+            <li><a href="../blog">BLOG</a></li>
         </ul>
     </div>
 </div>
@@ -44,8 +44,577 @@
     <div class="large-9 columns" role="content">
 
         <h1>Authentication: Getting Started with Mmadu and Springboot</h1>
+<div class="sect1">
+<h2 id="overview">Overview</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Springboot is a framework used for building enterprise applications in java. We are going
+to show you how to easily integrate your springboot applications with Mmadu.</p>
+</div>
+<div class="paragraph">
+<p>This sample uses a simple html page to demonstrate how to secure your webpage and access is
+using Oauth 2.0 with Mmadu. This sample is implemented using the native OAuth 2.0 support in Spring Boot.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the_code">The Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can find the <a href="../../samples/java/authorization-springboot/">sample code here</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dependencies">Dependencies</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Spring Boot 2.3.1</p>
+</li>
+<li>
+<p>Spring Boot Starter Oauth2 Client 2.3.1</p>
+</li>
+<li>
+<p>WebJars (jquery and bootstrap)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="approach">Approach</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To implement a simple grant authorization code flow with spring boot, we take
+the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start up Mmadu User Service and Mmadu Identity</p>
+</li>
+<li>
+<p>Configure a domain (app)</p>
+</li>
+<li>
+<p>Create A Spring Boot App</p>
+</li>
+<li>
+<p>Register Mmadu Oauth Client and Provider</p>
+</li>
+<li>
+<p>Configure Http Security</p>
+</li>
+<li>
+<p>Implement a Jwt User Service</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="starting_up_the_services">Starting up the Services</h3>
+<div class="paragraph">
+<p>Here we will use docker-compose to start up the service. See <a href="creating-your-first-domain.html">creating your first domain</a>
+for how to start up the services.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configure_the_domain">Configure the Domain</h3>
+<div class="paragraph">
+<p>Here we configure the user service and identity service with the configurations below:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Obtain an access token before configuring the domain. See <a href="creating-your-first-domain.html">creating your first domain</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, we configure the user service. Here we create two users <code>admin</code> with role <code>admin</code> and <code>user1</code> with role
+<code>user</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">[source,http]</div>
+<div class="content">
+<pre>POST /domains HTTP/1.1
+Host: localhost:15551
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZjBkZjA2ZTQ1NWU0ODJmM2I0YmVkIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3NzM1NTIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5Mzc3NzE1MiwiaWF0IjoxNTkzNzczNTUyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYzcwYTkyNDctNTBjYy00OTUxLWJlY2QtYzdiOTQ3NjAwZjEzIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.ZscT3iKtKHRfPKmr96nFWZRVNCCdoBgdy508jaPRMg7ZhlPh3FgPxo4UxuTWUHx2W3BSQAYpMxNGxmdCVmJmzNAWwNdKkdzwhCpgkNCw-PT1JrWcjuij19XKnGJJ3qV_j2KY72-MfUIpc_3XQcTVkH2AhR9BE7ZZ5HdvDxQ9slqR1YyIryWM5zHcbeJ34VR0UdaRFNhct7VRG6mK9LDtxFQVfnLXf1XJvUH6kq9f-kV9cfn0F3GOvhG4dX4LIXlgqM7vj-tvB8EmjyoRKBmjvymDTGyac8__v5l870v_jEeQgOxssWAhEbCf5jEDEUAQuYiAbdRw9mkhstBVcFpK8A
+Content-Type: application/json
+
+[
+  {
+    "id": "app",
+    "name": "A Sample App",
+    "users": [
+      {
+        "username": "admin",
+        "password": "admin-password",
+        "externalId": 1111111111,
+        "properties": {
+          "nickname": "admin",
+          "email": "admin@myapp.com"
+        }
+      },
+       {
+        "username": "user1",
+        "password": "password",
+        "externalId": 2222222222,
+        "properties": {
+          "nickname": "admin",
+          "email": "user.one@myapp.com"
+        }
+      }
+    ],
+    "authorities": [
+      {
+        "identifier": "view",
+        "name": "View",
+        "description": "View Data"
+      },
+      {
+        "identifier": "edit",
+        "name": "Edit",
+        "description": "Edit Data"
+      }
+    ],
+    "roles": [
+      {
+        "identifier": "admin",
+        "name": "Admin",
+        "description": "A My App Admin"
+      },
+      {
+        "identifier": "user",
+        "name": "User",
+        "description": "A My App User"
+      }
+    ],
+    "roleAuthorities": [
+      {
+        "role": "admin",
+        "authority": "edit"
+      },
+      {
+        "role": "admin",
+        "authority": "view"
+      },
+      {
+        "role": "user",
+        "authority": "view"
+      }
+    ],
+    "userAuthorities": [],
+    "userRoles": [
+      {
+        "user": "admin",
+        "role": "admin"
+      },
+      {
+        "user": "user1",
+        "role": "user"
+      }
+    ],
+    "groups": [],
+    "userGroups": []
+  }
+]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>And then the Identity Service. Here we configure a domain with a client instance with the credentials:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Client Identifier: <code>app.client.instance.1</code>
+Client Secret: <code>1111111111</code></p>
+</div>
+<div class="paragraph">
+<p>We configure the client identifier to support only the <code>admin</code> scope and not any other.
+So when the authorize page is displayed, only the admin scope will be requested.</p>
+</div>
+<div class="paragraph">
+<p>Here also, we do not configure any redirect url for the client, since this is a confidential client, we are allowed to
+specify any redirect uri. If we want to restrict the uri choices, we can add a redirectUri to the
+client instance configuration.</p>
+</div>
+<div class="paragraph">
+<p>The spring boot default redirect uri template is <code>{baseUrl}/login/oauth2/code/{registrationId}</code>, for
+our registration id of <code>mmadu</code>, this means <code><a href="http://localhost:8080/login/oauth2/code/mmad" class="bare">http://localhost:8080/login/oauth2/code/mmad</a></code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">App Domain Identity Service Configuration</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /admin/domains HTTP/1.1
+Host: localhost:10084
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZjBkZjA2ZTQ1NWU0ODJmM2I0YmVkIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3NzM1NTIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5Mzc3NzE1MiwiaWF0IjoxNTkzNzczNTUyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYzcwYTkyNDctNTBjYy00OTUxLWJlY2QtYzdiOTQ3NjAwZjEzIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.ZscT3iKtKHRfPKmr96nFWZRVNCCdoBgdy508jaPRMg7ZhlPh3FgPxo4UxuTWUHx2W3BSQAYpMxNGxmdCVmJmzNAWwNdKkdzwhCpgkNCw-PT1JrWcjuij19XKnGJJ3qV_j2KY72-MfUIpc_3XQcTVkH2AhR9BE7ZZ5HdvDxQ9slqR1YyIryWM5zHcbeJ34VR0UdaRFNhct7VRG6mK9LDtxFQVfnLXf1XJvUH6kq9f-kV9cfn0F3GOvhG4dX4LIXlgqM7vj-tvB8EmjyoRKBmjvymDTGyac8__v5l870v_jEeQgOxssWAhEbCf5jEDEUAQuYiAbdRw9mkhstBVcFpK8A
+Content-Type: application/json
+
+[
+  {
+    &quot;domainId&quot;: &quot;app&quot;,
+    &quot;authorizationCodeType&quot;: &quot;alphanumeric&quot;,
+    &quot;authorizationCodeTTLSeconds&quot;: 600,
+    &quot;maxAuthorizationTTLSeconds&quot;: 3600,
+    &quot;authorizationCodeTypeProperties&quot;: {},
+    &quot;refreshTokenEnabled&quot;: true,
+    &quot;refreshTokenProperties&quot;: {},
+    &quot;accessTokenProvider&quot;: &quot;jwt&quot;,
+    &quot;accessTokenProperties&quot;: {
+      &quot;credentialId&quot;: {
+        &quot;type&quot;: &quot;rsa&quot;
+      }
+    },
+    &quot;issuerId&quot;: &quot;myapp.com&quot;,
+    &quot;clients&quot;: [
+      {
+        &quot;name&quot;: &quot;app.client&quot;,
+        &quot;code&quot;: &quot;app.client.1&quot;,
+        &quot;applicationUrl&quot;: &quot;http://localhost:8080&quot;,
+        &quot;logoUrl&quot;: &quot;http://localhost:8080/logo.png&quot;,
+        &quot;tags&quot;: [
+          &quot;self&quot;
+        ]
+      }
+    ],
+    &quot;clientInstances&quot;: [
+      {
+        &quot;clientCode&quot;: &quot;app.client.1&quot;,
+        &quot;clientType&quot;: &quot;CONFIDENTIAL&quot;,
+        &quot;clientProfile&quot;: &quot;web_app&quot;,
+        &quot;credentials&quot;: {
+          &quot;type&quot;: &quot;secret&quot;,
+          &quot;secret&quot;: &quot;1111111111&quot;
+        },
+        &quot;identifier&quot;: &quot;app.client.instance.1&quot;,
+        &quot;tlsEnabled&quot;: true,
+        &quot;supportedGrantTypes&quot;: [
+          &quot;authorization_code&quot;
+        ],
+        &quot;scopes&quot;: [
+          &quot;admin&quot;
+        ],
+        &quot;resources&quot;: [
+          &quot;app.resource&quot;
+        ]
+      }
+    ],
+    &quot;resources&quot;: [
+      {
+        &quot;identifier&quot;: &quot;app.resource&quot;,
+        &quot;name&quot;: &quot;Sample App Service&quot;,
+        &quot;description&quot;: &quot;Sample App Service&quot;
+      }
+    ],
+    &quot;scopes&quot;: [
+      {
+        &quot;code&quot;: &quot;view&quot;,
+        &quot;name&quot;: &quot;view&quot;,
+        &quot;description&quot;: &quot;View Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;edit&quot;
+        ]
+      },
+      {
+        &quot;code&quot;: &quot;edit&quot;,
+        &quot;name&quot;: &quot;edit&quot;,
+        &quot;description&quot;: &quot;Edit Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;view&quot;
+        ]
+      },
+      {
+        &quot;code&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;admin&quot;,
+        &quot;description&quot;: &quot;Admin Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;view&quot;,
+          &quot;edit&quot;
+        ]
+      }
+    ]
+  }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now that we have a domain, we can now create our app.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating_a_spring_boot_app">Creating a Spring boot App</h3>
+<div class="paragraph">
+<p>You can use maven or gradle to create your app. Our sample app has a static html
+located in the <code>src/main/resource/static</code> folder.</p>
+</div>
+<div class="paragraph">
+<p>The pom is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample Dependencies</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;project</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+         <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;modelVersion&gt;</span>4.0.0<span class="tag">&lt;/modelVersion&gt;</span>
+    <span class="tag">&lt;parent&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;relativePath</span><span class="tag">/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span>
+    <span class="tag">&lt;/parent&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>com.gerald.samples.mmadu<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>authorization-springboot<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;name&gt;</span>authorization-springboot<span class="tag">&lt;/name&gt;</span>
+    <span class="tag">&lt;description&gt;</span>Authorization with Mmadu and Springboot<span class="tag">&lt;/description&gt;</span>
+
+    <span class="tag">&lt;properties&gt;</span>
+        <span class="tag">&lt;java.version&gt;</span>14<span class="tag">&lt;/java.version&gt;</span>
+    <span class="tag">&lt;/properties&gt;</span>
+
+    <span class="tag">&lt;dependencies&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.projectlombok<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>lombok<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;optional&gt;</span>true<span class="tag">&lt;/optional&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;scope&gt;</span>test<span class="tag">&lt;/scope&gt;</span>
+            <span class="tag">&lt;exclusions&gt;</span>
+                <span class="tag">&lt;exclusion&gt;</span>
+                    <span class="tag">&lt;groupId&gt;</span>org.junit.vintage<span class="tag">&lt;/groupId&gt;</span>
+                    <span class="tag">&lt;artifactId&gt;</span>junit-vintage-engine<span class="tag">&lt;/artifactId&gt;</span>
+                <span class="tag">&lt;/exclusion&gt;</span>
+            <span class="tag">&lt;/exclusions&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>spring-boot-starter-oauth2-client<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.webjars<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>jquery<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>3.4.1<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.webjars<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>bootstrap<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>4.3.1<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.webjars<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>webjars-locator-core<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+    <span class="tag">&lt;/dependencies&gt;</span>
+
+    <span class="tag">&lt;build&gt;</span>
+        <span class="tag">&lt;plugins&gt;</span>
+            <span class="tag">&lt;plugin&gt;</span>
+                <span class="tag">&lt;groupId&gt;</span>org.springframework.boot<span class="tag">&lt;/groupId&gt;</span>
+                <span class="tag">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;/plugin&gt;</span>
+        <span class="tag">&lt;/plugins&gt;</span>
+    <span class="tag">&lt;/build&gt;</span>
+
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuring_oauth_client_and_provider">Configuring Oauth Client And Provider</h3>
+<div class="paragraph">
+<p>We create an <code>application.yml</code> and add the following configurations:</p>
+</div>
+<div class="listingblock">
+<div class="title">Spring Boot Configuration for Mmadu Oauth Client and Provider</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">spring</span>:
+  <span class="key">security</span>:
+    <span class="key">oauth2</span>:
+      <span class="key">client</span>:
+        <span class="key">registration</span>:
+          <span class="key">mmadu</span>:
+            <span class="key">client-id</span>: <span class="string"><span class="content">app.client.instance.1</span></span>
+            <span class="key">client-secret</span>: <span class="string"><span class="content">1111111111</span></span>
+            <span class="key">authorization-grant-type</span>: <span class="string"><span class="content">authorization_code</span></span>
+            <span class="key">scope</span>:
+              - <span class="string"><span class="content">admin</span></span>
+            <span class="key">redirect-uri</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">{baseUrl}/login/oauth2/code/{registrationId}</span><span class="delimiter">&quot;</span></span>
+        <span class="key">provider</span>:
+          <span class="key">mmadu</span>:
+            <span class="key">authorization-uri</span>: <span class="string"><span class="content">http://mmadu.com:10084/oauth/authorize</span></span>
+            <span class="key">token-uri</span>: <span class="string"><span class="content">http://mmadu.com:10084/clients/token</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we create a client registration with a registration id of <code>mmadu</code>. We specify the following:</p>
+</div>
+<div class="paragraph">
+<p>The Oauth 2 Client:
+. <code>client-id</code>: Our Client Identifier
+. <code>client-secret</code>: Our Client Secret
+. <code>authorization-grant-type</code>: The grant types supported. We only need authorization code.
+. <code>scope</code>: The scopes that the app will request from the user.
+. <code>redirect-uri</code>: Here we are telling the authorization server where to redirect back to after authorization.</p>
+</div>
+<div class="paragraph">
+<p>The Oauth 2 Provider:
+. <code>authorization-uri</code>: Url of the authorization endpoint
+. <code>token-uri</code>: Url to request tokens.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Oauth provider stores session in cookies, because of this, you need to give the identity provider
+a different domain. Add a <code>mmadu.com</code> entity in your <code>etc/hosts</code> to point to <code>127.0.0.1</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once we hae configured this, we hae successfully integrated to Mmadu Identity.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configure_http_security">Configure Http Security</h3>
+<div class="paragraph">
+<p>We declare two pages, an admin page and an page. Admin page is secured with the <code>edit</code> authority
+while the index page is secured with the <code>view</code> authority.</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample Web Security Configuration</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">com.gerald.samples.mmadu.springboot</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.beans.factory.annotation.Autowired</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.context.annotation.Configuration</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.config.annotation.web.builders.HttpSecurity</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</span>;
+
+<span class="annotation">@Configuration</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SecurityConfig</span> <span class="directive">extends</span> WebSecurityConfigurerAdapter {
+    <span class="annotation">@Autowired</span>
+    <span class="directive">private</span> JwtUserService jwtUserService;
+
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> configure(HttpSecurity http) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        http.authorizeRequests()
+                .antMatchers(<span class="string"><span class="delimiter">&quot;</span><span class="content">/edit.html</span><span class="delimiter">&quot;</span></span>)
+                .hasAuthority(<span class="string"><span class="delimiter">&quot;</span><span class="content">edit</span><span class="delimiter">&quot;</span></span>)
+                .anyRequest()
+                .hasAuthority(<span class="string"><span class="delimiter">&quot;</span><span class="content">view</span><span class="delimiter">&quot;</span></span>)
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(jwtUserService);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We create an Oauth2 Security Configuration with a custom jwt user service.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="creating_the_jwt_user_service">Creating the JWT User Service</h3>
+<div class="paragraph">
+<p>Mmadu Identity was configured to issue jwt tokens, so we can extract the username and authorities
+from the token claims.</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample Jwt User Service</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">com.gerald.samples.mmadu.springboot</span>;
+
+<span class="keyword">import</span> <span class="include">com.nimbusds.jwt.JWT</span>;
+<span class="keyword">import</span> <span class="include">com.nimbusds.jwt.JWTClaimsSet</span>;
+<span class="keyword">import</span> <span class="include">com.nimbusds.jwt.JWTParser</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.core.GrantedAuthority</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.core.authority.SimpleGrantedAuthority</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.oauth2.client.userinfo.OAuth2UserService</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.oauth2.core.OAuth2AuthenticationException</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.oauth2.core.user.DefaultOAuth2User</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.security.oauth2.core.user.OAuth2User</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.stereotype.Component</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.Arrays</span>;
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+<span class="keyword">import</span> <span class="include">java.util.Optional</span>;
+<span class="keyword">import</span> <span class="include">java.util.stream.Collectors</span>;
+
+<span class="annotation">@Component</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">JwtUserService</span> <span class="directive">implements</span> OAuth2UserService&lt;OAuth2UserRequest, OAuth2User&gt; {
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) <span class="directive">throws</span> OAuth2AuthenticationException {
+        <span class="keyword">try</span> {
+            JWT jwt = JWTParser.parse(oAuth2UserRequest.getAccessToken().getTokenValue());
+            JWTClaimsSet claims = jwt.getJWTClaimsSet();
+            <span class="predefined-type">String</span> scope = Optional.ofNullable(claims.getStringClaim(<span class="string"><span class="delimiter">&quot;</span><span class="content">scope</span><span class="delimiter">&quot;</span></span>)).orElse(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>);
+            <span class="keyword">return</span> <span class="keyword">new</span> DefaultOAuth2User(toAuthorities(scope), claims.getClaims(), <span class="string"><span class="delimiter">&quot;</span><span class="content">username</span><span class="delimiter">&quot;</span></span>);
+        } <span class="keyword">catch</span> (<span class="exception">Exception</span> ex) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">IllegalStateException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Could not parse user</span><span class="delimiter">&quot;</span></span>, ex);
+        }
+    }
+
+    <span class="directive">private</span> <span class="predefined-type">List</span>&lt;GrantedAuthority&gt; toAuthorities(<span class="predefined-type">String</span> scope) {
+        <span class="keyword">return</span> <span class="predefined-type">Arrays</span>.stream(scope.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">[ ]</span><span class="delimiter">&quot;</span></span>))
+                .map(SimpleGrantedAuthority::<span class="keyword">new</span>)
+                .collect(Collectors.toList());
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running_the_application">Running the Application</h3>
+<div class="paragraph">
+<p>We can now run the app.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">mvn spring-boot:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It starts up on port <code>8080</code>.</p>
+</div>
+<div class="paragraph">
+<p>We can login as the <code>admin</code> user or <code>user1</code>. We will notice that <code>admin</code> user
+has access to the index page and the edit page while <code>user1</code> has access to the
+index page only.</p>
+</div>
+<div class="paragraph">
+<p>Congratulations, you have create your first Mmadu Springboot App!</p>
+</div>
+</div>
+</div>
 </div>
 
     </div>

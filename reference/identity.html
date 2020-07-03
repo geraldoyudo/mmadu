@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="../css/font-awesome.css">
     <link rel="stylesheet" href="../css/coderay.css">
     <link rel="stylesheet" href="../css/asciidoctor.css">
-    <script src="../../js/vendor/modernizr.js"></script>
-    <script src="../../js/toc.js"></script>
+    <script src="../js/vendor/modernizr.js"></script>
+    <script src="../js/toc.js"></script>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
 <div class="top-bar">
     <div class="top-bar-left">
         <ul class="menu">
-            <a href="../../">Mmadu</a>
+            <a href="../">Mmadu</a>
         </ul>
     </div>
     <div class="top-bar-right">
@@ -52,57 +52,83 @@
 <li><a href="#key_concepts">3. Key Concepts</a>
 <ul class="sectlevel2">
 <li><a href="#oauth_2_0">3.1. Oauth 2.0</a></li>
-<li><a href="#clients_and_authorization">3.2. Clients and Authorization</a></li>
-<li><a href="#resources_and_scopes">3.3. Resources and Scopes</a></li>
+<li><a href="#resources_and_scopes">3.2. Resources and Scopes</a></li>
+<li><a href="#clients_and_authorization">3.3. Clients and Authorization</a></li>
 </ul>
 </li>
-<li><a href="#default_configuration">4. Default Configuration</a></li>
+<li><a href="#default_configuration">4. Default Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#default_port">4.1. Default Port</a></li>
+<li><a href="#admin_client_credentials">4.2. Admin Client Credentials</a></li>
+</ul>
+</li>
 <li><a href="#managing_domains">5. Managing Domains</a>
 <ul class="sectlevel2">
 <li><a href="#configuring_an_identity_provider_for_a_domain">5.1. Configuring an Identity Provider for a Domain</a></li>
 <li><a href="#creating_a_domain_configuration">5.2. Creating a Domain Configuration</a></li>
-<li><a href="#retrieving_a_domain_configuration">5.3. Retrieving a Domain Configuration</a></li>
-<li><a href="#retrieving_all_domain_configurations">5.4. Retrieving all Domain Configurations</a></li>
-<li><a href="#updating_a_domain_configuration">5.5. Updating a Domain Configuration</a></li>
-<li><a href="#removing_a_domain_configuration">5.6. Removing a Domain Configuration</a></li>
+<li><a href="#retrieving_a_domain_configuration_by_id">5.3. Retrieving a Domain Configuration by ID</a></li>
+<li><a href="#retrieving_a_domain_configuration_by_domain_id">5.4. Retrieving a Domain Configuration by Domain ID</a></li>
+<li><a href="#retrieving_all_domain_configurations">5.5. Retrieving all Domain Configurations</a></li>
+<li><a href="#updating_a_domain_configuration">5.6. Updating a Domain Configuration</a></li>
+<li><a href="#removing_a_domain_configuration">5.7. Removing a Domain Configuration</a></li>
 </ul>
 </li>
 <li><a href="#managing_clients">6. Managing Clients</a>
 <ul class="sectlevel2">
 <li><a href="#creating_a_client">6.1. Creating a Client</a></li>
 <li><a href="#retrieving_a_client">6.2. Retrieving a Client</a></li>
-<li><a href="#updating_a_client">6.3. Updating a Client</a></li>
-<li><a href="#removing_a_client">6.4. Removing a Client</a></li>
+<li><a href="#retrieving_clients_by_domain_id">6.3. Retrieving Clients By Domain ID</a></li>
+<li><a href="#updating_a_client">6.4. Updating a Client</a></li>
+<li><a href="#removing_a_client">6.5. Removing a Client</a></li>
 </ul>
 </li>
 <li><a href="#managing_client_instances">7. Managing Client Instances</a>
 <ul class="sectlevel2">
 <li><a href="#creating_a_client_instance">7.1. Creating a Client Instance</a></li>
 <li><a href="#retrieving_a_client_instance">7.2. Retrieving a Client Instance</a></li>
-<li><a href="#updating_a_client_instance">7.3. Updating a Client Instance</a></li>
-<li><a href="#removing_a_client_instance">7.4. Removing a Client Instance</a></li>
+<li><a href="#retrieving_clients_instances_by_domain_id">7.3. Retrieving Clients Instances By Domain ID</a></li>
+<li><a href="#retrieving_clients_instances_by_domain_id_and_client_id">7.4. Retrieving Clients Instances By Domain ID and Client ID</a></li>
+<li><a href="#updating_a_client_instance">7.5. Updating a Client Instance</a></li>
+<li><a href="#removing_a_client_instance">7.6. Removing a Client Instance</a></li>
 </ul>
 </li>
 <li><a href="#managing_scopes">8. Managing Scopes</a>
 <ul class="sectlevel2">
 <li><a href="#creating_a_scope">8.1. Creating a Scope</a></li>
 <li><a href="#retrieving_a_scope">8.2. Retrieving a Scope</a></li>
-<li><a href="#updating_a_scope">8.3. Updating a Scope</a></li>
-<li><a href="#removing_a_scope">8.4. Removing a Scope</a></li>
+<li><a href="#retrieving_all_scopes_in_domain">8.3. Retrieving all Scopes in Domain</a></li>
+<li><a href="#updating_a_scope">8.4. Updating a Scope</a></li>
+<li><a href="#removing_a_scope">8.5. Removing a Scope</a></li>
 </ul>
 </li>
 <li><a href="#managing_resources">9. Managing Resources</a>
 <ul class="sectlevel2">
 <li><a href="#creating_a_resource">9.1. Creating a Resource</a></li>
 <li><a href="#retrieving_a_resource">9.2. Retrieving a Resource</a></li>
-<li><a href="#updating_a_resource">9.3. Updating a Resource</a></li>
-<li><a href="#removing_a_resource">9.4. Removing a Resource</a></li>
+<li><a href="#retrieving_all_resources_in_domain">9.3. Retrieving all Resources in Domain</a></li>
+<li><a href="#updating_a_resource">9.4. Updating a Resource</a></li>
+<li><a href="#removing_a_resource">9.5. Removing a Resource</a></li>
 </ul>
 </li>
-<li><a href="#oauth_2_0_authorization_flows_for_mmadu_identity">10. Oauth 2.0 Authorization Flows for Mmadu Identity</a>
+<li><a href="#managing_credentials">10. Managing Credentials</a>
 <ul class="sectlevel2">
-<li><a href="#authorization_code_grant_flow">10.1. Authorization Code Grant Flow</a></li>
-<li><a href="#client_credentials_grant_flow">10.2. Client Credentials Grant Flow</a></li>
+<li><a href="#generating_a_credential">10.1. Generating a Credential</a></li>
+<li><a href="#obtaining_a_credential_verification_key">10.2. Obtaining a Credential Verification Key</a></li>
+</ul>
+</li>
+<li><a href="#oauth_2_0_authorization_flows_for_mmadu_identity">11. Oauth 2.0 Authorization Flows for Mmadu Identity</a>
+<ul class="sectlevel2">
+<li><a href="#authorization_code_grant_flow">11.1. Authorization Code Grant Flow</a></li>
+<li><a href="#refresh_token">11.2. Refresh Token</a></li>
+<li><a href="#client_credentials_grant_flow">11.3. Client Credentials Grant Flow</a></li>
+<li><a href="#implicit_flow">11.4. Implicit Flow</a></li>
+<li><a href="#resource_owner_credentials_flow">11.5. Resource Owner Credentials Flow</a></li>
+</ul>
+</li>
+<li><a href="#token_verification">12. Token Verification</a>
+<ul class="sectlevel2">
+<li><a href="#jwt_token_signature_verification">12.1. JWT Token Signature Verification</a></li>
+<li><a href="#claim_verification">12.2. Claim Verification</a></li>
 </ul>
 </li>
 </ul>
@@ -111,15 +137,30 @@
 <h2 id="overview">1. Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Mmadu Identity is an authorization server used to grant authorizations to clients of an application. Authorization Servers
+make it possible for a resource owner delegate authorization to clients. Mmadu Identity aims to support most authorization standards
+like Oauth 2.0 and OIDC.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="features">2. Features</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Coming Soon</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Authorization Grant Type Flow</p>
+</li>
+<li>
+<p>Client Credentials Grant Type Flow</p>
+</li>
+<li>
+<p>Jwt Token Generation</p>
+</li>
+<li>
+<p>Implicit Flow</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -129,19 +170,64 @@
 <div class="sect2">
 <h3 id="oauth_2_0">3.1. Oauth 2.0</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Oauth 2.0 is a popular authorization framework for creating interoperable and secure services. To know more about this
+visit the <a href="https://oauth.net/">Oauth 2.0 Website</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clients_and_authorization">3.2. Clients and Authorization</h3>
+<h3 id="resources_and_scopes">3.2. Resources and Scopes</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Resources represent API&#8217;s that another service can utilize. Resources are usually secured and restrict access to users
+with specific authorities.</p>
+</div>
+<div class="paragraph">
+<p>Scopes are a set of authorities that are granted to the client by the user. These authorities are enforced by the
+resource servers. Users delegate authorities to clients in the form of scopes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="resources_and_scopes">3.3. Resources and Scopes</h3>
+<h3 id="clients_and_authorization">3.3. Clients and Authorization</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A client can be a user interface or another service that wants to consume a resource. In order to consume a protected resource,
+that client has to obtain an authorization. There are different ways by which a client can obtain an authorization and these ways
+are defined in authorization standards such as Oauth 2.0 and OIDC. Propietary ways of obtaining authorization can also be possible
+but this makes systems not interoperable with other third party systems.</p>
+</div>
+<div class="paragraph">
+<p>Oauth 2.0 provides four basic ways of obtaining an authorization:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Authorization Code Grant Type</p>
+</li>
+<li>
+<p>Implicit Grant Type</p>
+</li>
+<li>
+<p>Client Credentials Grant Type</p>
+</li>
+<li>
+<p>Resource Owner Credentials.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>All these can be found in the Oauth 2.0 specification.</p>
+</div>
+<div class="paragraph">
+<p>Third party (or first party) users of a service consume a service with client credentials. A <code>Client</code> represents
+details of an application or a company. This <code>Client</code> can have several <code>ClientInstance</code> objects. a <code>ClientInstance</code>
+object is analogous to the Oauth 2 client. This holds credentials and declares a specified and agreed way of accessing
+authorization apis.</p>
+</div>
+<div class="paragraph">
+<p>Based on the Oauth 2.0 specification, <code>ClientInstances</code> can be <code>PUBLIC</code> or <code>CONFIDENTIAL</code>. This states how authentication should be
+handled. <code>PUBLIC</code> clients are not authenticated when they access client apis, while authentication is required for
+<code>CONFIDENTIAL</code> clients.</p>
+</div>
+<div class="paragraph">
+<p>Settings like token expiry or type and allowed grant types can be configured on the <code>ClientInstance</code>. See <a href="#_creating_a_client_instance">[_creating_a_client_instance]</a>.</p>
 </div>
 </div>
 </div>
@@ -149,8 +235,30 @@
 <div class="sect1">
 <h2 id="default_configuration">4. Default Configuration</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="default_port">4.1. Default Port</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Mmadu Registration Service listens to port 15553 by default and this can be configured using the SERVER_PORT environment variable
+or the server.port SpringBoot property.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="admin_client_credentials">4.2. Admin Client Credentials</h3>
+<div class="paragraph">
+<p>A default admin client is created at start up with the client identifier and secret gotten from the environment
+variables <code>MMADU_ADMIN_CLIENT</code> and <code>MMADU_ADMIN_SECRET</code>, or the configuration properties <code>mmadu.admin.client</code>
+and <code>mmadu.admin.secret</code>. The defaults are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Default Admin Client Identifier - <code>mmadu_admin</code></p>
+</li>
+<li>
+<p>Default Admin Client Secret - <code>1234567890</code></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -158,42 +266,906 @@
 <h2 id="managing_domains">5. Managing Domains</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>You can integrate a domain to an identity provider by setting up that domain. The Mmadu Identity service provides
+a one step configuration for setting up a domain.</p>
 </div>
 <div class="sect2">
 <h3 id="configuring_an_identity_provider_for_a_domain">5.1. Configuring an Identity Provider for a Domain</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>POST /admin/domains</code> api call to the domain setup api will configure all entities needed to provision an authorization server for a domain.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>domain_identity.initialize</code></p>
+</div>
+<div class="sect3">
+<h4 id="identity_setup_request_body_fields">5.1.1. Identity Setup Request Body Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].authorizationCodeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization Code Type e.g {alphanumeric, jwt}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].authorizationCodeTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization code validity period</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].maxAuthorizationTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum validity period for every authorization</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].authorizationCodeTypeProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties of the authorization code</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].refreshTokenEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate refresh token for refresh token enabled grants</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].refreshTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties of the refresh token</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].accessTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provider for generating access token e.g (jwt)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].accessTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access token properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].issuerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Issuer id. Will be the used as the iss field in jwt tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].clients</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined clients</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].clientInstances</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined client instances</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].resources</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined resources</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].scopes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of predefined scopes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_identity_setup_request">5.1.2. Sample Identity Setup Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/domains HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI4MjUwOTQsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9pZGVudGl0eS5pbml0aWFsaXplIiwiZXhwIjoxNTkyODI1MDk5LCJpYXQiOjE1OTI4MjUwOTQsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.dHI_0exOeE773Xefp1tvXfTXPRBfq1LEPP4ODogcLsfvKJ4k2dW5_RewsMzJ_DcQ-ewgQRMMJiCtEVLxgwNknQi9LT15Em-L5pi5Tbp-IwMfrPZ5grLwzHXcGtmd-Uxg56N-uDU2kpIaIemtJ8LNsfFCfJDptFDyIjLKRZlRfoKd4HzlvDOFDBcJ7LB3xPQIt3ObY4SqeUqK1-EClKzFWv-CimwxBKZy9E-DSXJ8pX258XOGzDB2JzZZ9gJj10uq11B4HWywN07GWT850Y7Gfi9X-LbwWFMWGjKRqNEYB_hp3gPswRbz57sx5v7qwuPDmnzmDYyymaq3riPMJuy9rg
+Content-Length: 1555
+Host: localhost:8080
+
+[
+  {
+    &quot;domainId&quot;: 1212,
+    &quot;authorizationCodeType&quot;: &quot;alphanumeric&quot;,
+    &quot;authorizationCodeTTLSeconds&quot;: 600,
+    &quot;maxAuthorizationTTLSeconds&quot;: 3600,
+    &quot;authorizationCodeTypeProperties&quot;: {},
+    &quot;refreshTokenEnabled&quot;: true,
+    &quot;refreshTokenProperties&quot;: {},
+    &quot;accessTokenProvider&quot;: &quot;jwt&quot;,
+    &quot;accessTokenProperties&quot;: {
+      &quot;credentialId&quot;: {
+        &quot;type&quot;: &quot;rsa&quot;
+      }
+    },
+    &quot;issuerId&quot;: &quot;mmadu.com&quot;,
+    &quot;clients&quot;: [
+      {
+        &quot;name&quot;: &quot;mmadu&quot;,
+        &quot;code&quot;: 1111,
+        &quot;applicationUrl&quot;: &quot;http://localhost:18000&quot;,
+        &quot;logoUrl&quot;: &quot;http://logo.com/logo.png&quot;,
+        &quot;tags&quot;: [
+          &quot;primary&quot;,
+          &quot;test&quot;
+        ]
+      }
+    ],
+    &quot;clientInstances&quot;: [
+      {
+        &quot;clientCode&quot;: 1111,
+        &quot;clientType&quot;: &quot;CONFIDENTIAL&quot;,
+        &quot;clientProfile&quot;: &quot;web_app&quot;,
+        &quot;credentials&quot;: {
+          &quot;type&quot;: &quot;secret&quot;,
+          &quot;secret&quot;: &quot;1234567890&quot;
+        },
+        &quot;identifier&quot;: &quot;mmadu-admin&quot;,
+        &quot;tlsEnabled&quot;: true,
+        &quot;supportedGrantTypes&quot;: [
+          &quot;authorization_code&quot;,
+          &quot;client_credentials&quot;
+        ]
+      }
+    ],
+    &quot;resources&quot;: [
+      {
+        &quot;identifier&quot;: &quot;user-management-service&quot;,
+        &quot;name&quot;: &quot;User Management Service&quot;,
+        &quot;description&quot;: &quot;User Management Service for Mmadu&quot;
+      }
+    ],
+    &quot;scopes&quot;: [
+      {
+        &quot;code&quot;: &quot;admin&quot;,
+        &quot;name&quot;: &quot;admin&quot;,
+        &quot;description&quot;: &quot;Admin Privileges&quot;,
+        &quot;authorities&quot;: [
+          &quot;a.*.**&quot;,
+          &quot;r.*.**&quot;
+        ]
+      }
+    ]
+  }
+]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_identity_setup_response">5.1.3. Sample Identity Setup Response</h4>
+<div class="paragraph">
+<p>The server responds with a <code>HTTP 204 CREATED</code> response.</p>
+</div>
+<div class="paragraph">
+<p>In addition to one time setup, we have individual apis for configuring and creating different entities.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="creating_a_domain_configuration">5.2. Creating a Domain Configuration</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A domain configuration contains settings on how to properly manage authorization on your domain. A domain can be
+configured by creating a domain configuration object. A <code>POST /admin/repo/domainIdentityConfigurations</code> will create a
+domain configuration.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>identity_config.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_configuration_creation_request_fields">5.2.1. Domain Configuration Creation Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Identity Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format of authorization code generated in authorization_code grant type flow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTypeProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the authorization code generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validity of the authorization code in seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxAuthorizationTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum validity of Granted Authorization in seconds (regardless of any authorization type)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, refresh token will be issued if the flow supports it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating access tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the access token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating refresh tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the refresh token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>issuerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">issuer id of the domain</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_configuration_creation_request">5.2.2. Sample Domain Configuration Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/domainIdentityConfigurations HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fcSP3u2GZWDf44irm9T0Dqqm5-8nrEm40l0mLvPb-H9uIiEKrfB-0kdgDOMtbP8AXCVT9b3ryGBcndCKRP-x6bX0-piVd87q2CrjtyBjRN0wwZ2RpMCS92ebMbh0b9lNyGFpAq1yNfYZfXQuFrF_yuMNFSp5cxeAt7-vSmCbJ6viSvpdwsC0gyp317BJKlXxWEL_Hj2mPFk1VuPC9i3FaJohEAghWkcDCRnIlLqyry1fso6GfhM0TG5l-pxHUn-5gGK0Y9e46_XDE_S-cS0y7Ej_cTDE-bOFz6e4MreStS5T0pEfZw0nWEgoKD-d9HF4c8t8GeSfNYzCXzhs4ZGiBw
+Content-Length: 403
+Host: localhost:8080
+
+{
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+  &quot;authorizationCodeTTLSeconds&quot; : 600,
+  &quot;maxAuthorizationTTLSeconds&quot; : 86400,
+  &quot;refreshTokenEnabled&quot; : true,
+  &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+  &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+  &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+  &quot;authorizationCodeTypeProperties&quot; : { },
+  &quot;accessTokenProperties&quot; : { },
+  &quot;refreshTokenProperties&quot; : { }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_configuration_creation_response">5.2.3. Sample Domain Configuration Creation Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6c
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_a_domain_configuration">5.3. Retrieving a Domain Configuration</h3>
+<h3 id="retrieving_a_domain_configuration_by_id">5.3. Retrieving a Domain Configuration by ID</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a domain configuration by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>identity_config.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_domain_configuration_by_id">5.3.1. Sample Retrieve Domain Configuration by ID</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTkyNTQ4NTE3LCJpYXQiOjE1OTI1NDg1MTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.dm3ftZczJ-wbSfXzrX6HArrE16G2R2HcxgPFtmEqofpUKC-IagKyf0b7BSX77o6qkYlXzCbYJrGu3yR_aFxHJgRSTANzIHKnS9IlTzjEGzENtNLV3v7tRD1QfVtMMz3nBCIt3mtjTraXFGIbgg9Kqw2Ft_KQTIdL-JUtGLBMM0e8E0myTL-CcNsIJG46CprIW001VdZiVOKqw8k79o54Hj1TPpFMqv1KWvQXB4oP0P1licBUh-7nkSXYmKnnPR_UL6Flg7AeoWn500kxbmaKihAjttv2nAbnOYmG3rqCqaNaOlOYPDpduzT0hBwynRGvzKc_g_srioLFbM32ck_-XA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_domain_configuration_by_id_path_parameters">5.3.2. Retrieve Domain Configuration By ID Path Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainIdentityConfigurationId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain identity configuration id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_domain_configuration_by_id_response">5.3.3. Sample Retrieve Domain Configuration By ID Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 743
+
+{
+  &quot;id&quot; : &quot;5eec5ca0d4de4b28a4a41c6e&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+  &quot;authorizationCodeTypeProperties&quot; : { },
+  &quot;authorizationCodeTTLSeconds&quot; : 600,
+  &quot;maxAuthorizationTTLSeconds&quot; : 86400,
+  &quot;refreshTokenEnabled&quot; : true,
+  &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+  &quot;accessTokenProperties&quot; : { },
+  &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+  &quot;refreshTokenProperties&quot; : { },
+  &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e&quot;
+    },
+    &quot;domainIdentityConfiguration&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_domain_configuration_by_id_response_fields">5.3.4. Retrieve Domain Configuration By ID Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Identity Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format of authorization code generated in authorization_code grant type flow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTypeProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the authorization code generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validity of the authorization code in seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxAuthorizationTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum validity of Granted Authorization in seconds (regardless of any authorization type)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, refresh token will be issued if the flow supports it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating access tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the access token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating refresh tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the refresh token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>issuerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">issuer id of the domain</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_all_domain_configurations">5.4. Retrieving all Domain Configurations</h3>
+<h3 id="retrieving_a_domain_configuration_by_domain_id">5.4. Retrieving a Domain Configuration by Domain ID</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a domain configuration by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>identity_config.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_domain_configuration_by_domain_id">5.4.1. Sample Retrieve Domain Configuration by Domain ID</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcucmVhZCIsImV4cCI6MTU5MjU0ODUxNywiaWF0IjoxNTkyNTQ4NTEyLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.KNlBOEEtCNOfcc6O1u3zHhVOhaYOsVKWp9lSfJaJo-TjgJTOotY-yyNRB2Lcs15iqTOs1XZAykEyKWvK1ZOvSV5-_zcOnR2ALcx7ZX5trboJhfqKNsTXJQbkCYhwXrHg48gvxCe6k2xbVQOp0RupBlDGWb47KfgR4RkzadZxkyjZ823I8Q2A3gtYbNea9AtaHN_LgKMT13ZS1zIm2p65VCKXLEPjpYa5_sb-M_XmIX5AuKs7leWExsyS8T6rG5Q8ngiM7p-zOZrmSg3UtFHwD2RqZyEZKf55UNiPF9lTE-ZXcLEr3yxAHgVzZuMuAbERuDN0CCDyQgsTlUt9UDiuTA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_domain_configuration_by_domain_id_query_parameters">5.4.2. Retrieve Domain Configuration By Domain ID Query Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_domain_configuration_by_domain_id_response">5.4.3. Sample Retrieve Domain Configuration By Domain ID Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 743
+
+{
+  &quot;id&quot; : &quot;5eec5ca0d4de4b28a4a41c6f&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+  &quot;authorizationCodeTypeProperties&quot; : { },
+  &quot;authorizationCodeTTLSeconds&quot; : 600,
+  &quot;maxAuthorizationTTLSeconds&quot; : 86400,
+  &quot;refreshTokenEnabled&quot; : true,
+  &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+  &quot;accessTokenProperties&quot; : { },
+  &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+  &quot;refreshTokenProperties&quot; : { },
+  &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f&quot;
+    },
+    &quot;domainIdentityConfiguration&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_domain_configuration_by_domain_id_response_fields">5.4.4. Retrieve Domain Configuration By Domain ID Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Identity Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format of authorization code generated in authorization_code grant type flow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTypeProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the authorization code generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorizationCodeTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validity of the authorization code in seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxAuthorizationTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum validity of Granted Authorization in seconds (regardless of any authorization type)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, refresh token will be issued if the flow supports it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating access tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the access token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating refresh tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the refresh token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>issuerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">issuer id of the domain</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_domain_configuration">5.5. Updating a Domain Configuration</h3>
+<h3 id="retrieving_all_domain_configurations">5.5. Retrieving all Domain Configurations</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET /admin/repo/domainIdentityConfigurations</code> request will retrieve all domain configurations.</p>
+</div>
+<div class="paragraph">
+<p>Authority <code>identity_config.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_all_domains">5.5.1. Sample Retrieve All Domains</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.B5omk2ivqLYDDb7sT8EAuK0bPxC9BVE5GK1PVKjiDtiFMpq_z3XALIifSMbuKpyOzgT1URk-vj0MTw-5M30mYsgxLiyuUNDh1Ypo0ED76sV-AnPoVQddrqD1iCI0tUSWv-rbGT_S42baZnjFGTaVUlqutQzixi_8qWR6wBzTWFTh7LfQZxH4YUCs0ctKLiUqyJNNPZUI6vtOmGwpcWoxZ59sVApdP9v0zlPGxTOuNS7JhJyWxIh_mArOGHsg5USdIWMbQxhyxRZPBMiOdfuB3y8CgspirBmG9Y4aKEIdb7lX83Fs-wJbZVzrY_6_YrO63UkBlcOD21RrBatCzoFRMA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_all_domains_response">5.5.2. Sample Retrieve All Domains Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1356
+
+{
+  &quot;_embedded&quot; : {
+    &quot;domainIdentityConfigurations&quot; : [ {
+      &quot;id&quot; : &quot;5eec5c9fd4de4b28a4a41c6a&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+      &quot;authorizationCodeTypeProperties&quot; : { },
+      &quot;authorizationCodeTTLSeconds&quot; : 600,
+      &quot;maxAuthorizationTTLSeconds&quot; : 86400,
+      &quot;refreshTokenEnabled&quot; : true,
+      &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+      &quot;accessTokenProperties&quot; : { },
+      &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+      &quot;refreshTokenProperties&quot; : { },
+      &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a&quot;
+        },
+        &quot;domainIdentityConfiguration&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations&quot;
+    },
+    &quot;profile&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/profile/domainIdentityConfigurations&quot;
+    },
+    &quot;search&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/search&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 1,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="retrieve_all_domains_response_fields">5.5.3. Retrieve All Domains Response Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Identity Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].authorizationCodeType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format of authorization code generated in authorization_code grant type flow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].authorizationCodeTypeProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the authorization code generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].authorizationCodeTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validity of the authorization code in seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].maxAuthorizationTTLSeconds</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum validity of Granted Authorization in seconds (regardless of any authorization type)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].refreshTokenEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, refresh token will be issued if the flow supports it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].accessTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating access tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].accessTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the access token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].refreshTokenProvider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provider used for generating refresh tokens</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].refreshTokenProperties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties for customizing the refresh token generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.domainIdentityConfigurations.[].issuerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">issuer id of the domain</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_domain_configuration">5.6. Removing a Domain Configuration</h3>
+<h3 id="updating_a_domain_configuration">5.6. Updating a Domain Configuration</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>PATCH</code> request can be used to partially update a domain configuration.</p>
+</div>
+<div class="paragraph">
+<p>Authority <code>identity_config.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_all_domains_2">5.6.1. Sample Retrieve All Domains</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6d HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NTE3LCJpYXQiOjE1OTI1NDg1MTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fjv99JCJqJOx2s1n8spy5xDnQkTks3K-S7f9TnwM72V7PUkqfdAxcStNWsajYQInls9-JldoVIJuRDIfwM_C0Dz8rArlBcIeOtFC4LJyIYj0WRZrrZahbkAKX4dCLWmxCbXtg9VmWxO-oUafeWwfyqGRTZ4yhKO5nAw3Nhq0v6l-26E9vrKanO_XM4vonGX_U13CSKliDiMbS8UDf4XC3pXA8ZYsUoXxI9-K6mmhowRhNyDoWGjzFDRyayJ_uoj_DH8KrZmhcm8WuGkqsYR6d-nZv5nQsaJCYte0QhrBNmXIfW-VniwZ-5cyOhocp4XeX0cUCQGt3uL1Krb3Z-1RLQ
+Content-Length: 35
+Host: localhost:8080
+
+{&quot;authorizationCodeTTLSeconds&quot;:300}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_retrieve_all_domains_response_2">5.6.2. Sample Retrieve All Domains Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_domain_configuration">5.7. Removing a Domain Configuration</h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request can be used to remove a domain configuration.</p>
+</div>
+<div class="paragraph">
+<p>Authority <code>identity_config.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_configuration_delete_request">5.7.1. Sample Domain Configuration Delete Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6b HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.GJ6OnL6AOv3dRIsH5aSTPbvjXfGi0AlN8H2eDP8K15I-_l8qualtWRV_cWonzLv3r1sfJFDsvSYzOzbb0RY34kj30TgWF_wsmmRu-h_fCqXF5-jd0tme7P4P2AEx6Ly8pFsGG_srsx-BF5z7TKvVeE9murHpaJa6rs8PjmiJ28wrsSyvjGDtGcMsiYldkZK943TI67qqUo9yiy25cZCXAYt9n-2QK7AliG6H_YyjQiOoVkJvSJAtYtpB8ZEZNOEWD9lG4y6K5GwWTiz0c8vwdkGWz9934ESOrhhhnrtmdg_othnyE9LEqDgkBHQh02IJIrwuCOgu0ndh2T_UgO_vbQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_configuration_delete_path_variables">5.7.2. Domain Configuration Delete Path Variables</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /admin/repo/domainIdentityConfigurations/{domainIdentityConfigurationId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainIdentityConfigurationId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain identity configuration id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_delete_domain_configuration_response">5.7.3. Sample Delete Domain Configuration Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -202,30 +1174,540 @@
 <h2 id="managing_clients">6. Managing Clients</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Clients hold information about an application. A <code>Client</code> object is a convenient way to group Client Instances.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_client">6.1. Creating a Client</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>POST</code> request will create a client.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_creation_request">6.1.1. Sample Client Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/clients HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.TipPByggX5oRK0E1sqiUmPVDkWmK52op6aqxxEDaVJlu0M-Cb3Zgd-jSWPrQPY-chbhoUlm5OopWqyVZx2ip3My42ALhLwRDkF5ziF43FpdogkWuX0ubDAQgDbD1BRfdeuE226skPwtQe4eOgIJ9vqarbgOynh2AzB8cpL7jE2LDU1H_UMrMKPxQXtAov-LdJbl-lZ4ysd0xi7_dQIX6vecfSAJxMdYwz3CBXAPx4AVrv4tmrd8LnnoK2QgYDG1aRaGwA6MP8c9TphwYclZJd7CCUUwKR5P5mJIZ4b7DqSkBGLS4M8IafCy_dfZZgIxkF1I0ucwLK12yrk42oCiUAA
+Content-Length: 239
+Host: localhost:8080
+
+{
+  &quot;name&quot; : &quot;Email Client&quot;,
+  &quot;category&quot; : &quot;third_party&quot;,
+  &quot;logoUrl&quot; : &quot;http://an.email.com/favicon&quot;,
+  &quot;applicationUrl&quot; : &quot;http://an.email.com&quot;,
+  &quot;code&quot; : &quot;A12345&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_creation_request_fields">6.1.2. Client Creation Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>category</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s category</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of tags to further categorize clients</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logoUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Client&#8217;s logo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>applicationUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s main application home page url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client code</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_creation_response">6.1.3. Sample Client Creation Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7c
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="retrieving_a_client">6.2. Retrieving a Client</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a client by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_retrieval_request">6.2.1. Sample Client Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clients/5eec5caed4de4b28a4a41c7a HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudC5yZWFkIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.nzi-mtw4tp6JzJgcd0SQWxRah8aTC7BKbyx_Gl7on1K9q5IPRmW5RBZfRZr3lUK3DvZgpMZuornEhQ5LVVOgjtdU2Z1J7VXQ-P2pgSefv1iRI_a8O_tfqclQG6jqiDxgVxAQ4NoUdS_ZPeod8M3l2EjtXqUfCPSDkm-WPIYy4TSrbMGPjTAjgQdHXjU5ZttPa6jhD6DmXDFKMvtYIky02bu_H5Njpl4YCNJ51bUDUzhUdnBnF9NNjmnUOC-uiCZNscSfqWut9h45SmiWcTlwhs8vAjpr6AkgSwlsCh6OfdrfkIeuTt8zP3Ik9HILBN3W4CiJDYAKlalJcga1zphm7w
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_retrieval_request_path">6.2.2. Client Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /admin/repo/clients/{clientId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_retrieval_response">6.2.3. Sample Client Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 516
+
+{
+  &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7a&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;name&quot; : &quot;Email Client&quot;,
+  &quot;code&quot; : &quot;A12345&quot;,
+  &quot;applicationUrl&quot; : &quot;http://an.email.com&quot;,
+  &quot;logoUrl&quot; : &quot;http://an.email.com/favicon&quot;,
+  &quot;category&quot; : &quot;third_party&quot;,
+  &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+    },
+    &quot;client&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_client">6.3. Updating a Client</h3>
+<h3 id="retrieving_clients_by_domain_id">6.3. Retrieving Clients By Domain ID</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve clients by domain id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_retrieval_by_domain_request">6.3.1. Sample Client Retrieval by Domain Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clients/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQucmVhZCIsImV4cCI6MTU5MjU0ODUzMSwiaWF0IjoxNTkyNTQ4NTI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.LGo_XFGHlsGAj9ePYtnYcFul0oyUyfuT0BZFS2cD5JuCZTv-yn-hVkoZJc_xpUEBVY-gzJXciRPyGSP5xyzUtRpPlL54J4hiXj18lQjvkBNTBvZw0bi_f9feb_smZTJ2NxOQDj0FT5HmzyG0-uMzJnq-yIGjsj1dTBtokKAru0_rjB_wYae2XkMVrbVSpMSBZ2kDcKLvrv_yHwrtGcCHZZoMc2wvSZj9lhQyvahms9cGuffs3i4HGJeogEPsLJecUpIY_zQNxtSKwGnpm2Vl8oUjVdfWmPJDtZLdMYzp0Ey_zrathkL_B98Jb1utxxuZqX95_e_kyYHFb_jB-BV5-Q
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_retrieval_by_domain_query_parameters">6.3.2. Client Retrieval By Domain Query Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the client</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_retrieval_response_2">6.3.3. Sample Client Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 5326
+
+{
+  &quot;_embedded&quot; : {
+    &quot;clients&quot; : [ {
+      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c51&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5a&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5d&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;code&quot; : &quot;1234&quot;,
+      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
+      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
+      &quot;category&quot; : &quot;test&quot;,
+      &quot;tags&quot; : [ &quot;tags&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c79&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;New Email Client&quot;,
+      &quot;code&quot; : &quot;A12345&quot;,
+      &quot;applicationUrl&quot; : &quot;http://an.email.com&quot;,
+      &quot;logoUrl&quot; : &quot;http://an.email.com/favicon&quot;,
+      &quot;category&quot; : &quot;third_party&quot;,
+      &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7a&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;Email Client&quot;,
+      &quot;code&quot; : &quot;A12345&quot;,
+      &quot;applicationUrl&quot; : &quot;http://an.email.com&quot;,
+      &quot;logoUrl&quot; : &quot;http://an.email.com/favicon&quot;,
+      &quot;category&quot; : &quot;third_party&quot;,
+      &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7b&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;name&quot; : &quot;Email Client&quot;,
+      &quot;code&quot; : &quot;A12345&quot;,
+      &quot;applicationUrl&quot; : &quot;http://an.email.com&quot;,
+      &quot;logoUrl&quot; : &quot;http://an.email.com/favicon&quot;,
+      &quot;category&quot; : &quot;third_party&quot;,
+      &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b&quot;
+        },
+        &quot;client&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/search/findByDomainId?page=0&amp;size=20&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 9,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_client">6.4. Removing a Client</h3>
+<h3 id="updating_a_client">6.4. Updating a Client</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>PATCH</code> request will update a client.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_update_request">6.4.1. Sample Client Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clients/5eec5caed4de4b28a4a41c79 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fu_j1EmwYG7PuRa1wyBjhTXQ6PvajmySZhEpXEUPgMfhUYc5hQO_qBZGs3hLyBoI4CzNf8hdqPB8xKdGCS7P4N_ILIXppTWkov5fYVVVy5y8DpYGOZdAaL2Rfgupe9McD5T5TXSWLc3WRn73ZgrImadzhZM8Zl9fJOdePAMBKyk4dRV7q-DzNFooJh7ZhUOVpcrOcIHgOdLn_UqFzq8T3PzxnyxT9Dd6fAHzeH2s3FkyV92TcUQBXl4muru9Jqh8_5CMDTxaFWzymRuReEnuIC4BGNvFtLolJMBoA61Rs0gUxDKBy2AUkoxnJBYW6Wk85rTnNpI_ioETR7HhVdWuag
+Content-Length: 27
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;New Email Client&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_client_update_path">6.4.2. Sample Client Update Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /admin/repo/clients/{clientId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_update_response">6.4.3. Sample Client Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_client">6.5. Removing a Client</h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request will delete a client.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_removal_request">6.5.1. Sample Client Removal Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clients/5eec5caed4de4b28a4a41c78 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.iU4zyVNmClO0XeKmRYmjUvHcQCTwagMvfyXzH4NgPCs_MKCNvnmk-7GELgRqwf8SfoF2-h38aCIUyTLhzOyBTpzEGoRiyKNZeH1mk3JQEq7x-reFnwYG9jGbWUXIzNpXsRwhvEsHZWhqkOCBprOVoIylPt_NcvA2uuB2HBu8asokoEOKf5_RHBdOcOC23wLMfd1D2GwErSg7L2U5Vn0nka1UuZXT-OlfVR_e-kYroLyfHmuHbJqx56J_lfVKctJlvAatqTHqbsR8Iav-_wDD7VEMjFO_PePYnOurixRBrmYecKZzU7uV1noOMVKwVgY79GS6kbKUZPFxRkrrmcXd8g
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_client_removal_path">6.5.2. Sample Client Removal Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. /admin/repo/clients/{clientId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_removal_response">6.5.3. Sample Client Removal Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -234,30 +1716,703 @@
 <h2 id="managing_client_instances">7. Managing Client Instances</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A Client Instance represents an oauth client. An application can have several client instances for its different
+components if needed.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_client_instance">7.1. Creating a Client Instance</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>POST</code> request will create a client instance.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instance.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_creation_request">7.1.1. Sample Client Instance Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/clientInstances HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.Gxk6RZrTXuOXoH1e228tYAl6y9EWeJGLJC97sp33b_HPymsKQYkrN3OWXQzq_N6Eut1WqE8gIfN-7f5XVfP88wAz_2BoPBEJGVeyOHua6ybp1vJdz0TJOcCyrJGlA7G1cYakP28s7ypY9zYO7FdBGso3J3s0eZtsabBG7ama3rN-TaHn2p6XKCv2xh4O5nSkBu2OzrqyW6060gBOU3YgMm9fG_5bCVPBM83EKw9UWxinjkj5YeSQFT5bf-a0cNJJUJIKzVO693oJXQcXLPWhGWf-ygUwv5G2hZQZAadeJW0z_8CgJfNlteAmpiqFXlJ32AOa76SgorIiCdgaSkRqTQ
+Content-Length: 595
+Host: localhost:8080
+
+{
+  &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
+  &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+  &quot;clientProfile&quot; : &quot;web_app&quot;,
+  &quot;tlsEnabled&quot; : true,
+  &quot;includeUserRoles&quot; : true,
+  &quot;includeUserAuthorities&quot; : true,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;resources&quot; : [ &quot;test&quot; ],
+  &quot;authorities&quot; : [ &quot;admin&quot; ],
+  &quot;redirectionUris&quot; : [ &quot;https://myapp.com/callback&quot;, &quot;https://localhost:8080/callback&quot; ],
+  &quot;allowedHosts&quot; : [ &quot;localhost&quot;, &quot;teamapt.com&quot;, &quot;32.32.182.34&quot; ],
+  &quot;supportedGrantTypes&quot; : [ &quot;authentication_code&quot;, &quot;client_credentials&quot; ],
+  &quot;credentials&quot; : {
+    &quot;type&quot; : &quot;secret&quot;,
+    &quot;secret&quot; : &quot;1234&quot;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_instance_creation_request_fields">7.1.2. Client Instance Creation Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either CONFIDENTIAL or PUBLIC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientProfile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client profile category: either web_app, user_agent_app, or native_app, custom profiles may be used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentials</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Varies</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client credentials</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>identifier</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s generated identifier used for authorization and authentication</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allowedHosts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host names to be used with this client</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redirectionUris</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The redirection urls permitted to be used with this client</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>supportedGrantTypes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The grant types these clients are permitted to use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tlsEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether TLS should be made compulsory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resources</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource ids of the resources the client should have access to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of authorities granted to the client</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>includeUserRoles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include user&#8217;s roles in the token info</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>includeUserAuthorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include user&#8217;s authorities in the token info</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentials.type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s credential type (for now, <code>secret</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentials.secret</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client secret (if credential type is <code>secret</code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_creation_response">7.1.3. Sample Client Instance Creation Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="retrieving_a_client_instance">7.2. Retrieving a Client Instance</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a client instance by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instance.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_request">7.2.1. Sample Client Instance Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudF9pbnN0YW5jZS5yZWFkIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.edpq_tOWuGTfwpVe8homNN4Djszle5sdBBlBGjQuPq9_QKHcGm57QnpTpur1VQiaZoiKNjYNcAin5P6ZvWMQ9V6b8irMgWgKJgvKNlZG3SpRhwFWyvgGCybwcJetLgfColuD_caZtf2LMozNHVsAD2chhjaAxY1WM7XurZgOlZQdj2cX_OtG5w0p4QIZzIkTa6DABEi5fULsZvWs4WAy0XHkn61q3wIxg_SoujDTLIr8Tr551tVk0wdnY6Mo4F-yofriUlExPePIDZpY5Xp1iaKCXFZt_LJZNnLo88Tyzldv4JEe3GKeTb-RGoLZF8KkVh6tn0rkLPPDJXK82uKXSw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_instance_retrieval_request_path">7.2.2. Client Instance Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. /admin/repo/clientInstances/{clientInstanceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientInstanceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client instance ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_response">7.2.3. Sample Client Instance Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1135
+
+{
+  &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c56&quot;,
+  &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
+  &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+  &quot;clientProfile&quot; : &quot;web_app&quot;,
+  &quot;credentials&quot; : {
+    &quot;secret&quot; : &quot;1234&quot;,
+    &quot;type&quot; : &quot;secret&quot;
+  },
+  &quot;identifier&quot; : &quot;1111&quot;,
+  &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
+  &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
+  &quot;tlsEnabled&quot; : true,
+  &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;resources&quot; : [ &quot;test&quot; ],
+  &quot;authorities&quot; : [ &quot;admin&quot; ],
+  &quot;issueRefreshTokens&quot; : true,
+  &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+  &quot;accessTokenTTLSeconds&quot; : 300,
+  &quot;refreshTokenTTLSeconds&quot; : 3600,
+  &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+  &quot;includeUserRoles&quot; : false,
+  &quot;includeUserAuthorities&quot; : false,
+  &quot;includeUserGroups&quot; : false,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+    },
+    &quot;clientInstance&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_client_instance">7.3. Updating a Client Instance</h3>
+<h3 id="retrieving_clients_instances_by_domain_id">7.3. Retrieving Clients Instances By Domain ID</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve client instances by domain id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instane.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_by_domain_request">7.3.1. Sample Client Instance Retrieval by Domain Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5MjU0ODQ4OCwiaWF0IjoxNTkyNTQ4NDgzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.gAlbZQTKDTsTYitJc5NqSBe6idAhMb180d_bLoEpqlNYclVz3hGU0ev4WcIaFGQucmtm8uCI5P1iZUMGcYiaJPXgmXL_yB7zldsyL3GS2FRxRoQak9N4-ZmwndqOceuJs83rfoJ_7auVZ0SS4dBqbmZ7-Bgg9ogk6HFIXV7-7Emv5QhYkmpwfyhUOA_R59uHQgKXAROfV6h4zGHiT5y0-OONui-4y6G5tRhwv6xKrOA_1IpDXZAW0Kp7Xfs4xvraR3fo5xDFutS8CXiF-_P_XATGfpockefuvbzPEpl1OdUt_14hzKyxRR6pZrcO9nP_pmQA3lFVFaXWrrHVW5WYpw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_instances_retrieval_by_domain_query_parameters">7.3.2. Client Instances Retrieval By Domain Query Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the client instance</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_by_domain_response">7.3.3. Sample Client Instance Retrieval by Domain Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 5441
+
+{
+  &quot;_embedded&quot; : {
+    &quot;clientInstances&quot; : [ {
+      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c50&quot;,
+      &quot;clientId&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+      &quot;clientProfile&quot; : &quot;web_app&quot;,
+      &quot;credentials&quot; : {
+        &quot;secret&quot; : &quot;1234&quot;,
+        &quot;type&quot; : &quot;secret&quot;
+      },
+      &quot;identifier&quot; : &quot;1111&quot;,
+      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
+      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
+      &quot;tlsEnabled&quot; : true,
+      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;resources&quot; : [ &quot;test&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;issueRefreshTokens&quot; : true,
+      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;accessTokenTTLSeconds&quot; : 300,
+      &quot;refreshTokenTTLSeconds&quot; : 3600,
+      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+      &quot;includeUserRoles&quot; : false,
+      &quot;includeUserAuthorities&quot; : false,
+      &quot;includeUserGroups&quot; : false,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+        },
+        &quot;clientInstance&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c56&quot;,
+      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
+      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+      &quot;clientProfile&quot; : &quot;web_app&quot;,
+      &quot;credentials&quot; : {
+        &quot;secret&quot; : &quot;1234&quot;,
+        &quot;type&quot; : &quot;secret&quot;
+      },
+      &quot;identifier&quot; : &quot;1111&quot;,
+      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
+      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
+      &quot;tlsEnabled&quot; : true,
+      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;resources&quot; : [ &quot;test&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;issueRefreshTokens&quot; : true,
+      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;accessTokenTTLSeconds&quot; : 300,
+      &quot;refreshTokenTTLSeconds&quot; : 3600,
+      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+      &quot;includeUserRoles&quot; : false,
+      &quot;includeUserAuthorities&quot; : false,
+      &quot;includeUserGroups&quot; : false,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+        },
+        &quot;clientInstance&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c59&quot;,
+      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
+      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+      &quot;clientProfile&quot; : &quot;web_app&quot;,
+      &quot;credentials&quot; : {
+        &quot;secret&quot; : &quot;1234&quot;,
+        &quot;type&quot; : &quot;secret&quot;
+      },
+      &quot;identifier&quot; : &quot;43e622d5-b661-4c95-89fe-f020ce32bc7d&quot;,
+      &quot;redirectionUris&quot; : [ &quot;https://myapp.com/callback&quot;, &quot;https://localhost:8080/callback&quot; ],
+      &quot;allowedHosts&quot; : [ &quot;localhost&quot;, &quot;teamapt.com&quot;, &quot;32.32.182.34&quot; ],
+      &quot;tlsEnabled&quot; : true,
+      &quot;supportedGrantTypes&quot; : [ &quot;authentication_code&quot;, &quot;client_credentials&quot; ],
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;resources&quot; : [ &quot;test&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;issueRefreshTokens&quot; : true,
+      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;accessTokenTTLSeconds&quot; : 300,
+      &quot;refreshTokenTTLSeconds&quot; : 3600,
+      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+      &quot;includeUserRoles&quot; : true,
+      &quot;includeUserAuthorities&quot; : true,
+      &quot;includeUserGroups&quot; : false,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
+        },
+        &quot;clientInstance&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5c&quot;,
+      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c5a&quot;,
+      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+      &quot;clientProfile&quot; : &quot;web_app&quot;,
+      &quot;credentials&quot; : {
+        &quot;secret&quot; : &quot;1234&quot;,
+        &quot;type&quot; : &quot;secret&quot;
+      },
+      &quot;identifier&quot; : &quot;1111&quot;,
+      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
+      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
+      &quot;tlsEnabled&quot; : true,
+      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;resources&quot; : [ &quot;test&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;issueRefreshTokens&quot; : true,
+      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;accessTokenTTLSeconds&quot; : 300,
+      &quot;refreshTokenTTLSeconds&quot; : 3600,
+      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+      &quot;includeUserRoles&quot; : false,
+      &quot;includeUserAuthorities&quot; : false,
+      &quot;includeUserGroups&quot; : false,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
+        },
+        &quot;clientInstance&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/search/findByDomainId?page=0&amp;size=20&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 4,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_client_instance">7.4. Removing a Client Instance</h3>
+<h3 id="retrieving_clients_instances_by_domain_id_and_client_id">7.4. Retrieving Clients Instances By Domain ID and Client ID</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve client instances by domain id and client id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instane.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_by_domain_and_client_request">7.4.1. Sample Client Instance Retrieval by Domain and Client Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/search/findByDomainIdAndClientId?domainId=1&amp;clientId=5eec5c82d4de4b28a4a41c4e HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5MjU0ODQ4OCwiaWF0IjoxNTkyNTQ4NDgzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.gAlbZQTKDTsTYitJc5NqSBe6idAhMb180d_bLoEpqlNYclVz3hGU0ev4WcIaFGQucmtm8uCI5P1iZUMGcYiaJPXgmXL_yB7zldsyL3GS2FRxRoQak9N4-ZmwndqOceuJs83rfoJ_7auVZ0SS4dBqbmZ7-Bgg9ogk6HFIXV7-7Emv5QhYkmpwfyhUOA_R59uHQgKXAROfV6h4zGHiT5y0-OONui-4y6G5tRhwv6xKrOA_1IpDXZAW0Kp7Xfs4xvraR3fo5xDFutS8CXiF-_P_XATGfpockefuvbzPEpl1OdUt_14hzKyxRR6pZrcO9nP_pmQA3lFVFaXWrrHVW5WYpw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="client_instances_retrieval_by_domain_and_client_query_parameters">7.4.2. Client Instances Retrieval By Domain and Client Query Parameters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the client instance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_retrieval_by_domain_and_client_response">7.4.3. Sample Client Instance Retrieval by Domain and Client Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1590
+
+{
+  &quot;_embedded&quot; : {
+    &quot;clientInstances&quot; : [ {
+      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c50&quot;,
+      &quot;clientId&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
+      &quot;clientProfile&quot; : &quot;web_app&quot;,
+      &quot;credentials&quot; : {
+        &quot;secret&quot; : &quot;1234&quot;,
+        &quot;type&quot; : &quot;secret&quot;
+      },
+      &quot;identifier&quot; : &quot;1111&quot;,
+      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
+      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
+      &quot;tlsEnabled&quot; : true,
+      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;resources&quot; : [ &quot;test&quot; ],
+      &quot;authorities&quot; : [ &quot;admin&quot; ],
+      &quot;issueRefreshTokens&quot; : true,
+      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;accessTokenTTLSeconds&quot; : 300,
+      &quot;refreshTokenTTLSeconds&quot; : 3600,
+      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
+      &quot;includeUserRoles&quot; : false,
+      &quot;includeUserAuthorities&quot; : false,
+      &quot;includeUserGroups&quot; : false,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+        },
+        &quot;clientInstance&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/search/findByDomainIdAndClientId?page=0&amp;size=20&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 1,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_a_client_instance">7.5. Updating a Client Instance</h3>
+<div class="paragraph">
+<p>A <code>PATCH</code> request will update a client instance.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instance.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_update_request">7.5.1. Sample Client Instance Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5f HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.MYFtVBkiubph-kMnzycbZa6v5dRWrQc5TLI9xi7Ot4xMHbEwaPaagW_BseBsEVgb5CutDuAIeAoJKqqqxa7A9JU7Lpa8lSsWEkj9RclZ3oiziGLm31Wc4hEGP9KQQa4S7eNGB4cj7nDlzrVIByfv8FHo_p7jYXEpKVDfykRTdVw06-WfMS4v5rMQ7DkLXfY95JAagoQ9922yPwR17kdLzLDSXD6f3lhe313VJ19IQxy4bn_TOS4IMPfUa-ZJKrb136uMepc-yz7G0ptbke8RropLvaVyU4QIc_FIzo_UAVVzsdbH1pi3YL1sMTQCket45qUv8T0rP_ClUKHqtJV2HA
+Content-Length: 20
+Host: localhost:8080
+
+{&quot;tlsEnabled&quot;:false}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_update_path">7.5.2. Sample Client Instance Update Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. /admin/repo/clientInstances/{clientInstanceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientInstanceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client instance ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_update_response">7.5.3. Sample Client Instance Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_client_instance">7.6. Removing a Client Instance</h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request will delete a client instance.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>client_instance.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_removal_request">7.6.1. Sample Client Instance Removal Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c53 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.e4x3AzO2MmsqrksneTgck4s9yATDclwAxLch2WaUNgztH9_ratPtU2o9yCOu3rZAZ-xUvL0LPwP3UDXaP2Bo2mLo-IX0PjNw2fvXfAqKcDiTQcmmW8FMdkJpuMZhOmX-3BIH2iDcgtVEsk6UNuaTQvrEecth6GUUuwRVYo_O7RNYNCV8TBzbqSarDKDBtEcXPKTN0fxfWK7GBwl-HMvgfg6dIwzEz8tD-FqEy7XfLcLJZoz6SB6pnZxaA_Mn7aJEPqqN96_NfpPlxxsRZdi7tHs6c4vqB5eXNGK6qEB1Nq9QQuWfPP5Ij9P5VJGm87veCJx6k_bneQ9o7Na5L3M5dQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_removal_path">7.6.2. Sample Client Instance Removal Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. /admin/repo/clientInstances/{clientInstanceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clientInstanceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client instance ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_client_instance_removal_response">7.6.3. Sample Client Instance Removal Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -266,30 +2421,427 @@
 <h2 id="managing_scopes">8. Managing Scopes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Scopes are sets of authorities that the user can grant to a client. In Mmadu, a scope contains an array
+of authorities (can be roles or authorities) that the client wants to obtain from the user. The user sees
+the list of scopes at the authorization page and can select which scopes to approve and which to reject.</p>
+</div>
+<div class="paragraph">
+<p>Linking scopes to authorities provide a convenient way of grouping authorities in a manner that is presentable to the user.</p>
+</div>
+<div class="paragraph">
+<p>Assuming a client is requesting for four authorities from the user <code>create_book</code>, <code>edit_book</code>, <code>create_class</code> and <code>edit_class</code>.
+To present this to the user, an admin can create two scopes: <code>manage_book</code> and <code>manage_class</code>. The <code>manage_book</code> will be linked
+to the <code>create_book</code> and <code>edit_book</code> authorities while the <code>manage_class</code> will be linked to the <code>create_class</code> and <code>edit_class</code> authority.</p>
+</div>
+<div class="paragraph">
+<p>At the authorizaton page, the user will see that he needs to select from two scopes <code>manage_class</code> and <code>manage_book</code> instead of looking through
+four authorities. Any scope that the user approves, the authorities are automatically approved. The scope code and authority identifiers will be
+added to the scope field in the authorization.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_scope">8.1. Creating a Scope</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>POST</code> request will create a scope.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>scope.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_creation_request">8.1.1. Sample Scope Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/scopes HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5jcmVhdGUiLCJleHAiOjE1OTI2MjY0NjYsImlhdCI6MTU5MjYyNjQ2MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.QubtgzJqQzLyjXwqahOTXb1M63iuWjdDQX2cbR5hk0xb1vAlkrDekF5gEY5KC4fnWbEbx_7j_fCkpFT0tqpjI0fM4-1KPDN1veBfzOY1vHveU19I9KPXE9EmJt7CvXjRx28kG1h0xazZl_iQvOeMAET_hEVr8vawul22JPTzjJU9CJOqPgh-PxDUCspKC9_sIwksBnwcNYU-ENXdamsC84dKPeQ6Ieoi2diqvJvKCKelTaX141dp7wbTZlt30Y1WZr3MEHMv2QqduQDdVYpeyENUWvLoVB2osP2ypifai2FRBcWu7-RwDeml1bwYwefDS9aOo8G-UkCre2EIfrIXTQ
+Content-Length: 150
+Host: localhost:8080
+
+{
+  &quot;name&quot; : &quot;Email Scope&quot;,
+  &quot;code&quot; : &quot;test.mail&quot;,
+  &quot;description&quot; : &quot;Email Contacts&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;authorities&quot; : [ &quot;view_users&quot; ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scope_creation_request_fields">8.1.2. Scope Creation Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scope ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scope&#8217;s name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scopes identification code</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>authorities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of authorities and roles associated with this scope</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scopes description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the scope</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_creation_response">8.1.3. Sample Scope Creation Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="retrieving_a_scope">8.2. Retrieving a Scope</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a client by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>scope.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_retrieval_request">8.2.1. Sample Scope Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/scopes/5eed8d1efb781170c68bafaa HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnNjb3BlLnJlYWQiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.i-T2c66VisO0yC4tNA8DOcSDJO335AeWunUIFV0othOkHm9eSKRaX6ETwT4Ga2ppKzZ1KFty3spY7AZckUmKLjaqVnzhxfA4Tj3D5qses_d_FPWuATcQVpuDxy_XeRn-WShKZtRCeXfQiv3hKbWDu4GZHVPuC5_ddiZWGr7p3aEMoGm6LuEr4eSpFEAsce5H_RaKcFPkaym7ToXN0_JX0S9INgYdeZPuXrLHCSAjNpvBe_5xfWXgQWz9yiAyRunXRHHW4J4kQ_OnXqPPQqsh_NwtiWMUnfoZ6IKyB5_4jKYFnj5WZYTUmGnePRnyXq7z9c4k_Dh74MQGdHFEu8UeMA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scope_retrieval_request_path">8.2.2. Scope Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. /admin/repo/scopes/{scopeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scopeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scope ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_retrieval_response">8.2.3. Sample Scope Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 424
+
+{
+  &quot;id&quot; : &quot;5eed8d1efb781170c68bafaa&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;code&quot; : &quot;test.mail&quot;,
+  &quot;name&quot; : &quot;Email Scope&quot;,
+  &quot;description&quot; : &quot;Email Contacts&quot;,
+  &quot;authorities&quot; : [ &quot;view_users&quot; ],
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa&quot;
+    },
+    &quot;scope&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_scope">8.3. Updating a Scope</h3>
+<h3 id="retrieving_all_scopes_in_domain">8.3. Retrieving all Scopes in Domain</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve all scopes in a domain</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>scope.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_all_domain_scopes_retrieval_request">8.3.1. Sample All Domain Scopes Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/scopes/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5yZWFkIiwiZXhwIjoxNTkyNjI2NDY3LCJpYXQiOjE1OTI2MjY0NjIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.g4r2jHk9GURPSOhJT1oaHBAZsgnfSI1BRlOl59RFwRl_CddiRWKZhSInpxN81ZIlbSEorz0Fa63pygBzpPoKautNORdFQiFWCjZtgvOm_aT-rPqF5GuBEZKg17G8uuVcDZXDSw8rrlcF7CpGNsuwBjIlFFap1sZaSVurY3jIo6-AglAnIS8pj1Ro9ASSNLmZ0Uwul1QO6qs6hqSa75W2jD68LqtrrqpgiuYQupqNOeO3Q-d-fXQ7_0N5yano3xqMGDmb4FeobOJwBwCAChE2wvHcdHiUeva2g3br9ZlXrDEW_wVNEICdYyJrU-xSDcRM0us_4ybqXHuvyYPq1rg1Wg
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scope_all_domain_scopes_retrieval_query_parameter">8.3.2. Scope All Domain Scopes Retrieval Query Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the scope</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_all_domain_scopes_retrieval_response">8.3.3. Sample All Domain Scopes Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1628
+
+{
+  &quot;_embedded&quot; : {
+    &quot;scopes&quot; : [ {
+      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa6&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;code&quot; : &quot;test.mail&quot;,
+      &quot;name&quot; : &quot;Email Scope&quot;,
+      &quot;description&quot; : &quot;Email Contacts&quot;,
+      &quot;authorities&quot; : [ &quot;view_users&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6&quot;
+        },
+        &quot;scope&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa8&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;code&quot; : &quot;test.mail&quot;,
+      &quot;name&quot; : &quot;New Email&quot;,
+      &quot;description&quot; : &quot;Email Contacts&quot;,
+      &quot;authorities&quot; : [ &quot;view_users&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8&quot;
+        },
+        &quot;scope&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa9&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;code&quot; : &quot;test.mail&quot;,
+      &quot;name&quot; : &quot;Email Scope&quot;,
+      &quot;description&quot; : &quot;Email Contacts&quot;,
+      &quot;authorities&quot; : [ &quot;view_users&quot; ],
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9&quot;
+        },
+        &quot;scope&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/search/findByDomainId&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_scope">8.4. Removing a Scope</h3>
+<h3 id="updating_a_scope">8.4. Updating a Scope</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>PATCH</code> request will update a scope.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>scope.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_update_request">8.4.1. Sample Scope Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/scopes/5eed8d1efb781170c68bafa8 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS51cGRhdGUiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.mxNuAgIEajBmz5llQKLwqZdqCj16Hf5g2fhZredGqktSPZHKeTcn6WC4LgyIgEti8Sk3BnNGPf02SV2hXNxckvYbdOVGF7PEq--NFxiXzaCelEYw71wuRrXjadiTUg314g5k5zOYhbnyVySkwOtD-11stSxgiEG0syI16I50oJUyHVY47Zno5CRH1jBSlellT6om3D4Lw2chrQvAV1hg07lRD203CKx95z9XMsuoGtx-a8_f2o7pQjjnXtL3EeDwMmitOCQRnV5Zmx2xrDsCTVZEOtrRfovKVrkqL9CheDSHwi_uZyPJWD3dR4Jw2zMLys6gOtQbYXXuZ9r48aaSHA
+Content-Length: 20
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;New Email&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_update_path">8.4.2. Sample Scope Update Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. /admin/repo/scopes/{scopeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scopeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scope ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_update_response">8.4.3. Sample Scope Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_scope">8.5. Removing a Scope</h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request will delete a scope.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>scope.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_removal_request">8.5.1. Sample Scope Removal Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/scopes/5eed8d1efb781170c68bafa7 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5kZWxldGUiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.mgpdh52Vy5qSv-X4JEJvpmo8tDZmJUZlauk_jBfuFrn8czLX_gyBJNWSJCApQ26EuSAIsHZG9hcLo4BIICX0TMiGxMVg5R0JEs-_A-RIpB5Gdpxt3OP-5qVmBmEK2Usn41cNxuSLlWkPDVTQMBz98SdK_oIgGIx8IX5o0HMABf16BxxBnxaqvtirjLKMdQFslzJRNQZ4Uj2-dq813IF7YjZAXKibmEGptO-1EC3XXiDcL6ZRNPKDNWQMcr1xOl5YaLCW41pEc-5xonFhlQF2C9gUL1cRPz8rfbfySlO1KaSdlW_Bvda99R7nTeS52_RMvnqjXN-PiY7iG8W_alGgJQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_removal_path">8.5.2. Sample Scope Removal Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. /admin/repo/scopes/{scopeId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scopeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scope ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_scope_removal_response">8.5.3. Sample Scope Removal Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -298,48 +2850,1025 @@
 <h2 id="managing_resources">9. Managing Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>Resources represent individual API&#8217;s or services that clients can access. Every client instance specifies a
+list of resource identifiers that it is supposed to utilize. These resources must be created and maintained using these apis.
+On authorization, the list of resource identifiers that the client has access to will be included in the <code>aud</code> claim
+of the tokens. This claim can be enforced by resource servers by checking that its resource identifier is contained in the
+<code>aud</code> claim before processing the request.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_resource">9.1. Creating a Resource</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>POST</code> request will create a resource.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>resource.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_creation_request">9.1.1. Sample Resource Creation Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/resources HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5jcmVhdGUiLCJleHAiOjE1OTI1NDg1MzEsImlhdCI6MTU5MjU0ODUyNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.KOEbcct562z5B9WtD4Qflgvqdioq6sIxKmR3F9eogDhea25ekUEnzU-BLe86XLNUKTD3Eh_pOKeIrOzkoN2yDZz5wkMvkE9XOf1jb4f1E7Cc6ot3fBEuxjDGUhiBZYAX88zfcn7WN3DKiUU58CR93o2pEWmqP6YEocVkk7oROVtWOurgaVWjfGz6MuC-aw397sEoOgRu9zM-jZcs0Ze5ti8pdITFScuTIPWP9cU_BqrVIPl0N-qEAx4GLT2uGa95RfOQq8c6F1z0Vb-9aqRWHq0HGBaKnS7vohupzefBJ_R6oGc8N6VAHixvuqWEkcxmlIElGXutCTQrz8mfXW6ZSw
+Content-Length: 121
+Host: localhost:8080
+
+{
+  &quot;name&quot; : &quot;email&quot;,
+  &quot;identifier&quot; : &quot;email-service&quot;,
+  &quot;description&quot; : &quot;Email Microservice&quot;,
+  &quot;domainId&quot; : &quot;1&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="resource_creation_request_fields">9.1.2. Resource Creation Request Fields</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resource ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource&#8217;s name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>identifier</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource&#8217;s identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A description of the resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_creation_response">9.1.3. Sample Resource Creation Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c77
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="retrieving_a_resource">9.2. Retrieving a Resource</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve a client by id.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>resource.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_retrieval_request">9.2.1. Sample Resource Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/resources/5eec5caed4de4b28a4a41c76 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlc291cmNlLnJlYWQiLCJleHAiOjE1OTI1NDg1MzEsImlhdCI6MTU5MjU0ODUyNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.VEzZHeOI1VDuXv51bjN8tAU-Ar2umWz6JelbDwGnKfYcNO1_9KDni3ZpCdg5FIuxWNFln1XL35-s3zl1nekdCwEWAc_bH3DMBLhLWkq1xwFWXJkpOWKMbpMIhJJuZVMuNadQWQR3ip3U2lt0V35e4n_V7mX7Lttb_toHkHGEvJRVyHUh0pxx4br4IRd-sGrHfIIbrxWba5JqA1d1fr7NSjvGGir6XQ_rw2JYdtoNaGx4X1Adr4lq625bmu47K1kwg3zcmHFfl9Nm6BJckY4hYpiVON7zBfypX3Jbaw8_atZipis_0BN0CvRW0ZvSpQoFZRQ2K-FLs4Fv28b9YSKBpQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="resource_retrieval_request_path">9.2.2. Resource Retrieval Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. /admin/repo/resources/{resourceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resourceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_retrieval_response">9.2.3. Sample Resource Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 404
+
+{
+  &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c76&quot;,
+  &quot;domainId&quot; : &quot;1&quot;,
+  &quot;identifier&quot; : &quot;email-service&quot;,
+  &quot;name&quot; : &quot;email&quot;,
+  &quot;description&quot; : &quot;Email Microservice&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76&quot;
+    },
+    &quot;resource&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_resource">9.3. Updating a Resource</h3>
+<h3 id="retrieving_all_resources_in_domain">9.3. Retrieving all Resources in Domain</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>GET</code> request will retrieve all resources in a domain</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>resource.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_all_domain_resources_retrieval_request">9.3.1. Sample All Domain Resources Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/resources/search/findByDomainId?domainId=1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5yZWFkIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.RkNyNlmDvWJo4SrUtNTdS9Bs_Ye5jTuLmGaT7fUaNZiYydEciNzWOFB8wxo7gkkq1zN87qbH55UXe1Uji45-0WkB7z4OKLrucXVtGbFJEw4P2va-va0SJrFUC68vrJgQCn3pSyYv_4tJ3pBn_v9wrp-lg3bqv5Z2iMyYTbI7-d0fu0ziRMHfaj4AIshqvCtjEntvIqXigJOMhc8Gh6Mq9RvdPYwFp1MdNolWF-NvpfF8hrOlWmoj51L7BX-DTicPqsEzIlqvoGfv1c5TO9ogESHljEL9AQ2taGzOVaVvWnPPISq3bP1ReFF2pzKGWLLNuUtB5kGy0JT9DZaGIG2CGA
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="resource_all_domain_resources_retrieval_query_parameter">9.3.2. Resource All Domain Resources Retrieval Query Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID of the resource</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_all_domain_resources_retrieval_response">9.3.3. Sample All Domain Resources Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 3917
+
+{
+  &quot;_embedded&quot; : {
+    &quot;resources&quot; : [ {
+      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c4f&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c52&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c55&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c58&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5b&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5e&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;test&quot;,
+      &quot;name&quot; : &quot;test&quot;,
+      &quot;description&quot; : &quot;test resource&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5cadd4de4b28a4a41c74&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;email-service&quot;,
+      &quot;name&quot; : &quot;New Email Resource&quot;,
+      &quot;description&quot; : &quot;Email Microservice&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c75&quot;,
+      &quot;domainId&quot; : &quot;1&quot;,
+      &quot;identifier&quot; : &quot;email-service&quot;,
+      &quot;name&quot; : &quot;email&quot;,
+      &quot;description&quot; : &quot;Email Microservice&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75&quot;
+        },
+        &quot;resource&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75&quot;
+        }
+      }
+    } ]
+  },
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/search/findByDomainId?page=0&amp;size=20&quot;
+    }
+  },
+  &quot;page&quot; : {
+    &quot;size&quot; : 20,
+    &quot;totalElements&quot; : 8,
+    &quot;totalPages&quot; : 1,
+    &quot;number&quot; : 0
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_resource">9.4. Removing a Resource</h3>
+<h3 id="updating_a_resource">9.4. Updating a Resource</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>A <code>PATCH</code> request will update a resource.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>resource.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_update_request">9.4.1. Sample Resource Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/resources/5eec5cadd4de4b28a4a41c74 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS51cGRhdGUiLCJleHAiOjE1OTI1NDg1MzAsImlhdCI6MTU5MjU0ODUyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Hg6YExsT1MTjovECZLUDvAbwVdJ4vAkXFQbA0ek8avQ_zMQ0mCWuRAT9TpWC_jKL-MYLayCq7QBSJtryp-KimYVAASIp-Z83VCOabNDRsz5E9EJFAuP8hfDdYy8CNUQwFcoWwMqxR1cYKX8_BOjUo7AiAw8GPshlfDF0STdD0wNF_QkSQzcdv26QXSIYJOcZsX5QkP29sA3luB0Hp4vOptRjEcc9a0xHyxcWhRAzHmlcT2NlE_3Py6Y5ApDiSkqAu3gmNNLxTFXfz4kzbk7poVC7-az2o_3EaM4eKY_O3gUF5GHvNSggf7ZLemue9f1-eU7G_BdXbotkgOzzsSW6Vw
+Content-Length: 29
+Host: localhost:8080
+
+{&quot;name&quot;:&quot;New Email Resource&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_update_path">9.4.2. Sample Resource Update Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. /admin/repo/resources/{resourceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resourceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_update_response">9.4.3. Sample Resource Update Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing_a_resource">9.5. Removing a Resource</h3>
+<div class="paragraph">
+<p>A <code>DELETE</code> request will delete a resource.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>resource.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_removal_request">9.5.1. Sample Resource Removal Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/resources/5eec5cadd4de4b28a4a41c73 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5kZWxldGUiLCJleHAiOjE1OTI1NDg1MzAsImlhdCI6MTU5MjU0ODUyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.TSmhTt7BjQSNxyFCAN11WXKaIdYNPZhi0iiYviBOREd-GtaA06zwLy33WHDZBqmrpCE2Y6cfLLSaWI2QXnZ6geqIBQ6RAoTgT-ZnedNEhICdwKfwv3K5Fal1Ngu7WYmkLgp5eX5-0_n9OizF2KrS_0b11oIEQull6V8P-Vh9yvjfUXpDNaW6ryAj1g_XJSCc1czhCja0fjnw8yqIWdenFjkR1Tb4nKTfWXto3f95zCcOmWLwt1lRrsD0DUGHJNHk2WWESg4MUwdtSQGWDdPRBpC7t6-OX9qnHvYQm9FIhg8mtMw87pAbi80xPzmb4Ks6UfI-EEdaC6rVSE-uDR0maw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_removal_path">9.5.2. Sample Resource Removal Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. /admin/repo/resources/{resourceId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resourceId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The resource ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_resource_removal_response">9.5.3. Sample Resource Removal Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="oauth_2_0_authorization_flows_for_mmadu_identity">10. Oauth 2.0 Authorization Flows for Mmadu Identity</h2>
+<h2 id="managing_credentials">10. Managing Credentials</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="authorization_code_grant_flow">10.1. Authorization Code Grant Flow</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
-</div>
+<p>Credentials are secrets that are used for encryption, hashing or signature creation and verification. Credentials are
+used in different aspects of Mmadu Identity, so it is important to know how to manage them.</p>
 </div>
 <div class="sect2">
-<h3 id="client_credentials_grant_flow">10.2. Client Credentials Grant Flow</h3>
+<h3 id="generating_a_credential">10.1. Generating a Credential</h3>
 <div class="paragraph">
-<p>Coming Soon</p>
+<p>To Generate a credential, we make a <code>POST</code> request with the type and properties of the credential we want to generate.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/domains/1/credentials HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jcmVkZW50aWFsLmNyZWF0ZSIsImV4cCI6MTU5MjU0ODUyNCwiaWF0IjoxNTkyNTQ4NTE5LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.C8n13eYVq9QHkzF4JOPgTSNMY1-rDS0BdU6XMR_AuypofkqXsHZRQGxTsS0pZWBEh3OCbjU8ZzXZLjievxCNRCLpcUj3JAECh5wFI4Y2xKQum5scwPRjT-5tKgxgpJiMsXD_3AJxfj74KwJ3b9WALh0JzfXGqkfMmW8PAN7Wn9NwZY0qscGhqxUho540t33eURYCNHJrql0N_9Z0zK2Iki2bfcjJa2vGUuTITMzDyOJn1mBC_FkNQNd5xHKUV7X1SVbiRYZSeDRfseSHEdonw0T3HOvPQN7KK3MQjvaC4ZmNvRp6awXdofz7jS1OKSkdrY9AWL5584HGzXziWkF2Ug
+Accept: text/plain
+Content-Length: 22
+Host: localhost:8080
+
+{
+  &quot;type&quot; : &quot;rsa&quot;
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Only RSA Keys are supported at this time.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="obtaining_a_credential_verification_key">10.2. Obtaining a Credential Verification Key</h3>
+<div class="paragraph">
+<p>A credential verification key is a key used for verifying signatures created by its counter part private key.</p>
+</div>
+<div class="paragraph">
+<p>A <code>GET</code> request will obtain a credential verification key by credential id. A hex encoded string is returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/domains/1/credentials/5eece0d538447d41c377dca3/verificationKey HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1ODIzNTcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jcmVkZW50aWFsLnJlYWQiLCJleHAiOjE1OTI1ODIzNjIsImlhdCI6MTU5MjU4MjM1NywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.lqo_HZUjPAnuE_yRm1cugIg-gJmQET1Pe8YHnADTeRRYmeu85a91_HJt4hVouHunOTH94Y2CrI9IeoYN4sqpoYi0IOnVcYO-ag8TBvbU7xuAovI13Baino5Qx02i0WLJdBTaFBP-gyftQwPVMYKF1SXchx8L31CxJW0zPVrluo7mWfG547GM31x4MK_Fu4YdE9o3_HYYTRyNDXbvj4XtdEAR3d_sKxhBRDQSB3kHsDS1HNqA_nBrFAEVLUCdgcpwZpAng_mD0lYh6iIcuJuSmAaoOAsWn84D2CzlEIAcI48dcGyNYTYy9lrcxByg3E2dMfvoquaqrIe4Ng2S9r_fCQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. /admin/domains/{domainId}/credentials/{credentialId}/verificationKey</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain for the credentials to be crated in</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentialId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the credential id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth_2_0_authorization_flows_for_mmadu_identity">11. Oauth 2.0 Authorization Flows for Mmadu Identity</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here, we will itemize the steps to utilize the various grants.For each of these flows, you must have
+a client identifier, <code>client_id</code> and a client secret <code>client_secret</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="authorization_code_grant_flow">11.1. Authorization Code Grant Flow</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Redirect to user the authorize endpoint: <code>http://<host>:<port>/oauth/authorize?client_id=<client-id>&response_type=code&redirect_uri=<redirect-uri></code>
+The <code>redirect_uri</code> parameter may be omitted if you have configured <strong>one and only one</strong> <code>redirect_uri</code> on the <code>ClientInstance</code>.</p>
+</li>
+<li>
+<p>The user will first sign in if a session does not exist.After this, an authorization page will be displayed.</p>
+</li>
+<li>
+<p>The user selects the scopes to be approved, and checks the "I want to authorize this application" and clicks "Submit".</p>
+</li>
+<li>
+<p>The user is redirected to a the callback uri specified in the <code>redirect_uri</code> parameter or in the configuration of the <code>ClientInstance</code>.
+Here, a <code>code</code> query parameter is passed to the client as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>http://localhost:8080/oauth/callback?code=sdAd2adsfWaC</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client implements the callback to extract the authorization code in the <code>code</code> query param and use it to request for an access token.This is as
+shown below:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Confidential Client Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;code=K5s0BKyfF4</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+CONFIDENTIAL clients are required to provide an authentication when accessing the token api.PUBLIC clients are not
+required to do so.If no authentication is provided, you need to add the <code>client_id</code> parameter as shown below:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Public Client Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&amp;code=K5s0BKyfF4&amp;client_id=sample.client</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a <code>redirect_uri</code> was specified, then a <code>redirect_uri</code> parameter is required.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If authorization is successful, an access_token and a refresh token is returned.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODVkMzQ2ODdiZDI2MmU3Njk4Y2IyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMzUzMjEsInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJhLiouKiogc3VwZXJfYWRtaW4gci5zdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMzNTYyMSwiaWF0IjoxNTkzMzM1MzIxLCJqdGkiOiIxNWMzMjJlZC02MWI1LTQzNWEtOWVmMy02YzBjOThhMDQ4OTYiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.hdgo4JnswWI63N-vI-BDEgukBaVsHttqRw3s_JCLmbjISzU3z9fOq4y8y_mZa4sZc3tVHf9xETVefBfjLZl2pIGMRLdjYZac0_iPcOYzmXjP9eOcnYCjhjMTb02ZYhYpWRQt83gWUt1U4apoxQstXW0sKbdaqCa_oaDbg0drW-ComCg0cssgXsePMHqlvQUjn6GC7IdYgNh-FBSpNOiQ1XLOS4O62EgA75nO6OOwt4bTRdNLM9mBFRb8av89W4fzAKnL0l4_KXZM6hmFamvfCLS4FRBegBy463zvRSSHodhx75Q6r5kn_MgXToMWOt-urOjXiCehB2E7boynw9tbmw</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593335621</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">refresh_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">oxz46a4uaq11oC47FWQy</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">15c322ed-61b5-435a-9ef3-6c0c98a04896</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="refresh_token">11.2. Refresh Token</h3>
+<div class="paragraph">
+<p>The refresh token grant type is used for requesting new <code>access_tokens</code>.If a <code>refresh_token</code> is included in the <code>access_token</code> response
+then you can use the refresh token to obtain a new <code>access_token</code> once the old one expires.This endpoint generates a new <code>access_token</code> and
+<code>refresh_token</code>.This also supports Public and Confidential Clients.</p>
+</div>
+<div class="listingblock">
+<div class="title">Confidential Client Refresh Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&amp;refresh_token=oxz46a4uaq11oC47FWQy</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Public Client Refresh Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&amp;refresh_token=oxz46a4uaq11oC47FWQy&amp;client_id=sample.client</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="client_credentials_grant_flow">11.3. Client Credentials Grant Flow</h3>
+<div class="paragraph">
+<p>In client credentials, the client requests a token on behalf of itself.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Make a request to the token endpoint as shown:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Confidential Client Credentials Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Public Client Credentials Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&amp;client_id=sample.client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A token response will be returned if authentication is successful.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmODJiOWQxZmI2OTI3NDg3ODI3NmYwIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTMzMjIzOTcsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzMyNTk5NywiaWF0IjoxNTkzMzIyMzk3LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiYTVkYzJjMzktZjc4Zi00ZWU4LWE4OGQtNTU5NGEzNGUyNzU0IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.TpsXmmqc8DKA-5lx12W6JK5QXpbzpjkqPEBgU5oj__I9151v9bXX16xGF2A_gGoHK7JunGZ7OjuPFaPyS7rahuq-9KNAjQ_ZbBncytkVtNUf-h0WS-E3zM-5qnMTf5THU0zeTgii04U-rMgOgr3Qy6LKnYZraA1iUakX-MmR1Vkubf807im3_YqfjP3w86Xv62ipUuWiL64d-PZiYnM20s3lp5wHAWsFTFJPVHMPk0K96CHppDzYHh6WZF_kF9c5lPxqZFBmu8QY3Xfz8somAEq4jbldB7GW2W72gs7MTXtkO0omdedf3cwFItfQFWCHhLg8EyWhXUZu4SFqV5uThA</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593325997</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">a5dc2c39-f78f-4ee8-a88d-5594a34e2754</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Refresh tokens are not enabled for client_credentials grant type.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implicit_flow">11.4. Implicit Flow</h3>
+<div class="paragraph">
+<p>In implicit flow, the token details are returned in the redirect uri. The second step
+of obtaining a token is removed. This grant type requires no authorization.</p>
+</div>
+<div class="paragraph">
+<p>The state parameter is required and should be set by the client. This value is opaque and is
+returned when calling the redirect uri.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client is redirected to the authorization page as shown below:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Implicit Authorization Endpoint example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">http://localhost:15553/oauth/authorize?client_id=mmadu_admin&amp;response_type=token&amp;state=di298383sdfad</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After the user authorizes the request, the user is redirected back to the client redirect uri with token parameters
+as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="title">Implicit Authorization Endpoint Redirection Url Example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">http://localhost:18005/oauth/callback?access_token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZGUzNWYyOWU0OTM0MmY2ODhkZjQ4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM2OTcxMTksInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiJzdXBlcl9hZG1pbiIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5MzY5NzQxOSwiaWF0IjoxNTkzNjk3MTE5LCJqdGkiOiJlYWU3ZjYwNS0zNzc1LTQ4NzAtOWVkNC1mNzAyNzEwNWEzOWUiLCJjbGllbnRfaWQiOiJtbWFkdV9hZG1pbiJ9.l3UXI10Wwh6JTstziv_IXaVBDV0HGUKzDAK8nbnLEd2uprWcF40h8y34QCIrvuKRW0y9XzMf5d77kMJeCsGyCG_HWEquEBZdecawlpR3R9cuSZNsK96qO3grltms2xHP0FwMXvu2hAZEdJHIBSqf5ECwjYM_8kqVzxU8h5yQyBFUwVKgS0clqcHg7nn_hT8JETicptBLVgxR6vCH8H9a5qIS5LNu_7vxrwp5nMlE7oXbbcgb6NHqYvdhEy9aby6gwJ-zbpMBidHT65rQGS8AakS03d21GfJmUTwPw9yszXyF6JrrI5aTL-4FCV72WknIprZKryjVRwy2TsAvUia6AQ&amp;scope=super_admin&amp;state=di298383sdfad&amp;token_type=bearer&amp;expires_in=1593697419</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The client should implement the call back to extract the token details and clear the sensitive details from the url.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resource_owner_credentials_flow">11.5. Resource Owner Credentials Flow</h3>
+<div class="paragraph">
+<p>This flow involves making a token request with the credentials of the resource owner. This is useful
+in creating custom login screens that reside on third party applications. Because credentials are collected
+in third party applications there is a risk of exposing user credentials.</p>
+</div>
+<div class="paragraph">
+<p>The flow is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client displays a form for the user to input credentials.</p>
+</li>
+<li>
+<p>The client collects this input and makes a token request to authenticate user and obtain tokens.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Confidential Client Resource Owner Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&amp;username=admin&amp;password=password&amp;scope=super_admin+visitor</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Public Client Resource Owner Token Request</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&amp;username=admin&amp;password=password&amp;scope=super_admin+visitor&amp;client_id=my.client</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If Authorization succeds a token response is returned. A <code>refresh_token</code> is added to the
+response if the domain supports it.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">access_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWVmZTA1YjUyMGVhMWEzZWZlODFjMDEyIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTM3MDU5MDksInVzZXJfaWQiOiIxMTExIiwic2NvcGUiOiIiLCJpc3MiOiJtbWFkdS5jb20iLCJleHAiOjE1OTM3MDYyMDksImlhdCI6MTU5MzcwNTkwOSwianRpIjoiNjliN2JjMDUtMGQ1OC00ZjQyLTg4YzUtYzg0ZDYwMzhiMWViIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.xndAPkdwanAgwDE1LC2RuzaVLjbwwwgcBAnrUg49VLheOXBKcNPzPno4OlYXnSjl1zG9tIo-DocdNiFpsV34Fv41jIm_TcmzY8lmHEs1eznrolk1wcvze5Hjg9omD1smQMNgUUhTONOnJRDy-MXK3cmfgacQHb8Tlx94GfYxv611YsArLhHBhY_RN4-ClRtdsHP06Qndt8n5Mteo0QFxDc_UcdUfCXQ13WRG0JBIILq8yuqnVJ7jRrzxsvQpPyN0lpE79a4lvONJhxshy3Nwy4iCIkL9ONSmNiwHgrIaRWc-1gfRSGJYYf7z2DpS7PzEZlFeQhVSipPCA86WZWx0wg</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">expires_in</span><span class="delimiter">&quot;</span></span>: <span class="integer">1593706209</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">refresh_token</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Os3v8kb4RZYMEBxERly4</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">69b7bc05-0d58-4f42-88c5-c84d6038b1eb</span><span class="delimiter">&quot;</span></span>
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If a <code>refresh_token</code> is returned, the client can request for a new access token once the old one expires
+using the <a href="#refresh_token">refresh token grant</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="token_verification">12. Token Verification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once access tokens are issued to a client, the client uses the access token to access a resource. A resource needs to be able to:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Verify that the token comes from the correct source</p>
+</li>
+<li>
+<p>Verify that the token has sufficient claims to access the resource.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="jwt_token_signature_verification">12.1. JWT Token Signature Verification</h3>
+<div class="paragraph">
+<p>Mmmadu Identity provides two approaches to obtaining verification keys.</p>
+</div>
+<div class="sect3">
+<h4 id="from_credentials">12.1.1. From Credentials</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Retrieve the <a href="#_retrieving_a_domain_configuration_by_domain_id">domain configuration by domain id</a></p>
+</li>
+<li>
+<p>Get the <code>credentialId</code> property of the <code>accessTokenProperties</code> and use this to obtain the verification key using the
+<a href="#_obtaining_a_credential_verification_key">credential verification key retrieval api</a></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="from_authorization_server_metadata">12.1.2. From Authorization Server Metadata</h4>
+<div class="paragraph">
+<p>Mmadu Identity exposes a JWK uri for clients to dynamically obtain the verification key. A <code>GET</code> request will obtain
+the jwk set needed to verify the access tokens.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">GET /metadata/my-domain-id/jwks.json HTTP/1.1
+Host: localhost:15553</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This returns a standard JWK set JSON response that can be used to create the verification key.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">keys</span><span class="delimiter">&quot;</span></span>: [
+        {
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">kty</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">RSA</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">e</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">AQAB</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">kid</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">123</span><span class="delimiter">&quot;</span></span>,
+            <span class="key"><span class="delimiter">&quot;</span><span class="content">n</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">3bXAtU2gab_UTpVIOXA-bnJ8eJwhuClodIQyYiy3-mZIMJ3Bzh5nh017lDzma0HySzSZEfNcwiCeYXZ8EVcMNskT794FjCdMgXA_wcfr_A58d1trSr43_u5z3C5HaBF_AIU5vMLiLgi7-HpAoXB1gjFuPY6Rlr0O46dqZVoNpKq3Xo9KMe_FK6sTYneimDdcgDgyv60_CmysKGx4HGae0floU1Kad7YfCUw_K6yAJS-d4UvDte0IVYqdAC-kee-07nwFVq3OSO3L6wtVz_KSST4-wafNiBwhkqdhPS2VBhacUZWH7LAKDEeYvH14J7Knk2ZoAkMO_Ng9fMnwux-26w</span><span class="delimiter">&quot;</span></span>
+        }
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="claim_verification">12.2. Claim Verification</h3>
+<div class="paragraph">
+<p>Cliams are associated with each token generated.  The resource server can read these claims and use it to authenticate a
+client request. The following are the supported claims:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. Token Claims</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Claim</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Supported Grant Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domain_id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The domain id of the user and the client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sub</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Authorization ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aud</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audience, the list of resource identifiers that this token is meant for</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iss</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The issuer of this token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The expiry date of this token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The time at which the token was issued</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nbf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The time at which the token becomes active</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">authorities</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authorities of the client instance (configured when creating the client instance)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Credentials</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jti</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The token identifier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">client_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The client identifier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user id of the user that granted the authority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization Code, Implicit, Password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the user that granted the authority</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization Code, Implicit, Password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">scopes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A space delimited list of roles, scopes and authorities granted to the client by the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization Code, Implicit</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

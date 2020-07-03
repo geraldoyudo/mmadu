@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="../css/font-awesome.css">
     <link rel="stylesheet" href="../css/coderay.css">
     <link rel="stylesheet" href="../css/asciidoctor.css">
-    <script src="../../js/vendor/modernizr.js"></script>
-    <script src="../../js/toc.js"></script>
+    <script src="../js/vendor/modernizr.js"></script>
+    <script src="../js/toc.js"></script>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
 <div class="top-bar">
     <div class="top-bar-left">
         <ul class="menu">
-            <a href="../../">Mmadu</a>
+            <a href="../">Mmadu</a>
         </ul>
     </div>
     <div class="top-bar-right">
@@ -44,12 +44,227 @@
     <div class="large-9 columns" role="content">
 
         <h1>Api Convention Reference</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#http_response_codes">1. HTTP Response Codes</a></li>
+<li><a href="#authorization">2. Authorization</a></li>
+<li><a href="#roles_and_authorities">3. Roles and Authorities</a></li>
+<li><a href="#creating_applications_to_integrate_with_mmadu_services">4. Creating Applications to Integrate with Mmadu Services</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>This documentation explains the various standards and conventions used for implementing
 mmadu web services.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="http_response_codes">1. HTTP Response Codes</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Coming Soon.</p>
+<p>Mmmadu Api&#8217;s follow Http response standards. Some of them are itemized below:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. HTTP Response Codes for Mmadu Services</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Response Code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">200 OK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Successful With Response Body</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">201 CREATED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Successful creation of resource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">204 NO CONTENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Successful, Response is empty</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">400 BAD REQUEST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid Input Arguments</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">500 INTERNAL SERVER ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System Error</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="authorization">2. Authorization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All Mmadu services use an instance of Mmadu Identity as an authorization provider (yes, including mmadu identity itself).
+Domain with id <code>0</code> is  configured for Mmadu Operations and it contains all resources needed for Mmadu services to
+function properly.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Deleting Domain <code>0</code> will have serious consequences. Seriously don&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>At set up of a Mmadu Instance, the identity provider provisions an admin client with id and secret configured using the
+environment variables <code>MMADU_ADMIN_CLIENT</code> and <code>MMADU_ADMIN_SECRET</code>, or the configuration property <code>mmmadu.admin.client</code> and
+<code>mmadu.admin.secret</code>.</p>
+</div>
+<div class="paragraph">
+<p>This client has <strong>ultimate</strong> authorities and should only be used sparingly. It is advisable that this client be used to
+create other clients with streamlined authorities.</p>
+</div>
+<div class="paragraph">
+<p>In order to access the API&#8217;s, take the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a Client ID and Secret with the appropriate authorities (we will hear more about authorities in the next section).</p>
+</li>
+<li>
+<p>Using the client credentials token endpoint, request for a token. Hear we call the
+<code>POST /clients/token</code> api with basic authentication using your client identifier and secret as shown below.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>An <code>access_token</code> will be returned which you can now use to access protected resources. The authorities
+embedded in the <code>access_token</code> are those you set in the <code>authorities</code> property of your <code>ClientInstance</code>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To to access Mmadu Resource Api&#8217;s you need to use a client created at the mmadu domain (domain <code>0</code>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="roles_and_authorities">3. Roles and Authorities</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All Mmadu resources are protected by authorities. At startup, Mmadu user service creates
+one role called <code>r.super_admin</code> and associates it with one authority called <code>a.*.**</code>.</p>
+</div>
+<div class="paragraph">
+<p>Mmadu uses a names-pacing strategy for authorities. The first segment is the resource, while the second,
+and subsequent segments represents sub resources. For example, the <code>user.read</code> authority signifies that it is
+a read permission for user resources. Roles are prefixed with <code>r.</code> while authorities are prefixed with <code>a.</code>.</p>
+</div>
+<div class="paragraph">
+<p>Mmadu uses an ant-style matching system to determine if a user has a specific authority, so the authority
+<code>a.*.**</code> represents an absolute authority as it matches all authorities.</p>
+</div>
+<div class="paragraph">
+<p>An authority specifier is made up of three segments:
+. The first is the prefix <code>a.</code> stating that it is an authority.
+. The second segment represents the domain id. So <code>a.1.*.**</code> represents an ultimate authority for resources in domain <code>.
+. The third segment represents the resource itself i.e. `user</code>, <code>group</code>, <code>client</code>, e.t.c.</p>
+</div>
+<div class="paragraph">
+<p>The ant-style matching is a grouping mechanism which enables us to arrange authorities in hierarchies and group them.
+This ensures that users with admin level authorities do not have large security tokens. In this system,
+an authority of <code>a.*.user.*</code> means all user resources accross all domains</p>
+</div>
+<div class="paragraph">
+<p>In addition to one role and one authority created in Domain <code>0</code> (for Mmadu, don&#8217;t you ever forget). Admins are free to
+create more roles and authorities and assign to users. Assigning user specific fine grained roles and authorities enables
+the administrator fine tune which user has access to specific aspects of Mmadu resources.</p>
+</div>
+<div class="paragraph">
+<p>For example, if I want a member of my staff to handle third party client registration for a domain
+with id <code>app</code>, I perform the following task:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a User in Domain <code>0</code>.</p>
+</li>
+<li>
+<p>Create an two authorities <code>a.app.client.create</code> and <code>a.app.client_instance.create</code>.</p>
+</li>
+<li>
+<p>Create a Role <code>r.app.client_manager</code> assign to the authorities above.</p>
+</li>
+<li>
+<p>Assign the newly created role to the User.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With this, the staff will only be able to create clients and client instances in <code>app</code> domain.
+If I want another user to have full access to client and client instances, I simply create two authorities
+<code>a.app.client.*</code> and <code>a.app.client_instance.*</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating_applications_to_integrate_with_mmadu_services">4. Creating Applications to Integrate with Mmadu Services</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Having understood the nature of the authorities, you can create client instances to integrate with Mmadu Services.
+Take the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a Client</p>
+</li>
+<li>
+<p>Create a Client Instance with the appropriate authorities needed (use ant patterns if possible).</p>
+</li>
+<li>
+<p>Get obtain an access token as described in <a href="#authorization">Authorization</a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Go through the Mmadu Identity Reference for more information about how to create clients and client instances.</p>
+</div>
+<div class="paragraph">
+<p>In the subsequent documentations, all operations will include the authority required to access them.</p>
+</div>
+</div>
 </div>
 
     </div>
