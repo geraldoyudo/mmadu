@@ -20,7 +20,7 @@ using Oauth 2.0 with Mmadu. This sample is implemented using the native OAuth 2.
 
 == The Code
 
-You can find the link:../../samples/java/authorization-springboot/[sample code here]
+You can find the https://github.com/geraldoyudo/mmadu/tree/{version}/samples/java/authorization-springboot[sample code here]
 
 == Dependencies
 
