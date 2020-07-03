@@ -38,7 +38,7 @@ public class RoleAndAuthoritiesApprovedScopeFilter implements ApprovedScopeFilte
                 .flatMap(scope -> Optional.ofNullable(scope.getAuthorities()).orElse(Collections.emptyList()).stream())
                 .forEach(proposedScopes::add);
         MmaduUser user = context.getUser();
-        List<String> rolesAndAuthorities = new LinkedList<>();
+        List<String> rolesAndAuthorities = new LinkedList<>(scopes);
         rolesAndAuthorities.addAll(user.getAuthorities());
         rolesAndAuthorities.addAll(user.getRoles());
         return proposedScopes.stream()

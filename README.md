@@ -1,4 +1,4 @@
-# mmadu
+# Mmadu
 
 Mmadu (pronounced um-a-du) is derived from an Igbo word meaning people.
 
@@ -39,21 +39,18 @@ their desired management flows.
 Below are some of the features in the pipeline:
 
 1. User Account flows: Forgot Password, Reset Password e.t.c
-2. Oauth 2.0 [Implicit](https://tools.ietf.org/html/rfc6749#section-1.3.2) and
-[Resource owner Password Credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3) grant types
-(currently only Authorization Code, Client Credentials and Refresh Token are supported)
-3. Oauth 2.0 [Proof Key for Code Exchange](https://tools.ietf.org/html/rfc7636)
-4. Oauth 2.0 [Device Code Grant Type](https://tools.ietf.org/html/rfc8628#section-3.4)
-5. Oauth 2.0 [Authorization Server Metadata](https://tools.ietf.org/html/rfc8414)
-6. Oauth 2.0 [Dynamic Client Registration](https://tools.ietf.org/html/rfc7591)
-7. Oauth 2.0 [Dynamic Client Registration Management](https://tools.ietf.org/html/rfc7592)
-8. [Open ID Connect](https://https://openid.net/connect/)
-9. [UMA 2.0](https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html)
-10. ... and many more as they come
+2. Oauth 2.0 [Proof Key for Code Exchange](https://tools.ietf.org/html/rfc7636)
+3. Oauth 2.0 [Device Code Grant Type](https://tools.ietf.org/html/rfc8628#section-3.4)
+4. Oauth 2.0 [Authorization Server Metadata](https://tools.ietf.org/html/rfc8414)
+5. Oauth 2.0 [Dynamic Client Registration](https://tools.ietf.org/html/rfc7591)
+6. Oauth 2.0 [Dynamic Client Registration Management](https://tools.ietf.org/html/rfc7592)
+7. [Open ID Connect](https://https://openid.net/connect/)
+8. [UMA 2.0](https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html)
+9. ... and many more as they come
 
 ## Getting Started
 
-Click [here to get started with mmadu](https://geraldoyudo.github.io/mmadu)
+Click [here to get started with mmadu](https://geraldoyudo.github.io/mmadu/guides/)
 
 ## Contributing to Mmadu
 

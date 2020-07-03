@@ -5,6 +5,7 @@ import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.token.TokenContext;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.TokenSpecification;
@@ -29,24 +30,34 @@ import static com.mmadu.identity.utils.ZoneDateTimeUtils.min;
 
 @Component
 public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
-    @Autowired
     private TokenRepository tokenRepository;
-    @Autowired
     private GrantAuthorizationRepository grantAuthorizationRepository;
-    @Autowired
-    private DomainIdentityConfigurationService domainIdentityConfigurationService;
-    @Autowired
     private TokenFactory tokenFactory;
 
+    @Autowired
+    public void setTokenFactory(TokenFactory tokenFactory) {
+        this.tokenFactory = tokenFactory;
+    }
+
+    @Autowired
+    public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
+        this.grantAuthorizationRepository = grantAuthorizationRepository;
+    }
+
+    @Autowired
+    public void setTokenRepository(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
     @Override
-    public boolean apply(TokenRequest request, MmaduClient client) {
+    public boolean apply(TokenRequest request, TokenContext context) {
         return GrantTypeUtils.REFRESH_TOKEN.equals(request.getGrant_type());
     }
 
     @Override
-    public TokenResponse getToken(TokenRequest request, MmaduClient client) {
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
-                .orElseThrow(RefreshTokenCreationStrategy::invalidClient);
+    public TokenResponse getToken(TokenRequest request, TokenContext context) {
+        MmaduClient client = context.getClient();
+        DomainIdentityConfiguration configuration = context.getConfiguration();
 
         Token refreshToken = tokenRepository.findByTokenString(request.getRefresh_token())
                 .orElseThrow(RefreshTokenCreationStrategy::invalidRefreshToken);
@@ -92,6 +103,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                         .category(client.getTokenCategory())
                         .scopes(scopes)
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addAccessToken(newAccessToken);
@@ -115,6 +127,7 @@ public class RefreshTokenCreationStrategy implements TokenCreationStrategy {
                             .type("refresh_token")
                             .category(client.getTokenCategory())
                             .active(true)
+                            .audience(client.getResources())
                             .build()
             );
 

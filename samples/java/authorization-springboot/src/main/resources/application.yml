@@ -1,0 +1,17 @@
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          mmadu:
+            client-id: app.client.instance.1
+            client-secret: 1111111111
+            authorization-grant-type: authorization_code
+            scope:
+              - admin
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          mmadu:
+            authorization-uri: http://mmadu.com:10084/oauth/authorize
+            token-uri: http://mmadu.com:10084/clients/token

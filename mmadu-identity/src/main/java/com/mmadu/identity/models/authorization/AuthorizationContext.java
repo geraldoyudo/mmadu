@@ -1,5 +1,6 @@
 package com.mmadu.identity.models.authorization;
 
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
 import com.mmadu.identity.models.authorization.errors.AuthorizationError;
 import com.mmadu.identity.models.client.MmaduClient;
 
@@ -12,6 +13,7 @@ public class AuthorizationContext {
     private AuthorizationResult result = new AuthorizationResult();
     private Object authorizer;
     private MmaduClient client;
+    private DomainIdentityConfiguration domainConfiguration;
 
     public <T> Optional<T> get(String key) {
         return Optional.ofNullable(context.get(key))
@@ -71,5 +73,13 @@ public class AuthorizationContext {
 
     public MmaduClient getClient() {
         return client;
+    }
+
+    public DomainIdentityConfiguration getDomainConfiguration() {
+        return domainConfiguration;
+    }
+
+    public void setDomainConfiguration(DomainIdentityConfiguration domainConfiguration) {
+        this.domainConfiguration = domainConfiguration;
     }
 }

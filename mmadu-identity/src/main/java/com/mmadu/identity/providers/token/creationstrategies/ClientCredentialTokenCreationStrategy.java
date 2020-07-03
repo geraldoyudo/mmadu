@@ -1,17 +1,17 @@
 package com.mmadu.identity.providers.token.creationstrategies;
 
-import com.mmadu.identity.entities.*;
-import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
-import com.mmadu.identity.exceptions.DomainNotFoundException;
+import com.mmadu.identity.entities.ClientCredentialsGrantData;
+import com.mmadu.identity.entities.DomainIdentityConfiguration;
+import com.mmadu.identity.entities.GrantAuthorization;
+import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.token.TokenContext;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.TokenSpecification;
 import com.mmadu.identity.providers.token.TokenFactory;
-import com.mmadu.identity.repositories.ClientInstanceRepository;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import com.mmadu.identity.repositories.TokenRepository;
-import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,20 +20,14 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.ObjectUtils.min;
 
 @Component
 public class ClientCredentialTokenCreationStrategy implements TokenCreationStrategy {
     private GrantAuthorizationRepository grantAuthorizationRepository;
     private TokenRepository tokenRepository;
-    private DomainIdentityConfigurationService domainIdentityConfigurationService;
-    private ClientInstanceRepository clientInstanceRepository;
     private TokenFactory tokenFactory;
-
-    @Autowired
-    public void setClientInstanceRepository(ClientInstanceRepository clientInstanceRepository) {
-        this.clientInstanceRepository = clientInstanceRepository;
-    }
 
     @Autowired
     public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
@@ -46,26 +40,21 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
     }
 
     @Autowired
-    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
-        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
-    }
-
-    @Autowired
     public void setTokenFactory(TokenFactory tokenFactory) {
         this.tokenFactory = tokenFactory;
     }
 
     @Override
-    public boolean apply(TokenRequest request, MmaduClient client) {
-        return GrantTypeUtils.CLIENT_CREDENTIALS.equals(request.getGrant_type());
+    public boolean apply(TokenRequest request, TokenContext context) {
+        return GrantTypeUtils.CLIENT_CREDENTIALS.equals(request.getGrant_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                        .orElse(emptyList()).contains(GrantTypeUtils.CLIENT_CREDENTIALS);
     }
 
     @Override
-    public TokenResponse getToken(TokenRequest request, MmaduClient client) {
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
-                .orElseThrow(() -> new DomainNotFoundException("domain not found"));
-        ClientInstance clientInstance = clientInstanceRepository.findByIdentifier(client.getClientIdentifier())
-                .orElseThrow(() -> new ClientInstanceNotFoundException("client instance not found"));
+    public TokenResponse getToken(TokenRequest request, TokenContext context) {
+        MmaduClient client = context.getClient();
+        DomainIdentityConfiguration configuration = context.getConfiguration();
         ZonedDateTime now = ZonedDateTime.now();
 
         Optional<GrantAuthorization> authorizationOptional = grantAuthorizationRepository.findByClientIdentifierAndGrantTypeAndActive(
@@ -91,7 +80,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
             }
         }
         authorizationOptional.ifPresent(auth -> revokeAuthentication(now, auth));
-        GrantAuthorization grantAuthorization = createClientCredentialsAuthorization(client, configuration, clientInstance, now);
+        GrantAuthorization grantAuthorization = createClientCredentialsAuthorization(client, configuration, now);
         Token accessToken = tokenFactory.createToken(
                 TokenSpecification.builder()
                         .configuration(configuration.getAccessTokenProperties())
@@ -105,6 +94,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
                         .type("access_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         grantAuthorization.addAccessToken(accessToken);
@@ -124,16 +114,16 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
         grantAuthorizationRepository.save(auth);
     }
 
-    private GrantAuthorization createClientCredentialsAuthorization(MmaduClient client, DomainIdentityConfiguration configuration, ClientInstance clientInstance, ZonedDateTime now) {
+    private GrantAuthorization createClientCredentialsAuthorization(MmaduClient client, DomainIdentityConfiguration configuration, ZonedDateTime now) {
         GrantAuthorization grantAuthorization = new GrantAuthorization();
-        grantAuthorization.setClientInstanceId(clientInstance.getId());
-        grantAuthorization.setClientId(clientInstance.getClientId());
+        grantAuthorization.setClientInstanceId(client.getInstanceId());
+        grantAuthorization.setClientId(client.getId());
         grantAuthorization.setDomainId(client.getDomainId());
-        grantAuthorization.setClientIdentifier(clientInstance.getIdentifier());
+        grantAuthorization.setClientIdentifier(client.getClientIdentifier());
         grantAuthorization.setGrantType(GrantTypeUtils.CLIENT_CREDENTIALS);
         grantAuthorization.setIssuedTime(now);
         grantAuthorization.setExpiryTime(
-                now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), clientInstance.getClientCredentialsGrantTypeTTLSeconds()))
+                now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), client.getClientCredentialsGrantTypeTTLSeconds()))
         );
         grantAuthorization.setData(new ClientCredentialsGrantData());
         grantAuthorization.setActive(true);

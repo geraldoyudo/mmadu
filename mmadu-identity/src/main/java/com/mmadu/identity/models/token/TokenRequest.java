@@ -13,4 +13,6 @@ public class TokenRequest {
     private String client_secret;
     private String refresh_token;
     private String scope;
+    private String username;
+    private String password;
 }

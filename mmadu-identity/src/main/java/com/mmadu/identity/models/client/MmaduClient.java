@@ -55,4 +55,32 @@ public interface MmaduClient {
     default String getTokenCategory() {
         return TokenCategoryUtils.CATEGORY_BEARER;
     }
+
+    default Long getImplicitGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
+    default Long getPasswordGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
+    default Long getClientCredentialsGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
+    default String getInstanceId() {
+        return "";
+    }
+
+    default String getId() {
+        return "";
+    }
+
+    default Long getAuthorizationCodeGrantTypeTTLSeconds() {
+        return 0L;
+    }
+
+    default List<String> getSupportedGrantTypes() {
+        return Collections.emptyList();
+    }
 }

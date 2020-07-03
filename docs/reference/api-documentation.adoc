@@ -1,12 +1,12 @@
 = Api Convention Reference
 Oyudo Gerald <gerald.oyudo@gmail.com>
-v2.0.0, 2020-06-26
+v2.0.1, 2020-06-26
 :toc:
 :sectnums:
 :showtitle:
 :page-navtitle: API Convention Reference
 :page-excerpt: General API Documentation Refrence
-:page-root: ../
+:page-root:
 :imagesdir: {page-root}/images
 :permalink: /:title/
 :page-layout: reference
@@ -16,4 +16,113 @@ v2.0.0, 2020-06-26
 This documentation explains the various standards and conventions used for implementing
 mmadu web services.
 
-Coming Soon.
+== HTTP Response Codes
+
+Mmmadu Api's follow Http response standards. Some of them are itemized below:
+
+.HTTP Response Codes for Mmadu Services
+|===
+|Response Code |Description
+
+|200 OK
+|Successful With Response Body
+
+|201 CREATED
+|Successful creation of resource.
+
+|204 NO CONTENT
+|Successful, Response is empty
+
+|400 BAD REQUEST
+|Invalid Input Arguments
+
+|500 INTERNAL SERVER ERROR
+|System Error
+|===
+
+== Authorization
+
+All Mmadu services use an instance of Mmadu Identity as an authorization provider (yes, including mmadu identity itself).
+Domain with id `0` is  configured for Mmadu Operations and it contains all resources needed for Mmadu services to
+function properly.
+
+WARNING: Deleting Domain `0` will have serious consequences. Seriously don't.
+
+At set up of a Mmadu Instance, the identity provider provisions an admin client with id and secret configured using the
+environment variables `MMADU_ADMIN_CLIENT` and `MMADU_ADMIN_SECRET`, or the configuration property `mmmadu.admin.client` and
+`mmadu.admin.secret`.
+
+This client has *ultimate* authorities and should only be used sparingly. It is advisable that this client be used to
+create other clients with streamlined authorities.
+
+In order to access the API's, take the following steps:
+
+. Create a Client ID and Secret with the appropriate authorities (we will hear more about authorities in the next section).
+. Using the client credentials token endpoint, request for a token. Hear we call the
+`POST /clients/token` api with basic authentication using your client identifier and secret as shown below.
+
+[source,http]
+----
+POST /clients/token HTTP/1.1
+Host: localhost:15553
+Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+----
+. An `access_token` will be returned which you can now use to access protected resources. The authorities
+embedded in the `access_token` are those you set in the `authorities` property of your `ClientInstance`.
+
+NOTE: To to access Mmadu Resource Api's you need to use a client created at the mmadu domain (domain `0`).
+
+== Roles and Authorities
+
+All Mmadu resources are protected by authorities. At startup, Mmadu user service creates
+one role called `r.super_admin` and associates it with one authority called `+++a.*.**+++`.
+
+Mmadu uses a names-pacing strategy for authorities. The first segment is the resource, while the second,
+and subsequent segments represents sub resources. For example, the `user.read` authority signifies that it is
+a read permission for user resources. Roles are prefixed with `r.` while authorities are prefixed with `a.`.
+
+Mmadu uses an ant-style matching system to determine if a user has a specific authority, so the authority
+`+++a.*.**+++` represents an absolute authority as it matches all authorities.
+
+An authority specifier is made up of three segments:
+. The first is the prefix `a.` stating that it is an authority.
+. The second segment represents the domain id. So `+++a.1.*.**+++` represents an ultimate authority for resources in domain `.
+. The third segment represents the resource itself i.e. `user`, `group`, `client`, e.t.c.
+
+
+The ant-style matching is a grouping mechanism which enables us to arrange authorities in hierarchies and group them.
+This ensures that users with admin level authorities do not have large security tokens. In this system,
+an authority of `+++a.*.user.*+++` means all user resources accross all domains
+
+In addition to one role and one authority created in Domain `0` (for Mmadu, don't you ever forget). Admins are free to
+create more roles and authorities and assign to users. Assigning user specific fine grained roles and authorities enables
+the administrator fine tune which user has access to specific aspects of Mmadu resources.
+
+For example, if I want a member of my staff to handle third party client registration for a domain
+with id `app`, I perform the following task:
+
+. Create a User in Domain `0`.
+. Create an two authorities `a.app.client.create` and `a.app.client_instance.create`.
+. Create a Role `r.app.client_manager` assign to the authorities above.
+. Assign the newly created role to the User.
+
+With this, the staff will only be able to create clients and client instances in `app` domain.
+If I want another user to have full access to client and client instances, I simply create two authorities
+`+++a.app.client.*+++` and `+++a.app.client_instance.*+++`.
+
+
+== Creating Applications to Integrate with Mmadu Services
+
+Having understood the nature of the authorities, you can create client instances to integrate with Mmadu Services.
+Take the following steps:
+
+. Create a Client
+. Create a Client Instance with the appropriate authorities needed (use ant patterns if possible).
+. Get obtain an access token as described in <<Authorization>>.
+
+Go through the Mmadu Identity Reference for more information about how to create clients and client instances.
+
+In the subsequent documentations, all operations will include the authority required to access them.

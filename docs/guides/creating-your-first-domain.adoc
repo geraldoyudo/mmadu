@@ -479,7 +479,7 @@ This enpoint returns a new `access_token` and `refresh_token`.
 [source, http]
 ----
 POST /clients/token HTTP/1.1
-Host: 192.168.99.100:15553
+Host: localhost:15553
 Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
 Content-Type: application/x-www-form-urlencoded
 

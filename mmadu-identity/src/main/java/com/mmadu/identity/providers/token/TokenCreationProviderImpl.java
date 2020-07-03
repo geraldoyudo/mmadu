@@ -2,6 +2,7 @@ package com.mmadu.identity.providers.token;
 
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.token.TokenContext;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.error.InvalidGrant;
@@ -23,13 +24,13 @@ public class TokenCreationProviderImpl implements TokenCreationProvider {
     }
 
     @Override
-    public TokenResponse createToken(TokenRequest request, MmaduClient client) {
+    public TokenResponse createToken(TokenRequest request, TokenContext context) {
         Optional<TokenCreationStrategy> strategyOptional = strategies.stream()
-                .filter(s -> s.apply(request, client))
+                .filter(s -> s.apply(request, context))
                 .findFirst();
         if (strategyOptional.isEmpty()) {
             throw new TokenException(new InvalidGrant("cannot create token", ""));
         }
-        return strategyOptional.get().getToken(request, client);
+        return strategyOptional.get().getToken(request, context);
     }
 }

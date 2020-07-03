@@ -6,6 +6,7 @@ import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.exceptions.TokenException;
 import com.mmadu.identity.models.client.MmaduClient;
+import com.mmadu.identity.models.token.TokenContext;
 import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.TokenSpecification;
@@ -15,22 +16,25 @@ import com.mmadu.identity.providers.token.TokenFactory;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.GrantTypeUtils;
+import com.mmadu.identity.utils.TokenErrorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import static com.mmadu.identity.utils.TokenErrorUtils.*;
 import static com.mmadu.identity.utils.ZoneDateTimeUtils.min;
+import static java.util.Collections.emptyList;
 
 @Component
 public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStrategy {
     private GrantAuthorizationRepository grantAuthorizationRepository;
     private TokenFactory tokenFactory;
-    private DomainIdentityConfigurationService domainIdentityConfigurationService;
 
-    @Autowired(required = false)
+    @Autowired
     public void setGrantAuthorizationRepository(GrantAuthorizationRepository grantAuthorizationRepository) {
         this.grantAuthorizationRepository = grantAuthorizationRepository;
     }
@@ -40,21 +44,19 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
         this.tokenFactory = tokenFactory;
     }
 
-    @Autowired
-    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
-        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
+    @Override
+    public boolean apply(TokenRequest request, TokenContext context) {
+        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type()) &&
+                Optional.ofNullable(context.getClient().getSupportedGrantTypes())
+                        .orElse(emptyList()).contains(GrantTypeUtils.AUTHORIZATION_CODE);
     }
 
     @Override
-    public boolean apply(TokenRequest request, MmaduClient client) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(request.getGrant_type());
-    }
-
-    @Override
-    public TokenResponse getToken(TokenRequest request, MmaduClient client) {
+    public TokenResponse getToken(TokenRequest request, TokenContext context) {
+        MmaduClient client = context.getClient();
         GrantAuthorization authorization = grantAuthorizationRepository.
                 findByClientIdentifierAndAuthorizationCode(client.getClientIdentifier(), request.getCode())
-                .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidCodeError);
+                .orElseThrow(TokenErrorUtils::invalidCodeError);
 
         if (authorization.isActive() || authorization.isExpired() || authorization.isRevoked()) {
             throw invalidRequest();
@@ -67,8 +69,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
             throw redirectUriIsRequired();
         }
 
-        DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(client.getDomainId())
-                .orElseThrow(AuthorizationCodeTokenCreationStrategy::invalidClient);
+        DomainIdentityConfiguration configuration = context.getConfiguration();
 
         ZonedDateTime now = ZonedDateTime.now();
         Token accessToken = tokenFactory.createToken(
@@ -86,6 +87,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                         .type("access_token")
                         .category(client.getTokenCategory())
                         .active(true)
+                        .audience(client.getResources())
                         .build()
         );
         authorization.addAccessToken(accessToken);
@@ -107,6 +109,7 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                             .type("refresh_token")
                             .category(client.getTokenCategory())
                             .active(true)
+                            .audience(client.getResources())
                             .build()
             );
             refreshTokenString = refreshToken.getCredentials().getTokenString();
@@ -123,25 +126,5 @@ public class AuthorizationCodeTokenCreationStrategy implements TokenCreationStra
                 .tokenType(accessToken.getCategory())
                 .expiresIn(accessToken.getExpiryTime())
                 .build();
-    }
-
-    private static TokenException invalidCodeError() {
-        return new TokenException(new InvalidRequest("code.invalid", ""));
-    }
-
-    private static TokenException redirectUriIsRequired() {
-        return new TokenException(new InvalidRequest("redirect_uri.required", ""));
-    }
-
-    private static TokenException invalidGrantData() {
-        return new TokenException(new InvalidRequest("grant_data.invalid", ""));
-    }
-
-    private static TokenException invalidClient() {
-        return new TokenException(new InvalidClient("client.domain.invalid", ""));
-    }
-
-    private static TokenException invalidRequest() {
-        return new TokenException(new InvalidRequest("request.invalid", ""));
     }
 }

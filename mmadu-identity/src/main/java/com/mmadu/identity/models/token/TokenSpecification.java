@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public class TokenSpecification {
     private final String provider;
     private final String domainId;
@@ -23,6 +23,8 @@ public class TokenSpecification {
     private final ZonedDateTime activationTime;
     private final List<String> authorities;
     private final String category;
+    private final String issuer;
+    private final List<String> audience;
     @Builder.Default
     private final boolean active = true;
 }

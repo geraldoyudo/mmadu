@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.models.client.MmaduClient;
-import com.mmadu.identity.models.token.ClaimConfiguration;
-import com.mmadu.identity.models.token.ClaimSpecs;
-import com.mmadu.identity.models.token.TokenClaim;
-import com.mmadu.identity.models.token.TokenSpecification;
+import com.mmadu.identity.models.token.*;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import lombok.Builder;
@@ -23,7 +20,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
+public class UserGrantAccessTokenClaimStrategy implements ClaimGenerationStrategy {
+    private static final List<String> USER_GRANTS = List.of(
+            GrantTypeUtils.AUTHORIZATION_CODE, GrantTypeUtils.IMPLICIT, GrantTypeUtils.PASSWORD
+    );
+
     private MmaduClientService mmaduClientService;
 
     @Autowired
@@ -33,12 +34,12 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
 
     @Override
     public boolean apply(TokenSpecification tokenSpecs, ClaimSpecs specs) {
-        return GrantTypeUtils.AUTHORIZATION_CODE.equals(tokenSpecs.getGrantAuthorization().getGrantType()) &&
+        return USER_GRANTS.contains(tokenSpecs.getGrantAuthorization().getGrantType()) &&
                 "access_token".equals(specs.getType());
     }
 
     @Override
-    public TokenClaim generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
+    public TokenClaimCreationResult generateClaim(TokenSpecification tokenSpecs, ClaimSpecs specs) {
         GrantAuthorization authorization = tokenSpecs.getGrantAuthorization();
         MmaduClient client = mmaduClientService.loadClientByIdentifier(authorization.getClientIdentifier())
                 .orElseThrow(ClientInstanceNotFoundException::new);
@@ -49,17 +50,18 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         } else {
             scopes = tokenSpecs.getScopes();
         }
-        return AuthorizationCodeAccessTokenClaim.builder()
+        TokenClaim claim =  UserAccessTokenClaim.builder()
                 .issuer(configuration.getIssuer())
                 .subject(authorization.getId())
                 .activationTime(tokenSpecs.getActivationTime())
                 .expirationTime(tokenSpecs.getExpirationTime())
                 .issueTime(tokenSpecs.getIssueTime())
                 .clientIdentifier(authorization.getClientIdentifier())
-                .audience(client.getResources())
+                .audience(tokenSpecs.getAudience())
                 .tokenIdentifier(specs.getId())
                 .domainId(authorization.getDomainId())
                 .userId(authorization.getUserId())
+                .username(authorization.getUsername())
                 .scope(
                         Optional.ofNullable(scopes).orElse(Collections.emptyList())
                                 .stream()
@@ -69,12 +71,16 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
                 .roles(client.isIncludeUserRoles() ? authorization.getUserRoles() : null)
                 .groups(client.isIncludeUserGroups() ? authorization.getUserGroups() : null)
                 .build();
+        return TokenClaimCreationResult.builder()
+                .specification(tokenSpecs)
+                .claim(claim)
+                .build();
     }
 
     @Data
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class AuthorizationCodeAccessTokenClaim implements TokenClaim {
+    public static class UserAccessTokenClaim implements TokenClaim {
         private String issuer;
         private String subject;
         private List<String> audience;
@@ -87,6 +93,8 @@ public class AuthorizationCodeGrantAccessTokenClaimStrategy implements ClaimGene
         private String scope;
         @JsonProperty("user_id")
         private String userId;
+        @JsonProperty("username")
+        private String username;
         private List<String> authorities;
         private List<String> roles;
         private List<String> groups;
