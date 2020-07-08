@@ -18,7 +18,7 @@
 
     </style>
 </head>
-<body class="bg-info">
+<body class="bg-success">
 <section class="container-fluid h-100">
     <div class="row h-100 align-items-center">
         <div class="col">
@@ -26,7 +26,7 @@
         </div>
         <div class="col-11 col-sm-6 col-md-4 text-center">
             <h2 class="text-primary">Approve Access</h2>
-            <div class="bg-info text-center">
+            <div class="text-center">
                 <form th:action="@{/oauth/authorize}" method="post" th:object="${authorizationResponse}"
                       >
                     <div class="form-group" th:if="${not #lists.isEmpty(availableScopes)}">
@@ -48,11 +48,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input id="checkid" type="checkbox" th:field="*{authorize}" class="bg-primary"/>
+                        <input id="checkid" type="checkbox" th:field="*{authorize}"/>
                         <label for="checkid"
                                style="word-wrap:break-word;" class="text-primary"><strong>I want to authorize this application</strong></label>
                     </div>
-                    <div><input type="submit" value="Confirm" class="btn-success btn w-100"/></div>
+                    <div><input type="submit" value="Confirm" class="btn-secondary btn w-100"/></div>
                 </form>
             </div>
         </div>
