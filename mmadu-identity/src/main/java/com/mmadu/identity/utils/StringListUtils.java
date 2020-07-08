@@ -17,4 +17,12 @@ public class StringListUtils {
                 .split(" ");
         return asList(tokens);
     }
+
+    public static String toString(List<String> items) {
+        if (items == null || items.isEmpty()) {
+            return "";
+        } else {
+            return String.join(" ", items);
+        }
+    }
 }

@@ -122,6 +122,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
         grantAuthorization.setClientIdentifier(client.getClientIdentifier());
         grantAuthorization.setGrantType(GrantTypeUtils.CLIENT_CREDENTIALS);
         grantAuthorization.setIssuedTime(now);
+        grantAuthorization.setAuthorities(client.getAuthorities());
         grantAuthorization.setExpiryTime(
                 now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), client.getClientCredentialsGrantTypeTTLSeconds()))
         );

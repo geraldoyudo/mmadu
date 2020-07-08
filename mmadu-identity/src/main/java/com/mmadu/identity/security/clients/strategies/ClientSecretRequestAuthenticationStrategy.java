@@ -25,8 +25,10 @@ public class ClientSecretRequestAuthenticationStrategy implements ClientCredenti
 
     @Override
     public boolean apply(HttpServletRequest request, ClientCredentialRequestPayload payload, MmaduClient client) {
-        return payload instanceof ClientSecretCredentials && !StringUtils.isEmpty(((ClientSecretCredentials) payload).getSecret()) &&
-                client.getCredentials() != null && (client.getCredentials() instanceof ClientSecretCredentials);
+        return (payload instanceof ClientSecretCredentialRequestPayload) &&
+                !StringUtils.isEmpty(((ClientSecretCredentialRequestPayload) payload).getClientSecret()) &&
+                client.getCredentials() != null &&
+                (client.getCredentials() instanceof ClientSecretCredentials);
     }
 
     @Override

@@ -45,6 +45,7 @@ public class GrantAuthorization implements DomainPayload {
     private List<String> userAuthorities;
     private List<String> userRoles;
     private List<String> userGroups;
+    private List<String> authorities;
     private String state;
 
     public void addRefreshToken(Token token) {
