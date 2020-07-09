@@ -993,3 +993,69 @@ client request. The following are the supported claims:
 |A space delimited list of roles, scopes and authorities granted to the client by the user
 |Authorization Code, Implicit
 |===
+
+== Token Introspection
+
+To get metadata about a token, make a `POST /clients/checkToken`.
+
+.Token Introspection Request With Confidential Client and Basic Authentication
+[source,http]
+----
+POST /clients/checkToken HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw
+----
+
+.Token Introspection Endpoint with Confidential Client (Authentication body)
+[source, http]
+----
+POST /clients/checkToken HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&client_secret=1234567890&token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw
+----
+
+
+.Token Introspection Endpoint with Public Client
+[source, http]
+----
+POST /clients/checkToken HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw
+----
+
+This returns a json response with the token claims listed in <<_claim_verification>>
+
+Example:
+
+[source, json]
+----
+{
+    "active": true,
+    "client_id": "mmadu_admin",
+    "token_type": "bearer",
+    "exp": 1594288995,
+    "iat": 1594285395,
+    "nbf": 1594285395,
+    "sub": "5f06dd543a365a67887ea4e8",
+    "aud": [
+        "my.service.1",
+        "my.service.2"
+    ],
+    "iss": "mmadu.com",
+    "jti": "543c440d-5407-4a40-ae31-236707370f37",
+    "authorities": [
+        "view",
+        "edit"
+    ]
+}
+----
