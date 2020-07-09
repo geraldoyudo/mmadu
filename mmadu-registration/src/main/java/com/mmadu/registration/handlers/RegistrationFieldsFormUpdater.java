@@ -8,7 +8,9 @@ import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.HandleAfterSave;
+import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 
@@ -55,5 +57,15 @@ public class RegistrationFieldsFormUpdater {
                 .map(RegistrationProfile::getId)
                 .map(RegistrationFieldModifiedEvent::new)
                 .forEach(publisher::publishEvent);
+    }
+
+    @HandleAfterCreate
+    public void handleProfileCreate(RegistrationProfile profile){
+        publisher.publishEvent(new RegistrationFieldModifiedEvent(profile.getId()));
+    }
+
+    @HandleAfterSave
+    public void handleProfileSave(RegistrationProfile profile){
+        publisher.publishEvent(new RegistrationFieldModifiedEvent(profile.getId()));
     }
 }
