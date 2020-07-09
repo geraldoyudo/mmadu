@@ -3,6 +3,7 @@ package com.mmadu.identity.services.token;
 import com.mmadu.identity.entities.GrantAuthorization;
 import com.mmadu.identity.entities.Token;
 import com.mmadu.identity.exceptions.TokenNotFoundException;
+import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.token.TokenIntrospectionRequest;
 import com.mmadu.identity.models.token.TokenIntrospectionResponse;
 import com.mmadu.identity.repositories.GrantAuthorizationRepository;
@@ -17,6 +18,12 @@ import java.util.Optional;
 public class TokenIntrospectionServiceImpl implements TokenIntrospectionService {
     private TokenRepository tokenRepository;
     private GrantAuthorizationRepository grantAuthorizationRepository;
+    private MmaduClient mmaduClient;
+
+    @Autowired
+    public void setMmaduClient(MmaduClient mmaduClient) {
+        this.mmaduClient = mmaduClient;
+    }
 
     @Autowired
     public void setTokenRepository(TokenRepository tokenRepository) {
@@ -30,7 +37,9 @@ public class TokenIntrospectionServiceImpl implements TokenIntrospectionService 
 
     @Override
     public TokenIntrospectionResponse getTokenDetails(TokenIntrospectionRequest request) {
-        Token token = tokenRepository.findByTokenString(request.getToken())
+        String clientIdentifier = Optional.ofNullable(mmaduClient.getClientIdentifier())
+                .orElse(request.getClient_id());
+        Token token = tokenRepository.findByClientIdentifierAndTokenString(clientIdentifier, request.getToken())
                 .orElseThrow(TokenNotFoundException::new);
         ZonedDateTime now = ZonedDateTime.now();
         if (token.isExpired() || token.isRevoked()

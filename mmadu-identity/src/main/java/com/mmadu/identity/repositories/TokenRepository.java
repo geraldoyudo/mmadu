@@ -13,6 +13,9 @@ public interface TokenRepository extends MongoRepository<Token, String> {
 
     Optional<Token> findByTokenString(@Param("tokenString") String token);
 
+    Optional<Token> findByClientIdentifierAndTokenString(@Param("clientIdentifier") String clientIdentifier,
+                                                         @Param("tokenString") String token);
+
     List<Token> findByGrantAuthorizationIdAndTypeAndActive(
             @Param("grantAuthorizationId") String grantAuthorizationId,
             @Param("type") String type,
