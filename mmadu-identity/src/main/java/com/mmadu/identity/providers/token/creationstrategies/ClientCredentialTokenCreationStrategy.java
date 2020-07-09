@@ -67,7 +67,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
             List<String> tokens = grantAuthorization.getAccessTokens();
             if (!tokens.isEmpty()) {
                 Optional<Token> accessToken = tokenRepository.findById(tokens.get(0));
-                if (accessToken.isPresent() && accessToken.get().getExpiryTime().isAfter(now)) {
+                if (accessToken.isPresent() && accessToken.get().isValid()) {
                     Token token = accessToken.get();
                     return TokenResponse
                             .builder()

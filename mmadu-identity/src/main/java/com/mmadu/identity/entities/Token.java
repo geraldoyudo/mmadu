@@ -47,4 +47,15 @@ public class Token implements DomainPayload, Revokable {
         revoked = true;
         revokedTime = ZonedDateTime.now();
     }
+
+    boolean isInvalid() {
+        ZonedDateTime now = ZonedDateTime.now();
+        return expired || revoked ||
+                (expiryTime != null && now.isAfter(expiryTime)) ||
+                (revokedTime != null && now.isAfter(revokedTime));
+    }
+
+    public boolean isValid() {
+        return !isInvalid();
+    }
 }
