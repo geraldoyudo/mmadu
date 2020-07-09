@@ -54,7 +54,7 @@ public class TokenIntrospectionResponse {
     public static TokenIntrospectionResponse fromTokenAndAuthorization(Token token,
                                                                        Optional<GrantAuthorization> authorization) {
         return TokenIntrospectionResponse.builder()
-                .active(true)
+                .active(token.isActive())
                 .activationTime(token.getActivationTime().toEpochSecond())
                 .audience(token.getAudience())
                 .authorities(authorization.map(GrantAuthorization::getAuthorities).orElse(null))

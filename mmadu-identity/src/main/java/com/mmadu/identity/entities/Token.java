@@ -1,6 +1,7 @@
 package com.mmadu.identity.entities;
 
 import com.mmadu.identity.entities.token.TokenCredentials;
+import com.mmadu.identity.models.Revokable;
 import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @Document
 @EqualsAndHashCode
-public class Token implements DomainPayload {
+public class Token implements DomainPayload, Revokable {
     @Id
     private String id;
     private String grantAuthorizationId;
@@ -40,4 +41,10 @@ public class Token implements DomainPayload {
     private String issuer;
     private List<String> audience;
     private String authorizationGrantType;
+
+    @Override
+    public void revoke() {
+        revoked = true;
+        revokedTime = ZonedDateTime.now();
+    }
 }
