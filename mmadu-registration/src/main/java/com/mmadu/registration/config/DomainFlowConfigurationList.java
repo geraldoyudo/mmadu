@@ -1,5 +1,6 @@
 package com.mmadu.registration.config;
 
+import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
@@ -25,10 +26,16 @@ public class DomainFlowConfigurationList {
         @NotEmpty
         private String domainId;
         @NotNull
-        private RegistrationProfileItem registrationProfile;
+        private List<RegistrationProfileItem> registrationProfiles;
         @NotNull
         @Size(min = 1)
         private List<FieldItem> fields;
+
+        public DomainFlowConfiguration toEntity() {
+            DomainFlowConfiguration configuration = new DomainFlowConfiguration();
+            configuration.setDomainId(domainId);
+            return configuration;
+        }
     }
 
     @Data
@@ -102,6 +109,7 @@ public class DomainFlowConfigurationList {
 
     @Data
     public static class RegistrationProfileItem {
+        private String code;
         private String defaultRedirectUrl;
         private List<String> defaultRoles;
         private List<String> defaultAuthorities;
@@ -122,6 +130,7 @@ public class DomainFlowConfigurationList {
             profile.setHeaderThree(headerThree);
             profile.setInstruction(instruction);
             profile.setSubmitButtonTitle(submitButtonTitle);
+            profile.setCode(code);
             return profile;
         }
     }

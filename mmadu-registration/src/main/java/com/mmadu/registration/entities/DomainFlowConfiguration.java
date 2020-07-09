@@ -13,6 +13,4 @@ public class DomainFlowConfiguration {
     private String id;
     @NotEmpty(message = "domainId is required")
     private String domainId;
-    @NotEmpty(message = "default registration code is required")
-    private String defaultRegistrationCode;
 }

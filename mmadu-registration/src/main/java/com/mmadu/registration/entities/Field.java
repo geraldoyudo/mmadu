@@ -20,6 +20,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class Field implements Serializable, DomainPayload {
     private String id;
+    private String code;
     @NotEmpty
     private String domainId;
     @NotEmpty

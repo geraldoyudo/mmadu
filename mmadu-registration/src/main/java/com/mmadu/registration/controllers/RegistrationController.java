@@ -28,8 +28,9 @@ public class RegistrationController {
     private UserFormValidatorFactory userFormValidatorFactory;
 
     @InitBinder("user")
-    public void initBinder(@PathVariable("domainId") String domainId, WebDataBinder binder) {
-        binder.addValidators(userFormValidatorFactory.createValidatorForDomain(domainId));
+    public void initBinder(@PathVariable("domainId") String domainId, @PathVariable("code") String code,
+                           WebDataBinder binder) {
+        binder.addValidators(userFormValidatorFactory.createValidatorForDomainAndCode(domainId, code));
     }
 
     @ModelAttribute(name = "user")

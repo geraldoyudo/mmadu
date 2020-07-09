@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -29,6 +31,9 @@ public class RegistrationProfile implements DomainPayload {
     private List<String> defaultRoles;
     private List<String> defaultAuthorities;
     private List<String> defaultGroups;
+    @NotNull(message = "fields is required")
+    @Size(min = 1, message = "fields cannot be empty")
+    private List<String> fields;
     private String headerOne;
     private String headerTwo;
     private String headerThree;

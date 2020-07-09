@@ -3,6 +3,7 @@ package com.mmadu.registration.populators;
 import com.mmadu.registration.config.DomainFlowConfigurationList;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
+import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
 import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.FieldTypeRepository;
@@ -86,8 +87,11 @@ public class DomainFlowPopulator implements Populator {
     }
 
     private void initializeDomain(DomainFlowConfigurationList.DomainItem domainItem) {
-        Optional.ofNullable(domainItem.getRegistrationProfile())
-                .ifPresent(p -> this.registerProfile(domainItem.getDomainId(), p));
+        List<DomainFlowConfigurationList.RegistrationProfileItem> profileItems = Optional.ofNullable(domainItem.getRegistrationProfiles())
+                .orElse(Collections.emptyList());
+        if (!profileItems.isEmpty()) {
+            registerProfiles(domainItem.getDomainId(), profileItems);
+        }
         List<DomainFlowConfigurationList.FieldItem> fieldItems = Optional.ofNullable(domainItem.getFields())
                 .orElse(Collections.emptyList());
         if (!fieldItems.isEmpty()) {
@@ -96,8 +100,12 @@ public class DomainFlowPopulator implements Populator {
         publisher.publishEvent(new RegistrationFieldModifiedEvent(domainItem.getDomainId()));
     }
 
-    private void registerProfile(String domainId, DomainFlowConfigurationList.RegistrationProfileItem profileItem) {
-        registrationProfileRepository.save(profileItem.toEntity(domainId));
+    private void registerProfiles(String domainId, List<DomainFlowConfigurationList.RegistrationProfileItem> profileItems) {
+        List<RegistrationProfile> profiles = profileItems
+                .stream()
+                .map(item -> item.toEntity(domainId))
+                .collect(Collectors.toList());
+        registrationProfileRepository.saveAll(profiles);
     }
 
     private void registerFields(String domainId, List<DomainFlowConfigurationList.FieldItem> fieldItems) {

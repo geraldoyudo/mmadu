@@ -67,7 +67,7 @@ public class RegistrationControllerTest {
     @BeforeEach
     public void setUp() {
         doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
-        doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomain(anyString());
+        doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomainAndCode(anyString(), anyString());
         doReturn(true).when(userFormValidator).supports(eq(UserForm.class));
     }
 
