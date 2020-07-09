@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class RegistrationProfileServiceImpl implements RegistrationProfileService {
     private RegistrationProfileRepository registrationProfileRepository;
@@ -21,5 +24,13 @@ public class RegistrationProfileServiceImpl implements RegistrationProfileServic
     public RegistrationProfile getProfileForDomainAndCode(String domainId, String code) {
         return registrationProfileRepository.findByDomainIdAndCode(domainId, code)
                 .orElseThrow(RegistrationProfileNotFoundException::new);
+    }
+
+    @Override
+    public List<String> getAllProfileIds() {
+        return registrationProfileRepository.findAll()
+                .stream()
+                .map(RegistrationProfile::getId)
+                .collect(Collectors.toList());
     }
 }

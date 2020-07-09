@@ -3,17 +3,16 @@ package com.mmadu.registration.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode
 public class RegistrationFieldModifiedEvent {
-    public static final String ALL_DOMAIN = "###$$ALL__DOMAIN$$##";
+    public static final String ALL_PROFILE = "###$$ALL__PROFILE$$##";
 
-    private String domain;
+    private String profileId;
 
     public RegistrationFieldModifiedEvent() {
-        domain = ALL_DOMAIN;
+        profileId = ALL_PROFILE;
     }
 }

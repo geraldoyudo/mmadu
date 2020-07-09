@@ -78,6 +78,8 @@ public class DomainFlowConfigurationList {
         @NotEmpty
         private String name;
         @NotEmpty
+        private String code;
+        @NotEmpty
         private String placeholder;
         @NotEmpty
         private String property;
@@ -95,6 +97,7 @@ public class DomainFlowConfigurationList {
             Field field = new Field();
             field.setDomainId(domainId);
             field.setName(name);
+            field.setCode(code);
             field.setPlaceholder(placeholder);
             field.setProperty(property);
             field.setFieldTypeId(fieldTypeId);
@@ -118,6 +121,7 @@ public class DomainFlowConfigurationList {
         private String headerThree;
         private String instruction;
         private String submitButtonTitle;
+        private List<String> fields;
 
         public RegistrationProfile toEntity(String domainId) {
             RegistrationProfile profile = new RegistrationProfile();
@@ -131,6 +135,7 @@ public class DomainFlowConfigurationList {
             profile.setInstruction(instruction);
             profile.setSubmitButtonTitle(submitButtonTitle);
             profile.setCode(code);
+            profile.setFields(fields);
             return profile;
         }
     }

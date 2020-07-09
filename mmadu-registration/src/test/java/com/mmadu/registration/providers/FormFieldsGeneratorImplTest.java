@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
@@ -56,7 +55,7 @@ public class FormFieldsGeneratorImplTest {
 
     @Test
     void generateFormFieldsForDomain() {
-        assertThat(formFieldsGenerator.generateFormFieldsForDomain(DOMAIN_ID).replaceAll("\\s", ""),
+        assertThat(formFieldsGenerator.generateFormFieldsForProfile(DOMAIN_ID).replaceAll("\\s", ""),
                 equalTo("<markup-name></markup-name><markup-class></markup-class><script>a-script</script>"));
     }
 }

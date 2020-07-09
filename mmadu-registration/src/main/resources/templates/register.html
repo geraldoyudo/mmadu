@@ -30,7 +30,7 @@
         <p id="instructionParagraph" th:if="${profile.instruction}" th:text="${profile.instruction}">Please fill out the
             forms</p>
 
-        <div th:replace="'domain/register-' +${domainId}">
+        <div th:replace="'domain/register-' +${profile.id}">
 
         </div>
 

@@ -97,7 +97,6 @@ public class DomainFlowPopulator implements Populator {
         if (!fieldItems.isEmpty()) {
             registerFields(domainItem.getDomainId(), fieldItems);
         }
-        publisher.publishEvent(new RegistrationFieldModifiedEvent(domainItem.getDomainId()));
     }
 
     private void registerProfiles(String domainId, List<DomainFlowConfigurationList.RegistrationProfileItem> profileItems) {
@@ -105,7 +104,10 @@ public class DomainFlowPopulator implements Populator {
                 .stream()
                 .map(item -> item.toEntity(domainId))
                 .collect(Collectors.toList());
-        registrationProfileRepository.saveAll(profiles);
+        profiles = registrationProfileRepository.saveAll(profiles);
+        profiles.stream()
+                .map(p -> new RegistrationFieldModifiedEvent(p.getId()))
+                .forEach(publisher::publishEvent);
     }
 
     private void registerFields(String domainId, List<DomainFlowConfigurationList.FieldItem> fieldItems) {
