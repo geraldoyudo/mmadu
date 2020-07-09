@@ -1,5 +1,6 @@
 package com.mmadu.registration.security;
 
+import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
@@ -14,6 +15,24 @@ import org.springframework.stereotype.Component;
 @Component
 @RepositoryEventHandler
 public class RepositoryRestSecurity {
+
+    @HandleBeforeCreate
+    @PreAuthorize("hasAuthority('flow_config.create')")
+    public void createDomainFlowConfiguration(@P("domainFlowConfiguration") DomainFlowConfiguration domainFlowConfiguration) {
+
+    }
+
+    @HandleBeforeSave
+    @PreAuthorize("hasAuthority('flow_config.update')")
+    public void saveDomainFlowConfiguration(@P("domainFlowConfiguration") DomainFlowConfiguration domainFlowConfiguration) {
+
+    }
+
+    @HandleBeforeDelete
+    @PreAuthorize("hasAuthority('flow_config.delete')")
+    public void deleteDomainFlowConfiguration(@P("domainFlowConfiguration") DomainFlowConfiguration domainFlowConfiguration) {
+
+    }
 
     @HandleBeforeCreate
     @PreAuthorize("hasAuthority('field.create')")
@@ -68,4 +87,6 @@ public class RepositoryRestSecurity {
     public void deleteRegistrationProfile(@P("registrationProfile") RegistrationProfile registrationProfile) {
 
     }
+
+
 }

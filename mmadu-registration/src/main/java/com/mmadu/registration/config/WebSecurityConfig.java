@@ -22,6 +22,8 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
                 .hasAuthority("field_type.read")
                 .antMatchers(HttpMethod.GET, "/repo/registrationProfiles/**")
                 .hasAuthority("reg_profile.read")
+                .antMatchers(HttpMethod.GET, "/repo/domainFlowConfigurations/**")
+                .hasAuthority("flow_config.read")
                 .anyRequest()
                 .authenticated();
     }
