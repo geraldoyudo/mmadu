@@ -6,6 +6,7 @@ import com.mmadu.registration.entities.RegistrationProfile;
 
 public final class EntityUtils {
     public static final String DOMAIN_ID = "domain-1";
+    public static final String DOMAIN_CODE = "1234";
 
     private EntityUtils() {
     }
@@ -58,6 +59,7 @@ public final class EntityUtils {
     public static RegistrationProfile createRegistrationProfile(String id) {
         RegistrationProfile profile = new RegistrationProfile();
         profile.setDomainId(DOMAIN_ID);
+        profile.setCode(DOMAIN_CODE);
         profile.setDefaultRedirectUrl("https://google.com");
         profile.setId(id);
         return profile;
@@ -66,6 +68,7 @@ public final class EntityUtils {
     public static RegistrationProfile createRegistrationProfile(String id, String domainId) {
         RegistrationProfile profile = new RegistrationProfile();
         profile.setDomainId(domainId);
+        profile.setCode(DOMAIN_CODE);
         profile.setDefaultRedirectUrl("https://google.com");
         profile.setId(id);
         return profile;

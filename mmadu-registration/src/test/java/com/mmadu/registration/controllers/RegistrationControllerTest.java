@@ -49,6 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RegistrationControllerTest {
     public static final String PROFILE_ID = "1";
     public static final String DOMAIN_ID = "1";
+    public static final String DOMAIN_CODE = "1234";
     public static final String REDIRECT_URL = "http://google.com";
     @Autowired
     private MockMvc mockMvc;
@@ -65,7 +66,7 @@ public class RegistrationControllerTest {
 
     @BeforeEach
     public void setUp() {
-        doReturn(profile).when(registrationProfileService).getProfileForDomain(DOMAIN_ID);
+        doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
         doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomain(anyString());
         doReturn(true).when(userFormValidator).supports(eq(UserForm.class));
     }

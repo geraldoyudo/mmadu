@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties(prefix = "mmadu.registration.domain-flow-config")
-public class DomainFlowConfiguration {
+public class DomainFlowConfigurationList {
     private List<FieldTypeItem> fieldTypes = Collections.emptyList();
     @Size(min = 1)
     @NotNull

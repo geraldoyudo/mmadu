@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationProfileServiceImpl implements RegistrationProfileService {
-    @Autowired
     private RegistrationProfileRepository registrationProfileRepository;
 
+    @Autowired
+    public void setRegistrationProfileRepository(RegistrationProfileRepository registrationProfileRepository) {
+        this.registrationProfileRepository = registrationProfileRepository;
+    }
+
     @Override
-    public RegistrationProfile getProfileForDomain(String domainId) {
-        return registrationProfileRepository.findByDomainId(domainId)
+    public RegistrationProfile getProfileForDomainAndCode(String domainId, String code) {
+        return registrationProfileRepository.findByDomainIdAndCode(domainId, code)
                 .orElseThrow(DomainNotFoundException::new);
     }
 }

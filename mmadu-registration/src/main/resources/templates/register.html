@@ -18,7 +18,7 @@
 <body>
 <div class="container">
     <form class="form-signin" action="#"
-          th:action="@{'/' + ${domainId} + '/register' + ${redirectUrl == null ? '': ('?redirectUrl=' + redirectUrl)}}"
+          th:action="@{'/' + ${domainId} + '/register' + '/' + ${profile.code} + '/' + ${redirectUrl == null ? '': ('?redirectUrl=' + redirectUrl)}}"
           th:object="${user}" method="post">
 
         <h1 id="headerOne" class="form-signin-heading" th:text="${profile.headerOne ?: 'Register'}">Register</h1>
