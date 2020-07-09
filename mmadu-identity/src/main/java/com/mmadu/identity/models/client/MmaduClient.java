@@ -2,6 +2,7 @@ package com.mmadu.identity.models.client;
 
 import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientType;
+import com.mmadu.identity.models.authorization.AuthorizationProfile;
 import com.mmadu.identity.utils.TokenCategoryUtils;
 
 import java.util.Collections;
@@ -82,5 +83,9 @@ public interface MmaduClient {
 
     default List<String> getSupportedGrantTypes() {
         return Collections.emptyList();
+    }
+
+    default AuthorizationProfile getAuthorizationProfile() {
+        return null;
     }
 }

@@ -20,7 +20,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
@@ -99,10 +98,8 @@ public class AuthorizationController {
 
     @GetMapping
     public String getAuthorizationPage(@Valid @ModelAttribute("authorizationRequest") AuthorizationRequest request,
-                                       @ModelAttribute("authorizationResponse") AuthorizationResponse response,
-                                       HttpSession session) {
-        session.setAttribute("authorizationRequest", request);
-        return "authorization_page";
+                                       @ModelAttribute("authorizationResponse") AuthorizationResponse response) {
+        return authorizationService.initiateAuthorization(request);
     }
 
     @PostMapping

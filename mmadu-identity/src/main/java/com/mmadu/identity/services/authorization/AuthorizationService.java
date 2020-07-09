@@ -6,4 +6,6 @@ import com.mmadu.identity.models.authorization.AuthorizationResponse;
 public interface AuthorizationService {
 
     String processAuthorization(AuthorizationRequest request, AuthorizationResponse response);
+
+    String initiateAuthorization(AuthorizationRequest request);
 }
