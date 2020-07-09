@@ -22,6 +22,8 @@ public interface TokenRepository extends MongoRepository<Token, String> {
             @Param("active") Boolean active
     );
 
+    List<Token> findByGrantAuthorizationId(@Param("grantAuthorizationId") String grantAuthorizationId);
+
     @DeleteQuery("{ $or: [ {expiryTime: { $lt: ?0}}, {revokedTime: { $lt: ?0}}, {expired: true}, {revoked: true} ] }")
     void deleteExpiredAndRevokedTokens(ZonedDateTime time);
 }
