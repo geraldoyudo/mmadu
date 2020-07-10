@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
@@ -89,14 +90,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     private void addUserRolesIfExists(UserView userView, AppUser appUser) {
-        List<String> roles = userView.getRoles();
+        List<String> roles = Optional.ofNullable(userView.getRoles()).orElse(emptyList());
         if (!roles.isEmpty()) {
             roleManagementService.grantUserRoles(appUser.getDomainId(), appUser.getExternalId(), roles);
         }
     }
 
     private void addUserToGroupsIfExists(UserView userView, AppUser appUser) {
-        List<String> groups = userView.getGroups();
+        List<String> groups = Optional.ofNullable(userView.getGroups()).orElse(emptyList());
         if (!groups.isEmpty()) {
             groups.stream()
                     .map(group -> new NewGroupUserRequest(appUser.getExternalId(), group))
@@ -105,7 +106,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     private void addUserAuthoritiesIfExists(UserView userView, AppUser appUser) {
-        List<String> authorities = userView.getAuthorities();
+        List<String> authorities = Optional.ofNullable(userView.getAuthorities()).orElse(emptyList());
         if (!authorities.isEmpty()) {
             authorityManagementService.grantUserAuthorities(appUser.getDomainId(), appUser.getExternalId(), authorities);
         }
