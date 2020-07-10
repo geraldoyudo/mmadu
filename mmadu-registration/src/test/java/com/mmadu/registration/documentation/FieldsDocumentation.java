@@ -55,6 +55,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
                 fieldWithPath("order").description("Order of the field in Layout"),
                 fieldWithPath("required").description("If the field input is required or not"),
                 fieldWithPath("name").description("the form name of the field"),
+                fieldWithPath("code").description("the field code"),
                 fieldWithPath("domainId").description("the ID of the domain")
         );
     }
@@ -72,6 +73,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
         field.setName("username");
         field.setId("1");
         field.setDomainId("1");
+        field.setCode("username");
         return field;
     }
 
@@ -123,6 +125,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.fields.[].order").description("Order of the field in Layout"),
                 fieldWithPath("_embedded.fields.[].required").description("If the field input is required or not"),
                 fieldWithPath("_embedded.fields.[].name").description("the form name of the field"),
+                fieldWithPath("_embedded.fields.[].code").description("the field code"),
                 fieldWithPath("_embedded.fields.[].domainId").description("the ID of the domain")
         );
     }

@@ -53,6 +53,7 @@ public final class EntityUtils {
         field.setPlaceholder(name);
         field.setProperty(property);
         field.setFieldTypeId(fieldTypeId);
+        field.setCode(name);
         return field;
     }
 

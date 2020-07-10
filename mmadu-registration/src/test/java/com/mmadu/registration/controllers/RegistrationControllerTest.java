@@ -74,7 +74,7 @@ public class RegistrationControllerTest {
     @Test
     public void whenGetRegisterApiCalledShouldReturnRegisterPage() throws Exception {
 
-        mockMvc.perform(get("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(get("/{domainId}/register/user", DOMAIN_ID)
         ).andExpect(
                 status().isOk()
         ).andExpect(
@@ -90,7 +90,7 @@ public class RegistrationControllerTest {
     public void whenGetRegisterApiCalledWithRedirectUrlShouldReturnRegisterPageWithRedirectUrlAttribute()
             throws Exception {
 
-        mockMvc.perform(get("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(get("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
         ).andExpect(
                 status().isOk()
@@ -101,7 +101,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void whenPostRegisterShouldSendRedirectToRedirectUrl() throws Exception {
-        mockMvc.perform(post("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(post("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
@@ -125,7 +125,7 @@ public class RegistrationControllerTest {
             return null;
         }).when(userFormValidator).validate(ArgumentMatchers.any(), ArgumentMatchers.any(Errors.class));
 
-        mockMvc.perform(post("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(post("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(

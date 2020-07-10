@@ -1,5 +1,6 @@
 package com.mmadu.registration.providers;
 
+import com.mmadu.registration.services.RegistrationProfileService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ public class RegistrationProfileFormFieldsManagerDirectoryInitializationTest {
     @Mock
     private FormFieldsGenerator formFieldsGenerator;
     @Mock
-    private DomainService domainService;
+    private RegistrationProfileService registrationProfileService;
     @InjectMocks
     private RegistrationProfileFormFieldsManager formFieldsManager = new RegistrationProfileFormFieldsManager();
 
@@ -43,7 +44,7 @@ public class RegistrationProfileFormFieldsManagerDirectoryInitializationTest {
     @BeforeEach
     void setUp() {
         formFieldsManager.setTemplatesDirectoryResource(new FileSystemResource(USER_HOME + "/mmadu-test/templates"));
-        doReturn(asList("1")).when(domainService).getDomainIds();
+        doReturn(asList("1")).when(registrationProfileService).getAllProfileIds();
         doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForProfile("1");
     }
 
