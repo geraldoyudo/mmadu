@@ -4,6 +4,7 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
+import com.mmadu.service.models.NewGroupUserRequest;
 import com.mmadu.service.models.PagedList;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserView;
@@ -16,11 +17,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
     private AppUserRepository appUserRepository;
     private AppDomainRepository appDomainRepository;
     private UniqueUserIdGenerator uniqueUserIdGenerator;
+    private GroupService groupService;
+    private RoleManagementService roleManagementService;
+    private AuthorityManagementService authorityManagementService;
+
+    @Autowired
+    public void setRoleManagementService(RoleManagementService roleManagementService) {
+        this.roleManagementService = roleManagementService;
+    }
+
+    @Autowired
+    public void setAuthorityManagementService(AuthorityManagementService authorityManagementService) {
+        this.authorityManagementService = authorityManagementService;
+    }
+
+    @Autowired
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
 
     @Autowired
     public void setAppUserRepository(AppUserRepository appUserRepository) {
@@ -62,7 +85,33 @@ public class UserManagementServiceImpl implements UserManagementService {
             userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
         }
         AppUser appUser = new AppUser(domainId, userView);
+        addUserRolesIfExists(userView, appUser);
+        addUserToGroupsIfExists(userView, appUser);
+        addUserAuthoritiesIfExists(userView, appUser);
         appUserRepository.save(appUser);
+    }
+
+    private void addUserRolesIfExists(UserView userView, AppUser appUser) {
+        List<String> roles = (List<String>) userView.getProperty("roles").orElse(emptyList());
+        if (!roles.isEmpty()) {
+            roleManagementService.grantUserRoles(appUser.getDomainId(), appUser.getExternalId(), roles);
+        }
+    }
+
+    private void addUserToGroupsIfExists(UserView userView, AppUser appUser) {
+        List<String> groups = (List<String>) userView.getProperty("groups").orElse(emptyList());
+        if (!groups.isEmpty()) {
+            groups.stream()
+                    .map(group -> new NewGroupUserRequest(appUser.getId(), group))
+                    .forEach(req -> groupService.addUserToGroup(appUser.getDomainId(), req));
+        }
+    }
+
+    private void addUserAuthoritiesIfExists(UserView userView, AppUser appUser) {
+        List<String> authorities = (List<String>) userView.getProperty("authorities").orElse(emptyList());
+        if (!authorities.isEmpty()) {
+            authorityManagementService.grantUserAuthorities(appUser.getDomainId(), appUser.getExternalId(), authorities);
+        }
     }
 
     @Override
