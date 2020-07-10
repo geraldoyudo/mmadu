@@ -17,6 +17,18 @@
 |`+Array+`
 |Authorities assigned to newly registered users
 
+|`+defaultGroups+`
+|`+Array+`
+|Groups assigned to newly registered users
+
+|`+code+`
+|`+String+`
+|Registration Profile code, used in the registration url
+
+|`+fields+`
+|`+Array+`
+|Field codes of domain fields to display in this form
+
 |`+defaultRedirectUrl+`
 |`+String+`
 |Url to redirect to after registration success

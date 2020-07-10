@@ -2,7 +2,7 @@
 ----
 $ curl 'http://localhost:8080/domains' -i -X POST \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTMyNDE3NjEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9mbG93LmluaXRpYWxpemUiLCJleHAiOjE1OTMyNDE3NjYsImlhdCI6MTU5MzI0MTc2MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.kpbIMv4mYid4nypo-po60rrxEe_wt7BESICFORaaH8qKKAijMYyaxPVw1fanqx8q9RYzyHOvWGmu0VWIad7mqgBzfxDEHwSicnXRIGY0Z5qps84KxRthDMh7VrPQ9NwICBW2R0S4fy-SGFoQ7PMz9AEBpuOkMcE36QVB65VsY_y6iFQD0K1-PMvBSUUV7rQouyuYtpi6maGwrqgE4E1jIcku6s0mjVmhgND0hwIvTjzvlF6Mn6ogd8-giRiORO8n3EkJ7ZlMKr3BSFy33YnCRPpgPQtjsGD9HKBaLZ6IFWtaFKoG6r-vOI3e5QEdCdIepKirac6sIQyr6l39Dg9LPQ' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQzOTA5NTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9mbG93LmluaXRpYWxpemUiLCJleHAiOjE1OTQzOTA5NTUsImlhdCI6MTU5NDM5MDk1MCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.kwzrlKIs_hqTWDO6pq9me908Qs5PxM1sMfkVTdRLHZEaO1HlcqbUpn60scw8EMpU2RHvpwmxPOZA4OLbumO6L6jSSLB03mvuOMEjrXzkuBimSfcy-Wxs2FPoTEqvJ7wE3WBI4cMXCEN5PNgZMg0rC2R1RvWYDkgGLEoWb0cXrghc2Mn7jqVcOKxmhrcOFm1KWAEKpnxFJpIMoEtkkXCBsMjnBM2Dq1gO03pd94OP8GcwIg1Xs1zgRrm0jRF1TR0gwvW9hT1HlvTM6dCVtD0bpxX-Asn_lRHZGZTOQAU2K0F8bcmv4IKW0c7atoPSdcyYA17KMmSlvsH8u7a5NsogaQ' \
     -d '{
   "fieldTypes": [
     {
@@ -72,13 +72,15 @@ $ curl 'http://localhost:8080/domains' -i -X POST \
   "domains": [
     {
       "domainId": "0",
-      "registrationProfile": {
-        "defaultRedirectUrl": "https://google.com",
-        "headerOne": "My App",
-        "headerThree": "Register",
-        "instruction": "Fill all the fields to register",
-        "submitButtonTitle": "GO!!"
-      },
+      "registrationProfiles": [
+        {
+          "defaultRedirectUrl": "https://google.com",
+          "headerOne": "My App",
+          "headerThree": "Register",
+          "instruction": "Fill all the fields to register",
+          "submitButtonTitle": "GO!!"
+        }
+      ],
       "fields": [
         {
           "name": "email",

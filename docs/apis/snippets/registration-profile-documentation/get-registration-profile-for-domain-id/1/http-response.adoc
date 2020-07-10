@@ -11,24 +11,36 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 563
+Content-Length: 967
 
 {
-  "domainId" : "0",
-  "defaultRedirectUrl" : "http://my.app.com/home",
-  "defaultRoles" : [ "member" ],
-  "defaultAuthorities" : [ "view-list" ],
-  "headerOne" : "My App",
-  "headerTwo" : "Register",
-  "headerThree" : "Fill all required fields",
-  "instruction" : "Ensure that all fields are filled",
-  "submitButtonTitle" : "Go",
+  "_embedded" : {
+    "registrationProfiles" : [ {
+      "code" : "user",
+      "domainId" : "0",
+      "defaultRedirectUrl" : "http://my.app.com/home",
+      "defaultRoles" : [ "member" ],
+      "defaultAuthorities" : [ "view-list" ],
+      "defaultGroups" : [ "admins" ],
+      "fields" : [ "field.username", "field.email", "field.password" ],
+      "headerOne" : "My App",
+      "headerTwo" : "Register",
+      "headerThree" : "Fill all required fields",
+      "instruction" : "Ensure that all fields are filled",
+      "submitButtonTitle" : "Go",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/repo/registrationProfiles/1"
+        },
+        "registrationProfile" : {
+          "href" : "http://localhost:8080/repo/registrationProfiles/1"
+        }
+      }
+    } ]
+  },
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/repo/registrationProfiles/1"
-    },
-    "registrationProfile" : {
-      "href" : "http://localhost:8080/repo/registrationProfiles/1"
+      "href" : "http://localhost:8080/repo/registrationProfiles/search/findByDomainId"
     }
   }
 }

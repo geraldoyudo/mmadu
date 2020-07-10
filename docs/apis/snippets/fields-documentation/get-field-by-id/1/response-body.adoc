@@ -1,6 +1,7 @@
 [source,options="nowrap"]
 ----
 {
+  "code" : "username",
   "domainId" : "1",
   "name" : "username",
   "placeholder" : "Enter Username",
