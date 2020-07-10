@@ -6,6 +6,8 @@ import com.mmadu.service.providers.PatchOperationConverter;
 import com.mmadu.service.providers.PatchOperationConverterImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 
 @Configuration
 public class DatabaseConfig {
@@ -32,5 +34,10 @@ public class DatabaseConfig {
     @Bean
     public PatchOperationConverter patchOperationConverter() {
         return new PatchOperationConverterImpl();
+    }
+
+    @Bean
+    public MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
     }
 }

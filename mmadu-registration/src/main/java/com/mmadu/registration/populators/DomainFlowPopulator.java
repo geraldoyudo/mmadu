@@ -5,12 +5,14 @@ import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
+import com.mmadu.registration.repositories.DomainFlowConfigurationRepository;
 import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.FieldTypeRepository;
 import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
@@ -24,6 +26,7 @@ public class DomainFlowPopulator implements Populator {
     private FieldTypeRepository fieldTypeRepository;
     private FieldRepository fieldRepository;
     private RegistrationProfileRepository registrationProfileRepository;
+    private DomainFlowConfigurationRepository domainFlowConfigurationRepository;
     private ApplicationEventPublisher publisher;
 
     @Autowired
@@ -47,6 +50,11 @@ public class DomainFlowPopulator implements Populator {
     }
 
     @Autowired
+    public void setDomainFlowConfigurationRepository(DomainFlowConfigurationRepository domainFlowConfigurationRepository) {
+        this.domainFlowConfigurationRepository = domainFlowConfigurationRepository;
+    }
+
+    @Autowired
     public void setPublisher(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
     }
@@ -57,6 +65,7 @@ public class DomainFlowPopulator implements Populator {
         initializeDomainEnvironment(domainFlowConfigurationList);
     }
 
+    @Transactional
     public void initializeDomainEnvironment(DomainFlowConfigurationList configuration) {
         List<DomainFlowConfigurationList.FieldTypeItem> newFieldTypes = Optional.ofNullable(configuration.getFieldTypes()).orElse(Collections.emptyList())
                 .stream()
@@ -87,6 +96,7 @@ public class DomainFlowPopulator implements Populator {
     }
 
     private void initializeDomain(DomainFlowConfigurationList.DomainItem domainItem) {
+        domainFlowConfigurationRepository.save(domainItem.toEntity());
         List<DomainFlowConfigurationList.FieldItem> fieldItems = Optional.ofNullable(domainItem.getFields())
                 .orElse(Collections.emptyList());
         if (!fieldItems.isEmpty()) {

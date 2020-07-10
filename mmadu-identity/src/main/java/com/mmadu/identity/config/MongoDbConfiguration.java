@@ -4,6 +4,8 @@ import com.mmadu.identity.utils.converters.ZonedDateTimeReadConverter;
 import com.mmadu.identity.utils.converters.ZonedDateTimeWriteConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 import java.util.List;
@@ -19,5 +21,10 @@ public class MongoDbConfiguration {
                         new ZonedDateTimeWriteConverter()
                 )
         );
+    }
+
+    @Bean
+    public MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
     }
 }

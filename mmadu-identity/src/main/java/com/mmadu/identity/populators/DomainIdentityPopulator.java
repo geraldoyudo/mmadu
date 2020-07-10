@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -95,11 +96,16 @@ public class DomainIdentityPopulator {
                         .filter(domainIdentityItem -> !domainIdentityConfigurationRepository.existsByDomainId(domainIdentityItem.getDomainId()))
                         .collect(Collectors.toList());
         if (!unInitializedDomains.isEmpty()) {
-            initializeDomains(unInitializedDomains);
+            doInitializeDomains(unInitializedDomains);
         }
     }
 
+    @Transactional
     public void initializeDomains(List<DomainIdentityConfigurationList.DomainIdentityItem> domainIdentityItems) {
+        doInitializeDomains(domainIdentityItems);
+    }
+
+    private void doInitializeDomains(List<DomainIdentityConfigurationList.DomainIdentityItem> domainIdentityItems) {
         List<String> domainIds = new LinkedList<>();
         for (DomainIdentityConfigurationList.DomainIdentityItem item : domainIdentityItems) {
             domainIds.add(initializeDomain(item).getDomainId());
