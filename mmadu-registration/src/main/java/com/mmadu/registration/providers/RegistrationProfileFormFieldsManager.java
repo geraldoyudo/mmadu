@@ -3,6 +3,7 @@ package com.mmadu.registration.providers;
 import com.mmadu.registration.exceptions.FormFieldsGenerationException;
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
 import com.mmadu.registration.services.RegistrationProfileService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,7 @@ import java.util.List;
 import static com.mmadu.registration.models.RegistrationFieldModifiedEvent.ALL_PROFILE;
 
 @Component
+@Slf4j
 public class RegistrationProfileFormFieldsManager {
     private int sampleTimeInSeconds = 5;
     private RegistrationProfileService registrationProfileService;
@@ -101,6 +103,7 @@ public class RegistrationProfileFormFieldsManager {
     }
 
     void handleEvent(RegistrationFieldModifiedEvent event) {
+        log.debug("Processing Forms for Profile: {}", event.getProfileId());
         if (event.getProfileId().equals(ALL_PROFILE)) {
             generateFormFieldsForAllDomains();
         } else {

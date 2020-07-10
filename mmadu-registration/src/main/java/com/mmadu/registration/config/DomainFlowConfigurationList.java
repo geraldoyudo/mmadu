@@ -116,6 +116,7 @@ public class DomainFlowConfigurationList {
         private String defaultRedirectUrl;
         private List<String> defaultRoles;
         private List<String> defaultAuthorities;
+        private List<String> defaultGroups;
         private String headerOne;
         private String headerTwo;
         private String headerThree;
@@ -136,6 +137,7 @@ public class DomainFlowConfigurationList {
             profile.setSubmitButtonTitle(submitButtonTitle);
             profile.setCode(code);
             profile.setFields(fields);
+            profile.setDefaultGroups(defaultGroups);
             return profile;
         }
     }

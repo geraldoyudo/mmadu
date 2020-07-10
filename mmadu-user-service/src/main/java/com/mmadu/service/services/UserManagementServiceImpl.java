@@ -81,34 +81,31 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (StringUtils.isEmpty(userView.getId())) {
             userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
         }
-        if (StringUtils.isEmpty(userView.getId())) {
-            userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
-        }
         AppUser appUser = new AppUser(domainId, userView);
+        appUser = appUserRepository.save(appUser);
         addUserRolesIfExists(userView, appUser);
         addUserToGroupsIfExists(userView, appUser);
         addUserAuthoritiesIfExists(userView, appUser);
-        appUserRepository.save(appUser);
     }
 
     private void addUserRolesIfExists(UserView userView, AppUser appUser) {
-        List<String> roles = (List<String>) userView.getProperty("roles").orElse(emptyList());
+        List<String> roles = userView.getRoles();
         if (!roles.isEmpty()) {
             roleManagementService.grantUserRoles(appUser.getDomainId(), appUser.getExternalId(), roles);
         }
     }
 
     private void addUserToGroupsIfExists(UserView userView, AppUser appUser) {
-        List<String> groups = (List<String>) userView.getProperty("groups").orElse(emptyList());
+        List<String> groups = userView.getGroups();
         if (!groups.isEmpty()) {
             groups.stream()
-                    .map(group -> new NewGroupUserRequest(appUser.getId(), group))
+                    .map(group -> new NewGroupUserRequest(appUser.getExternalId(), group))
                     .forEach(req -> groupService.addUserToGroup(appUser.getDomainId(), req));
         }
     }
 
     private void addUserAuthoritiesIfExists(UserView userView, AppUser appUser) {
-        List<String> authorities = (List<String>) userView.getProperty("authorities").orElse(emptyList());
+        List<String> authorities = userView.getAuthorities();
         if (!authorities.isEmpty()) {
             authorityManagementService.grantUserAuthorities(appUser.getDomainId(), appUser.getExternalId(), authorities);
         }

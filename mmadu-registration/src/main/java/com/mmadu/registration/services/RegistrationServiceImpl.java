@@ -50,7 +50,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             model.set("authorities", profile.getDefaultAuthorities());
         }
         if (!model.get("groups").isPresent()) {
-            model.set("groups", profile.getDefaultRoles());
+            model.set("groups", profile.getDefaultGroups());
         }
         if (!model.get("password").isPresent()) {
             model.set("password", "");

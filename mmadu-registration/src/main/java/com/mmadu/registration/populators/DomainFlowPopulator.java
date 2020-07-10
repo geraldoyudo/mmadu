@@ -87,15 +87,15 @@ public class DomainFlowPopulator implements Populator {
     }
 
     private void initializeDomain(DomainFlowConfigurationList.DomainItem domainItem) {
-        List<DomainFlowConfigurationList.RegistrationProfileItem> profileItems = Optional.ofNullable(domainItem.getRegistrationProfiles())
-                .orElse(Collections.emptyList());
-        if (!profileItems.isEmpty()) {
-            registerProfiles(domainItem.getDomainId(), profileItems);
-        }
         List<DomainFlowConfigurationList.FieldItem> fieldItems = Optional.ofNullable(domainItem.getFields())
                 .orElse(Collections.emptyList());
         if (!fieldItems.isEmpty()) {
             registerFields(domainItem.getDomainId(), fieldItems);
+        }
+        List<DomainFlowConfigurationList.RegistrationProfileItem> profileItems = Optional.ofNullable(domainItem.getRegistrationProfiles())
+                .orElse(Collections.emptyList());
+        if (!profileItems.isEmpty()) {
+            registerProfiles(domainItem.getDomainId(), profileItems);
         }
     }
 
