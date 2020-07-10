@@ -1,5 +1,6 @@
 package com.mmadu.registration.providers;
 
+import com.mmadu.registration.services.RegistrationProfileService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
-public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
+public class RegistrationProfileFormFieldsManagerDirectoryInitializationTest {
     public static final String USER_HOME = System.getProperty("user.home");
     @Value("${mmadu.registration.templates}")
     private String templatesFolder;
@@ -29,9 +30,9 @@ public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
     @Mock
     private FormFieldsGenerator formFieldsGenerator;
     @Mock
-    private DomainService domainService;
+    private RegistrationProfileService registrationProfileService;
     @InjectMocks
-    private DomainRegistrationFormFieldsManager formFieldsManager = new DomainRegistrationFormFieldsManager();
+    private RegistrationProfileFormFieldsManager formFieldsManager = new RegistrationProfileFormFieldsManager();
 
     private static File file;
 
@@ -43,8 +44,8 @@ public class DomainRegistrationFormFieldsManagerDirectoryInitializationTest {
     @BeforeEach
     void setUp() {
         formFieldsManager.setTemplatesDirectoryResource(new FileSystemResource(USER_HOME + "/mmadu-test/templates"));
-        doReturn(asList("1")).when(domainService).getDomainIds();
-        doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
+        doReturn(asList("1")).when(registrationProfileService).getAllProfileIds();
+        doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForProfile("1");
     }
 
     @Test

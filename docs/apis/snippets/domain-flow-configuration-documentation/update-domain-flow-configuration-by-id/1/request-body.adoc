@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"domainId":"my-app-2"}
+----

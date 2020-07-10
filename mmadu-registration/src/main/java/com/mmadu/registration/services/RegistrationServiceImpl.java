@@ -33,7 +33,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public void registerUser(String domainId, UserForm userForm) {
+    public void registerUser(String domainId, String code, UserForm userForm) {
         if (userForm == null) {
             throw new IllegalArgumentException("user form cannot be null");
         }
@@ -41,13 +41,16 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new UserFormValidationException("username cannot be empty");
         }
 
-        RegistrationProfile profile = registrationProfileService.getProfileForDomain(domainId);
+        RegistrationProfile profile = registrationProfileService.getProfileForDomainAndCode(domainId, code);
         UserModel model = userFormConverter.convertToUserProperties(domainId, userForm);
         if (!model.get("roles").isPresent()) {
             model.set("roles", profile.getDefaultRoles());
         }
         if (!model.get("authorities").isPresent()) {
             model.set("authorities", profile.getDefaultAuthorities());
+        }
+        if (!model.get("groups").isPresent()) {
+            model.set("groups", profile.getDefaultGroups());
         }
         if (!model.get("password").isPresent()) {
             model.set("password", "");

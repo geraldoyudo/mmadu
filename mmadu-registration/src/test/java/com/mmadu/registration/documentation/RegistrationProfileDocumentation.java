@@ -57,6 +57,12 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                         .description("Roles assigned to newly registered users"),
                 fieldWithPath("defaultAuthorities")
                         .description("Authorities assigned to newly registered users"),
+                fieldWithPath("defaultGroups")
+                        .description("Groups assigned to newly registered users"),
+                fieldWithPath("code")
+                        .description("Registration Profile code, used in the registration url"),
+                fieldWithPath("fields")
+                        .description("Field codes of domain fields to display in this form"),
                 fieldWithPath("defaultRedirectUrl")
                         .description("Url to redirect to after registration success"),
                 fieldWithPath("headerOne").description("Main registration page title - h1"),
@@ -74,6 +80,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         RegistrationProfile profile = new RegistrationProfile();
         profile.setDefaultRoles(Collections.singletonList("member"));
         profile.setDefaultAuthorities(Collections.singletonList("view-list"));
+        profile.setDefaultGroups(Collections.singletonList("admins"));
         profile.setId("1");
         profile.setDefaultRedirectUrl("http://my.app.com/home");
         profile.setDomainId("0");
@@ -82,6 +89,8 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         profile.setHeaderThree("Fill all required fields");
         profile.setInstruction("Ensure that all fields are filled");
         profile.setSubmitButtonTitle("Go");
+        profile.setCode("user");
+        profile.setFields(asList("field.username", "field.email", "field.password"));
         return profile;
     }
 
@@ -106,6 +115,13 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                 );
     }
 
+    private List<FieldDescriptor> registrationProfileFieldList() {
+        return asList(
+                subsectionWithPath("_embedded.registrationProfiles").description("Registration Profile Array, (See Registartion Profile Details Response)")
+        );
+    }
+
+
     @Test
     void getRegistrationProfileForDomainId() throws Exception {
         RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
@@ -118,10 +134,33 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                 .andDo(
                         document(DOCUMENTATION_NAME,
                                 relaxedResponseFields(
-                                        registrationProfileFields()
+                                        registrationProfileFieldList()
                                 ),
                                 requestParameters(
                                         parameterWithName("domainId").description("Domain ID")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    void getRegistrationProfileForDomainIdAndCode() throws Exception {
+        RegistrationProfile profile = registrationProfileRepository.save(createNewRegistrationProfile());
+        mockMvc.perform(
+                RestDocumentationRequestBuilders.get("/repo/registrationProfiles/search/findByDomainIdAndCode")
+                        .param("domainId", profile.getDomainId())
+                        .param("code", profile.getCode())
+                        .header(HttpHeaders.AUTHORIZATION, authorization("a.0.reg_profile.read"))
+        )
+                .andExpect(status().isOk())
+                .andDo(
+                        document(DOCUMENTATION_NAME,
+                                relaxedResponseFields(
+                                        registrationProfileFields()
+                                ),
+                                requestParameters(
+                                        parameterWithName("domainId").description("Domain ID"),
+                                        parameterWithName("code").description("Registration Profile code")
                                 )
                         )
                 );

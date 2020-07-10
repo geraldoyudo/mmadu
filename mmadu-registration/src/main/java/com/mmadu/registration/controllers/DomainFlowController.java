@@ -1,6 +1,6 @@
 package com.mmadu.registration.controllers;
 
-import com.mmadu.registration.config.DomainFlowConfiguration;
+import com.mmadu.registration.config.DomainFlowConfigurationList;
 import com.mmadu.registration.populators.DomainFlowPopulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class DomainFlowController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('domain_flow.initialize')")
-    public void registerDomains(@RequestBody @Valid DomainFlowConfiguration configuration){
+    public void registerDomains(@RequestBody @Valid DomainFlowConfigurationList configuration){
         domainFlowPopulator.initializeDomainEnvironment(configuration);
     }
 }

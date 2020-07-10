@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mmadu.registration.utils.EntityUtils.DOMAIN_CODE;
 import static com.mmadu.registration.utils.EntityUtils.DOMAIN_ID;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -47,7 +48,7 @@ public class RegistrationServiceImplTest {
         UserForm userForm = new UserForm();
         userForm.set("password", "password");
         Exception ex = assertThrows(UserFormValidationException.class,
-                () -> registrationService.registerUser(DOMAIN_ID, userForm));
+                () -> registrationService.registerUser(DOMAIN_ID, DOMAIN_CODE, userForm));
         assertEquals("username cannot be empty", ex.getMessage());
     }
 
@@ -56,8 +57,8 @@ public class RegistrationServiceImplTest {
         UserForm userForm = new UserForm();
         userForm.set("username", "user");
         RegistrationProfile profile = getRegistrationProfile();
-        doReturn(profile).when(registrationProfileService).getProfileForDomain(DOMAIN_ID);
-        registrationService.registerUser(DOMAIN_ID, userForm);
+        doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
+        registrationService.registerUser(DOMAIN_ID, DOMAIN_CODE, userForm);
         verify(mmaduUserServiceClient, times(1)).addUsers(eq(DOMAIN_ID), userCaptor.capture());
         Map<String, Object> userProperties = userCaptor.getValue();
         assertThat(userProperties.get("roles"), equalTo(profile.getDefaultRoles()));
@@ -79,8 +80,8 @@ public class RegistrationServiceImplTest {
         UserForm userForm = new UserForm();
         userForm.set("username", "user");
         RegistrationProfile profile = getRegistrationProfile();
-        doReturn(profile).when(registrationProfileService).getProfileForDomain(DOMAIN_ID);
-        registrationService.registerUser(DOMAIN_ID, userForm);
+        doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
+        registrationService.registerUser(DOMAIN_ID, DOMAIN_CODE, userForm);
         verify(mmaduUserServiceClient, times(1)).addUsers(eq(DOMAIN_ID), userCaptor.capture());
         Map<String, Object> userProperties = userCaptor.getValue();
         assertThat(userProperties.get("password"), equalTo(""));
@@ -89,7 +90,7 @@ public class RegistrationServiceImplTest {
     @Test
     public void givenNullUserFormThrowIllegalArgumentException() {
         Exception ex = assertThrows(IllegalArgumentException.class,
-                () -> registrationService.registerUser(DOMAIN_ID, null));
+                () -> registrationService.registerUser(DOMAIN_ID, DOMAIN_CODE,null));
         assertEquals("user form cannot be null", ex.getMessage());
     }
 

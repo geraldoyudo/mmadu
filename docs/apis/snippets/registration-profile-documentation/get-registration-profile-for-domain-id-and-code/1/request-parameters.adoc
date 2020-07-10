@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+domainId+`
+|Domain ID
+
+|`+code+`
+|Registration Profile code
+
+|===

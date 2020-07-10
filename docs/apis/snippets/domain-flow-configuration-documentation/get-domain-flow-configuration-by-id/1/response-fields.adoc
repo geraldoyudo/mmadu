@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+id+`
+|`+string+`
+|Domain Flow Configuration ID
+
+|`+domainId+`
+|`+string+`
+|Domain Id
+
+|===

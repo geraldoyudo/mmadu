@@ -10,4 +10,7 @@ public interface FieldRepository extends MongoRepository<Field, String> {
     List<Field> findByDomainId(@Param("domainId") String domainId);
 
     List<Field> findByFieldTypeId(@Param("fieldTypeId") String fieldTypeId);
+
+    List<Field> findByDomainIdAndCodeIn(@Param("domainId") String domainId,
+                                        @Param("codes") List<String> codes);
 }

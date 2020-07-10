@@ -49,6 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RegistrationControllerTest {
     public static final String PROFILE_ID = "1";
     public static final String DOMAIN_ID = "1";
+    public static final String DOMAIN_CODE = "1234";
     public static final String REDIRECT_URL = "http://google.com";
     @Autowired
     private MockMvc mockMvc;
@@ -65,15 +66,15 @@ public class RegistrationControllerTest {
 
     @BeforeEach
     public void setUp() {
-        doReturn(profile).when(registrationProfileService).getProfileForDomain(DOMAIN_ID);
-        doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomain(anyString());
+        doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
+        doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomainAndCode(anyString(), anyString());
         doReturn(true).when(userFormValidator).supports(eq(UserForm.class));
     }
 
     @Test
     public void whenGetRegisterApiCalledShouldReturnRegisterPage() throws Exception {
 
-        mockMvc.perform(get("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(get("/{domainId}/register/user", DOMAIN_ID)
         ).andExpect(
                 status().isOk()
         ).andExpect(
@@ -89,7 +90,7 @@ public class RegistrationControllerTest {
     public void whenGetRegisterApiCalledWithRedirectUrlShouldReturnRegisterPageWithRedirectUrlAttribute()
             throws Exception {
 
-        mockMvc.perform(get("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(get("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
         ).andExpect(
                 status().isOk()
@@ -100,7 +101,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void whenPostRegisterShouldSendRedirectToRedirectUrl() throws Exception {
-        mockMvc.perform(post("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(post("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(
@@ -124,7 +125,7 @@ public class RegistrationControllerTest {
             return null;
         }).when(userFormValidator).validate(ArgumentMatchers.any(), ArgumentMatchers.any(Errors.class));
 
-        mockMvc.perform(post("/{domainId}/register", DOMAIN_ID)
+        mockMvc.perform(post("/{domainId}/register/user", DOMAIN_ID)
                 .param("redirectUrl", REDIRECT_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(new UrlEncodedFormEntity(Arrays.asList(

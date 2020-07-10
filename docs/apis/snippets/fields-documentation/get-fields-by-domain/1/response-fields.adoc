@@ -37,6 +37,10 @@
 |`+String+`
 |the form name of the field
 
+|`+_embedded.fields.[].code+`
+|`+String+`
+|the field code
+
 |`+_embedded.fields.[].domainId+`
 |`+String+`
 |the ID of the domain

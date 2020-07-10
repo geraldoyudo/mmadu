@@ -81,14 +81,21 @@ mmadu:
           max: 2020-08-19T13:45:00
       domains:
         - domainId: 0
-          registrationProfile:
-            defaultRedirectUrl: https://google.com
-            headerOne: Mmadu
-            headerThree: Register
-            instruction: Fill all the fields to register
-            submitButtonTitle: GO!!
+          registration-profiles:
+            - defaultRedirectUrl: https://google.com
+              code: user
+              headerOne: Mmadu
+              headerThree: Register
+              instruction: Fill all the fields to register
+              submitButtonTitle: GO!!
+              fields:
+                - mmadu.field.email
+                - mmadu.field.full_name
+                - mmadu.field.username
+                - mmadu.field.password
           fields:
             - name: email
+              code: mmadu.field.email
               placeholder: Email
               property: email
               fieldTypeId: mmadu.fields.email
@@ -96,6 +103,7 @@ mmadu:
               order: 1
               required: true
             - name: full-name
+              code: mmadu.field.full_name
               placeholder: Full Name
               property: fullName
               fieldTypeId: mmadu.fields.text
@@ -103,6 +111,7 @@ mmadu:
               order: 2
               required: true
             - name: username
+              code: mmadu.field.username
               placeholder: Username
               property: username
               fieldTypeId: mmadu.fields.text
@@ -110,6 +119,7 @@ mmadu:
               order: 3
               required: true
             - name: password
+              code: mmadu.field.password
               placeholder: Password
               property: password
               fieldTypeId: mmadu.fields.password

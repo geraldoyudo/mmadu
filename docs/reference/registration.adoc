@@ -70,21 +70,22 @@ generates a form from the configured fields and field types of a domain.
 The registration form can be accessed in the browser using the url:
 
 ----
-http://[registration-host]:[registration-port]/[domain-id]/register
+http://[registration-host]:[registration-port]/[domain-id]/register/[registration-profile-code]
 ----
 
 For example, accessing the default domain with the default configuration can be done
 by entering the url below on your browser.
 
 ----
-http://localhost:15552/0/register
+http://localhost:15552/0/register/user
 ----
 
 The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
-this domain. To specify a url to redirect to, add the redirectUrl parameter.
+this domain. To specify a url to redirect to, add the redirectUrl parameter. Here we are using a registration
+profile with code `user`.
 
 ----
-http://localhost:1552/0/register?redirectUrl=http://myapp.com
+http://localhost:1552/0/register/user?redirectUrl=http://myapp.com
 ----
 
 
@@ -93,13 +94,111 @@ http://localhost:1552/0/register?redirectUrl=http://myapp.com
 Registration forms for a domain can be customized by adding and removing fields and field types.
 The registration service ensures that form fields are created for each field.
 
+== Domain Flow Configurations
+
+Each domain has a Domain Flow Configuration object that is used for configuring the applications behaviour during
+registration.
+
+=== Creating a Domain Flow Configuration
+
+A `POST /repo/domainFlowConfigurations` Request will create a Domain Flow Configuration.
+
+Authority: `flow_config.create`
+
+==== Create Domain Flow Configuration Request Body
+
+include::{snippets}/domain-flow-configuration-documentation/create-domain-flow-configurations/1/request-fields.adoc[]
+
+==== Sample Create Domain Flow Configuration Request
+
+include::{snippets}/domain-flow-configuration-documentation/create-domain-flow-configurations/1/http-request.adoc[]
+
+==== Create Domain Flow Configuration Response
+
+This API returns a HTTP 201 CREATED response with an empty body.
+
+
+=== Retrieving a Domain Flow Configuration
+
+A GET Request will return a Domain Flow Configuration with its ID
+
+Authority: `flow_config.read`
+
+==== Domain Flow Configuration Retrieval Path Parameter
+
+include::{snippets}/domain-flow-configuration-documentation/get-domain-flow-configuration-by-id/1/path-parameters.adoc[]
+
+==== Sample Domain Flow Configuration Retrieval Request
+
+include::{snippets}/domain-flow-configuration-documentation/get-domain-flow-configuration-by-id/1/http-request.adoc[]
+
+
+==== Domain Flow Configuration Retrieval Response
+
+This API returns the Domain Flow Configuration with the following fields:
+
+include::{snippets}/domain-flow-configuration-documentation/get-domain-flow-configuration-by-id/1/response-fields.adoc[]
+
+==== Sample Domain Flow Configuration Retrieval Response
+
+include::{snippets}/domain-flow-configuration-documentation/get-domain-flow-configuration-by-id/1/http-response.adoc[]
+
+
+=== Updating Domain Flow Configuration by ID
+
+A `PATCH /repo/domainFlowConfigurations/{domainFlowConfigurationId}` Request will update a Domain Flow Configuration.
+The example below updates the defaultRegistrationUrl property.
+
+Authority: `flow_config.update`
+
+==== Domain Flow Configuration Update Request Path Parameter
+
+include::{snippets}/domain-flow-configuration-documentation/update-domain-flow-configuration-by-id/1/path-parameters.adoc[]
+
+==== Sample Domain Flow Configuration Update Request
+
+include::{snippets}/domain-flow-configuration-documentation/update-domain-flow-configuration-by-id/1/http-request.adoc[]
+
+
+==== Domain Flow Configuration Update Response
+
+This API returns a HTTP 204 NO CONTENT response.
+
+==== Sample Domain Flow Configuration Update Response
+
+Authority: `flow_config.update`
+
+include::{snippets}/domain-flow-configuration-documentation/update-domain-flow-configuration-by-id/1/http-response.adoc[]
+
+
+=== Deleting a Domain Flow Configuration by ID
+
+A `DELETE /repo/domainFlowConfigurations/{domainFlowConfigurationID}` request will delete a Domain Flow Configuration.
+
+
+Authority: `flow_config.delete`
+
+==== Domain Flow Configuration Delete Request Path
+
+include::{snippets}/domain-flow-configuration-documentation/delete-domain-flow-configuration-by-id/1/path-parameters.adoc[]
+
+==== Sample Domain Flow Configuration Delete Request
+
+include::{snippets}/domain-flow-configuration-documentation/delete-domain-flow-configuration-by-id/1/http-request.adoc[]
+
+==== Domain Flow Configuration Delete Response
+
+This API returns a HTTP 204 NO CONTENT response.
+
+==== Sample Domain Flow Configuration Delete Response
+
+include::{snippets}/domain-flow-configuration-documentation/delete-domain-flow-configuration-by-id/1/http-response.adoc[]
+
 
 == Registration Profiles
 
 Each domain has a registration profile object that is used for configuring the applications behaviour during
 registration.
-
-NOTE: There can be only one registration profile for a domain.
 
 === Creating a Registration Profile
 

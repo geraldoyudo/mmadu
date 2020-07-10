@@ -1,7 +1,7 @@
 package com.mmadu.registration.documentation;
 
 import com.mmadu.registration.entities.FieldType;
-import com.mmadu.registration.providers.DomainRegistrationFormFieldsManager;
+import com.mmadu.registration.providers.RegistrationProfileFormFieldsManager;
 import com.mmadu.registration.repositories.FieldTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
     @Autowired
     private FieldTypeRepository fieldTypeRepository;
     @MockBean
-    private DomainRegistrationFormFieldsManager domainRegistrationFormFieldsManager;
+    private RegistrationProfileFormFieldsManager registrationProfileFormFieldsManager;
 
     @Test
     void createFieldTypes() throws Exception {
