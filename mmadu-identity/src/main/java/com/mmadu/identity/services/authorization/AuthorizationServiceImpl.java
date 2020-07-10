@@ -16,6 +16,7 @@ import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.StringListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,6 +70,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    @Transactional
     public String initiateAuthorization(AuthorizationRequest request) {
         MmaduClient client = mmaduClientService.loadClientByIdentifier(request.getClient_id())
                 .orElseThrow(ClientInstanceNotFoundException::new);
@@ -85,6 +87,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    @Transactional
     public String processAuthorization(AuthorizationRequest request, AuthorizationResponse response) {
         AuthorizationContext context = new AuthorizationContext();
         context.setAuthorizer(mmaduUser);

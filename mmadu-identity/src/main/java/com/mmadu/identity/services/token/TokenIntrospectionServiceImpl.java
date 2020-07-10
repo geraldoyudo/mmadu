@@ -10,6 +10,7 @@ import com.mmadu.identity.repositories.GrantAuthorizationRepository;
 import com.mmadu.identity.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -36,6 +37,7 @@ public class TokenIntrospectionServiceImpl implements TokenIntrospectionService 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TokenIntrospectionResponse getTokenDetails(TokenIntrospectionRequest request) {
         String clientIdentifier = Optional.ofNullable(mmaduClient.getClientIdentifier())
                 .orElse(request.getClient_id());

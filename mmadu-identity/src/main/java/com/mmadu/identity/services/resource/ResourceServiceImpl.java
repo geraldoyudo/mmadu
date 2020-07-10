@@ -4,6 +4,7 @@ import com.mmadu.identity.entities.Resource;
 import com.mmadu.identity.repositories.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -20,16 +21,19 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Resource> findByDomainIdAndIdentifier(String domainId, String identifier) {
         return resourceRepository.findByDomainIdAndIdentifier(domainId, identifier);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean existsByDomainIdAndIdentifier(String domainId, String identifier) {
         return resourceRepository.existsByDomainIdAndIdentifier(domainId, identifier);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean areAllResourcesSupportedInDomain(String domainId, List<String> resources) {
         Set<String> resourceSet = new HashSet<>(resources);
         return resourceRepository.countByDomainIdAndIdentifierIn(domainId, new ArrayList<>(resourceSet))
@@ -37,6 +41,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean supportsTokenCategory(String domainId, List<String> resources, String tokenCategory) {
         List<Resource> resourceList = resourceRepository.findByDomainIdAndIdentifierIn(domainId, resources);
         for (Resource resource : resourceList) {

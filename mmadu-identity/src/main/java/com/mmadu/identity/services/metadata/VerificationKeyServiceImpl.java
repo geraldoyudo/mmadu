@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +49,7 @@ public class VerificationKeyServiceImpl implements VerificationKeyService {
 
     @Override
     @Cacheable("verificationKeys")
+    @Transactional(readOnly = true)
     public Map<String,Object> getKeys(String domainId) {
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(domainId)
                 .orElseThrow(DomainNotFoundException::new);

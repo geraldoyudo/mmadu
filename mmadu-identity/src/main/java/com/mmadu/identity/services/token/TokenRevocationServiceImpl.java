@@ -11,6 +11,7 @@ import com.mmadu.identity.repositories.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -40,6 +41,7 @@ public class TokenRevocationServiceImpl implements TokenRevocationService {
     }
 
     @Override
+    @Transactional
     public void revokeToken(TokenRevocationRequest request) {
         String clientIdentifier = Optional.ofNullable(mmaduClient.getClientIdentifier())
                 .orElse(request.getClient_id());
