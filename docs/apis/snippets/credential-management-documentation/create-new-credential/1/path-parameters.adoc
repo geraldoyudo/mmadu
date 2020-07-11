@@ -1,0 +1,8 @@
+.+/admin/domains/{domainId}/credentials+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|domain for the credentials to be crated in
+
+|===

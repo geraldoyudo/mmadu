@@ -10,5 +10,5 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 152
 
-{"id":"123453432","username":"test-user","password":"my-password","roles":[],"authorities":[],"groups":[],"favourite-colour":"blue","country":"Nigeria"}
+{"id":"123453432","roles":[],"authorities":[],"groups":[],"username":"test-user","password":"my-password","favourite-colour":"blue","country":"Nigeria"}
 ----

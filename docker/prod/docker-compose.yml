@@ -1,4 +1,4 @@
-version: '2'
+version: '3.4'
 services:
   mmadu-user-service:
     image: geraldoyudo/mmadu-user-service:2.0.2-SNAPSHOT
@@ -49,6 +49,6 @@ services:
     depends_on:
       - mongodb
   mongodb:
-    image: mongo:3.4.20-xenial
+    image: mongo:4.2.8-bionic
     ports:
       - "27017:27017"

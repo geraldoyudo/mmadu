@@ -3,7 +3,7 @@
 {
   "_embedded" : {
     "scopes" : [ {
-      "id" : "5eed8d1efb781170c68bafa6",
+      "id" : "5f095502ea78f80ca7c29aba",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "Email Scope",
@@ -11,14 +11,14 @@
       "authorities" : [ "view_users" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29aba"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29aba"
         }
       }
     }, {
-      "id" : "5eed8d1efb781170c68bafa8",
+      "id" : "5f095502ea78f80ca7c29abc",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "New Email",
@@ -26,14 +26,14 @@
       "authorities" : [ "view_users" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abc"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abc"
         }
       }
     }, {
-      "id" : "5eed8d1efb781170c68bafa9",
+      "id" : "5f095502ea78f80ca7c29abd",
       "domainId" : "1",
       "code" : "test.mail",
       "name" : "Email Scope",
@@ -41,10 +41,10 @@
       "authorities" : [ "view_users" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abd"
         },
         "scope" : {
-          "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9"
+          "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abd"
         }
       }
     } ]

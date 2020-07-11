@@ -11,114 +11,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 5326
+Content-Length: 2056
 
 {
   "_embedded" : {
     "clients" : [ {
-      "id" : "5eec5c82d4de4b28a4a41c4e",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c51",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c54",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c57",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c5a",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c5d",
-      "domainId" : "1",
-      "name" : "test",
-      "code" : "1234",
-      "applicationUrl" : "https://myapp.com",
-      "logoUrl" : "https://logo.url/favicon",
-      "category" : "test",
-      "tags" : [ "tags" ],
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d"
-        },
-        "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d"
-        }
-      }
-    }, {
-      "id" : "5eec5caed4de4b28a4a41c79",
+      "id" : "5f095530ea78f80ca7c29b0c",
       "domainId" : "1",
       "name" : "New Email Client",
       "code" : "A12345",
@@ -128,14 +26,14 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0c"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0c"
         }
       }
     }, {
-      "id" : "5eec5caed4de4b28a4a41c7a",
+      "id" : "5f095530ea78f80ca7c29b0d",
       "domainId" : "1",
       "name" : "Email Client",
       "code" : "A12345",
@@ -145,14 +43,14 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d"
         }
       }
     }, {
-      "id" : "5eec5caed4de4b28a4a41c7b",
+      "id" : "5f095530ea78f80ca7c29b0e",
       "domainId" : "1",
       "name" : "Email Client",
       "code" : "A12345",
@@ -162,10 +60,10 @@ Content-Length: 5326
       "tags" : [ "email", "communications" ],
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0e"
         },
         "client" : {
-          "href" : "http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b"
+          "href" : "http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0e"
         }
       }
     } ]
@@ -177,7 +75,7 @@ Content-Length: 5326
   },
   "page" : {
     "size" : 20,
-    "totalElements" : 9,
+    "totalElements" : 3,
     "totalPages" : 1,
     "number" : 0
   }

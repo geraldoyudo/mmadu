@@ -54,7 +54,7 @@
 |The client's credential type (for now, `secret`)
 
 |`+_embedded.clientInstances.[].credentials.secret+`
-|`+String+`
+|`+string+`
 |The client secret (if credential type is `secret`)
 
 |===

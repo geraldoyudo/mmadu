@@ -3,7 +3,53 @@
 {
   "_embedded" : {
     "domainIdentityConfigurations" : [ {
-      "id" : "5eec5c9fd4de4b28a4a41c6a",
+      "id" : "5f095508ea78f80ca7c29ac1",
+      "domainId" : "0",
+      "authorizationCodeType" : "alphanumeric",
+      "authorizationCodeTypeProperties" : { },
+      "authorizationCodeTTLSeconds" : 600,
+      "maxAuthorizationTTLSeconds" : 3600,
+      "refreshTokenEnabled" : true,
+      "accessTokenProvider" : "jwt",
+      "accessTokenProperties" : {
+        "credentialId" : "5f095508ea78f80ca7c29ac0"
+      },
+      "refreshTokenProvider" : "alphanumeric",
+      "refreshTokenProperties" : { },
+      "issuerId" : "mmadu.com",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac1"
+        },
+        "domainIdentityConfiguration" : {
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac1"
+        }
+      }
+    }, {
+      "id" : "5f095508ea78f80ca7c29ac9",
+      "domainId" : "1212",
+      "authorizationCodeType" : "alphanumeric",
+      "authorizationCodeTypeProperties" : { },
+      "authorizationCodeTTLSeconds" : 600,
+      "maxAuthorizationTTLSeconds" : 3600,
+      "refreshTokenEnabled" : true,
+      "accessTokenProvider" : "jwt",
+      "accessTokenProperties" : {
+        "credentialId" : "5f095508ea78f80ca7c29ac8"
+      },
+      "refreshTokenProvider" : "alphanumeric",
+      "refreshTokenProperties" : { },
+      "issuerId" : "mmadu.com",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac9"
+        },
+        "domainIdentityConfiguration" : {
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac9"
+        }
+      }
+    }, {
+      "id" : "5f09551cea78f80ca7c29ae9",
       "domainId" : "1",
       "authorizationCodeType" : "alphanumeric",
       "authorizationCodeTypeProperties" : { },
@@ -17,10 +63,10 @@
       "issuerId" : "mmadu.com",
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a"
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29ae9"
         },
         "domainIdentityConfiguration" : {
-          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a"
+          "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29ae9"
         }
       }
     } ]
@@ -38,7 +84,7 @@
   },
   "page" : {
     "size" : 20,
-    "totalElements" : 1,
+    "totalElements" : 3,
     "totalPages" : 1,
     "number" : 0
   }

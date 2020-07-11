@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "type" : "rsa"
+}' | http POST 'http://localhost:8080/admin/domains/1/credentials' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcwOTksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jcmVkZW50aWFsLmNyZWF0ZSIsImV4cCI6MTU5NDQ0NzEwNCwiaWF0IjoxNTk0NDQ3MDk5LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.hA6Gy_9CxwwoMchRYsibpoOCpuk-6qvn5G8XpalDsUeI8wDurTMDh2eJaXOPZvAqkv5PDiUPQc7nwGi7pv5P47nF6O1bXUUgw87Gw5-Urer36jcAWCB45CYVhYhwkn_G_1OFe3H20sGL604yO55Bv1JtuzKu2SXMeo0iqEdALpweUsQc-WF-gR22tKo5-40-7t-wo98v-ZiCZOx6qW3_IaTupPBdMDCfXfwXLKZX_U0fhJJ0LeSdS_3-dwP3BnuQblGnwccDlPgEs-jMobHVidO6o7nKg6fCP-tGvLe2naiJJYbUeNpgUwOZWUfjhgAlH2LBLerpNNukNxYSY9pGOw' \
+    'Accept:text/plain'
+----

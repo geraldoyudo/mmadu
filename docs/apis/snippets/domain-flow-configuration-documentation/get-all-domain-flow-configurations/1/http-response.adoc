@@ -11,11 +11,21 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 794
+Content-Length: 1138
 
 {
   "_embedded" : {
     "domainFlowConfigurations" : [ {
+      "domainId" : "0",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/5f095d92b969613dad89523c"
+        },
+        "domainFlowConfiguration" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/5f095d92b969613dad89523c"
+        }
+      }
+    }, {
       "domainId" : "1234",
       "_links" : {
         "self" : {
@@ -40,7 +50,7 @@ Content-Length: 794
   },
   "page" : {
     "size" : 20,
-    "totalElements" : 1,
+    "totalElements" : 2,
     "totalPages" : 1,
     "number" : 0
   }
