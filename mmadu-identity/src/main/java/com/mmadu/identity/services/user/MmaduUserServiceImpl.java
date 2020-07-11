@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -29,6 +30,7 @@ public class MmaduUserServiceImpl implements MmaduUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<MmaduUser> loadUserByUsernameAndDomainId(String username, String domainId) {
         try {
             return userServiceClient.get()

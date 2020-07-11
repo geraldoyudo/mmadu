@@ -5,6 +5,7 @@ import com.mmadu.registration.repositories.DomainFlowConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class DomainFlowConfigurationServiceImpl implements DomainFlowConfigurati
 
     @Override
     @Cacheable("domainFlowConfigurations")
+    @Transactional(readOnly = true)
     public Optional<DomainFlowConfiguration> findByDomainId(String domainId) {
         return domainFlowConfigurationRepository.findByDomainId(domainId);
     }

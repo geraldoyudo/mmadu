@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -62,6 +63,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void createUser(String domainId, UserView userView) {
         if (userView == null) {
             throw new IllegalArgumentException("user cannot be null");
@@ -113,6 +115,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserView> getAllUsers(String domainId, Pageable pageable) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -123,6 +126,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserView getUserByDomainIdAndExternalId(String domainId, String externalId) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -132,6 +136,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void deleteUserByDomainAndExternalId(String domainId, String externalId) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -143,6 +148,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void updateUser(String domainId, String externalId, UserView userView) {
         if (userView == null) {
             throw new IllegalArgumentException("user cannot be null");
@@ -160,6 +166,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserView getUserByDomainIdAndUsername(String domainId, String username) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -169,6 +176,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserView> queryUsers(String domainId, String query, Pageable pageable) {
         String resultantQuery = ensureQueryAndDomainParameters(domainId, query);
         Page<UserView> userViewPage = appUserRepository.queryForUsers(resultantQuery, pageable)
@@ -193,6 +201,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void patchUpdateUsers(String domainId, String query, UpdateRequest updateRequest) {
         if (updateRequest == null) {
             throw new IllegalArgumentException("Update request cannot be null");

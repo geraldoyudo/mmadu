@@ -9,6 +9,7 @@ import com.mmadu.identity.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public class MmaduClientServiceImpl implements MmaduClientService {
 
     @Override
     @Cacheable("clients")
+    @Transactional(readOnly = true)
     public Optional<MmaduClient> loadClientByIdentifier(String clientIdentifier) {
         Optional<ClientInstance> optionalInstance = clientInstanceRepository.findByIdentifier(clientIdentifier);
         if (optionalInstance.isEmpty()) {

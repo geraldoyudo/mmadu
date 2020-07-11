@@ -10,5 +10,5 @@ Expires: 0
 X-Frame-Options: DENY
 Content-Length: 606
 
-{"content":[{"id":"123453432","username":"test-user0","password":"my-password0","roles":[],"authorities":[],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user1","password":"my-password1","roles":[],"authorities":[],"country":"Nigeria","favourite-color":"blue"},{"id":"123453432","username":"test-user2","password":"my-password2","roles":[],"authorities":[],"country":"Nigeria","favourite-color":"blue"}],"totalPages":1,"last":true,"totalElements":3,"number":0,"size":10,"sort":{"sorted":false,"unsorted":true,"empty":true},"first":true,"numberOfElements":3,"empty":false}
+{"content":[{"id":"123453432","roles":[],"authorities":[],"username":"test-user0","password":"my-password0","country":"Nigeria","favourite-color":"blue"},{"id":"123453432","roles":[],"authorities":[],"username":"test-user1","password":"my-password1","country":"Nigeria","favourite-color":"blue"},{"id":"123453432","roles":[],"authorities":[],"username":"test-user2","password":"my-password2","country":"Nigeria","favourite-color":"blue"}],"totalElements":3,"totalPages":1,"last":true,"number":0,"size":10,"sort":{"sorted":false,"unsorted":true,"empty":true},"numberOfElements":3,"first":true,"empty":false}
 ----

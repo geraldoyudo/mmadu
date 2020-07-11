@@ -5,6 +5,7 @@ import com.mmadu.identity.repositories.DomainIdentityConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class DomainIdentityConfigurationServiceImpl implements DomainIdentityCon
 
     @Override
     @Cacheable("domainConfigurations")
+    @Transactional(readOnly = true)
     public Optional<DomainIdentityConfiguration> findByDomainId(String domainId) {
         return domainIdentityConfigurationRepository.findByDomainId(domainId);
     }

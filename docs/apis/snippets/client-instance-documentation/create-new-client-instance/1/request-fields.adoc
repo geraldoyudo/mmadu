@@ -61,12 +61,16 @@
 |`+Boolean+`
 |Include user's authorities in the token info
 
+|`+tokenCategory+`
+|`+String+`
+|The type of tokens expected e.g. 'bearer'
+
 |`+credentials.type+`
 |`+String+`
 |The client's credential type (for now, `secret`)
 
 |`+credentials.secret+`
-|`+String+`
+|`+string+`
 |The client secret (if credential type is `secret`)
 
 |===

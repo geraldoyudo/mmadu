@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
@@ -45,6 +46,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public void addGroup(String domainId, NewGroupRequest request) {
         if (groupRepository.existsByDomainIdAndIdentifier(domainId, request.getIdentifier())) {
             throw new DuplicationException("group already exists");
@@ -64,6 +66,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public void addUserToGroup(String domainId, NewGroupUserRequest request) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, request.getId())
                 .orElseThrow(UserNotFoundException::new);
@@ -86,6 +89,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional
     public void removeUserFromGroup(String domainId, GroupUserRemovalRequest request) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, request.getId())
                 .orElseThrow(UserNotFoundException::new);
@@ -100,6 +104,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<String> getGroups(String domainId, String userId) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -123,6 +128,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserView> getUsersInGroup(String domainId, String groupIdentifier, Pageable pageable) {
         Group group = groupRepository.findByDomainIdAndIdentifier(domainId, groupIdentifier)
                 .orElseThrow(GroupNotFoundException::new);
@@ -149,6 +155,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean userInGroup(String domainId, String userExternalId, String groupIdentifier) {
         Group group = groupRepository.findByDomainIdAndIdentifier(domainId, groupIdentifier)
                 .orElseThrow(GroupNotFoundException::new);

@@ -1,5 +1,4 @@
 spring:
   data:
     mongodb:
-      database: mmadu_user_db
-      host: localhost
+      uri: mongodb://localhost:27017/mmadu_user_db?replicaSet=default-replica-set

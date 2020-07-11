@@ -9,6 +9,7 @@ import com.mmadu.identity.providers.authorization.scopes.ScopeFilterContext;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class ProposedScopeLimitServiceImpl implements ProposedScopeLimitService 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> limitScopesForUser(List<String> scopes, MmaduUser user, MmaduClient client) {
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(user.getDomainId())
                 .orElseThrow(() -> new DomainNotFoundException("user domain not found"));

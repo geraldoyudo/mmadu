@@ -8,6 +8,7 @@ import com.mmadu.registration.providers.UserFormConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
@@ -33,6 +34,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void registerUser(String domainId, String code, UserForm userForm) {
         if (userForm == null) {
             throw new IllegalArgumentException("user form cannot be null");

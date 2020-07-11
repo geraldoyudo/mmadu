@@ -10,6 +10,7 @@ import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public AuthenticateResponse authenticate(String domainId, AuthenticateRequest authRequest) {
 
         if (!appDomainRepository.existsById(domainId)) {

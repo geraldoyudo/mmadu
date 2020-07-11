@@ -10,6 +10,7 @@ import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.utils.ClientProfileUtils;
 import com.mmadu.identity.utils.GrantTypeUtils;
 import com.mmadu.identity.utils.TokenCategoryUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -78,6 +79,13 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
         resource = resourceRepository.save(resource);
     }
 
+    @AfterEach
+    void clear() {
+        clientRepository.deleteAll();
+        clientInstanceRepository.deleteAll();
+        resourceRepository.deleteAll();
+    }
+
     @Test
     void createNewClientInstance() throws Exception {
         when(domainIdentityConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(configuration));
@@ -140,8 +148,9 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("authorities").description("The list of authorities granted to the client"),
                 fieldWithPath("includeUserRoles").description("Include user's roles in the token info"),
                 fieldWithPath("includeUserAuthorities").description("Include user's authorities in the token info"),
+                fieldWithPath("tokenCategory").description("The type of tokens expected e.g. 'bearer'"),
                 fieldWithPath("credentials.type").description("The client's credential type (for now, `secret`)"),
-                fieldWithPath("credentials.secret").description("The client secret (if credential type is `secret`)").optional()
+                fieldWithPath("credentials.secret").type("string").optional().description("The client secret (if credential type is `secret`)").optional()
         );
     }
 
@@ -214,7 +223,7 @@ public class ClientInstanceDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.clientInstances.[].includeUserRoles").description("Include user's roles in the token info"),
                 fieldWithPath("_embedded.clientInstances.[].includeUserAuthorities").description("Include user's authorities in the token info"),
                 fieldWithPath("_embedded.clientInstances.[].credentials.type").optional().description("The client's credential type (for now, `secret`)"),
-                fieldWithPath("_embedded.clientInstances.[].credentials.secret").optional().description("The client secret (if credential type is `secret`)").optional()
+                fieldWithPath("_embedded.clientInstances.[].credentials.secret").type("string").optional().description("The client secret (if credential type is `secret`)").optional()
         );
     }
 

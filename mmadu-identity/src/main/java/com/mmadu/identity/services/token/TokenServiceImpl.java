@@ -15,6 +15,7 @@ import com.mmadu.identity.services.token.TokenService;
 import com.mmadu.identity.utils.TokenErrorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -44,6 +45,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
+    @Transactional
     public TokenResponse getToken(TokenRequest request) {
         MmaduClient client = mmaduClient;
         if (client.getClientIdentifier() == null) {
