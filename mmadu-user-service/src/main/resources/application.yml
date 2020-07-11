@@ -36,4 +36,4 @@ spring:
     allow-bean-definition-overriding: true
   data:
     mongodb:
-      replica-set-name: default-replica-set
+      uri: mongodb://localhost:27017/mmadu_db?replicaSet=default-replica-set
