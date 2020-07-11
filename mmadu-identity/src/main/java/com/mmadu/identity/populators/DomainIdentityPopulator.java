@@ -87,6 +87,7 @@ public class DomainIdentityPopulator {
         credentialConverter = credentials -> objectMapper.convertValue(credentials, ClientCredentials.class);
     }
 
+    @Transactional
     @EventListener(ContextRefreshedEvent.class)
     public void setUpDomainIdentities() {
         List<DomainIdentityConfigurationList.DomainIdentityItem> unInitializedDomains =

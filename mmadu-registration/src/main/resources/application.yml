@@ -20,6 +20,8 @@ spring:
           mmadu:
             token-uri: http://localhost:10084/clients/token
 mmadu:
+  transactions:
+    enabled: true
   admin:
     client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
     secret: ${MMADU_ADMIN_SECRET:1234567890}

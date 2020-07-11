@@ -1,4 +1,6 @@
 mmadu:
+  transactions:
+    enabled: true
   admin:
     username: ${MMADU_ADMIN_USERNAME:admin}
     password: ${MMADU_ADMIN_PASSWORD:password}

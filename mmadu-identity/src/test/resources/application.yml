@@ -22,7 +22,7 @@ management:
         include: health, info, caches
 mmadu:
   transactions:
-    enabled: true
+    enabled: false
   admin:
     client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
     secret: ${MMADU_ADMIN_SECRET:1234567890}

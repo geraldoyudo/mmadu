@@ -16,6 +16,8 @@ spring:
             token-uri: http://localhost:${server.port}/clients/token
 
 mmadu:
+  transactions:
+    enabled: false
   home: ${user.home}/mmadu-test
   domainKey: 2222
   tokenService:
