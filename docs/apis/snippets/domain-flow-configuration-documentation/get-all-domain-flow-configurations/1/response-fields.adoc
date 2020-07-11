@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+_embedded.domainFlowConfigurations+`
+|`+Array+`
+|Domain Flow Configuration array
+
+|===

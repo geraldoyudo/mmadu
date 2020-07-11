@@ -13,6 +13,7 @@ import com.mmadu.identity.repositories.CredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,12 +53,14 @@ public class CredentialServiceImpl implements CredentialService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<CredentialData> findById(String credentialId) {
         return credentialRepository.findById(credentialId)
                 .map(Credential::getData);
     }
 
     @Override
+    @Transactional
     public String generateCredentialForDomain(String domainId, CredentialGenerationRequest request) {
         CredentialsProvider provider = providers.stream()
                 .filter(p -> p.apply(request))
@@ -79,6 +82,7 @@ public class CredentialServiceImpl implements CredentialService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public String getCredentialVerificationKey(String domainId, String credentialId) {
         return credentialRepository.findById(credentialId)
                 .filter(credential -> domainId.equals(credential.getDomainId()))

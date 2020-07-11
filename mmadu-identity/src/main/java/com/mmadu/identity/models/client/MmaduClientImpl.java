@@ -5,6 +5,7 @@ import com.mmadu.identity.entities.Client;
 import com.mmadu.identity.entities.ClientCredentials;
 import com.mmadu.identity.entities.ClientInstance;
 import com.mmadu.identity.entities.ClientType;
+import com.mmadu.identity.models.authorization.AuthorizationProfile;
 
 import java.util.List;
 
@@ -126,5 +127,10 @@ public class MmaduClientImpl implements MmaduClient {
     @Override
     public Long getClientCredentialsGrantTypeTTLSeconds() {
         return clientInstance.getClientCredentialsGrantTypeTTLSeconds();
+    }
+
+    @Override
+    public AuthorizationProfile getAuthorizationProfile() {
+        return clientInstance.getAuthorizationProfile();
     }
 }

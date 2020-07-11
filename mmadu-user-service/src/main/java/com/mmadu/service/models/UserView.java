@@ -16,13 +16,10 @@ public class UserView {
     private String username;
     @JsonProperty("password")
     private String password;
-    @JsonProperty(value = "roles", access = JsonProperty.Access.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> roles;
-    @JsonProperty(value = "authorities", access = JsonProperty.Access.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> authorities;
-    @JsonProperty(value = "groups", access = JsonProperty.Access.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> groups;
 

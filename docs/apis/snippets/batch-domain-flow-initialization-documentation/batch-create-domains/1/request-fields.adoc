@@ -9,9 +9,9 @@
 |`+String+`
 |Domain ID to be configured
 
-|`+domains.[].registrationProfile+`
-|`+Object+`
-|Registration form configuration for domain
+|`+domains.[].registrationProfiles+`
+|`+Array+`
+|Registration proiles
 
 |`+domains.[].fields+`
 |`+Array+`

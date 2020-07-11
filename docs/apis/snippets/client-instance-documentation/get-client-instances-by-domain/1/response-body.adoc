@@ -3,12 +3,11 @@
 {
   "_embedded" : {
     "clientInstances" : [ {
-      "id" : "5eec5c82d4de4b28a4a41c50",
-      "clientId" : "5eec5c82d4de4b28a4a41c4e",
+      "id" : "5f095509ea78f80ca7c29adc",
+      "clientId" : "5f095509ea78f80ca7c29ada",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
-        "secret" : "1234",
         "type" : "secret"
       },
       "identifier" : "1111",
@@ -21,117 +20,25 @@
       "authorities" : [ "admin" ],
       "issueRefreshTokens" : true,
       "authorizationCodeGrantTypeTTLSeconds" : 86400,
+      "implicitGrantTypeTTLSeconds" : 3600,
+      "passwordGrantTypeTTLSeconds" : 86400,
       "accessTokenTTLSeconds" : 300,
       "refreshTokenTTLSeconds" : 3600,
       "clientCredentialsGrantTypeTTLSeconds" : 86400,
       "includeUserRoles" : false,
       "includeUserAuthorities" : false,
       "includeUserGroups" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
-        },
-        "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c56",
-      "clientId" : "5eec5c83d4de4b28a4a41c54",
-      "clientType" : "CONFIDENTIAL",
-      "clientProfile" : "web_app",
-      "credentials" : {
-        "secret" : "1234",
-        "type" : "secret"
+      "scopes" : [ ],
+      "tokenCategory" : "bearer",
+      "authorizationProfile" : {
+        "autoApproveScopes" : false
       },
-      "identifier" : "1111",
-      "redirectionUris" : [ "https://redirect.com/callback", "https://localhost:832/callback" ],
-      "allowedHosts" : [ "192.168.99.100" ],
-      "tlsEnabled" : true,
-      "supportedGrantTypes" : [ "authorization_code", "client_credentials" ],
-      "domainId" : "1",
-      "resources" : [ "test" ],
-      "authorities" : [ "admin" ],
-      "issueRefreshTokens" : true,
-      "authorizationCodeGrantTypeTTLSeconds" : 86400,
-      "accessTokenTTLSeconds" : 300,
-      "refreshTokenTTLSeconds" : 3600,
-      "clientCredentialsGrantTypeTTLSeconds" : 86400,
-      "includeUserRoles" : false,
-      "includeUserAuthorities" : false,
-      "includeUserGroups" : false,
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c59",
-      "clientId" : "5eec5c83d4de4b28a4a41c57",
-      "clientType" : "CONFIDENTIAL",
-      "clientProfile" : "web_app",
-      "credentials" : {
-        "secret" : "1234",
-        "type" : "secret"
-      },
-      "identifier" : "43e622d5-b661-4c95-89fe-f020ce32bc7d",
-      "redirectionUris" : [ "https://myapp.com/callback", "https://localhost:8080/callback" ],
-      "allowedHosts" : [ "localhost", "teamapt.com", "32.32.182.34" ],
-      "tlsEnabled" : true,
-      "supportedGrantTypes" : [ "authentication_code", "client_credentials" ],
-      "domainId" : "1",
-      "resources" : [ "test" ],
-      "authorities" : [ "admin" ],
-      "issueRefreshTokens" : true,
-      "authorizationCodeGrantTypeTTLSeconds" : 86400,
-      "accessTokenTTLSeconds" : 300,
-      "refreshTokenTTLSeconds" : 3600,
-      "clientCredentialsGrantTypeTTLSeconds" : 86400,
-      "includeUserRoles" : true,
-      "includeUserAuthorities" : true,
-      "includeUserGroups" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59"
-        },
-        "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59"
-        }
-      }
-    }, {
-      "id" : "5eec5c83d4de4b28a4a41c5c",
-      "clientId" : "5eec5c83d4de4b28a4a41c5a",
-      "clientType" : "CONFIDENTIAL",
-      "clientProfile" : "web_app",
-      "credentials" : {
-        "secret" : "1234",
-        "type" : "secret"
-      },
-      "identifier" : "1111",
-      "redirectionUris" : [ "https://redirect.com/callback", "https://localhost:832/callback" ],
-      "allowedHosts" : [ "192.168.99.100" ],
-      "tlsEnabled" : true,
-      "supportedGrantTypes" : [ "authorization_code", "client_credentials" ],
-      "domainId" : "1",
-      "resources" : [ "test" ],
-      "authorities" : [ "admin" ],
-      "issueRefreshTokens" : true,
-      "authorizationCodeGrantTypeTTLSeconds" : 86400,
-      "accessTokenTTLSeconds" : 300,
-      "refreshTokenTTLSeconds" : 3600,
-      "clientCredentialsGrantTypeTTLSeconds" : 86400,
-      "includeUserRoles" : false,
-      "includeUserAuthorities" : false,
-      "includeUserGroups" : false,
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c"
-        },
-        "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc"
         }
       }
     } ]
@@ -143,7 +50,7 @@
   },
   "page" : {
     "size" : 20,
-    "totalElements" : 4,
+    "totalElements" : 1,
     "totalPages" : 1,
     "number" : 0
   }

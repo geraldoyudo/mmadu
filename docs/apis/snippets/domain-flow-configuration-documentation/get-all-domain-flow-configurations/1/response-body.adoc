@@ -1,0 +1,45 @@
+[source,options="nowrap"]
+----
+{
+  "_embedded" : {
+    "domainFlowConfigurations" : [ {
+      "domainId" : "0",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/5f095d92b969613dad89523c"
+        },
+        "domainFlowConfiguration" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/5f095d92b969613dad89523c"
+        }
+      }
+    }, {
+      "domainId" : "1234",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/1"
+        },
+        "domainFlowConfiguration" : {
+          "href" : "http://localhost:8080/repo/domainFlowConfigurations/1"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/repo/domainFlowConfigurations"
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/repo/profile/domainFlowConfigurations"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/repo/domainFlowConfigurations/search"
+    }
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 2,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+----

@@ -1,6 +1,7 @@
 package com.mmadu.registration.providers;
 
 import com.mmadu.registration.models.RegistrationFieldModifiedEvent;
+import com.mmadu.registration.services.RegistrationProfileService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +31,9 @@ public class DomainRegistrationFormFieldsManageTest {
     @Mock
     private FormFieldsGenerator formFieldsGenerator;
     @Mock
-    private DomainService domainService;
+    private RegistrationProfileService registrationProfileService;
     @InjectMocks
-    private DomainRegistrationFormFieldsManager formFieldsManager = new DomainRegistrationFormFieldsManager();
+    private RegistrationProfileFormFieldsManager formFieldsManager = new RegistrationProfileFormFieldsManager();
 
     private static File file;
 
@@ -45,10 +46,10 @@ public class DomainRegistrationFormFieldsManageTest {
     @BeforeEach
     void setUp() {
         formFieldsManager.setTemplatesDirectoryResource(new FileSystemResource(USER_HOME + "/mmadu-test/templates"));
-        lenient().doReturn(asList("1", "2", "3")).when(domainService).getDomainIds();
-        lenient().doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForDomain("1");
-        lenient().doReturn("fields-2").when(formFieldsGenerator).generateFormFieldsForDomain("2");
-        lenient().doReturn("fields-3").when(formFieldsGenerator).generateFormFieldsForDomain("3");
+        lenient().doReturn(asList("1", "2", "3")).when(registrationProfileService).getAllProfileIds();
+        lenient().doReturn("fields-1").when(formFieldsGenerator).generateFormFieldsForProfile("1");
+        lenient().doReturn("fields-2").when(formFieldsGenerator).generateFormFieldsForProfile("2");
+        lenient().doReturn("fields-3").when(formFieldsGenerator).generateFormFieldsForProfile("3");
     }
 
     @Test
@@ -64,7 +65,7 @@ public class DomainRegistrationFormFieldsManageTest {
 
     @Test
     void testFieldChangeListening() throws Exception {
-        DomainRegistrationFormFieldsManager spyManager = spy(formFieldsManager);
+        RegistrationProfileFormFieldsManager spyManager = spy(formFieldsManager);
         spyManager.subscribeToEvent();
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
         Thread.sleep(100);
@@ -74,7 +75,7 @@ public class DomainRegistrationFormFieldsManageTest {
 
     @Test
     void testDebounceOfEvents() throws Exception {
-        DomainRegistrationFormFieldsManager spyManager = spy(formFieldsManager);
+        RegistrationProfileFormFieldsManager spyManager = spy(formFieldsManager);
         spyManager.subscribeToEvent();
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));
         spyManager.sendEventToProcessor(new RegistrationFieldModifiedEvent("1"));

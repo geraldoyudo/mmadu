@@ -11,11 +11,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 658
+Content-Length: 686
 
 {
   "_embedded" : {
     "fields" : [ {
+      "code" : "username",
       "domainId" : "1",
       "name" : "username",
       "placeholder" : "Enter Username",

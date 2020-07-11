@@ -2,8 +2,11 @@ package com.mmadu.registration.providers;
 
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
+import com.mmadu.registration.entities.RegistrationProfile;
+import com.mmadu.registration.exceptions.RegistrationProfileNotFoundException;
 import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.FieldTypeRepository;
+import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -25,6 +28,7 @@ public class FormFieldsGeneratorImpl implements FormFieldsGenerator {
     private FieldTypeRepository fieldTypeRepository;
     private FieldMarkupGenerator fieldMarkupGenerator;
     private VelocityEngine velocityEngine;
+    private RegistrationProfileRepository registrationProfileRepository;
 
     @Autowired
     public void setFieldRepository(FieldRepository fieldRepository) {
@@ -42,13 +46,20 @@ public class FormFieldsGeneratorImpl implements FormFieldsGenerator {
     }
 
     @Autowired
+    public void setRegistrationProfileRepository(RegistrationProfileRepository registrationProfileRepository) {
+        this.registrationProfileRepository = registrationProfileRepository;
+    }
+
+    @Autowired
     public void setVelocityEngine(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
     }
 
     @Override
-    public String generateFormFieldsForDomain(String domainId) {
-        List<Field> fields = fieldRepository.findByDomainId(domainId);
+    public String generateFormFieldsForProfile(String profileId) {
+        RegistrationProfile profile = registrationProfileRepository.findById(profileId)
+                .orElseThrow(RegistrationProfileNotFoundException::new);
+        List<Field> fields = fieldRepository.findByDomainIdAndCodeIn(profile.getDomainId(), profile.getFields());
         Map<String, String> fieldIdTypeMap = generateFieldIdMap(fields);
         Map<String, FieldType> fieldTypeMap = generateFieldTypeIdMap(fieldIdTypeMap);
         List<String> fieldMarkups = generateFieldMarkups(fields, fieldTypeMap);

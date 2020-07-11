@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -81,6 +82,7 @@ public class DomainPopulator {
         this.userGroupRepository = userGroupRepository;
     }
 
+    @Transactional
     @EventListener(ContextRefreshedEvent.class)
     public void setUpDomains() {
         List<DomainConfigurationList.DomainItem> unInitializedDomains = Optional.ofNullable(domainConfigurationList.getDomains())
@@ -93,7 +95,12 @@ public class DomainPopulator {
         }
     }
 
+    @Transactional
     public void initializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
+        doInitializeDomains(domainItems);
+    }
+
+    private void doInitializeDomains(List<DomainConfigurationList.DomainItem> domainItems) {
         List<String> domainIds = new LinkedList<>();
         for (DomainConfigurationList.DomainItem domainItem : domainItems) {
             domainIds.add(initializeDomain(domainItem).getId());

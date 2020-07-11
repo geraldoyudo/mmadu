@@ -30,7 +30,7 @@ This guide assumes that you have MongoDB running at local host (default mongodb 
 
 [source,sh,options="nowrap"]
 ----
-java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15553 -Dmmadu.identity.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-identity-2.0.1.jar
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15553 -Dmmadu.identity.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-identity-2.0.2.jar
 ----
 
 === Running the User Service
@@ -40,7 +40,7 @@ java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -
 
 [source,sh,options="nowrap"]
 ----
-java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15551 -Dmmadu.registration.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-user-service-2.0.1.jar
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15551 -Dmmadu.registration.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-user-service-2.0.2.jar
 ----
 
 === Running the Registration Service
@@ -50,7 +50,7 @@ java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -
 
 [source,sh,options="nowrap"]
 ----
-java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15552 -Dmmadu.user.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-registration-2.0.1.jar
+java -Dspring.profiles.active=prod -Dmmadu.identity.url=http://localhost:15553 -Dserver.port=15552 -Dmmadu.user.db.uri=mongodb://localhost/mmadu_local_db -jar mmadu-registration-2.0.2.jar
 ----
 
 == Getting Started with Docker
@@ -63,14 +63,14 @@ This guide assumes that you have MongoDB running at local host (default mongodb 
 
 [source,sh,options="nowrap"]
 ----
-docker pull geraldoyudo/mmadu-identity:2.0.1
+docker pull geraldoyudo/mmadu-identity:2.0.2
 ----
 
 . Start the Identity Container
 
 [source,sh,options="nowrap"]
 ----
-docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-identity:2.0.1
+docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-identity:2.0.2
 ----
 
 === Running the User Service
@@ -79,14 +79,14 @@ docker run -it -p 15553:8080 -e MMADU_IDENTITY_DB_URI='http://localhost/mongodb'
 
 [source,sh,options="nowrap"]
 ----
-docker pull geraldoyudo/mmadu-user-service:2.0.1
+docker pull geraldoyudo/mmadu-user-service:2.0.2
 ----
 
 . Start the User Service Container
 
 [source,sh,options="nowrap"]
 ----
-docker run -it -p 15551:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-user-service:2.0.1
+docker run -it -p 15551:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 geraldoyudo/mmadu-user-service:2.0.2
 ----
 
 This also needs a reference to the identity provider.
@@ -97,14 +97,14 @@ This also needs a reference to the identity provider.
 
 [source,sh,options="nowrap"]
 ----
-docker pull geraldoyudo/mmadu-registration-service:2.0.1
+docker pull geraldoyudo/mmadu-registration-service:2.0.2
 ----
 
 . Start the Registration Service Container
 
 [source,sh,options="nowrap"]
 ----
-docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 -e MMADU_USER_URL=http://localhost:15551 geraldoyudo/mmadu-registration:2.0.1
+docker run -it -p 15552:8080 -e MMADU_USER_DB_URI='http://localhost/mongodb' -e SPRING_PROFILES_ACTIVE=prod -e MMADU_IDENTITY_URL=http://localhost:15553 -e MMADU_USER_URL=http://localhost:15551 geraldoyudo/mmadu-registration:2.0.2
 ----
 
 This also needs a reference to the identity provider.
@@ -113,11 +113,12 @@ This also needs a reference to the identity provider.
 
 To run Mmadu with all the services, use the docker-compose file:
 
-Create a docker compose file as shown below:
+Download and run the docker compose file as shown below:
 
-[source,yaml,options="nowrap"]
+[source,sh,options="nowrap"]
 ----
-include::../../docker/prod/docker-compose.yml[]
+curl https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/prod/docker-compose.yml --output docker-compose.yml
+docker-compose up
 ----
 
 This starts up four services:

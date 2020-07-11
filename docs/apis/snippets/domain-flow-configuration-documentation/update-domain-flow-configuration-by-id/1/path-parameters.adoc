@@ -1,0 +1,8 @@
+.+/repo/domainFlowConfigurations/{domainFlowConfigurationId}+
+|===
+|Parameter|Description
+
+|`+domainFlowConfigurationId+`
+|The Domain Flow Configuration ID
+
+|===

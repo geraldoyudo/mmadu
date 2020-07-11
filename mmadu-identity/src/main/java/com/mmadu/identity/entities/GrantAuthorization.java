@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities;
 
+import com.mmadu.identity.models.Revokable;
 import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @Document
 @EqualsAndHashCode
-public class GrantAuthorization implements DomainPayload {
+public class GrantAuthorization implements DomainPayload, Revokable {
     @Id
     private String id;
     @NotEmpty(message = "domain id is required")
@@ -45,6 +46,7 @@ public class GrantAuthorization implements DomainPayload {
     private List<String> userAuthorities;
     private List<String> userRoles;
     private List<String> userGroups;
+    private List<String> authorities;
     private String state;
 
     public void addRefreshToken(Token token) {
@@ -53,5 +55,11 @@ public class GrantAuthorization implements DomainPayload {
 
     public void addAccessToken(Token token) {
         this.accessTokens.add(token.getId());
+    }
+
+    @Override
+    public void revoke() {
+        revoked = true;
+        revokedTime = ZonedDateTime.now();
     }
 }

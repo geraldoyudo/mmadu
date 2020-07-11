@@ -1,17 +1,18 @@
 [source,options="nowrap"]
 ----
 {
-  "id" : "5eec5caed4de4b28a4a41c76",
+  "id" : "5f095530ea78f80ca7c29b09",
   "domainId" : "1",
   "identifier" : "email-service",
   "name" : "email",
   "description" : "Email Microservice",
+  "supportedTokenCategories" : [ "bearer" ],
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76"
+      "href" : "http://localhost:8080/admin/repo/resources/5f095530ea78f80ca7c29b09"
     },
     "resource" : {
-      "href" : "http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76"
+      "href" : "http://localhost:8080/admin/repo/resources/5f095530ea78f80ca7c29b09"
     }
   }
 }

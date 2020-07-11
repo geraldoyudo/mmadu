@@ -27,7 +27,18 @@ Open ID and others. Mmadu aims to provide all the tools needed developers to imp
 
 To help developers (*of all walks of life*) eliminate user-management coding in applications forever.
 
-== What's New in 2.0.1?
+== Release Notes
+
+=== What's new in 2.0.2?
+
+. Token Revocation Endpoint https://tools.ietf.org/html/rfc7009[(RFC 7009)]
+. Token Introspection Endpoint https://tools.ietf.org/html/rfc7662[(RFC 7662)]
+. Authorization Profile with auto approve scopes.
+. Multiple registration profiles for a domain.
+. Implemented Transaction Management
+. Updated Theme
+
+=== What's New in 2.0.1?
 
 . Implemented Implicit and Password Grant Types
 . Added username field to user token

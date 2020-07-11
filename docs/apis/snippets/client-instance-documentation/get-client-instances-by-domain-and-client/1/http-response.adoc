@@ -11,17 +11,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1590
+Content-Length: 1792
 
 {
   "_embedded" : {
     "clientInstances" : [ {
-      "id" : "5eec5c82d4de4b28a4a41c50",
-      "clientId" : "5eec5c82d4de4b28a4a41c4e",
+      "id" : "5f095508ea78f80ca7c29ad0",
+      "clientId" : "5f095508ea78f80ca7c29ace",
       "clientType" : "CONFIDENTIAL",
       "clientProfile" : "web_app",
       "credentials" : {
-        "secret" : "1234",
         "type" : "secret"
       },
       "identifier" : "1111",
@@ -34,18 +33,25 @@ Content-Length: 1590
       "authorities" : [ "admin" ],
       "issueRefreshTokens" : true,
       "authorizationCodeGrantTypeTTLSeconds" : 86400,
+      "implicitGrantTypeTTLSeconds" : 3600,
+      "passwordGrantTypeTTLSeconds" : 86400,
       "accessTokenTTLSeconds" : 300,
       "refreshTokenTTLSeconds" : 3600,
       "clientCredentialsGrantTypeTTLSeconds" : 86400,
       "includeUserRoles" : false,
       "includeUserAuthorities" : false,
       "includeUserGroups" : false,
+      "scopes" : [ ],
+      "tokenCategory" : "bearer",
+      "authorizationProfile" : {
+        "autoApproveScopes" : false
+      },
       "_links" : {
         "self" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad0"
         },
         "clientInstance" : {
-          "href" : "http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50"
+          "href" : "http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad0"
         }
       }
     } ]

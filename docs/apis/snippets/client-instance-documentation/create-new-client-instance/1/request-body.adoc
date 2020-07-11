@@ -1,12 +1,13 @@
 [source,options="nowrap"]
 ----
 {
-  "clientId" : "5eec5c83d4de4b28a4a41c57",
+  "clientId" : "5f095509ea78f80ca7c29ad7",
   "clientType" : "CONFIDENTIAL",
   "clientProfile" : "web_app",
   "tlsEnabled" : true,
   "includeUserRoles" : true,
   "includeUserAuthorities" : true,
+  "tokenCategory" : "bearer",
   "domainId" : "1",
   "resources" : [ "test" ],
   "authorities" : [ "admin" ],

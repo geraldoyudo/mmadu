@@ -1,5 +1,7 @@
 spring:
   data:
+    mongodb:
+      uri: mongodb://localhost:27017/mmadu_db?replicaSet=default-replica-set
     rest:
       base-path: /admin/repo
   security:
@@ -21,6 +23,8 @@ management:
       exposure:
         include: health, info, caches
 mmadu:
+  transactions:
+    enabled: true
   admin:
     client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
     secret: ${MMADU_ADMIN_SECRET:1234567890}

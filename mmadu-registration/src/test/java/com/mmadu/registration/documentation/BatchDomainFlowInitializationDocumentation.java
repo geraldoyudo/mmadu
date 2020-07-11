@@ -26,7 +26,7 @@ public class BatchDomainFlowInitializationDocumentation extends AbstractDocument
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         subsectionWithPath("fieldTypes").description("Field Type List"),
                         fieldWithPath("domains.[].domainId").description("Domain ID to be configured"),
-                        subsectionWithPath("domains.[].registrationProfile").description("Registration form configuration for domain"),
+                        subsectionWithPath("domains.[].registrationProfiles").description("Registration proiles"),
                         subsectionWithPath("domains.[].fields").description("List of fields in registration form")
                 )));
     }

@@ -8,7 +8,7 @@
 :version: master
 :page-layout: reference-list
 
-== 2.0.1
+== 2.0.2
 
 For in-depth documentation about api and architecture, check the side links.
 

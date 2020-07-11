@@ -2,8 +2,10 @@ package com.mmadu.registration.providers;
 
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
+import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.repositories.FieldRepository;
 import com.mmadu.registration.repositories.FieldTypeRepository;
+import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.typeconverters.FieldValidatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,12 +28,15 @@ public class UserFormValidatorFactory {
     @Autowired
     private FieldValidatorFactory fieldValidatorFactory;
     @Autowired
+    private RegistrationProfileService registrationProfileService;
+    @Autowired
     private HttpServletRequest request;
 
-    public UserFormValidator createValidatorForDomain(String domainId) {
-        List<Field> fieldList = fieldRepository.findByDomainId(domainId);
+    public UserFormValidator createValidatorForDomainAndCode(String domainId, String profileCode) {
+        RegistrationProfile profile = registrationProfileService.getProfileForDomainAndCode(domainId, profileCode);
+        List<Field> fieldList = fieldRepository.findByDomainIdAndCodeIn(domainId, profile.getFields());
         List<String> fieldTypeIds = fieldList.stream()
-                .map(field -> field.getFieldTypeId())
+                .map(Field::getFieldTypeId)
                 .distinct()
                 .collect(Collectors.toList());
         Iterable<FieldType> fieldTypes = fieldTypeRepository.findAllById(fieldTypeIds);

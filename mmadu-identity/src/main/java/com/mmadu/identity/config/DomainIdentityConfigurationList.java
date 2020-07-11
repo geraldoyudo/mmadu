@@ -1,6 +1,7 @@
 package com.mmadu.identity.config;
 
 import com.mmadu.identity.entities.*;
+import com.mmadu.identity.models.authorization.AuthorizationProfile;
 import com.mmadu.identity.models.security.CredentialGenerationRequest;
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
 import com.mmadu.identity.utils.ClientCategoryUtils;
@@ -129,6 +130,7 @@ public class DomainIdentityConfigurationList {
         private boolean includeUserGroups;
         private List<String> scopes = Collections.emptyList();
         private String tokenCategory = TokenCategoryUtils.CATEGORY_BEARER;
+        private AuthorizationProfile authorizationProfile = new AuthorizationProfile();
 
         public ClientInstance toEntity(String domainId,
                                        ClientResolver clientResolver,
@@ -160,6 +162,7 @@ public class DomainIdentityConfigurationList {
             instance.setScopes(scopes);
             instance.setDomainId(domainId);
             instance.setTokenCategory(tokenCategory);
+            instance.setAuthorizationProfile(authorizationProfile);
             return instance;
         }
     }

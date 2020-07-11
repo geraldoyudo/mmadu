@@ -4,6 +4,7 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
+import com.mmadu.service.models.NewGroupUserRequest;
 import com.mmadu.service.models.PagedList;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserView;
@@ -14,13 +15,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Collections.emptyList;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
     private AppUserRepository appUserRepository;
     private AppDomainRepository appDomainRepository;
     private UniqueUserIdGenerator uniqueUserIdGenerator;
+    private GroupService groupService;
+    private RoleManagementService roleManagementService;
+    private AuthorityManagementService authorityManagementService;
+
+    @Autowired
+    public void setRoleManagementService(RoleManagementService roleManagementService) {
+        this.roleManagementService = roleManagementService;
+    }
+
+    @Autowired
+    public void setAuthorityManagementService(AuthorityManagementService authorityManagementService) {
+        this.authorityManagementService = authorityManagementService;
+    }
+
+    @Autowired
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
 
     @Autowired
     public void setAppUserRepository(AppUserRepository appUserRepository) {
@@ -38,6 +63,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void createUser(String domainId, UserView userView) {
         if (userView == null) {
             throw new IllegalArgumentException("user cannot be null");
@@ -58,14 +84,38 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (StringUtils.isEmpty(userView.getId())) {
             userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
         }
-        if (StringUtils.isEmpty(userView.getId())) {
-            userView.setId(uniqueUserIdGenerator.generateUniqueId(domainId));
-        }
         AppUser appUser = new AppUser(domainId, userView);
-        appUserRepository.save(appUser);
+        appUser = appUserRepository.save(appUser);
+        addUserRolesIfExists(userView, appUser);
+        addUserToGroupsIfExists(userView, appUser);
+        addUserAuthoritiesIfExists(userView, appUser);
+    }
+
+    private void addUserRolesIfExists(UserView userView, AppUser appUser) {
+        List<String> roles = Optional.ofNullable(userView.getRoles()).orElse(emptyList());
+        if (!roles.isEmpty()) {
+            roleManagementService.grantUserRoles(appUser.getDomainId(), appUser.getExternalId(), roles);
+        }
+    }
+
+    private void addUserToGroupsIfExists(UserView userView, AppUser appUser) {
+        List<String> groups = Optional.ofNullable(userView.getGroups()).orElse(emptyList());
+        if (!groups.isEmpty()) {
+            groups.stream()
+                    .map(group -> new NewGroupUserRequest(appUser.getExternalId(), group))
+                    .forEach(req -> groupService.addUserToGroup(appUser.getDomainId(), req));
+        }
+    }
+
+    private void addUserAuthoritiesIfExists(UserView userView, AppUser appUser) {
+        List<String> authorities = Optional.ofNullable(userView.getAuthorities()).orElse(emptyList());
+        if (!authorities.isEmpty()) {
+            authorityManagementService.grantUserAuthorities(appUser.getDomainId(), appUser.getExternalId(), authorities);
+        }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserView> getAllUsers(String domainId, Pageable pageable) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -76,6 +126,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserView getUserByDomainIdAndExternalId(String domainId, String externalId) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -85,6 +136,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void deleteUserByDomainAndExternalId(String domainId, String externalId) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -96,6 +148,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void updateUser(String domainId, String externalId, UserView userView) {
         if (userView == null) {
             throw new IllegalArgumentException("user cannot be null");
@@ -113,6 +166,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserView getUserByDomainIdAndUsername(String domainId, String username) {
         if (!appDomainRepository.existsById(domainId)) {
             throw new DomainNotFoundException();
@@ -122,6 +176,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<UserView> queryUsers(String domainId, String query, Pageable pageable) {
         String resultantQuery = ensureQueryAndDomainParameters(domainId, query);
         Page<UserView> userViewPage = appUserRepository.queryForUsers(resultantQuery, pageable)
@@ -146,6 +201,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    @Transactional
     public void patchUpdateUsers(String domainId, String query, UpdateRequest updateRequest) {
         if (updateRequest == null) {
             throw new IllegalArgumentException("Update request cannot be null");

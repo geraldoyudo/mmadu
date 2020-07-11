@@ -1,7 +1,7 @@
 [source,options="nowrap"]
 ----
 {
-  "id" : "5eed8d1efb781170c68bafaa",
+  "id" : "5f095502ea78f80ca7c29abe",
   "domainId" : "1",
   "code" : "test.mail",
   "name" : "Email Scope",
@@ -9,10 +9,10 @@
   "authorities" : [ "view_users" ],
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
+      "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abe"
     },
     "scope" : {
-      "href" : "http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa"
+      "href" : "http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abe"
     }
   }
 }

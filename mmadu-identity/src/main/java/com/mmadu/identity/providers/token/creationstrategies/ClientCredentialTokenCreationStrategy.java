@@ -67,7 +67,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
             List<String> tokens = grantAuthorization.getAccessTokens();
             if (!tokens.isEmpty()) {
                 Optional<Token> accessToken = tokenRepository.findById(tokens.get(0));
-                if (accessToken.isPresent() && accessToken.get().getExpiryTime().isAfter(now)) {
+                if (accessToken.isPresent() && accessToken.get().isValid()) {
                     Token token = accessToken.get();
                     return TokenResponse
                             .builder()
@@ -122,6 +122,7 @@ public class ClientCredentialTokenCreationStrategy implements TokenCreationStrat
         grantAuthorization.setClientIdentifier(client.getClientIdentifier());
         grantAuthorization.setGrantType(GrantTypeUtils.CLIENT_CREDENTIALS);
         grantAuthorization.setIssuedTime(now);
+        grantAuthorization.setAuthorities(client.getAuthorities());
         grantAuthorization.setExpiryTime(
                 now.plusSeconds(min(configuration.getMaxAuthorizationTTLSeconds(), client.getClientCredentialsGrantTypeTTLSeconds()))
         );

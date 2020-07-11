@@ -49,7 +49,12 @@ public class UserManagementServiceImplTest {
     private AppDomainRepository appDomainRepository;
     @MockBean
     private UniqueUserIdGenerator uniqueUserIdGenerator;
-
+    @MockBean
+    private GroupService groupService;
+    @MockBean
+    private AuthorityManagementService authorityManagementService;
+    @MockBean
+    private RoleManagementService roleManagementService;
     @Mock
     private Pageable pageable;
 
@@ -67,15 +72,16 @@ public class UserManagementServiceImplTest {
     @Test
     void createUser() {
         UserView userView = createUserView();
+        when(appUserRepository.save(appUserArgumentCaptor.capture())).thenAnswer(iom -> iom.getArgument(0));
         userManagementService.createUser(DOMAIN_ID, userView);
-        verify(appUserRepository, times(1)).save(appUserArgumentCaptor.capture());
         AppUser appUser = appUserArgumentCaptor.getValue();
         assertAll(
                 () -> assertThat(appUser.getDomainId(), equalTo(DOMAIN_ID)),
                 () -> assertThat(appUser.getPassword(), equalTo(userView.getPassword())),
                 () -> assertThat(appUser.getUsername(), equalTo(userView.getUsername())),
                 () -> assertThat(appUser.getProperties(), equalTo(userView.getProperties())),
-                () -> assertThat(appUser.getExternalId(), equalTo(UNIQUE_USER_ID))
+                () -> assertThat(appUser.getExternalId(), equalTo(UNIQUE_USER_ID)),
+                () -> verify(appUserRepository, times(1)).save(any())
         );
 
     }
@@ -142,15 +148,16 @@ public class UserManagementServiceImplTest {
     void givenUserWithIdWhenCreateUserThenExternalIdShouldBeTheSame() {
         UserView userView = createUserView();
         userView.setId(TEST_ID);
+        when(appUserRepository.save(appUserArgumentCaptor.capture())).thenAnswer(iom -> iom.getArgument(0));
         userManagementService.createUser(DOMAIN_ID, userView);
-        verify(appUserRepository, times(1)).save(appUserArgumentCaptor.capture());
         AppUser appUser = appUserArgumentCaptor.getValue();
         assertAll(
                 () -> assertThat(appUser.getDomainId(), equalTo(DOMAIN_ID)),
                 () -> assertThat(appUser.getPassword(), equalTo(userView.getPassword())),
                 () -> assertThat(appUser.getUsername(), equalTo(userView.getUsername())),
                 () -> assertThat(appUser.getProperties(), equalTo(userView.getProperties())),
-                () -> assertThat(appUser.getExternalId(), equalTo(TEST_ID))
+                () -> assertThat(appUser.getExternalId(), equalTo(TEST_ID)),
+                () -> verify(appUserRepository, times(1)).save(any())
         );
     }
 

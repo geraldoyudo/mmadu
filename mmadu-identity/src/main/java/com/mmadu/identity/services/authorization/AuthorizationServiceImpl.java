@@ -4,18 +4,24 @@ import com.mmadu.identity.exceptions.AuthorizationException;
 import com.mmadu.identity.exceptions.ClientInstanceNotFoundException;
 import com.mmadu.identity.exceptions.DomainNotFoundException;
 import com.mmadu.identity.models.authorization.AuthorizationContext;
+import com.mmadu.identity.models.authorization.AuthorizationProfile;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
+import com.mmadu.identity.models.client.MmaduClient;
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.authorization.AuthorizationResultProcessor;
 import com.mmadu.identity.providers.authorization.strategies.AuthorizationStrategy;
 import com.mmadu.identity.services.client.MmaduClientService;
 import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
+import com.mmadu.identity.utils.StringListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +29,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private List<AuthorizationStrategy> strategies;
     private AuthorizationResultProcessor resultProcessor;
     private HttpSession session;
+    private HttpServletRequest httpRequest;
     private MmaduUser mmaduUser;
     private MmaduClientService mmaduClientService;
     private DomainIdentityConfigurationService domainIdentityConfigurationService;
@@ -43,6 +50,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Autowired
+    public void setHttpRequest(HttpServletRequest httpRequest) {
+        this.httpRequest = httpRequest;
+    }
+
+    @Autowired
     public void setMmaduUser(MmaduUser mmaduUser) {
         this.mmaduUser = mmaduUser;
     }
@@ -58,6 +70,24 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
+    @Transactional
+    public String initiateAuthorization(AuthorizationRequest request) {
+        MmaduClient client = mmaduClientService.loadClientByIdentifier(request.getClient_id())
+                .orElseThrow(ClientInstanceNotFoundException::new);
+        AuthorizationProfile profile = Optional.ofNullable(client.getAuthorizationProfile())
+                .orElse(new AuthorizationProfile());
+        if (profile.isAutoApproveScopes()) {
+            AuthorizationResponse response = new AuthorizationResponse();
+            response.setScopes(StringListUtils.toList(request.getScope()));
+            response.setAuthorize(true);
+            return processAuthorization(request, response);
+        }
+        session.setAttribute("authorizationRequest", request);
+        return "authorization_page";
+    }
+
+    @Override
+    @Transactional
     public String processAuthorization(AuthorizationRequest request, AuthorizationResponse response) {
         AuthorizationContext context = new AuthorizationContext();
         context.setAuthorizer(mmaduUser);

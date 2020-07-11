@@ -5,6 +5,7 @@ import com.mmadu.identity.models.token.TokenRequest;
 import com.mmadu.identity.models.token.TokenResponse;
 import com.mmadu.identity.models.token.error.InvalidRequest;
 import com.mmadu.identity.models.token.error.TokenError;
+import com.mmadu.identity.security.clients.EnsureClientAuthentication;
 import com.mmadu.identity.services.token.TokenService;
 import com.mmadu.identity.validators.token.TokenRequestValidator;
 import com.mmadu.identity.validators.token.ValidationErrorProcessor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/clients/token")
@@ -46,6 +48,7 @@ public class TokenController {
         binder.addValidators(tokenRequestValidator);
     }
 
+    @EnsureClientAuthentication
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public TokenResponse getToken(@Valid TokenRequest request) {

@@ -1,4 +1,6 @@
 mmadu:
+  transactions:
+    enabled: false
   security:
     master-key: 11111111111111111111111111111111
     domain-parsing:

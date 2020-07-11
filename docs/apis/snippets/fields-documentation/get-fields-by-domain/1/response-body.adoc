@@ -3,6 +3,7 @@
 {
   "_embedded" : {
     "fields" : [ {
+      "code" : "username",
       "domainId" : "1",
       "name" : "username",
       "placeholder" : "Enter Username",

@@ -1,44 +1,8 @@
 |===
 |Path|Type|Description
 
-|`+id+`
-|`+string+`
-|Registration profile ID (auto generated if absent)
-
-|`+domainId+`
-|`+String+`
-|domain ID
-
-|`+defaultRoles+`
+|`+_embedded.registrationProfiles+`
 |`+Array+`
-|Roles assigned to newly registered users
-
-|`+defaultAuthorities+`
-|`+Array+`
-|Authorities assigned to newly registered users
-
-|`+defaultRedirectUrl+`
-|`+String+`
-|Url to redirect to after registration success
-
-|`+headerOne+`
-|`+String+`
-|Main registration page title - h1
-
-|`+headerTwo+`
-|`+String+`
-|Secondary registration page title - h2
-
-|`+headerThree+`
-|`+String+`
-|Tertiary registration page title - h3
-
-|`+instruction+`
-|`+String+`
-|Instruction message for registering users displayed at the top of the form
-
-|`+submitButtonTitle+`
-|`+String+`
-|Submit button text
+|Registration Profile Array, (See Registartion Profile Details Response)
 
 |===

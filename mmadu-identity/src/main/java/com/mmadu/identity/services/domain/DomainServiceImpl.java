@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -22,6 +23,7 @@ public class DomainServiceImpl implements DomainService {
 
     @Override
     @Cacheable("domains")
+    @Transactional(readOnly = true)
     public Optional<Domain> findById(String id) {
         try {
             return userServiceClient.get()

@@ -1,0 +1,94 @@
+spring:
+  data:
+    rest:
+      base-path: /admin/repo
+  security:
+    oauth2:
+      client:
+        registration:
+          mmadu:
+            client-id: ${mmadu.admin.client}
+            client-secret: ${mmadu.admin.secret}
+            authorization-grant-type: client_credentials
+            scope: a.*.**, r.*.**
+        provider:
+          mmadu:
+            token-uri: http://localhost:${server.port}/clients/token
+management:
+  endpoints:
+    web:
+      base-path: /admin/actuator
+      exposure:
+        include: health, info, caches
+mmadu:
+  transactions:
+    enabled: false
+  admin:
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
+  application:
+    ui: http://localhost:18005
+  security:
+    domain-parsing:
+      path-keys: domain,domainId,domains
+  userService:
+    url: http://localhost:10080
+  domain-identity-config:
+    domains:
+      - domainId: "0"
+        authorization-code-type: alphanumeric
+        authorization-code-ttl-seconds: 600
+        max-authorization-ttl-seconds: 3600
+        refresh-token-enabled: true
+        access-token-provider: jwt
+        access-token-properties:
+          credentialId:
+            type: rsa
+        issuer-id: mmadu.com
+        clients:
+          - name: mmadu
+            code: mmadu
+            application-url: ${mmadu.application.ui}
+            logo-url: ${mmadu.application.ui}/images/logo.png
+            tags:
+              - mmadu
+        client-instances:
+          - client-code: mmadu
+            client-type: CONFIDENTIAL
+            client-profile: web_app
+            credentials:
+              type: secret
+              secret: ${mmadu.admin.secret}
+            identifier: ${mmadu.admin.client}
+            tls-enabled: true
+            supported-grant-types:
+              - authorization_code
+              - client_credentials
+            scopes:
+              - super_admin
+            redirection-uris:
+              - ${mmadu.application.ui}/oauth/callback
+            authorities:
+              - a.*.**
+              - r.*.**
+            resources:
+              - ums
+              - ids
+              - ufs
+        resources:
+          - identifier: ums
+            name: User Management Service
+            description: User Management Service for Mmadu
+          - identifier: ids
+            name: Identity Service
+            description: Identity Management Service for Mmadu
+          - identifier: ufs
+            name: User Flow Service
+            description: User Flow Service for Mmadu
+        scopes:
+          - code: super_admin
+            name: Super Admin
+            description: All Admin Access
+            authorities:
+              - a.*.**
+              - r.super_admin

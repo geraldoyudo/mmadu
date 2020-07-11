@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/{domainId}")
+@RequestMapping("/{domainId}/register/{code}")
 @Slf4j
 public class RegistrationController {
     @Autowired
@@ -28,8 +28,9 @@ public class RegistrationController {
     private UserFormValidatorFactory userFormValidatorFactory;
 
     @InitBinder("user")
-    public void initBinder(@PathVariable("domainId") String domainId, WebDataBinder binder) {
-        binder.addValidators(userFormValidatorFactory.createValidatorForDomain(domainId));
+    public void initBinder(@PathVariable("domainId") String domainId, @PathVariable("code") String code,
+                           WebDataBinder binder) {
+        binder.addValidators(userFormValidatorFactory.createValidatorForDomainAndCode(domainId, code));
     }
 
     @ModelAttribute(name = "user")
@@ -48,23 +49,25 @@ public class RegistrationController {
     }
 
     @ModelAttribute(name = "profile")
-    public RegistrationProfile setUpRegistrationProfile(@PathVariable("domainId") String domainId) {
-        return registrationProfileService.getProfileForDomain(domainId);
+    public RegistrationProfile setUpRegistrationProfile(@PathVariable("domainId") String domainId,
+                                                        @PathVariable("code") String registrationCode) {
+        return registrationProfileService.getProfileForDomainAndCode(domainId, registrationCode);
     }
 
-    @GetMapping("/register")
+    @GetMapping
     public String register() {
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public String doRegister(@PathVariable("domainId") String domainId,
+                             @PathVariable("code") String code,
                              @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
                              @ModelAttribute("user") @Valid UserForm user,
                              BindingResult result,
                              @ModelAttribute("profile") RegistrationProfile profile) {
         if (!result.hasErrors()) {
-            registrationService.registerUser(domainId, user);
+            registrationService.registerUser(domainId, code, user);
             if (StringUtils.isEmpty(redirectUrl))
                 return "redirect:" + profile.getDefaultRedirectUrl();
             else

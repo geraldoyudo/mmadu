@@ -67,13 +67,15 @@
   "domains": [
     {
       "domainId": "0",
-      "registrationProfile": {
-        "defaultRedirectUrl": "https://google.com",
-        "headerOne": "My App",
-        "headerThree": "Register",
-        "instruction": "Fill all the fields to register",
-        "submitButtonTitle": "GO!!"
-      },
+      "registrationProfiles": [
+        {
+          "defaultRedirectUrl": "https://google.com",
+          "headerOne": "My App",
+          "headerThree": "Register",
+          "instruction": "Fill all the fields to register",
+          "submitButtonTitle": "GO!!"
+        }
+      ],
       "fields": [
         {
           "name": "email",

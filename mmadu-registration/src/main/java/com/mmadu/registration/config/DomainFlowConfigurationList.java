@@ -1,5 +1,6 @@
 package com.mmadu.registration.config;
 
+import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties(prefix = "mmadu.registration.domain-flow-config")
-public class DomainFlowConfiguration {
+public class DomainFlowConfigurationList {
     private List<FieldTypeItem> fieldTypes = Collections.emptyList();
     @Size(min = 1)
     @NotNull
@@ -25,10 +26,16 @@ public class DomainFlowConfiguration {
         @NotEmpty
         private String domainId;
         @NotNull
-        private RegistrationProfileItem registrationProfile;
+        private List<RegistrationProfileItem> registrationProfiles;
         @NotNull
         @Size(min = 1)
         private List<FieldItem> fields;
+
+        public DomainFlowConfiguration toEntity() {
+            DomainFlowConfiguration configuration = new DomainFlowConfiguration();
+            configuration.setDomainId(domainId);
+            return configuration;
+        }
     }
 
     @Data
@@ -71,6 +78,8 @@ public class DomainFlowConfiguration {
         @NotEmpty
         private String name;
         @NotEmpty
+        private String code;
+        @NotEmpty
         private String placeholder;
         @NotEmpty
         private String property;
@@ -88,6 +97,7 @@ public class DomainFlowConfiguration {
             Field field = new Field();
             field.setDomainId(domainId);
             field.setName(name);
+            field.setCode(code);
             field.setPlaceholder(placeholder);
             field.setProperty(property);
             field.setFieldTypeId(fieldTypeId);
@@ -102,14 +112,17 @@ public class DomainFlowConfiguration {
 
     @Data
     public static class RegistrationProfileItem {
+        private String code;
         private String defaultRedirectUrl;
         private List<String> defaultRoles;
         private List<String> defaultAuthorities;
+        private List<String> defaultGroups;
         private String headerOne;
         private String headerTwo;
         private String headerThree;
         private String instruction;
         private String submitButtonTitle;
+        private List<String> fields;
 
         public RegistrationProfile toEntity(String domainId) {
             RegistrationProfile profile = new RegistrationProfile();
@@ -122,6 +135,9 @@ public class DomainFlowConfiguration {
             profile.setHeaderThree(headerThree);
             profile.setInstruction(instruction);
             profile.setSubmitButtonTitle(submitButtonTitle);
+            profile.setCode(code);
+            profile.setFields(fields);
+            profile.setDefaultGroups(defaultGroups);
             return profile;
         }
     }
