@@ -1,10 +1,10 @@
-version: '3.4'
+version: '3.3'
 services:
   mmadu-user-service:
     image: geraldoyudo/mmadu-user-service:2.0.2-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - MMADU_USER_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_USER_DB_URI=mongodb://mongodb/mmadu_db?replicaSet=default-replica-set
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
       - MMADU_ADMIN_CLIENT=mmadu_admin
       - MMADU_ADMIN_SECRET=1234567890
@@ -20,7 +20,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - MMADU_USER_URL=http://mmadu-user-service:8080
-      - MMADU_REGISTRATION_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_REGISTRATION_DB_URI=mongodb://mongodb/mmadu_db?replicaSet=default-replica-set
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
       - MMADU_ADMIN_CLIENT=mmadu_admin
       - MMADU_ADMIN_SECRET=1234567890
@@ -38,7 +38,7 @@ services:
     image: geraldoyudo/mmadu-identity:2.0.2-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      - MMADU_IDENTITY_DB_URI=mongodb://mongodb/mmadu_db
+      - MMADU_IDENTITY_DB_URI=mongodb://mongodb/mmadu_db?replicaSet=default-replica-set
       - MMADU_USER_URL=http://mmadu-user-service:8080
       - MMADU_ADMIN_CLIENT=mmadu_admin
       - MMADU_ADMIN_SECRET=1234567890
@@ -52,3 +52,7 @@ services:
     image: mongo:4.2.8-bionic
     ports:
       - "27017:27017"
+    healthcheck:
+      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo --quiet) -eq 1
+      interval: 1m
+    command: ["--replSet", "default-replica-set"]
