@@ -118,6 +118,7 @@ Download and run the docker compose file as shown below:
 [source,sh,options="nowrap"]
 ----
 curl https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/prod/docker-compose.yml --output docker-compose.yml
+
 docker-compose up
 ----
 
