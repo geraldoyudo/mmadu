@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void saveRoles(String domainId, List<SaveRoleRequest> roleRequests) {
         roleRequests.forEach(role -> this.createOrUpdateRole(domainId, role));
     }
@@ -99,6 +101,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<RoleData> getRoles(String domainId, Pageable p) {
         Page<RoleData> roleDataPage = roleRepository.findByDomainId(domainId, p)
                 .map(Role::roleData);
@@ -106,6 +109,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void deleteRole(String domainId, String identifier) {
         Role role = roleRepository.findByDomainIdAndIdentifier(domainId, identifier).orElseThrow(() -> {
             throw new NotFoundException("role not found");
@@ -116,6 +120,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void grantUserRoles(String domainId, String userId, List<String> roleIdentifiers) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -137,6 +142,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void revokeUserRoles(String domainId, String userId, List<String> roleIdentifiers) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -154,6 +160,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void addAuthorityToRole(String domainId, List<RoleAuthorityUpdateRequest> roleAuthorities) {
         extractRoleAuthorityAndPerform(domainId, roleAuthorities, this::addIfNotExists);
     }
@@ -208,6 +215,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional
     public void removeAuthorityFromRole(String domainId, List<RoleAuthorityUpdateRequest> roleAuthorities) {
         extractRoleAuthorityAndPerform(domainId, roleAuthorities, this::removeIfExists);
     }
@@ -219,6 +227,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<String> getUserRoles(String domainId, String userId) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -229,6 +238,7 @@ public class RoleManagementServiceImpl implements RoleManagementService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<String> getAuthoritiesForRoles(String domainId, List<String> roleIdentifiers) {
         List<Role> roles = roleRepository.findByDomainIdAndIdentifierIn(domainId, roleIdentifiers);
         if (roles.size() != roleIdentifiers.size()) {

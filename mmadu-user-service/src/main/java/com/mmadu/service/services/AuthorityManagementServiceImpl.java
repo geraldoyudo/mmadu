@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional
     public void saveAuthorities(String domainId, List<AuthorityData> authorities) {
         authorities
                 .forEach(auth -> createOrSave(domainId, auth));
@@ -68,6 +70,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AuthorityData> getAuthorities(String domainId, Pageable p) {
         Page<AuthorityData> authoritiesPage = authorityRepository.findByDomainId(domainId, p)
                 .map(Authority::authorityData);
@@ -75,6 +78,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional
     public void deleteAuthority(String domainId, String identifier) {
         Authority auth = authorityRepository.findByDomainIdAndIdentifier(domainId, identifier).orElseThrow(() -> {
             throw new NotFoundException("authority not found");
@@ -84,6 +88,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional
     public void grantUserAuthorities(String domainId, String userId, List<String> authorityIdentifiers) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -105,6 +110,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional
     public void revokeUserAuthorities(String domainId, String userId, List<String> authorityIdentifiers) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -122,6 +128,7 @@ public class AuthorityManagementServiceImpl implements AuthorityManagementServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<String> getUserAuthorities(String domainId, String userId) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);

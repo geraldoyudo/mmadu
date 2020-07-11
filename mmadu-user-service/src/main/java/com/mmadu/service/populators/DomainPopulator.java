@@ -82,6 +82,7 @@ public class DomainPopulator {
         this.userGroupRepository = userGroupRepository;
     }
 
+    @Transactional
     @EventListener(ContextRefreshedEvent.class)
     public void setUpDomains() {
         List<DomainConfigurationList.DomainItem> unInitializedDomains = Optional.ofNullable(domainConfigurationList.getDomains())

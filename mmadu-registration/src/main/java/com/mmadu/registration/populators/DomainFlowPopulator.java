@@ -61,6 +61,7 @@ public class DomainFlowPopulator implements Populator {
 
     @Override
     @PostConstruct
+    @Transactional
     public void populate() {
         initializeDomainEnvironment(domainFlowConfigurationList);
     }
