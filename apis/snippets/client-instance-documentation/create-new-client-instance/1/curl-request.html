@@ -45,14 +45,15 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">$ curl 'http://localhost:8080/admin/repo/clientInstances' -i -X POST \
-    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.Gxk6RZrTXuOXoH1e228tYAl6y9EWeJGLJC97sp33b_HPymsKQYkrN3OWXQzq_N6Eut1WqE8gIfN-7f5XVfP88wAz_2BoPBEJGVeyOHua6ybp1vJdz0TJOcCyrJGlA7G1cYakP28s7ypY9zYO7FdBGso3J3s0eZtsabBG7ama3rN-TaHn2p6XKCv2xh4O5nSkBu2OzrqyW6060gBOU3YgMm9fG_5bCVPBM83EKw9UWxinjkj5YeSQFT5bf-a0cNJJUJIKzVO693oJXQcXLPWhGWf-ygUwv5G2hZQZAadeJW0z_8CgJfNlteAmpiqFXlJ32AOa76SgorIiCdgaSkRqTQ' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTk0NDQ3MTE4LCJpYXQiOjE1OTQ0NDcxMTMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.G342OICMp0TOVQKPAvH2M4Hi0zkx9rMZOu2b7Wx8rnaDbTO95lp_-au1tVTX2D0HVM3CaUU-ikIgc3mYWFt0Tkhf4vyHsRhEaSHuJkot6TS--7LXZYE_r4LgbScfJSkcnccPHLvsgXOld8gRGejIIOzEj6WSUsjpxsmSa45G76F15_HSh4FQ0VACXe6e8nTSW9kLSVJOT0m5hj_-XS6kNEyJiRz9HrIrcXp88wFl7iMdidkF79L1aWSDG-lrE3YJi1JTyWngBeb3QYvqNFkfT11xBkx_Y4DnF9IHNkymZw383K0-gORAELVM2AQ84WZ09jRRwrLi28HVupXel_hTRA' \
     -d '{
-  &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
+  &quot;clientId&quot; : &quot;5f095509ea78f80ca7c29ad7&quot;,
   &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
   &quot;clientProfile&quot; : &quot;web_app&quot;,
   &quot;tlsEnabled&quot; : true,
   &quot;includeUserRoles&quot; : true,
   &quot;includeUserAuthorities&quot; : true,
+  &quot;tokenCategory&quot; : &quot;bearer&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;resources&quot; : [ &quot;test&quot; ],
   &quot;authorities&quot; : [ &quot;admin&quot; ],

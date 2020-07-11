@@ -45,21 +45,33 @@
         <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code>{
-  &quot;domainId&quot; : &quot;0&quot;,
-  &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
-  &quot;defaultRoles&quot; : [ &quot;member&quot; ],
-  &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
-  &quot;headerOne&quot; : &quot;My App&quot;,
-  &quot;headerTwo&quot; : &quot;Register&quot;,
-  &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
-  &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
-  &quot;submitButtonTitle&quot; : &quot;Go&quot;,
+  &quot;_embedded&quot; : {
+    &quot;registrationProfiles&quot; : [ {
+      &quot;code&quot; : &quot;user&quot;,
+      &quot;domainId&quot; : &quot;0&quot;,
+      &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
+      &quot;defaultRoles&quot; : [ &quot;member&quot; ],
+      &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+      &quot;defaultGroups&quot; : [ &quot;admins&quot; ],
+      &quot;fields&quot; : [ &quot;field.username&quot;, &quot;field.email&quot;, &quot;field.password&quot; ],
+      &quot;headerOne&quot; : &quot;My App&quot;,
+      &quot;headerTwo&quot; : &quot;Register&quot;,
+      &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
+      &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
+      &quot;submitButtonTitle&quot; : &quot;Go&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+        },
+        &quot;registrationProfile&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+        }
+      }
+    } ]
+  },
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
-    },
-    &quot;registrationProfile&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/1&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/repo/registrationProfiles/search/findByDomainId&quot;
     }
   }
 }</code></pre>

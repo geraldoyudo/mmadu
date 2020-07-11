@@ -131,15 +131,17 @@
 <li><a href="#claim_verification">12.2. Claim Verification</a></li>
 </ul>
 </li>
+<li><a href="#token_introspection">13. Token Introspection</a></li>
+<li><a href="#revoking_tokens">14. Revoking Tokens</a></li>
 </ul>
 </div>
 <div class="sect1">
 <h2 id="overview">1. Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mmadu Identity is an authorization server used to grant authorizations to clients of an application. Authorization Servers
-make it possible for a resource owner delegate authorization to clients. Mmadu Identity aims to support most authorization standards
-like Oauth 2.0 and OIDC.</p>
+<p>Mmadu Identity is an authorization server used to grant authorizations to clients of an application.
+Authorization Servers make it possible for a resource owner delegate authorization to clients.
+Mmadu Identity aims to support most authorization standards like Oauth 2.0 and OIDC.</p>
 </div>
 </div>
 </div>
@@ -170,28 +172,28 @@ like Oauth 2.0 and OIDC.</p>
 <div class="sect2">
 <h3 id="oauth_2_0">3.1. Oauth 2.0</h3>
 <div class="paragraph">
-<p>Oauth 2.0 is a popular authorization framework for creating interoperable and secure services. To know more about this
-visit the <a href="https://oauth.net/">Oauth 2.0 Website</a>.</p>
+<p>Oauth 2.0 is a popular authorization framework for creating interoperable and secure services.
+To know more about this visit the <a href="https://oauth.net/">Oauth 2.0 Website</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="resources_and_scopes">3.2. Resources and Scopes</h3>
 <div class="paragraph">
-<p>Resources represent API&#8217;s that another service can utilize. Resources are usually secured and restrict access to users
-with specific authorities.</p>
+<p>Resources represent API&#8217;s that another service can utilize.
+Resources are usually secured and restrict access to users with specific authorities.</p>
 </div>
 <div class="paragraph">
-<p>Scopes are a set of authorities that are granted to the client by the user. These authorities are enforced by the
-resource servers. Users delegate authorities to clients in the form of scopes.</p>
+<p>Scopes are a set of authorities that are granted to the client by the user.
+These authorities are enforced by the resource servers.
+Users delegate authorities to clients in the form of scopes.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="clients_and_authorization">3.3. Clients and Authorization</h3>
 <div class="paragraph">
-<p>A client can be a user interface or another service that wants to consume a resource. In order to consume a protected resource,
-that client has to obtain an authorization. There are different ways by which a client can obtain an authorization and these ways
-are defined in authorization standards such as Oauth 2.0 and OIDC. Propietary ways of obtaining authorization can also be possible
-but this makes systems not interoperable with other third party systems.</p>
+<p>A client can be a user interface or another service that wants to consume a resource.
+In order to consume a protected resource, that client has to obtain an authorization.
+There are different ways by which a client can obtain an authorization and these ways are defined in authorization standards such as Oauth 2.0 and OIDC. Propietary ways of obtaining authorization can also be possible but this makes systems not interoperable with other third party systems.</p>
 </div>
 <div class="paragraph">
 <p>Oauth 2.0 provides four basic ways of obtaining an authorization:</p>
@@ -216,18 +218,20 @@ but this makes systems not interoperable with other third party systems.</p>
 <p>All these can be found in the Oauth 2.0 specification.</p>
 </div>
 <div class="paragraph">
-<p>Third party (or first party) users of a service consume a service with client credentials. A <code>Client</code> represents
-details of an application or a company. This <code>Client</code> can have several <code>ClientInstance</code> objects. a <code>ClientInstance</code>
-object is analogous to the Oauth 2 client. This holds credentials and declares a specified and agreed way of accessing
-authorization apis.</p>
+<p>Third party (or first party) users of a service consume a service with client credentials.
+A <code>Client</code> represents details of an application or a company.
+This <code>Client</code> can have several <code>ClientInstance</code> objects. a <code>ClientInstance</code>
+object is analogous to the Oauth 2 client.
+This holds credentials and declares a specified and agreed way of accessing authorization apis.</p>
 </div>
 <div class="paragraph">
-<p>Based on the Oauth 2.0 specification, <code>ClientInstances</code> can be <code>PUBLIC</code> or <code>CONFIDENTIAL</code>. This states how authentication should be
-handled. <code>PUBLIC</code> clients are not authenticated when they access client apis, while authentication is required for
+<p>Based on the Oauth 2.0 specification, <code>ClientInstances</code> can be <code>PUBLIC</code> or <code>CONFIDENTIAL</code>.
+This states how authentication should be handled. <code>PUBLIC</code> clients are not authenticated when they access client apis, while authentication is required for
 <code>CONFIDENTIAL</code> clients.</p>
 </div>
 <div class="paragraph">
-<p>Settings like token expiry or type and allowed grant types can be configured on the <code>ClientInstance</code>. See <a href="#_creating_a_client_instance">[_creating_a_client_instance]</a>.</p>
+<p>Settings like token expiry or type and allowed grant types can be configured on the <code>ClientInstance</code>.
+See <a href="#_creating_a_client_instance">[_creating_a_client_instance]</a>.</p>
 </div>
 </div>
 </div>
@@ -238,16 +242,15 @@ handled. <code>PUBLIC</code> clients are not authenticated when they access clie
 <div class="sect2">
 <h3 id="default_port">4.1. Default Port</h3>
 <div class="paragraph">
-<p>Mmadu Registration Service listens to port 15553 by default and this can be configured using the SERVER_PORT environment variable
-or the server.port SpringBoot property.</p>
+<p>Mmadu Registration Service listens to port 15553 by default and this can be configured using the SERVER_PORT environment variable or the server.port SpringBoot property.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="admin_client_credentials">4.2. Admin Client Credentials</h3>
 <div class="paragraph">
-<p>A default admin client is created at start up with the client identifier and secret gotten from the environment
-variables <code>MMADU_ADMIN_CLIENT</code> and <code>MMADU_ADMIN_SECRET</code>, or the configuration properties <code>mmadu.admin.client</code>
-and <code>mmadu.admin.secret</code>. The defaults are as follows:</p>
+<p>A default admin client is created at start up with the client identifier and secret gotten from the environment variables <code>MMADU_ADMIN_CLIENT</code> and <code>MMADU_ADMIN_SECRET</code>, or the configuration properties <code>mmadu.admin.client</code>
+and <code>mmadu.admin.secret</code>.
+The defaults are as follows:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -266,8 +269,8 @@ and <code>mmadu.admin.secret</code>. The defaults are as follows:</p>
 <h2 id="managing_domains">5. Managing Domains</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can integrate a domain to an identity provider by setting up that domain. The Mmadu Identity service provides
-a one step configuration for setting up a domain.</p>
+<p>You can integrate a domain to an identity provider by setting up that domain.
+The Mmadu Identity service provides a one step configuration for setting up a domain.</p>
 </div>
 <div class="sect2">
 <h3 id="configuring_an_identity_provider_for_a_domain">5.1. Configuring an Identity Provider for a Domain</h3>
@@ -372,7 +375,7 @@ a one step configuration for setting up a domain.</p>
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/domains HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI4MjUwOTQsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9pZGVudGl0eS5pbml0aWFsaXplIiwiZXhwIjoxNTkyODI1MDk5LCJpYXQiOjE1OTI4MjUwOTQsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.dHI_0exOeE773Xefp1tvXfTXPRBfq1LEPP4ODogcLsfvKJ4k2dW5_RewsMzJ_DcQ-ewgQRMMJiCtEVLxgwNknQi9LT15Em-L5pi5Tbp-IwMfrPZ5grLwzHXcGtmd-Uxg56N-uDU2kpIaIemtJ8LNsfFCfJDptFDyIjLKRZlRfoKd4HzlvDOFDBcJ7LB3xPQIt3ObY4SqeUqK1-EClKzFWv-CimwxBKZy9E-DSXJ8pX258XOGzDB2JzZZ9gJj10uq11B4HWywN07GWT850Y7Gfi9X-LbwWFMWGjKRqNEYB_hp3gPswRbz57sx5v7qwuPDmnzmDYyymaq3riPMJuy9rg
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9pZGVudGl0eS5pbml0aWFsaXplIiwiZXhwIjoxNTk0NDQ3MTE3LCJpYXQiOjE1OTQ0NDcxMTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.HI5DP8hsacl9skOANt-SObMA2wTd0XcqOcn4-g_knrc5fgNycSFEO2iD5mblsWlvD-HY810iGz9SJyCEHcAdvWmq0ZUNtVDcMxDZWcjMe7vjbUbWViy7eE6TljIhF4Jqflv_8lM0SbhgC8pJQRQjjhsLT85waOLk5jVdE11rz8F4cnwywMu6hM6zMvl3yzl5d3CT-6APGr6YgN8YvMW-agAIH8xA9h1wqgpRDSIXAy5t-5tyaexd3g80iSoF0IY6_06-bOTJzQF7v3p21d6ojgUTP0k8aHxgMrKHUSLDfRWY9lWtL83udL7P8YGd87Tknpg_X4pgVw9vdeERuSFn5A
 Content-Length: 1555
 Host: localhost:8080
 
@@ -457,9 +460,9 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="creating_a_domain_configuration">5.2. Creating a Domain Configuration</h3>
 <div class="paragraph">
-<p>A domain configuration contains settings on how to properly manage authorization on your domain. A domain can be
-configured by creating a domain configuration object. A <code>POST /admin/repo/domainIdentityConfigurations</code> will create a
-domain configuration.</p>
+<p>A domain configuration contains settings on how to properly manage authorization on your domain.
+A domain can be configured by creating a domain configuration object.
+A <code>POST /admin/repo/domainIdentityConfigurations</code> will create a domain configuration.</p>
 </div>
 <div class="paragraph">
 <p>Authority: <code>identity_config.create</code></p>
@@ -548,7 +551,7 @@ domain configuration.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/domainIdentityConfigurations HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fcSP3u2GZWDf44irm9T0Dqqm5-8nrEm40l0mLvPb-H9uIiEKrfB-0kdgDOMtbP8AXCVT9b3ryGBcndCKRP-x6bX0-piVd87q2CrjtyBjRN0wwZ2RpMCS92ebMbh0b9lNyGFpAq1yNfYZfXQuFrF_yuMNFSp5cxeAt7-vSmCbJ6viSvpdwsC0gyp317BJKlXxWEL_Hj2mPFk1VuPC9i3FaJohEAghWkcDCRnIlLqyry1fso6GfhM0TG5l-pxHUn-5gGK0Y9e46_XDE_S-cS0y7Ej_cTDE-bOFz6e4MreStS5T0pEfZw0nWEgoKD-d9HF4c8t8GeSfNYzCXzhs4ZGiBw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuY3JlYXRlIiwiZXhwIjoxNTk0NDQ3MTM3LCJpYXQiOjE1OTQ0NDcxMzIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.b03ulPg5nzqMfWSXaratExu3e-hWJPqS8ptn5iatEI-WPzY5kelUvqu1gqgbWkmWQnVr0IYAWTIX3ER6wgqepLt9ePbhy-92V9i9u56wwdXwuExxZFkfCS39gRZJsrhe1rWx-uTltmbQYdF9fFUZ4ipv7OOhSNW5dfPblU8wsYRYRGbgP7cVtSOM4HqYJ9wyLhDv6ezCJ77lahXvIBZc7QabYvHL18DuEN2MhrAK3014h4-kBj-aNVvcVwYuE4i1wBrn-NRV1FrcspFPBFAm7TU5T9UkKKS-hyiaLMn5zSp4sujTcvEBrTUf8AIsDOo3huQ2Uscynj2HjnlBkXAdsA
 Content-Length: 403
 Host: localhost:8080
 
@@ -576,7 +579,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6c
+Location: http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aeb
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -599,8 +602,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_retrieve_domain_configuration_by_id">5.3.1. Sample Retrieve Domain Configuration by ID</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTkyNTQ4NTE3LCJpYXQiOjE1OTI1NDg1MTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.dm3ftZczJ-wbSfXzrX6HArrE16G2R2HcxgPFtmEqofpUKC-IagKyf0b7BSX77o6qkYlXzCbYJrGu3yR_aFxHJgRSTANzIHKnS9IlTzjEGzENtNLV3v7tRD1QfVtMMz3nBCIt3mtjTraXFGIbgg9Kqw2Ft_KQTIdL-JUtGLBMM0e8E0myTL-CcNsIJG46CprIW001VdZiVOKqw8k79o54Hj1TPpFMqv1KWvQXB4oP0P1licBUh-7nkSXYmKnnPR_UL6Flg7AeoWn500kxbmaKihAjttv2nAbnOYmG3rqCqaNaOlOYPDpduzT0hBwynRGvzKc_g_srioLFbM32ck_-XA
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aed HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTk0NDQ3MTM3LCJpYXQiOjE1OTQ0NDcxMzIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fsoOIpIik4HcXdPkRFWZOl7JP2ULG-P2Dcm4syrRsSJJnoyEodiEzzUmbrKtzFDuYImJPVM1CFwVEGZJcpE6Ox6WP4tVbCcYyO7eF8sryZz7HyCIzOrZ628g4jf_YlDZn0KNHcnOETwi5b9WvTgauOg3Fq3C5v_WFW7Z0QmKSV66sP9Ww3gXGAqqA1757Tk21OevBA7T_JotohSuf3LDy2Tt8hhlZ1YhioiJpQZQYKFo9OE09aFYZfTPZj0sEp2Cj3I75JJTiglzbJw-FpRjTG1JpcnoJmJxZVDjOZ3ZH3WlEEzA7YwSKU63PurNz9ft9D_ZoytRNXIu9WUu9NeCnA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -645,7 +648,7 @@ X-Frame-Options: DENY
 Content-Length: 743
 
 {
-  &quot;id&quot; : &quot;5eec5ca0d4de4b28a4a41c6e&quot;,
+  &quot;id&quot; : &quot;5f09551cea78f80ca7c29aed&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
   &quot;authorizationCodeTypeProperties&quot; : { },
@@ -659,10 +662,10 @@ Content-Length: 743
   &quot;issuerId&quot; : &quot;mmadu.com&quot;,
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aed&quot;
     },
     &quot;domainIdentityConfiguration&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6e&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aed&quot;
     }
   }
 }</code></pre>
@@ -762,7 +765,7 @@ Content-Length: 743
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcucmVhZCIsImV4cCI6MTU5MjU0ODUxNywiaWF0IjoxNTkyNTQ4NTEyLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.KNlBOEEtCNOfcc6O1u3zHhVOhaYOsVKWp9lSfJaJo-TjgJTOotY-yyNRB2Lcs15iqTOs1XZAykEyKWvK1ZOvSV5-_zcOnR2ALcx7ZX5trboJhfqKNsTXJQbkCYhwXrHg48gvxCe6k2xbVQOp0RupBlDGWb47KfgR4RkzadZxkyjZ823I8Q2A3gtYbNea9AtaHN_LgKMT13ZS1zIm2p65VCKXLEPjpYa5_sb-M_XmIX5AuKs7leWExsyS8T6rG5Q8ngiM7p-zOZrmSg3UtFHwD2RqZyEZKf55UNiPF9lTE-ZXcLEr3yxAHgVzZuMuAbERuDN0CCDyQgsTlUt9UDiuTA
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcucmVhZCIsImV4cCI6MTU5NDQ0NzEzOCwiaWF0IjoxNTk0NDQ3MTMzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.a2L1j_2xF6DENOho5UAjmRrFx03OStVpEZkj1eVY7lzBwDSdf11Gfw9xq9P_NGLrBBekCD81Jk46myknpaSQ00nl28URhC2kK7UWaD0uwcyWpokGytdR8O9lyhGuVwSQAL2KvyBwGr9w4e_eneipV2e80Wt7iaUUcnGo-zqSdmZlRcH30S0NgG9J2L1vF1mC_rLQ9t194p1lCan7ZhaAc3Z4UpUt0i_SeVjrVXImOAxNP2eYT97lr3MT4kEzID7wBrFXO-UknrAjzOmVff4wkLQzI4ZNx9Bbtrl7l7tZGuPnLgWxZDMBFqxD8oCah2QVUn9PmULv953P8MSnyh8SBg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -806,7 +809,7 @@ X-Frame-Options: DENY
 Content-Length: 743
 
 {
-  &quot;id&quot; : &quot;5eec5ca0d4de4b28a4a41c6f&quot;,
+  &quot;id&quot; : &quot;5f09551dea78f80ca7c29aee&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
   &quot;authorizationCodeTypeProperties&quot; : { },
@@ -820,10 +823,10 @@ Content-Length: 743
   &quot;issuerId&quot; : &quot;mmadu.com&quot;,
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551dea78f80ca7c29aee&quot;
     },
     &quot;domainIdentityConfiguration&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6f&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551dea78f80ca7c29aee&quot;
     }
   }
 }</code></pre>
@@ -923,7 +926,7 @@ Content-Length: 743
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/domainIdentityConfigurations HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.B5omk2ivqLYDDb7sT8EAuK0bPxC9BVE5GK1PVKjiDtiFMpq_z3XALIifSMbuKpyOzgT1URk-vj0MTw-5M30mYsgxLiyuUNDh1Ypo0ED76sV-AnPoVQddrqD1iCI0tUSWv-rbGT_S42baZnjFGTaVUlqutQzixi_8qWR6wBzTWFTh7LfQZxH4YUCs0ctKLiUqyJNNPZUI6vtOmGwpcWoxZ59sVApdP9v0zlPGxTOuNS7JhJyWxIh_mArOGHsg5USdIWMbQxhyxRZPBMiOdfuB3y8CgspirBmG9Y4aKEIdb7lX83Fs-wJbZVzrY_6_YrO63UkBlcOD21RrBatCzoFRMA
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmlkZW50aXR5X2NvbmZpZy5yZWFkIiwiZXhwIjoxNTk0NDQ3MTM3LCJpYXQiOjE1OTQ0NDcxMzIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fsoOIpIik4HcXdPkRFWZOl7JP2ULG-P2Dcm4syrRsSJJnoyEodiEzzUmbrKtzFDuYImJPVM1CFwVEGZJcpE6Ox6WP4tVbCcYyO7eF8sryZz7HyCIzOrZ628g4jf_YlDZn0KNHcnOETwi5b9WvTgauOg3Fq3C5v_WFW7Z0QmKSV66sP9Ww3gXGAqqA1757Tk21OevBA7T_JotohSuf3LDy2Tt8hhlZ1YhioiJpQZQYKFo9OE09aFYZfTPZj0sEp2Cj3I75JJTiglzbJw-FpRjTG1JpcnoJmJxZVDjOZ3ZH3WlEEzA7YwSKU63PurNz9ft9D_ZoytRNXIu9WUu9NeCnA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -943,12 +946,58 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1356
+Content-Length: 3135
 
 {
   &quot;_embedded&quot; : {
     &quot;domainIdentityConfigurations&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c9fd4de4b28a4a41c6a&quot;,
+      &quot;id&quot; : &quot;5f095508ea78f80ca7c29ac1&quot;,
+      &quot;domainId&quot; : &quot;0&quot;,
+      &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+      &quot;authorizationCodeTypeProperties&quot; : { },
+      &quot;authorizationCodeTTLSeconds&quot; : 600,
+      &quot;maxAuthorizationTTLSeconds&quot; : 3600,
+      &quot;refreshTokenEnabled&quot; : true,
+      &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+      &quot;accessTokenProperties&quot; : {
+        &quot;credentialId&quot; : &quot;5f095508ea78f80ca7c29ac0&quot;
+      },
+      &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+      &quot;refreshTokenProperties&quot; : { },
+      &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac1&quot;
+        },
+        &quot;domainIdentityConfiguration&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac1&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5f095508ea78f80ca7c29ac9&quot;,
+      &quot;domainId&quot; : &quot;1212&quot;,
+      &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
+      &quot;authorizationCodeTypeProperties&quot; : { },
+      &quot;authorizationCodeTTLSeconds&quot; : 600,
+      &quot;maxAuthorizationTTLSeconds&quot; : 3600,
+      &quot;refreshTokenEnabled&quot; : true,
+      &quot;accessTokenProvider&quot; : &quot;jwt&quot;,
+      &quot;accessTokenProperties&quot; : {
+        &quot;credentialId&quot; : &quot;5f095508ea78f80ca7c29ac8&quot;
+      },
+      &quot;refreshTokenProvider&quot; : &quot;alphanumeric&quot;,
+      &quot;refreshTokenProperties&quot; : { },
+      &quot;issuerId&quot; : &quot;mmadu.com&quot;,
+      &quot;_links&quot; : {
+        &quot;self&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac9&quot;
+        },
+        &quot;domainIdentityConfiguration&quot; : {
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f095508ea78f80ca7c29ac9&quot;
+        }
+      }
+    }, {
+      &quot;id&quot; : &quot;5f09551cea78f80ca7c29ae9&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;authorizationCodeType&quot; : &quot;alphanumeric&quot;,
       &quot;authorizationCodeTypeProperties&quot; : { },
@@ -962,10 +1011,10 @@ Content-Length: 1356
       &quot;issuerId&quot; : &quot;mmadu.com&quot;,
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29ae9&quot;
         },
         &quot;domainIdentityConfiguration&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6a&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29ae9&quot;
         }
       }
     } ]
@@ -983,7 +1032,7 @@ Content-Length: 1356
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 1,
+    &quot;totalElements&quot; : 3,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
@@ -1083,8 +1132,8 @@ Content-Length: 1356
 <h4 id="sample_retrieve_all_domains_2">5.6.1. Sample Retrieve All Domains</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/domainIdentityConfigurations/5eec5ca0d4de4b28a4a41c6d HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NTE3LCJpYXQiOjE1OTI1NDg1MTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fjv99JCJqJOx2s1n8spy5xDnQkTks3K-S7f9TnwM72V7PUkqfdAxcStNWsajYQInls9-JldoVIJuRDIfwM_C0Dz8rArlBcIeOtFC4LJyIYj0WRZrrZahbkAKX4dCLWmxCbXtg9VmWxO-oUafeWwfyqGRTZ4yhKO5nAw3Nhq0v6l-26E9vrKanO_XM4vonGX_U13CSKliDiMbS8UDf4XC3pXA8ZYsUoXxI9-K6mmhowRhNyDoWGjzFDRyayJ_uoj_DH8KrZmhcm8WuGkqsYR6d-nZv5nQsaJCYte0QhrBNmXIfW-VniwZ-5cyOhocp4XeX0cUCQGt3uL1Krb3Z-1RLQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aec HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcudXBkYXRlIiwiZXhwIjoxNTk0NDQ3MTM3LCJpYXQiOjE1OTQ0NDcxMzIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.NnFlKZEn40eVDbimF4hypkTA6ICchdgN8lv_lhIy3B1EUmfhS4p8aL1YB5lTSdN3ZrNrtL-osdUFvf7fT5Z7InAoChotnfvFD089bwlnODs880miA4RJ73CuxjeRbPla_uRm3RDTVhsmh7juzoHJuZEbCCs-WZk9BgDdcTSvGQgeMigTgr4VeG-Q1j2hfSiEwFUo0HMqkKyXatb_gs63SW0AJUCqtL05O0uaxDOV0V0mjGVCwIVhBT0576yQLcxEssIpAO2s8rFVqClCasF75UnJEe05wvbCNVhU7R33XldLadx2Vir_ZceMHiR2vV9AcCpzFQsGa0Tvep84ioT9WQ
 Content-Length: 35
 Host: localhost:8080
 
@@ -1122,8 +1171,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_domain_configuration_delete_request">5.7.1. Sample Domain Configuration Delete Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/domainIdentityConfigurations/5eec5c9fd4de4b28a4a41c6b HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NTE2LCJpYXQiOjE1OTI1NDg1MTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.GJ6OnL6AOv3dRIsH5aSTPbvjXfGi0AlN8H2eDP8K15I-_l8qualtWRV_cWonzLv3r1sfJFDsvSYzOzbb0RY34kj30TgWF_wsmmRu-h_fCqXF5-jd0tme7P4P2AEx6Ly8pFsGG_srsx-BF5z7TKvVeE9murHpaJa6rs8PjmiJ28wrsSyvjGDtGcMsiYldkZK943TI67qqUo9yiy25cZCXAYt9n-2QK7AliG6H_YyjQiOoVkJvSJAtYtpB8ZEZNOEWD9lG4y6K5GwWTiz0c8vwdkGWz9934ESOrhhhnrtmdg_othnyE9LEqDgkBHQh02IJIrwuCOgu0ndh2T_UgO_vbQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aea HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMzIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5pZGVudGl0eV9jb25maWcuZGVsZXRlIiwiZXhwIjoxNTk0NDQ3MTM3LCJpYXQiOjE1OTQ0NDcxMzIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.YarNp8O52oqPpNioUEJ5km53dHhoPWNjqm0Jf2b0wB7PWg6-lBitm4IgDf_xJiuXZht92pMcF7IRr19W1ESx7uAMv2F8Bo6PFBn4YBxe-67pTYZO6cgOBu1jJoESCSNZrdY7p5_TN8P3azlRT9a5gcfQltVQ2TnzFi00TkQsnsYcZS0ImiZiG7Z5qxL_vtz-e_8XIQ2Kk6-Btvmj0sTXNk9UlF53ifRiVZrYeGWhHChVeUnH19FVRdpjgDymsyAxWgUGkRxnuBtpiVVQmwDwpDwdxg168bCFeYBDD607JgibJ-LqVeKNODZoNOUmluaFwJwja6spzxr6Sz9garFj2w
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1174,7 +1223,8 @@ X-Frame-Options: DENY</code></pre>
 <h2 id="managing_clients">6. Managing Clients</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Clients hold information about an application. A <code>Client</code> object is a convenient way to group Client Instances.</p>
+<p>Clients hold information about an application.
+A <code>Client</code> object is a convenient way to group Client Instances.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_client">6.1. Creating a Client</h3>
@@ -1189,7 +1239,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/clients HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.TipPByggX5oRK0E1sqiUmPVDkWmK52op6aqxxEDaVJlu0M-Cb3Zgd-jSWPrQPY-chbhoUlm5OopWqyVZx2ip3My42ALhLwRDkF5ziF43FpdogkWuX0ubDAQgDbD1BRfdeuE226skPwtQe4eOgIJ9vqarbgOynh2AzB8cpL7jE2LDU1H_UMrMKPxQXtAov-LdJbl-lZ4ysd0xi7_dQIX6vecfSAJxMdYwz3CBXAPx4AVrv4tmrd8LnnoK2QgYDG1aRaGwA6MP8c9TphwYclZJd7CCUUwKR5P5mJIZ4b7DqSkBGLS4M8IafCy_dfZZgIxkF1I0ucwLK12yrk42oCiUAA
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuY3JlYXRlIiwiZXhwIjoxNTk0NDQ3MTU3LCJpYXQiOjE1OTQ0NDcxNTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.LpRreKM1gUxE8wQKHunNoMPATphHK07QcmNguemKGIUePYzBnp4kI4JKedMePkSKvHRZjTQd3sPcE2rGcbWgkqOCfozjcomz9ok6lQjO4017YSfz8XiblfOIZv9uK4KAarytjRBaz7Fz8xTt0J8MXTCe5dPanUk0cJbuW4Obb962a2-4uBb8HKdsvBua_FO3EkAqyITqgWp7xuajnaiDrB0KYV5fkmU8KxpRWfGUi-vKoGuYhL1GChB5o4Z_CiBIdkBtVO6OgSVVU4vGGnKmcZmjTYQCgSjW2pTjTf8cNHRDpyLg0nrAZUJhN_8vwEDaFMCH91yn_ZgHiJ1OE6vYmQ
 Content-Length: 239
 Host: localhost:8080
 
@@ -1272,7 +1322,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7c
+Location: http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0f
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1295,8 +1345,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_client_retrieval_request">6.2.1. Sample Client Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clients/5eec5caed4de4b28a4a41c7a HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudC5yZWFkIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.nzi-mtw4tp6JzJgcd0SQWxRah8aTC7BKbyx_Gl7on1K9q5IPRmW5RBZfRZr3lUK3DvZgpMZuornEhQ5LVVOgjtdU2Z1J7VXQ-P2pgSefv1iRI_a8O_tfqclQG6jqiDxgVxAQ4NoUdS_ZPeod8M3l2EjtXqUfCPSDkm-WPIYy4TSrbMGPjTAjgQdHXjU5ZttPa6jhD6DmXDFKMvtYIky02bu_H5Njpl4YCNJ51bUDUzhUdnBnF9NNjmnUOC-uiCZNscSfqWut9h45SmiWcTlwhs8vAjpr6AkgSwlsCh6OfdrfkIeuTt8zP3Ik9HILBN3W4CiJDYAKlalJcga1zphm7w
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clients/5f095530ea78f80ca7c29b0d HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudC5yZWFkIiwiZXhwIjoxNTk0NDQ3MTU3LCJpYXQiOjE1OTQ0NDcxNTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.S-_wQjpD06f-SsZXRy4MApNAq-gV96rPbwv6-3hj_6jIL_mZiODClBEnWtMNa7FhSWC8hlFlTsIZ8SY7lCRlUUMDBFpgRETEZfv3GWYN7IWeF3_VhNy2uGM4RG04X9I6Q5AESOW1Zs0mdl1npJK5mjezpgEEAb5f1wQdwdSwelCRgm2pTvLkfroERYJkFqyVlaqpu4iPZ0seKtI9dWa-hOrdabpsas03y8cTwlK18tP7aIOvT3lly6GspAUN1QcqywJ1Zs-vzo2bYGePcqMb7bNoQ9fY6pQkj6CgP1Zimad7R-6splV9bNJeChfMuyifXaAKohaGnnwkaFY-GXUrTg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1341,7 +1391,7 @@ X-Frame-Options: DENY
 Content-Length: 516
 
 {
-  &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7a&quot;,
+  &quot;id&quot; : &quot;5f095530ea78f80ca7c29b0d&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;name&quot; : &quot;Email Client&quot;,
   &quot;code&quot; : &quot;A12345&quot;,
@@ -1351,10 +1401,10 @@ Content-Length: 516
   &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d&quot;
     },
     &quot;client&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d&quot;
     }
   }
 }</code></pre>
@@ -1375,7 +1425,7 @@ Content-Length: 516
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clients/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQucmVhZCIsImV4cCI6MTU5MjU0ODUzMSwiaWF0IjoxNTkyNTQ4NTI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.LGo_XFGHlsGAj9ePYtnYcFul0oyUyfuT0BZFS2cD5JuCZTv-yn-hVkoZJc_xpUEBVY-gzJXciRPyGSP5xyzUtRpPlL54J4hiXj18lQjvkBNTBvZw0bi_f9feb_smZTJ2NxOQDj0FT5HmzyG0-uMzJnq-yIGjsj1dTBtokKAru0_rjB_wYae2XkMVrbVSpMSBZ2kDcKLvrv_yHwrtGcCHZZoMc2wvSZj9lhQyvahms9cGuffs3i4HGJeogEPsLJecUpIY_zQNxtSKwGnpm2Vl8oUjVdfWmPJDtZLdMYzp0Ey_zrathkL_B98Jb1utxxuZqX95_e_kyYHFb_jB-BV5-Q
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQucmVhZCIsImV4cCI6MTU5NDQ0NzE1NywiaWF0IjoxNTk0NDQ3MTUyLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.kLK1G_8lAEl8OqvqD7dcxnO0MTVjNJ-d30P69ya1jxmvi8tutgNjb1vgsMuznZRcURwtomb38HfNIgWAOVcmbKbsR3zN1v98Cmnv6LQBqY2xZmm3WYjA_ECiGX7oBrdLxvtgsxh3QCgWZ-9MUI7PyvYETkTPWEymvzlogYrQzdwRWDDNW3qRt2DbaBWsAplz_j8DVwLwJiLQmpysyFVQL_9hvgjB7g9nAC6h4vnXHW8bi8Wga0UU1fta8GzwuA7wcsmbX3-wsSm-iAmfNxjxr-X_5Uw0C6oE7Q39X9KKSQ60X8Pd56EmZDgB4jSZhG5QD-3E3-jIKGL8gT5IknH2hA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1416,114 +1466,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 5326
+Content-Length: 2056
 
 {
   &quot;_embedded&quot; : {
     &quot;clients&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c82d4de4b28a4a41c4e&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c51&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c51&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c54&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c57&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5a&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5a&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5d&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;code&quot; : &quot;1234&quot;,
-      &quot;applicationUrl&quot; : &quot;https://myapp.com&quot;,
-      &quot;logoUrl&quot; : &quot;https://logo.url/favicon&quot;,
-      &quot;category&quot; : &quot;test&quot;,
-      &quot;tags&quot; : [ &quot;tags&quot; ],
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d&quot;
-        },
-        &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5c83d4de4b28a4a41c5d&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c79&quot;,
+      &quot;id&quot; : &quot;5f095530ea78f80ca7c29b0c&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;name&quot; : &quot;New Email Client&quot;,
       &quot;code&quot; : &quot;A12345&quot;,
@@ -1533,14 +1481,14 @@ Content-Length: 5326
       &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0c&quot;
         },
         &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c79&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0c&quot;
         }
       }
     }, {
-      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7a&quot;,
+      &quot;id&quot; : &quot;5f095530ea78f80ca7c29b0d&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;name&quot; : &quot;Email Client&quot;,
       &quot;code&quot; : &quot;A12345&quot;,
@@ -1550,14 +1498,14 @@ Content-Length: 5326
       &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d&quot;
         },
         &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7a&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0d&quot;
         }
       }
     }, {
-      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c7b&quot;,
+      &quot;id&quot; : &quot;5f095530ea78f80ca7c29b0e&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;name&quot; : &quot;Email Client&quot;,
       &quot;code&quot; : &quot;A12345&quot;,
@@ -1567,10 +1515,10 @@ Content-Length: 5326
       &quot;tags&quot; : [ &quot;email&quot;, &quot;communications&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0e&quot;
         },
         &quot;client&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5eec5caed4de4b28a4a41c7b&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clients/5f095530ea78f80ca7c29b0e&quot;
         }
       }
     } ]
@@ -1582,7 +1530,7 @@ Content-Length: 5326
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 9,
+    &quot;totalElements&quot; : 3,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
@@ -1603,8 +1551,8 @@ Content-Length: 5326
 <h4 id="sample_client_update_request">6.4.1. Sample Client Update Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clients/5eec5caed4de4b28a4a41c79 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.fu_j1EmwYG7PuRa1wyBjhTXQ6PvajmySZhEpXEUPgMfhUYc5hQO_qBZGs3hLyBoI4CzNf8hdqPB8xKdGCS7P4N_ILIXppTWkov5fYVVVy5y8DpYGOZdAaL2Rfgupe9McD5T5TXSWLc3WRn73ZgrImadzhZM8Zl9fJOdePAMBKyk4dRV7q-DzNFooJh7ZhUOVpcrOcIHgOdLn_UqFzq8T3PzxnyxT9Dd6fAHzeH2s3FkyV92TcUQBXl4muru9Jqh8_5CMDTxaFWzymRuReEnuIC4BGNvFtLolJMBoA61Rs0gUxDKBy2AUkoxnJBYW6Wk85rTnNpI_ioETR7HhVdWuag
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clients/5f095530ea78f80ca7c29b0c HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQudXBkYXRlIiwiZXhwIjoxNTk0NDQ3MTU3LCJpYXQiOjE1OTQ0NDcxNTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.Wlsp-5RywZ2OXB6j85pqripIg2wIP5VZjlR-0io9NKaw9_u_Zfi5pxw7b53bRx6zwaUMNfwaaTvC8TvGAtIjCDwUiMhzFh8QZLFulPhRDmTXwVfx2tfsrcQLalQXPxfzS8RyVlcvyQPgFxLfr9RURtlTKZt_H2mb1qSohJc7FdHx51pFAXt7bM4ZguV0k5ydewDo1cvYoIRRIxqLpgg6fojympMYaa2ccQ_ly2Pf1sboXWQEiIJmtgcvvlJXdwH9-ieU97e5kOxDExhXWo42m5eMuenWOvJy47Vgd7DgcO4bq8Tr1fZFuWeNVRvSh75BT20El11OZkjCSoh-zy1jtQ
 Content-Length: 27
 Host: localhost:8080
 
@@ -1664,8 +1612,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_client_removal_request">6.5.1. Sample Client Removal Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clients/5eec5caed4de4b28a4a41c78 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.iU4zyVNmClO0XeKmRYmjUvHcQCTwagMvfyXzH4NgPCs_MKCNvnmk-7GELgRqwf8SfoF2-h38aCIUyTLhzOyBTpzEGoRiyKNZeH1mk3JQEq7x-reFnwYG9jGbWUXIzNpXsRwhvEsHZWhqkOCBprOVoIylPt_NcvA2uuB2HBu8asokoEOKf5_RHBdOcOC23wLMfd1D2GwErSg7L2U5Vn0nka1UuZXT-OlfVR_e-kYroLyfHmuHbJqx56J_lfVKctJlvAatqTHqbsR8Iav-_wDD7VEMjFO_PePYnOurixRBrmYecKZzU7uV1noOMVKwVgY79GS6kbKUZPFxRkrrmcXd8g
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clients/5f095530ea78f80ca7c29b0b HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnQuZGVsZXRlIiwiZXhwIjoxNTk0NDQ3MTU3LCJpYXQiOjE1OTQ0NDcxNTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.jUOnWuz-G9zCZAWaZ3Ja827vz0UKc0nbna2ZSHcZdU5FWvhYOKKB2expUYiT-15rDYn6ELUV1Jl5dQxpJPcHQ2s8_nJsQ-yYvHC7Fid1KrGYr7c1XXZFBjtac4KYZv_r663JAHK6cLKT_f43TD6laLm7dpjH37-lG12TsvjiRA96DPV1jF-wqcf-ycOMkHf85WDYahlC-lHJSDSc-RrQRE9UqRkzC-h1TpoU7aDRpOBWuuL4n5Y0lmsLqjN75LYRhQCklv5_Y3airD0Z1f3kmnIJJmrMpy5Vu_2_i2EBVBC7O3qtvjIr72SpUVoeZ7ZQWdIeR-1-rgFdaCqj2wD2Bg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1716,8 +1664,8 @@ X-Frame-Options: DENY</code></pre>
 <h2 id="managing_client_instances">7. Managing Client Instances</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A Client Instance represents an oauth client. An application can have several client instances for its different
-components if needed.</p>
+<p>A Client Instance represents an oauth client.
+An application can have several client instances for its different components if needed.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_client_instance">7.1. Creating a Client Instance</h3>
@@ -1732,17 +1680,18 @@ components if needed.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/clientInstances HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.Gxk6RZrTXuOXoH1e228tYAl6y9EWeJGLJC97sp33b_HPymsKQYkrN3OWXQzq_N6Eut1WqE8gIfN-7f5XVfP88wAz_2BoPBEJGVeyOHua6ybp1vJdz0TJOcCyrJGlA7G1cYakP28s7ypY9zYO7FdBGso3J3s0eZtsabBG7ama3rN-TaHn2p6XKCv2xh4O5nSkBu2OzrqyW6060gBOU3YgMm9fG_5bCVPBM83EKw9UWxinjkj5YeSQFT5bf-a0cNJJUJIKzVO693oJXQcXLPWhGWf-ygUwv5G2hZQZAadeJW0z_8CgJfNlteAmpiqFXlJ32AOa76SgorIiCdgaSkRqTQ
-Content-Length: 595
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuY3JlYXRlIiwiZXhwIjoxNTk0NDQ3MTE4LCJpYXQiOjE1OTQ0NDcxMTMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.G342OICMp0TOVQKPAvH2M4Hi0zkx9rMZOu2b7Wx8rnaDbTO95lp_-au1tVTX2D0HVM3CaUU-ikIgc3mYWFt0Tkhf4vyHsRhEaSHuJkot6TS--7LXZYE_r4LgbScfJSkcnccPHLvsgXOld8gRGejIIOzEj6WSUsjpxsmSa45G76F15_HSh4FQ0VACXe6e8nTSW9kLSVJOT0m5hj_-XS6kNEyJiRz9HrIrcXp88wFl7iMdidkF79L1aWSDG-lrE3YJi1JTyWngBeb3QYvqNFkfT11xBkx_Y4DnF9IHNkymZw383K0-gORAELVM2AQ84WZ09jRRwrLi28HVupXel_hTRA
+Content-Length: 626
 Host: localhost:8080
 
 {
-  &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
+  &quot;clientId&quot; : &quot;5f095509ea78f80ca7c29ad7&quot;,
   &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
   &quot;clientProfile&quot; : &quot;web_app&quot;,
   &quot;tlsEnabled&quot; : true,
   &quot;includeUserRoles&quot; : true,
   &quot;includeUserAuthorities&quot; : true,
+  &quot;tokenCategory&quot; : &quot;bearer&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;resources&quot; : [ &quot;test&quot; ],
   &quot;authorities&quot; : [ &quot;admin&quot; ],
@@ -1849,13 +1798,18 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">Include user&#8217;s authorities in the token info</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tokenCategory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of tokens expected e.g. 'bearer'</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentials.type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The client&#8217;s credential type (for now, <code>secret</code>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>credentials.secret</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The client secret (if credential type is <code>secret</code>)</p></td>
 </tr>
 </tbody>
@@ -1869,7 +1823,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59
+Location: http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29ad9
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1892,8 +1846,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_client_instance_retrieval_request">7.2.1. Sample Client Instance Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudF9pbnN0YW5jZS5yZWFkIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.edpq_tOWuGTfwpVe8homNN4Djszle5sdBBlBGjQuPq9_QKHcGm57QnpTpur1VQiaZoiKNjYNcAin5P6ZvWMQ9V6b8irMgWgKJgvKNlZG3SpRhwFWyvgGCybwcJetLgfColuD_caZtf2LMozNHVsAD2chhjaAxY1WM7XurZgOlZQdj2cX_OtG5w0p4QIZzIkTa6DABEi5fULsZvWs4WAy0XHkn61q3wIxg_SoujDTLIr8Tr551tVk0wdnY6Mo4F-yofriUlExPePIDZpY5Xp1iaKCXFZt_LJZNnLo88Tyzldv4JEe3GKeTb-RGoLZF8KkVh6tn0rkLPPDJXK82uKXSw
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/5f095508ea78f80ca7c29ad6 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmNsaWVudF9pbnN0YW5jZS5yZWFkIiwiZXhwIjoxNTk0NDQ3MTE3LCJpYXQiOjE1OTQ0NDcxMTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.oIFjB6RoO1HGLHKlA6CNOrz8VzF5Afcx_IJt_Upb5q39uOiwP55JTcgQ3CTbYouZUybFpiwgW1GdGGEmKpi_MJuiAJ4fhJkf8ASkh8kJl_aXfz5dY-XODGKY__VY_EMiXlZ5Onhl0MEz7ZL5Bz8SXBHo1ZZt4yeSASwNwSAULc3y4vs1DqJT-PvSdG53QDTomMeDv5kFW-z79T9wHKKFKRzW8VmUjTU3GRiUbd4n1rbnXU_QSZegbDah2WjivkzUUyDKeJTVWGbl0e0_Hcos78zk5qdqOZh_niWvNNE7PMQ1f9Lw9hfuRODewPrpMHZHElXrRIjsXrQARO8rBZ0Uuw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1935,15 +1889,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1135
+Content-Length: 1313
 
 {
-  &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c56&quot;,
-  &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
+  &quot;id&quot; : &quot;5f095508ea78f80ca7c29ad6&quot;,
+  &quot;clientId&quot; : &quot;5f095508ea78f80ca7c29ad4&quot;,
   &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
   &quot;clientProfile&quot; : &quot;web_app&quot;,
   &quot;credentials&quot; : {
-    &quot;secret&quot; : &quot;1234&quot;,
     &quot;type&quot; : &quot;secret&quot;
   },
   &quot;identifier&quot; : &quot;1111&quot;,
@@ -1956,18 +1909,25 @@ Content-Length: 1135
   &quot;authorities&quot; : [ &quot;admin&quot; ],
   &quot;issueRefreshTokens&quot; : true,
   &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+  &quot;implicitGrantTypeTTLSeconds&quot; : 3600,
+  &quot;passwordGrantTypeTTLSeconds&quot; : 86400,
   &quot;accessTokenTTLSeconds&quot; : 300,
   &quot;refreshTokenTTLSeconds&quot; : 3600,
   &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
   &quot;includeUserRoles&quot; : false,
   &quot;includeUserAuthorities&quot; : false,
   &quot;includeUserGroups&quot; : false,
+  &quot;scopes&quot; : [ ],
+  &quot;tokenCategory&quot; : &quot;bearer&quot;,
+  &quot;authorizationProfile&quot; : {
+    &quot;autoApproveScopes&quot; : false
+  },
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad6&quot;
     },
     &quot;clientInstance&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad6&quot;
     }
   }
 }</code></pre>
@@ -1988,7 +1948,7 @@ Content-Length: 1135
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5MjU0ODQ4OCwiaWF0IjoxNTkyNTQ4NDgzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.gAlbZQTKDTsTYitJc5NqSBe6idAhMb180d_bLoEpqlNYclVz3hGU0ev4WcIaFGQucmtm8uCI5P1iZUMGcYiaJPXgmXL_yB7zldsyL3GS2FRxRoQak9N4-ZmwndqOceuJs83rfoJ_7auVZ0SS4dBqbmZ7-Bgg9ogk6HFIXV7-7Emv5QhYkmpwfyhUOA_R59uHQgKXAROfV6h4zGHiT5y0-OONui-4y6G5tRhwv6xKrOA_1IpDXZAW0Kp7Xfs4xvraR3fo5xDFutS8CXiF-_P_XATGfpockefuvbzPEpl1OdUt_14hzKyxRR6pZrcO9nP_pmQA3lFVFaXWrrHVW5WYpw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5NDQ0NzExOCwiaWF0IjoxNTk0NDQ3MTEzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.A9LoJRTa_nI_EG2vVL0StkMNYwTHV_UBxyqLIN4C-9pLeQdXT_83HJJJyCzllK3sH2Q-qgHFuUP6qzUox4iEC_t9Bf8I3qxNmnyUjrbZTiVC7v7hMxY1Sjk8wHvOzZMVJvCL_CEKYFtpX63GtffHGKTGGnBh666_HwLPIthGD5QjVBuIpRpM0Wt598klSJuTJGZhkzGlDLOif-Sh5WT3mALwhqqtE8jnU9arUp623RuvHrX6g9leHUntM2jvN22Or3RNQ03iAHruvoof0-fhfNjKGPsddLrjlHxtdpyZ4Rz2qjwE3bKGQTwMstNFvWIllmLOCON778DYwQxNao4mpw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2029,17 +1989,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 5441
+Content-Length: 1781
 
 {
   &quot;_embedded&quot; : {
     &quot;clientInstances&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c50&quot;,
-      &quot;clientId&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;id&quot; : &quot;5f095509ea78f80ca7c29adc&quot;,
+      &quot;clientId&quot; : &quot;5f095509ea78f80ca7c29ada&quot;,
       &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
       &quot;clientProfile&quot; : &quot;web_app&quot;,
       &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
         &quot;type&quot; : &quot;secret&quot;
       },
       &quot;identifier&quot; : &quot;1111&quot;,
@@ -2052,117 +2011,25 @@ Content-Length: 5441
       &quot;authorities&quot; : [ &quot;admin&quot; ],
       &quot;issueRefreshTokens&quot; : true,
       &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;implicitGrantTypeTTLSeconds&quot; : 3600,
+      &quot;passwordGrantTypeTTLSeconds&quot; : 86400,
       &quot;accessTokenTTLSeconds&quot; : 300,
       &quot;refreshTokenTTLSeconds&quot; : 3600,
       &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
       &quot;includeUserRoles&quot; : false,
       &quot;includeUserAuthorities&quot; : false,
       &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c56&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
+      &quot;scopes&quot; : [ ],
+      &quot;tokenCategory&quot; : &quot;bearer&quot;,
+      &quot;authorizationProfile&quot; : {
+        &quot;autoApproveScopes&quot; : false
       },
-      &quot;identifier&quot; : &quot;1111&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : false,
-      &quot;includeUserAuthorities&quot; : false,
-      &quot;includeUserGroups&quot; : false,
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc&quot;
         },
         &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c59&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
-      },
-      &quot;identifier&quot; : &quot;43e622d5-b661-4c95-89fe-f020ce32bc7d&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://myapp.com/callback&quot;, &quot;https://localhost:8080/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;localhost&quot;, &quot;teamapt.com&quot;, &quot;32.32.182.34&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authentication_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : true,
-      &quot;includeUserAuthorities&quot; : true,
-      &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5c&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c5a&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
-      },
-      &quot;identifier&quot; : &quot;1111&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : false,
-      &quot;includeUserAuthorities&quot; : false,
-      &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc&quot;
         }
       }
     } ]
@@ -2174,7 +2041,7 @@ Content-Length: 5441
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 4,
+    &quot;totalElements&quot; : 1,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
@@ -2195,8 +2062,8 @@ Content-Length: 5441
 <h4 id="sample_client_instance_retrieval_by_domain_and_client_request">7.4.1. Sample Client Instance Retrieval by Domain and Client Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/search/findByDomainIdAndClientId?domainId=1&amp;clientId=5eec5c82d4de4b28a4a41c4e HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5MjU0ODQ4OCwiaWF0IjoxNTkyNTQ4NDgzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.gAlbZQTKDTsTYitJc5NqSBe6idAhMb180d_bLoEpqlNYclVz3hGU0ev4WcIaFGQucmtm8uCI5P1iZUMGcYiaJPXgmXL_yB7zldsyL3GS2FRxRoQak9N4-ZmwndqOceuJs83rfoJ_7auVZ0SS4dBqbmZ7-Bgg9ogk6HFIXV7-7Emv5QhYkmpwfyhUOA_R59uHQgKXAROfV6h4zGHiT5y0-OONui-4y6G5tRhwv6xKrOA_1IpDXZAW0Kp7Xfs4xvraR3fo5xDFutS8CXiF-_P_XATGfpockefuvbzPEpl1OdUt_14hzKyxRR6pZrcO9nP_pmQA3lFVFaXWrrHVW5WYpw
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/clientInstances/search/findByDomainIdAndClientId?domainId=1&amp;clientId=5f095508ea78f80ca7c29ace HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UucmVhZCIsImV4cCI6MTU5NDQ0NzExNywiaWF0IjoxNTk0NDQ3MTEyLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.Z6mkPGTHiE4SsRMCirJyZxUZUTw8cDYY_gRL4OVWP28zKKDtfHUmp1AJiiB73tCYeZtXakEFtyt883tLct_HQvxMoMS0XyBuedzba1nEB-Gssbd8yXLbA4-KQAiZeZFe3a430eN9rOqdT6H99IQxjEdjdr5FDd1iNHXUQMS4zLp55QIK4DQM8tcudFfu9fx1dhyOxDnJ13P7woOOXCFjwCJUM1e0srGXFYQ20tbpGOBXfAiqBPjLLrj7n3TN1R0Cupp25825zPYmkbmw5fs7tUkgSxpeoqCuoF2Ng2LknnaTuAhCHvIEcAka0IkqBbw3WMnBDsdOLgw4xtHC9T3B3Q
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2241,17 +2108,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1590
+Content-Length: 1792
 
 {
   &quot;_embedded&quot; : {
     &quot;clientInstances&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c50&quot;,
-      &quot;clientId&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;id&quot; : &quot;5f095508ea78f80ca7c29ad0&quot;,
+      &quot;clientId&quot; : &quot;5f095508ea78f80ca7c29ace&quot;,
       &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
       &quot;clientProfile&quot; : &quot;web_app&quot;,
       &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
         &quot;type&quot; : &quot;secret&quot;
       },
       &quot;identifier&quot; : &quot;1111&quot;,
@@ -2264,18 +2130,25 @@ Content-Length: 1590
       &quot;authorities&quot; : [ &quot;admin&quot; ],
       &quot;issueRefreshTokens&quot; : true,
       &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;implicitGrantTypeTTLSeconds&quot; : 3600,
+      &quot;passwordGrantTypeTTLSeconds&quot; : 86400,
       &quot;accessTokenTTLSeconds&quot; : 300,
       &quot;refreshTokenTTLSeconds&quot; : 3600,
       &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
       &quot;includeUserRoles&quot; : false,
       &quot;includeUserAuthorities&quot; : false,
       &quot;includeUserGroups&quot; : false,
+      &quot;scopes&quot; : [ ],
+      &quot;tokenCategory&quot; : &quot;bearer&quot;,
+      &quot;authorizationProfile&quot; : {
+        &quot;autoApproveScopes&quot; : false
+      },
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad0&quot;
         },
         &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095508ea78f80ca7c29ad0&quot;
         }
       }
     } ]
@@ -2308,8 +2181,8 @@ Content-Length: 1590
 <h4 id="sample_client_instance_update_request">7.5.1. Sample Client Instance Update Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5f HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UudXBkYXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.MYFtVBkiubph-kMnzycbZa6v5dRWrQc5TLI9xi7Ot4xMHbEwaPaagW_BseBsEVgb5CutDuAIeAoJKqqqxa7A9JU7Lpa8lSsWEkj9RclZ3oiziGLm31Wc4hEGP9KQQa4S7eNGB4cj7nDlzrVIByfv8FHo_p7jYXEpKVDfykRTdVw06-WfMS4v5rMQ7DkLXfY95JAagoQ9922yPwR17kdLzLDSXD6f3lhe313VJ19IQxy4bn_TOS4IMPfUa-ZJKrb136uMepc-yz7G0ptbke8RropLvaVyU4QIc_FIzo_UAVVzsdbH1pi3YL1sMTQCket45qUv8T0rP_ClUKHqtJV2HA
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/clientInstances/5f095509ea78f80ca7c29adf HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UudXBkYXRlIiwiZXhwIjoxNTk0NDQ3MTE4LCJpYXQiOjE1OTQ0NDcxMTMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.aUIeCdeg5F3qWsRWy2FAByaiv717ecSnhlKMkrP1Yafp0_v-KiRjZef8kVbNBBJH6RL9i9ZizX1fMty8X6iLgE3Ej7NJro462c891rWUk0h6qJWIoOrD-Np_AxrJUN-kqBi4KC-gvVAFAy-mxaO83YdU4aIuPwnsRq8nI7p09isqcCHE5K8Ez-z_aAIiaE5Ywj4XBkT5EpkWWELdtDAG0jMMG4iQVHykHJkttr7ngWgY-Qn8q3dvVmCwM03uZmzePe0_4NAiVR4dK7Hsc17lwmvx3xxuJ_KE4Fhy-67Z9ILTU8yCKzs26LP9dBszic08bPOpvMkeLt-qHk2sRJjMtw
 Content-Length: 20
 Host: localhost:8080
 
@@ -2369,8 +2242,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_client_instance_removal_request">7.6.1. Sample Client Instance Removal Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clientInstances/5eec5c83d4de4b28a4a41c53 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg0ODMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuZGVsZXRlIiwiZXhwIjoxNTkyNTQ4NDg4LCJpYXQiOjE1OTI1NDg0ODMsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.e4x3AzO2MmsqrksneTgck4s9yATDclwAxLch2WaUNgztH9_ratPtU2o9yCOu3rZAZ-xUvL0LPwP3UDXaP2Bo2mLo-IX0PjNw2fvXfAqKcDiTQcmmW8FMdkJpuMZhOmX-3BIH2iDcgtVEsk6UNuaTQvrEecth6GUUuwRVYo_O7RNYNCV8TBzbqSarDKDBtEcXPKTN0fxfWK7GBwl-HMvgfg6dIwzEz8tD-FqEy7XfLcLJZoz6SB6pnZxaA_Mn7aJEPqqN96_NfpPlxxsRZdi7tHs6c4vqB5eXNGK6qEB1Nq9QQuWfPP5Ij9P5VJGm87veCJx6k_bneQ9o7Na5L3M5dQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/clientInstances/5f095508ea78f80ca7c29ad3 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jbGllbnRfaW5zdGFuY2UuZGVsZXRlIiwiZXhwIjoxNTk0NDQ3MTE3LCJpYXQiOjE1OTQ0NDcxMTIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.HTcR20Bkl76sWrTBGB0X8ylNEfetrdpxnJUVXVIOxIxdHRb8-VuJJq7Ee0zCtgYmPbp7vLBNBzdhJHypwxaXI9rOF2Wowv0VGeEnheNqKZVU_5UOJqMxo4iYrD6h2ulR4d4pk-pJ_uIeTHn5Sia6A2FG_Fdz8WygOaTsaaE4jDveZgHpgF9CRbo7dnMiwGaQtqZ88gzIe19frkxnyiamoQtTuql3mhaS_QIWPlDmFsJr1iwclgPvVX59qRbXd8cYXpCczAnCgvgoBgI9XHQ_yF8h_uie9bFrbigJIqxc9sNTRdxOrR10-vVVlD9KCgDpNflIk0olMirnMuF75GMNaA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2421,22 +2294,22 @@ X-Frame-Options: DENY</code></pre>
 <h2 id="managing_scopes">8. Managing Scopes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Scopes are sets of authorities that the user can grant to a client. In Mmadu, a scope contains an array
-of authorities (can be roles or authorities) that the client wants to obtain from the user. The user sees
-the list of scopes at the authorization page and can select which scopes to approve and which to reject.</p>
+<p>Scopes are sets of authorities that the user can grant to a client.
+In Mmadu, a scope contains an array of authorities (can be roles or authorities) that the client wants to obtain from the user.
+The user sees the list of scopes at the authorization page and can select which scopes to approve and which to reject.</p>
 </div>
 <div class="paragraph">
 <p>Linking scopes to authorities provide a convenient way of grouping authorities in a manner that is presentable to the user.</p>
 </div>
 <div class="paragraph">
 <p>Assuming a client is requesting for four authorities from the user <code>create_book</code>, <code>edit_book</code>, <code>create_class</code> and <code>edit_class</code>.
-To present this to the user, an admin can create two scopes: <code>manage_book</code> and <code>manage_class</code>. The <code>manage_book</code> will be linked
-to the <code>create_book</code> and <code>edit_book</code> authorities while the <code>manage_class</code> will be linked to the <code>create_class</code> and <code>edit_class</code> authority.</p>
+To present this to the user, an admin can create two scopes: <code>manage_book</code> and <code>manage_class</code>.
+The <code>manage_book</code> will be linked to the <code>create_book</code> and <code>edit_book</code> authorities while the <code>manage_class</code> will be linked to the <code>create_class</code> and <code>edit_class</code> authority.</p>
 </div>
 <div class="paragraph">
-<p>At the authorizaton page, the user will see that he needs to select from two scopes <code>manage_class</code> and <code>manage_book</code> instead of looking through
-four authorities. Any scope that the user approves, the authorities are automatically approved. The scope code and authority identifiers will be
-added to the scope field in the authorization.</p>
+<p>At the authorizaton page, the user will see that he needs to select from two scopes <code>manage_class</code> and <code>manage_book</code> instead of looking through four authorities.
+Any scope that the user approves, the authorities are automatically approved.
+The scope code and authority identifiers will be added to the scope field in the authorization.</p>
 </div>
 <div class="sect2">
 <h3 id="creating_a_scope">8.1. Creating a Scope</h3>
@@ -2451,7 +2324,7 @@ added to the scope field in the authorization.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/scopes HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5jcmVhdGUiLCJleHAiOjE1OTI2MjY0NjYsImlhdCI6MTU5MjYyNjQ2MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.QubtgzJqQzLyjXwqahOTXb1M63iuWjdDQX2cbR5hk0xb1vAlkrDekF5gEY5KC4fnWbEbx_7j_fCkpFT0tqpjI0fM4-1KPDN1veBfzOY1vHveU19I9KPXE9EmJt7CvXjRx28kG1h0xazZl_iQvOeMAET_hEVr8vawul22JPTzjJU9CJOqPgh-PxDUCspKC9_sIwksBnwcNYU-ENXdamsC84dKPeQ6Ieoi2diqvJvKCKelTaX141dp7wbTZlt30Y1WZr3MEHMv2QqduQDdVYpeyENUWvLoVB2osP2ypifai2FRBcWu7-RwDeml1bwYwefDS9aOo8G-UkCre2EIfrIXTQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMDYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5jcmVhdGUiLCJleHAiOjE1OTQ0NDcxMTEsImlhdCI6MTU5NDQ0NzEwNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.lgZMPHV0Y-yEtzQHUfGfkK6NWQSQlpE1ue-Br8CTg_AeyWvh0K5OYqdmaaXrda_9bfl5wIpa00jehRHA_HOQ2rDfnLsoKqXmSixrxPLEEVGf_nnRFzSMP_nevfiXEi4kH3xoeDpywkSjYu8CwrawxjcjktrX05-62quFAYqDjUdvbHycRs6l3PIOzpSZDKhTuQzhuKTlAaE5DGK9c5LgPccX1yz6HgQ0TIdcda-faQm3i2_3BP7XGcVwEKoccyia6B34LM7Iv9n9Y65pPsF3A6XquWgPGNnUrwD43k19evpgvPVoiWv1pQNF6npGJ62zw3CNUQxx3rbtGDWK05TH8A
 Content-Length: 150
 Host: localhost:8080
 
@@ -2522,7 +2395,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6
+Location: http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29aba
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -2545,8 +2418,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_scope_retrieval_request">8.2.1. Sample Scope Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/scopes/5eed8d1efb781170c68bafaa HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnNjb3BlLnJlYWQiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.i-T2c66VisO0yC4tNA8DOcSDJO335AeWunUIFV0othOkHm9eSKRaX6ETwT4Ga2ppKzZ1KFty3spY7AZckUmKLjaqVnzhxfA4Tj3D5qses_d_FPWuATcQVpuDxy_XeRn-WShKZtRCeXfQiv3hKbWDu4GZHVPuC5_ddiZWGr7p3aEMoGm6LuEr4eSpFEAsce5H_RaKcFPkaym7ToXN0_JX0S9INgYdeZPuXrLHCSAjNpvBe_5xfWXgQWz9yiAyRunXRHHW4J4kQ_OnXqPPQqsh_NwtiWMUnfoZ6IKyB5_4jKYFnj5WZYTUmGnePRnyXq7z9c4k_Dh74MQGdHFEu8UeMA
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/scopes/5f095502ea78f80ca7c29abe HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMDYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnNjb3BlLnJlYWQiLCJleHAiOjE1OTQ0NDcxMTEsImlhdCI6MTU5NDQ0NzEwNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.hDuqytJWxIaD4FNJ0ZBBhaQbsive_kd-6KD0Bbbnee2ycLpf6qRgndhZwmt39wbGmt7r53nuu79cvQAMqOBj0xq-1AVJF0d1421dMI13uhV2Yc5leoCTqs9fuALQsLkJQJWM1oGz3IhSDF9ntu-JRKAMyPJ60kknZ5WRvIqsQNFllRpm8AZiTlqjQWdFp1ku7z8_0be2_lZH4CAhBZTYZ4p9CeFGqB5Qt-VLYKF_-1berH0lg3HoMHy9xgCu9I2rqtD3eDzha49pXi-WT3oL0TSohM8b35r3ajjTD31Y6v_RQ_1IX7HOkv5A9RnK0zuLNTmfJkrMk-C-3s6e3Gyfbw
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2591,7 +2464,7 @@ X-Frame-Options: DENY
 Content-Length: 424
 
 {
-  &quot;id&quot; : &quot;5eed8d1efb781170c68bafaa&quot;,
+  &quot;id&quot; : &quot;5f095502ea78f80ca7c29abe&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;code&quot; : &quot;test.mail&quot;,
   &quot;name&quot; : &quot;Email Scope&quot;,
@@ -2599,10 +2472,10 @@ Content-Length: 424
   &quot;authorities&quot; : [ &quot;view_users&quot; ],
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abe&quot;
     },
     &quot;scope&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafaa&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abe&quot;
     }
   }
 }</code></pre>
@@ -2623,7 +2496,7 @@ Content-Length: 424
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/scopes/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5yZWFkIiwiZXhwIjoxNTkyNjI2NDY3LCJpYXQiOjE1OTI2MjY0NjIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.g4r2jHk9GURPSOhJT1oaHBAZsgnfSI1BRlOl59RFwRl_CddiRWKZhSInpxN81ZIlbSEorz0Fa63pygBzpPoKautNORdFQiFWCjZtgvOm_aT-rPqF5GuBEZKg17G8uuVcDZXDSw8rrlcF7CpGNsuwBjIlFFap1sZaSVurY3jIo6-AglAnIS8pj1Ro9ASSNLmZ0Uwul1QO6qs6hqSa75W2jD68LqtrrqpgiuYQupqNOeO3Q-d-fXQ7_0N5yano3xqMGDmb4FeobOJwBwCAChE2wvHcdHiUeva2g3br9ZlXrDEW_wVNEICdYyJrU-xSDcRM0us_4ybqXHuvyYPq1rg1Wg
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMDYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5yZWFkIiwiZXhwIjoxNTk0NDQ3MTExLCJpYXQiOjE1OTQ0NDcxMDYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.XInDzg_DJvkzCWJLmWdwFJAXtTNBVf0EZoSJQppxKoOTY0Tewud3-vfxM8170YYMJ2o4W_ek_OclfWNBawUsuDoNMgMy-9k7ZYRagzI9zyShrDWi1etQTsIzPX6Z5z6dfUO99fDOKQj3azJDWg4VuhEFx9M-Dnqg76R6NRjSkmI9Z0so08jrhqkP9CUltfFBUZgQl75Ls8z5a-TaJIA8x8b5ra8TXEXNyvFif_v05LMoPW0hnwyagfyK42PIKysr83K2CIwCI7P5AYMNz8TtV054hrjUw3ww0ANgkCYoPo-aMx4-BishQ0Gvz1Bjxa_5quOcamO9UR26oXlPTMZqCA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2669,7 +2542,7 @@ Content-Length: 1628
 {
   &quot;_embedded&quot; : {
     &quot;scopes&quot; : [ {
-      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa6&quot;,
+      &quot;id&quot; : &quot;5f095502ea78f80ca7c29aba&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;code&quot; : &quot;test.mail&quot;,
       &quot;name&quot; : &quot;Email Scope&quot;,
@@ -2677,14 +2550,14 @@ Content-Length: 1628
       &quot;authorities&quot; : [ &quot;view_users&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29aba&quot;
         },
         &quot;scope&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa6&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29aba&quot;
         }
       }
     }, {
-      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa8&quot;,
+      &quot;id&quot; : &quot;5f095502ea78f80ca7c29abc&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;code&quot; : &quot;test.mail&quot;,
       &quot;name&quot; : &quot;New Email&quot;,
@@ -2692,14 +2565,14 @@ Content-Length: 1628
       &quot;authorities&quot; : [ &quot;view_users&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abc&quot;
         },
         &quot;scope&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa8&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abc&quot;
         }
       }
     }, {
-      &quot;id&quot; : &quot;5eed8d1efb781170c68bafa9&quot;,
+      &quot;id&quot; : &quot;5f095502ea78f80ca7c29abd&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;code&quot; : &quot;test.mail&quot;,
       &quot;name&quot; : &quot;Email Scope&quot;,
@@ -2707,10 +2580,10 @@ Content-Length: 1628
       &quot;authorities&quot; : [ &quot;view_users&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abd&quot;
         },
         &quot;scope&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5eed8d1efb781170c68bafa9&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/scopes/5f095502ea78f80ca7c29abd&quot;
         }
       }
     } ]
@@ -2737,8 +2610,8 @@ Content-Length: 1628
 <h4 id="sample_scope_update_request">8.4.1. Sample Scope Update Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/scopes/5eed8d1efb781170c68bafa8 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS51cGRhdGUiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.mxNuAgIEajBmz5llQKLwqZdqCj16Hf5g2fhZredGqktSPZHKeTcn6WC4LgyIgEti8Sk3BnNGPf02SV2hXNxckvYbdOVGF7PEq--NFxiXzaCelEYw71wuRrXjadiTUg314g5k5zOYhbnyVySkwOtD-11stSxgiEG0syI16I50oJUyHVY47Zno5CRH1jBSlellT6om3D4Lw2chrQvAV1hg07lRD203CKx95z9XMsuoGtx-a8_f2o7pQjjnXtL3EeDwMmitOCQRnV5Zmx2xrDsCTVZEOtrRfovKVrkqL9CheDSHwi_uZyPJWD3dR4Jw2zMLys6gOtQbYXXuZ9r48aaSHA
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/scopes/5f095502ea78f80ca7c29abc HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMDYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS51cGRhdGUiLCJleHAiOjE1OTQ0NDcxMTEsImlhdCI6MTU5NDQ0NzEwNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.U1mx7pIht34BuyV9v0pq1aw0kUGTg-k6NgspVCM3AUIo99fdp7kvtm40zP5bYEYOebltOzwhmkN98l1U6CmcPb01W6i5icHloT_RcVRkzp7PWujlxRTncdU0qrW3rI-bGZq3HcHY3eP1JFao_v8Z6P3F9ZEdiubFvg6PX1klmQgLKqZPWpFthuUZyYcxqmR7oBdz-cXUip60IIu6c27q-PLzI7UAgRT_RtAirCwo1xIZoMtjYXRkUvZmCOSqvAkzXUV-5t_q7JtTniTH75KyGFikl_FFUseao_Fs5KTjntTj4yOyy6PUiZU56dy39fqvmjlf58SenbSnNIqHu7cbnQ
 Content-Length: 20
 Host: localhost:8080
 
@@ -2798,8 +2671,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_scope_removal_request">8.5.1. Sample Scope Removal Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/scopes/5eed8d1efb781170c68bafa7 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI2MjY0NjIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5kZWxldGUiLCJleHAiOjE1OTI2MjY0NjcsImlhdCI6MTU5MjYyNjQ2MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.mgpdh52Vy5qSv-X4JEJvpmo8tDZmJUZlauk_jBfuFrn8czLX_gyBJNWSJCApQ26EuSAIsHZG9hcLo4BIICX0TMiGxMVg5R0JEs-_A-RIpB5Gdpxt3OP-5qVmBmEK2Usn41cNxuSLlWkPDVTQMBz98SdK_oIgGIx8IX5o0HMABf16BxxBnxaqvtirjLKMdQFslzJRNQZ4Uj2-dq813IF7YjZAXKibmEGptO-1EC3XXiDcL6ZRNPKDNWQMcr1xOl5YaLCW41pEc-5xonFhlQF2C9gUL1cRPz8rfbfySlO1KaSdlW_Bvda99R7nTeS52_RMvnqjXN-PiY7iG8W_alGgJQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/scopes/5f095502ea78f80ca7c29abb HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxMDYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5zY29wZS5kZWxldGUiLCJleHAiOjE1OTQ0NDcxMTEsImlhdCI6MTU5NDQ0NzEwNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Vmk1613DZV7Xt68KnvNoEeTCOqbx2MHcY5OqCbICJyc8Rr5I1KxKY4PZiI_LjdZyJtaNE4lHuSBP4XPqByJSR7mCH-mcc58J3LvvbUopHot8ZhlhbVhyDKqfNVPcPOqyCrTT5eBrBlyGoWNipyyFpMmheMBpcJDN4tDg_QxE6SQb_udO5Cr3Kau_no8JU2jNJ-5vPM7-qFnhc6WM0X_M4gyqxFriPwFZsLlPbxqUSfdtPGfxnPaHxIgDKIrxHNMJU5i3hNNCCFMeV5pqM9YjMiCIyFhzwtz_9CESOWH73osgcjNWzSjvJXcXBCkLT2DN3KvKY6RVBSzxXeE0CxyzOQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2850,10 +2723,11 @@ X-Frame-Options: DENY</code></pre>
 <h2 id="managing_resources">9. Managing Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Resources represent individual API&#8217;s or services that clients can access. Every client instance specifies a
-list of resource identifiers that it is supposed to utilize. These resources must be created and maintained using these apis.
-On authorization, the list of resource identifiers that the client has access to will be included in the <code>aud</code> claim
-of the tokens. This claim can be enforced by resource servers by checking that its resource identifier is contained in the
+<p>Resources represent individual API&#8217;s or services that clients can access.
+Every client instance specifies a list of resource identifiers that it is supposed to utilize.
+These resources must be created and maintained using these apis.
+On authorization, the list of resource identifiers that the client has access to will be included in the <code>aud</code> claim of the tokens.
+This claim can be enforced by resource servers by checking that its resource identifier is contained in the
 <code>aud</code> claim before processing the request.</p>
 </div>
 <div class="sect2">
@@ -2869,7 +2743,7 @@ of the tokens. This claim can be enforced by resource servers by checking that i
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /admin/repo/resources HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5jcmVhdGUiLCJleHAiOjE1OTI1NDg1MzEsImlhdCI6MTU5MjU0ODUyNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.KOEbcct562z5B9WtD4Qflgvqdioq6sIxKmR3F9eogDhea25ekUEnzU-BLe86XLNUKTD3Eh_pOKeIrOzkoN2yDZz5wkMvkE9XOf1jb4f1E7Cc6ot3fBEuxjDGUhiBZYAX88zfcn7WN3DKiUU58CR93o2pEWmqP6YEocVkk7oROVtWOurgaVWjfGz6MuC-aw397sEoOgRu9zM-jZcs0Ze5ti8pdITFScuTIPWP9cU_BqrVIPl0N-qEAx4GLT2uGa95RfOQq8c6F1z0Vb-9aqRWHq0HGBaKnS7vohupzefBJ_R6oGc8N6VAHixvuqWEkcxmlIElGXutCTQrz8mfXW6ZSw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5jcmVhdGUiLCJleHAiOjE1OTQ0NDcxNTcsImlhdCI6MTU5NDQ0NzE1MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.TFFDGTKk7rBOpr9ayoml9fT2JGRxzBO7Ej-Spaq1yb2L1hlxK2nvrnJ1iLJDHzi6Tp5H8lO1XjiTOXa0RS1JXaNEXyehnFZYN_mg-KX4n-qRO4RpXprN3PXsfUpcwk9CbWJ7zeua9VvX27nSQDvt2jKzMjaBEDv4pWLYj6pwwkgFaLWM1EJ6hzQkLfOmczkXQcS5341EVowsLIhx2-elF1piwB4QtcztznfJ9PP6bs_iSl4UQ7vK-ZAm8gMnXhfBF3J-86iYnbiU6dFgnDTqVhCx6R5o68ieiqQLqNPXzLqYtjUmmjYaV7BzVubMsGcXgI2NzDVBmXQVC73h6URk9g
 Content-Length: 121
 Host: localhost:8080
 
@@ -2934,7 +2808,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c77
+Location: http://localhost:8080/admin/repo/resources/5f095530ea78f80ca7c29b0a
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -2957,8 +2831,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_resource_retrieval_request">9.2.1. Sample Resource Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/resources/5eec5caed4de4b28a4a41c76 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlc291cmNlLnJlYWQiLCJleHAiOjE1OTI1NDg1MzEsImlhdCI6MTU5MjU0ODUyNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.VEzZHeOI1VDuXv51bjN8tAU-Ar2umWz6JelbDwGnKfYcNO1_9KDni3ZpCdg5FIuxWNFln1XL35-s3zl1nekdCwEWAc_bH3DMBLhLWkq1xwFWXJkpOWKMbpMIhJJuZVMuNadQWQR3ip3U2lt0V35e4n_V7mX7Lttb_toHkHGEvJRVyHUh0pxx4br4IRd-sGrHfIIbrxWba5JqA1d1fr7NSjvGGir6XQ_rw2JYdtoNaGx4X1Adr4lq625bmu47K1kwg3zcmHFfl9Nm6BJckY4hYpiVON7zBfypX3Jbaw8_atZipis_0BN0CvRW0ZvSpQoFZRQ2K-FLs4Fv28b9YSKBpQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/resources/5f095530ea78f80ca7c29b09 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlc291cmNlLnJlYWQiLCJleHAiOjE1OTQ0NDcxNTcsImlhdCI6MTU5NDQ0NzE1MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.lUa_7MdYLficcZQsmeh3Wj1WNxNABSAK8fupokZ1OX34yifpMd8u1DOx2Xiq0IZrElSLnptprzuL1KMdUmJIsJ65hxCmGmONZCaqnylThdp3qnjAAYRQo7bwi9rhDNiKc5MfWHLRFZ8z6p9HFAt3vm3zTGwyA4yTJqgNNTPdwF3rsa71n6XzXDLlnN6FlzkdKFdo2IzNnPaIzFu-t0rMlURwxIPDEOAoDxCWr2cCQnN7ivOzC8Jj2LLxLLjPIpz6O8xazqZ8BwmB-J_mQJiXCB9YBvfR0355Y7fWpqetgvv0UBkH0BodLiDqIg578BgvRc8GXjejlvd1SLhPCOGO5w
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3000,20 +2874,21 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 404
+Content-Length: 450
 
 {
-  &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c76&quot;,
+  &quot;id&quot; : &quot;5f095530ea78f80ca7c29b09&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;identifier&quot; : &quot;email-service&quot;,
   &quot;name&quot; : &quot;email&quot;,
   &quot;description&quot; : &quot;Email Microservice&quot;,
+  &quot;supportedTokenCategories&quot; : [ &quot;bearer&quot; ],
   &quot;_links&quot; : {
     &quot;self&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f095530ea78f80ca7c29b09&quot;
     },
     &quot;resource&quot; : {
-      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c76&quot;
+      &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f095530ea78f80ca7c29b09&quot;
     }
   }
 }</code></pre>
@@ -3034,7 +2909,7 @@ Content-Length: 404
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/repo/resources/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5yZWFkIiwiZXhwIjoxNTkyNTQ4NTMxLCJpYXQiOjE1OTI1NDg1MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.RkNyNlmDvWJo4SrUtNTdS9Bs_Ye5jTuLmGaT7fUaNZiYydEciNzWOFB8wxo7gkkq1zN87qbH55UXe1Uji45-0WkB7z4OKLrucXVtGbFJEw4P2va-va0SJrFUC68vrJgQCn3pSyYv_4tJ3pBn_v9wrp-lg3bqv5Z2iMyYTbI7-d0fu0ziRMHfaj4AIshqvCtjEntvIqXigJOMhc8Gh6Mq9RvdPYwFp1MdNolWF-NvpfF8hrOlWmoj51L7BX-DTicPqsEzIlqvoGfv1c5TO9ogESHljEL9AQ2taGzOVaVvWnPPISq3bP1ReFF2pzKGWLLNuUtB5kGy0JT9DZaGIG2CGA
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5yZWFkIiwiZXhwIjoxNTk0NDQ3MTU2LCJpYXQiOjE1OTQ0NDcxNTEsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.TezYKNL8mf-QRp9RE9WMys0wZ7FcfAAC8ZTXtmfOae4YGYdkJOfj6XyV7tYr1ZbiuxLFbSi4McPsxNuAawfDacirjU4CKuRA-uHSjpSw2uGSOs4IyTa2JgNRCNwPzHtsqG0h-8_RhsWReAWAFDa7GS4lGLgURjjhjmpUhVbYfZtldtU2H7wFjs7HF1_5G_ymVgvPJygnV4DoKk_y0hQH7iWAd5zffrGvmtacFCewE6JUD4aGp3VPjprKhZuZY6nBOPczzy3Jw-Dq5PnfWo9JrIZIGsAv1ZEBlTGuhKhcYqel23YGsIdE1mPEkKKroSoA-xqM46XcHRhcujlN-zTJwg
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3075,120 +2950,38 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 3917
+Content-Length: 1335
 
 {
   &quot;_embedded&quot; : {
     &quot;resources&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c4f&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c82d4de4b28a4a41c4f&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c52&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c52&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c55&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c55&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c58&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c58&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5b&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5b&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5e&quot;,
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;identifier&quot; : &quot;test&quot;,
-      &quot;name&quot; : &quot;test&quot;,
-      &quot;description&quot; : &quot;test resource&quot;,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e&quot;
-        },
-        &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5c83d4de4b28a4a41c5e&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5cadd4de4b28a4a41c74&quot;,
+      &quot;id&quot; : &quot;5f09552fea78f80ca7c29b07&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;identifier&quot; : &quot;email-service&quot;,
       &quot;name&quot; : &quot;New Email Resource&quot;,
       &quot;description&quot; : &quot;Email Microservice&quot;,
+      &quot;supportedTokenCategories&quot; : [ &quot;bearer&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f09552fea78f80ca7c29b07&quot;
         },
         &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5cadd4de4b28a4a41c74&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f09552fea78f80ca7c29b07&quot;
         }
       }
     }, {
-      &quot;id&quot; : &quot;5eec5caed4de4b28a4a41c75&quot;,
+      &quot;id&quot; : &quot;5f09552fea78f80ca7c29b08&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;identifier&quot; : &quot;email-service&quot;,
       &quot;name&quot; : &quot;email&quot;,
       &quot;description&quot; : &quot;Email Microservice&quot;,
+      &quot;supportedTokenCategories&quot; : [ &quot;bearer&quot; ],
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f09552fea78f80ca7c29b08&quot;
         },
         &quot;resource&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5eec5caed4de4b28a4a41c75&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/resources/5f09552fea78f80ca7c29b08&quot;
         }
       }
     } ]
@@ -3200,7 +2993,7 @@ Content-Length: 3917
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 8,
+    &quot;totalElements&quot; : 2,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }
@@ -3221,8 +3014,8 @@ Content-Length: 3917
 <h4 id="sample_resource_update_request">9.4.1. Sample Resource Update Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/resources/5eec5cadd4de4b28a4a41c74 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS51cGRhdGUiLCJleHAiOjE1OTI1NDg1MzAsImlhdCI6MTU5MjU0ODUyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Hg6YExsT1MTjovECZLUDvAbwVdJ4vAkXFQbA0ek8avQ_zMQ0mCWuRAT9TpWC_jKL-MYLayCq7QBSJtryp-KimYVAASIp-Z83VCOabNDRsz5E9EJFAuP8hfDdYy8CNUQwFcoWwMqxR1cYKX8_BOjUo7AiAw8GPshlfDF0STdD0wNF_QkSQzcdv26QXSIYJOcZsX5QkP29sA3luB0Hp4vOptRjEcc9a0xHyxcWhRAzHmlcT2NlE_3Py6Y5ApDiSkqAu3gmNNLxTFXfz4kzbk7poVC7-az2o_3EaM4eKY_O3gUF5GHvNSggf7ZLemue9f1-eU7G_BdXbotkgOzzsSW6Vw
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /admin/repo/resources/5f09552fea78f80ca7c29b07 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS51cGRhdGUiLCJleHAiOjE1OTQ0NDcxNTYsImlhdCI6MTU5NDQ0NzE1MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.C7hACpL3O7UOVTDh1aVaAOlRZC7n5oCceBLhE05XxSLTIUvSU_2o75HhABnwTsqAs4n97MhYF3AULyXUiTNQTK6c2LNkoy_QWIG9KhftUvqT7PFCOqI2oqkkxARiSWwe5_aFgpTmD5MycNXyJt1pxaTALSEEjNoG-FV7WyhLjDwW3mnsO2DquH8WhR7OM9ZWNhnK1a-pRAZYRriB2KtGPQkYAD6VRmDsn0pLixeXU4SkbSJVGG_e368CU4weeaQG_3c9dZa-EuASYAwq61N-sGeHgtGTim5KUBlUzUC_HuKCQEDLvCDP0Sq8kMo2aZEdZLni33c-G62CmRiZdoXsTw
 Content-Length: 29
 Host: localhost:8080
 
@@ -3282,8 +3075,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="sample_resource_removal_request">9.5.1. Sample Resource Removal Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/resources/5eec5cadd4de4b28a4a41c73 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NDg1MjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5kZWxldGUiLCJleHAiOjE1OTI1NDg1MzAsImlhdCI6MTU5MjU0ODUyNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.TSmhTt7BjQSNxyFCAN11WXKaIdYNPZhi0iiYviBOREd-GtaA06zwLy33WHDZBqmrpCE2Y6cfLLSaWI2QXnZ6geqIBQ6RAoTgT-ZnedNEhICdwKfwv3K5Fal1Ngu7WYmkLgp5eX5-0_n9OizF2KrS_0b11oIEQull6V8P-Vh9yvjfUXpDNaW6ryAj1g_XJSCc1czhCja0fjnw8yqIWdenFjkR1Tb4nKTfWXto3f95zCcOmWLwt1lRrsD0DUGHJNHk2WWESg4MUwdtSQGWDdPRBpC7t6-OX9qnHvYQm9FIhg8mtMw87pAbi80xPzmb4Ks6UfI-EEdaC6rVSE-uDR0maw
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /admin/repo/resources/5f09552fea78f80ca7c29b06 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcxNTEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5yZXNvdXJjZS5kZWxldGUiLCJleHAiOjE1OTQ0NDcxNTYsImlhdCI6MTU5NDQ0NzE1MSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GV6KU9VCoRslhYQuz6EM-mzLdYjO-9aQaEK2MG2A6wuC4RCj7pE1lgL1hqG-QZOuqCBvkkrgGrVVFufZ93Tc1PasCQMM0kzXJibqKQsK9BLpOxHBvVOmZb2ouC5LY80mu10FIfynVvRNedlUXRh-nZLYMoS_ZOUmzVS5JSrIpjXCgDewhU4p5hyRphy2s72mMpaOs8NxMvwhkGIh-IEjXaqfwfZpg8sEha3T8JX8cZx6bXSX8f7nr8curXYQgwpuo7ufoaojWZhFj0txcpVpnpXmEuRPlJG6EYwFp_ud188a9JeZBCYSx-ms0JlY3KWq69xiSNScfJWZFKqip_-2kQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3334,8 +3127,8 @@ X-Frame-Options: DENY</code></pre>
 <h2 id="managing_credentials">10. Managing Credentials</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Credentials are secrets that are used for encryption, hashing or signature creation and verification. Credentials are
-used in different aspects of Mmadu Identity, so it is important to know how to manage them.</p>
+<p>Credentials are secrets that are used for encryption, hashing or signature creation and verification.
+Credentials are used in different aspects of Mmadu Identity, so it is important to know how to manage them.</p>
 </div>
 <div class="sect2">
 <h3 id="generating_a_credential">10.1. Generating a Credential</h3>
@@ -3375,12 +3168,13 @@ Only RSA Keys are supported at this time.
 <p>A credential verification key is a key used for verifying signatures created by its counter part private key.</p>
 </div>
 <div class="paragraph">
-<p>A <code>GET</code> request will obtain a credential verification key by credential id. A hex encoded string is returned.</p>
+<p>A <code>GET</code> request will obtain a credential verification key by credential id.
+A hex encoded string is returned.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/domains/1/credentials/5eece0d538447d41c377dca3/verificationKey HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1ODIzNTcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jcmVkZW50aWFsLnJlYWQiLCJleHAiOjE1OTI1ODIzNjIsImlhdCI6MTU5MjU4MjM1NywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.lqo_HZUjPAnuE_yRm1cugIg-gJmQET1Pe8YHnADTeRRYmeu85a91_HJt4hVouHunOTH94Y2CrI9IeoYN4sqpoYi0IOnVcYO-ag8TBvbU7xuAovI13Baino5Qx02i0WLJdBTaFBP-gyftQwPVMYKF1SXchx8L31CxJW0zPVrluo7mWfG547GM31x4MK_Fu4YdE9o3_HYYTRyNDXbvj4XtdEAR3d_sKxhBRDQSB3kHsDS1HNqA_nBrFAEVLUCdgcpwZpAng_mD0lYh6iIcuJuSmAaoOAsWn84D2CzlEIAcI48dcGyNYTYy9lrcxByg3E2dMfvoquaqrIe4Ng2S9r_fCQ
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /admin/domains/1/credentials/5f0954fbea78f80ca7c29aaf/verificationKey HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6WyJ0ZXN0Iiwic2FtcGxlIl0sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDcwOTksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5jcmVkZW50aWFsLnJlYWQiLCJleHAiOjE1OTQ0NDcxMDQsImlhdCI6MTU5NDQ0NzA5OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.NGb0BOc_PH2c6NC0NfaPBQtbqKtrfvyri8bFejYHYR9jZizwuEGnvvR7ZolhBnvf7jTq43RrM-ct0m5u4wAd7LrM-lGqIBw40cmMMEItnVD0v8HGozBbxo6F6PqqrU3p9Ix9wbf5EICqle0dmZmzDGKPzUdRNttpwTn3r-QHgrSInPUvfNpI7qzDqYRsDO7mz4wUow90OJhGr2yhFVlNAO2R6nLFmb-v29Eu33WWGNDGbKTh6MaaMLdDI591f5yrDEiTAK5pZ9MzaKmyiRU8euhIvcvkLpMa1eYJ0CNkYCOPotgDugiHb1t7CxF6KLoLsEzL9v0KCOQ4n1yAhANbiQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3414,8 +3208,7 @@ Host: localhost:8080</code></pre>
 <h2 id="oauth_2_0_authorization_flows_for_mmadu_identity">11. Oauth 2.0 Authorization Flows for Mmadu Identity</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here, we will itemize the steps to utilize the various grants.For each of these flows, you must have
-a client identifier, <code>client_id</code> and a client secret <code>client_secret</code>.</p>
+<p>Here, we will itemize the steps to utilize the various grants.For each of these flows, you must have a client identifier, <code>client_id</code> and a client secret <code>client_secret</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="authorization_code_grant_flow">11.1. Authorization Code Grant Flow</h3>
@@ -3439,14 +3232,13 @@ Here, a <code>code</code> query parameter is passed to the client as shown:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:8080/oauth/callback?code=sdAd2adsfWaC</pre>
+<pre class="CodeRay highlight"><code data-lang="http">http://localhost:8080/oauth/callback?code=sdAd2adsfWaC</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The client implements the callback to extract the authorization code in the <code>code</code> query param and use it to request for an access token.This is as
-shown below:</p>
+<p>The client implements the callback to extract the authorization code in the <code>code</code> query param and use it to request for an access token.This is as shown below:</p>
 </li>
 </ul>
 </div>
@@ -3468,8 +3260,7 @@ grant_type=authorization_code&amp;code=K5s0BKyfF4</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-CONFIDENTIAL clients are required to provide an authentication when accessing the token api.PUBLIC clients are not
-required to do so.If no authentication is provided, you need to add the <code>client_id</code> parameter as shown below:
+CONFIDENTIAL clients are required to provide an authentication when accessing the token api.PUBLIC clients are not required to do so.If no authentication is provided, you need to add the <code>client_id</code> parameter as shown below:
 </td>
 </tr>
 </table>
@@ -3514,12 +3305,29 @@ If a <code>redirect_uri</code> was specified, then a <code>redirect_uri</code> p
 }</code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="auto_approving_scopes">11.1.1. Auto Approving Scopes</h4>
+<div class="paragraph">
+<p>The client instance can be configured to skip authorization i.e grant all of the clients scopes without displaying the authorization page.
+This functionality is desired to create a seemless login for the user.
+To configure the client instance to auto approve scopes, we set the <code>authorizationProfile.autoApproveScopes</code> property to true;</p>
+</div>
+<div class="listingblock">
+<div class="title">Client Innstance Configuration for Auto Approve scopes</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+<span class="key"><span class="delimiter">&quot;</span><span class="content">authorizationProfile</span><span class="delimiter">&quot;</span></span>: {
+  <span class="key"><span class="delimiter">&quot;</span><span class="content">autoApproveScopes</span><span class="delimiter">&quot;</span></span>: <span class="value">true</span>
+}
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="refresh_token">11.2. Refresh Token</h3>
 <div class="paragraph">
-<p>The refresh token grant type is used for requesting new <code>access_tokens</code>.If a <code>refresh_token</code> is included in the <code>access_token</code> response
-then you can use the refresh token to obtain a new <code>access_token</code> once the old one expires.This endpoint generates a new <code>access_token</code> and
+<p>The refresh token grant type is used for requesting new <code>access_tokens</code>.If a <code>refresh_token</code> is included in the <code>access_token</code> response then you can use the refresh token to obtain a new <code>access_token</code> once the old one expires.This endpoint generates a new <code>access_token</code> and
 <code>refresh_token</code>.This also supports Public and Confidential Clients.</p>
 </div>
 <div class="listingblock">
@@ -3608,12 +3416,13 @@ Refresh tokens are not enabled for client_credentials grant type.
 <div class="sect2">
 <h3 id="implicit_flow">11.4. Implicit Flow</h3>
 <div class="paragraph">
-<p>In implicit flow, the token details are returned in the redirect uri. The second step
-of obtaining a token is removed. This grant type requires no authorization.</p>
+<p>In implicit flow, the token details are returned in the redirect uri.
+The second step of obtaining a token is removed.
+This grant type requires no authorization.</p>
 </div>
 <div class="paragraph">
-<p>The state parameter is required and should be set by the client. This value is opaque and is
-returned when calling the redirect uri.</p>
+<p>The state parameter is required and should be set by the client.
+This value is opaque and is returned when calling the redirect uri.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3629,8 +3438,7 @@ returned when calling the redirect uri.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>After the user authorizes the request, the user is redirected back to the client redirect uri with token parameters
-as shown below:</p>
+<p>After the user authorizes the request, the user is redirected back to the client redirect uri with token parameters as shown below:</p>
 </div>
 <div class="listingblock">
 <div class="title">Implicit Authorization Endpoint Redirection Url Example</div>
@@ -3645,9 +3453,9 @@ as shown below:</p>
 <div class="sect2">
 <h3 id="resource_owner_credentials_flow">11.5. Resource Owner Credentials Flow</h3>
 <div class="paragraph">
-<p>This flow involves making a token request with the credentials of the resource owner. This is useful
-in creating custom login screens that reside on third party applications. Because credentials are collected
-in third party applications there is a risk of exposing user credentials.</p>
+<p>This flow involves making a token request with the credentials of the resource owner.
+This is useful in creating custom login screens that reside on third party applications.
+Because credentials are collected in third party applications there is a risk of exposing user credentials.</p>
 </div>
 <div class="paragraph">
 <p>The flow is as follows:</p>
@@ -3688,8 +3496,8 @@ grant_type=password&amp;username=admin&amp;password=password&amp;scope=super_adm
 <div class="ulist">
 <ul>
 <li>
-<p>If Authorization succeds a token response is returned. A <code>refresh_token</code> is added to the
-response if the domain supports it.</p>
+<p>If Authorization succeds a token response is returned.
+A <code>refresh_token</code> is added to the response if the domain supports it.</p>
 </li>
 </ul>
 </div>
@@ -3707,8 +3515,7 @@ response if the domain supports it.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>If a <code>refresh_token</code> is returned, the client can request for a new access token once the old one expires
-using the <a href="#refresh_token">refresh token grant</a>.</p>
+<p>If a <code>refresh_token</code> is returned, the client can request for a new access token once the old one expires using the <a href="#refresh_token">refresh token grant</a>.</p>
 </li>
 </ul>
 </div>
@@ -3719,7 +3526,8 @@ using the <a href="#refresh_token">refresh token grant</a>.</p>
 <h2 id="token_verification">12. Token Verification</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once access tokens are issued to a client, the client uses the access token to access a resource. A resource needs to be able to:</p>
+<p>Once access tokens are issued to a client, the client uses the access token to access a resource.
+A resource needs to be able to:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -3753,8 +3561,8 @@ using the <a href="#refresh_token">refresh token grant</a>.</p>
 <div class="sect3">
 <h4 id="from_authorization_server_metadata">12.1.2. From Authorization Server Metadata</h4>
 <div class="paragraph">
-<p>Mmadu Identity exposes a JWK uri for clients to dynamically obtain the verification key. A <code>GET</code> request will obtain
-the jwk set needed to verify the access tokens.</p>
+<p>Mmadu Identity exposes a JWK uri for clients to dynamically obtain the verification key.
+A <code>GET</code> request will obtain the jwk set needed to verify the access tokens.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3784,8 +3592,9 @@ Host: localhost:15553</code></pre>
 <div class="sect2">
 <h3 id="claim_verification">12.2. Claim Verification</h3>
 <div class="paragraph">
-<p>Cliams are associated with each token generated.  The resource server can read these claims and use it to authenticate a
-client request. The following are the supported claims:</p>
+<p>Cliams are associated with each token generated.
+The resource server can read these claims and use it to authenticate a client request.
+The following are the supported claims:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 16. Token Claims</caption>
@@ -3869,6 +3678,119 @@ client request. The following are the supported claims:</p>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="token_introspection">13. Token Introspection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To get metadata about a token, make a <code>POST /clients/checkToken</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Token Introspection Request With Confidential Client and Basic Authentication</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/checkToken HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Token Introspection Endpoint with Confidential Client (Authentication body)</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/checkToken HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&amp;client_secret=1234567890&amp;token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Token Introspection Endpoint with Public Client</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/checkToken HTTP/1.1
+Host: localhost:15553
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&amp;token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNmRkNTQzYTM2NWE2Nzg4N2VhNGU4IiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyODUzOTUsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI4ODk5NSwiaWF0IjoxNTk0Mjg1Mzk1LCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiNTQzYzQ0MGQtNTQwNy00YTQwLWFlMzEtMjM2NzA3MzcwZjM3IiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.jIjprf3KlL_5CBvB4EJAoJIHxL2sUQzxY5aDaAsXDFnXYwC7FMS8jXAWPEDrcnLjgX0IorzZxc98H2zS87x06rT1pZ54_MqofdR_QjPyxheKMnhc0JrFgW9bgDGDSRBw1ufBJityFcyi4jQXPj_9IGYUvJkqPxoVwm9zVfvMQvTLBioyEtgXZH0x86Kxny98mMkgaYbsDDwrIrJCzM8ey32JymZ4M00Ao1-gTM6PbqgZhtBMkp4i7QSHOmKX7NzsQZaPYVp1hVrYuTzHpxUu5j1LZBCsas8II_46XU64GWKl1pRvjLkKd2r9kKvgo8tH5gD9FrbNde0OVmEp_qyhCw</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This returns a json response with the token claims listed in <a href="#_claim_verification">[_claim_verification]</a></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">active</span><span class="delimiter">&quot;</span></span>: <span class="value">true</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">client_id</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mmadu_admin</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">token_type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">bearer</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">exp</span><span class="delimiter">&quot;</span></span>: <span class="integer">1594288995</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">iat</span><span class="delimiter">&quot;</span></span>: <span class="integer">1594285395</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">nbf</span><span class="delimiter">&quot;</span></span>: <span class="integer">1594285395</span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">sub</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">5f06dd543a365a67887ea4e8</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">aud</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">my.service.1</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">my.service.2</span><span class="delimiter">&quot;</span></span>
+    ],
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">iss</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mmadu.com</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">jti</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">543c440d-5407-4a40-ae31-236707370f37</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">authorities</span><span class="delimiter">&quot;</span></span>: [
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">view</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">edit</span><span class="delimiter">&quot;</span></span>
+    ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="revoking_tokens">14. Revoking Tokens</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tokens can be revoked using the revoke token endpoint, <code>POST /clients/revokeToken</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Token Revocation for Confidential Clients (Basic Authentication)</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/revokeToken HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
+Content-Type: application/x-www-form-urlencoded
+
+token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNzAyM2E2NjMyOTA1OWU1ZTcxNmMxIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyOTQ4NDIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI5ODQ0MiwiaWF0IjoxNTk0Mjk0ODQyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiMDBjMzZkMzItOTcwNy00NzU5LTkzMTQtMGM3NDhkOTljZWRkIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.fom22MxbPtJ2P_N6ukWotr229IgTBGSuEh088IbngfreChFHwoZNf9kmoVWdWhAUXjDyn0aQlKEla76u-kxVwal3AbDfZoOYb0oT36BL6wNQIsQ9qj3ZVZ3dLlAntvt5EMi-cpTCKsCi8eWvUYW4kNkZQ_y5NJzup_I4Io1S3eh4VFR_4Or_2nwJTCsXVtmW8MI8R17q1mIqlzcRfkFChurdDkL77zMn_d7yTKRquJf8QmBd1tZxc580ZTsTNX1bIOQgn8G4PKwPQVQ_tFX58RYDM1YOidkgJ4SdV-2AaL4wk7eU0qNx0tywBYpjgoM7x4jOJ8a69YkfpfmCNL8a7w</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Token Revocation for Confidential Clients (Authentication body)</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/revokeToken HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&amp;client_secret=1234567890&amp;token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNzAyM2E2NjMyOTA1OWU1ZTcxNmMxIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyOTQ4NDIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI5ODQ0MiwiaWF0IjoxNTk0Mjk0ODQyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiMDBjMzZkMzItOTcwNy00NzU5LTkzMTQtMGM3NDhkOTljZWRkIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.fom22MxbPtJ2P_N6ukWotr229IgTBGSuEh088IbngfreChFHwoZNf9kmoVWdWhAUXjDyn0aQlKEla76u-kxVwal3AbDfZoOYb0oT36BL6wNQIsQ9qj3ZVZ3dLlAntvt5EMi-cpTCKsCi8eWvUYW4kNkZQ_y5NJzup_I4Io1S3eh4VFR_4Or_2nwJTCsXVtmW8MI8R17q1mIqlzcRfkFChurdDkL77zMn_d7yTKRquJf8QmBd1tZxc580ZTsTNX1bIOQgn8G4PKwPQVQ_tFX58RYDM1YOidkgJ4SdV-2AaL4wk7eU0qNx0tywBYpjgoM7x4jOJ8a69YkfpfmCNL8a7w</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Token Revocation for Public Clients</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="http">POST /clients/revokeToken HTTP/1.1
+Host: localhost:10084
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mmadu_admin&amp;token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwNzAyM2E2NjMyOTA1OWU1ZTcxNmMxIiwiYXVkIjpbInVtcyIsImlkcyIsInVmcyJdLCJuYmYiOjE1OTQyOTQ4NDIsImlzcyI6Im1tYWR1LmNvbSIsImV4cCI6MTU5NDI5ODQ0MiwiaWF0IjoxNTk0Mjk0ODQyLCJhdXRob3JpdGllcyI6WyJhLiouKioiLCJyLiouKioiXSwianRpIjoiMDBjMzZkMzItOTcwNy00NzU5LTkzMTQtMGM3NDhkOTljZWRkIiwiY2xpZW50X2lkIjoibW1hZHVfYWRtaW4ifQ.fom22MxbPtJ2P_N6ukWotr229IgTBGSuEh088IbngfreChFHwoZNf9kmoVWdWhAUXjDyn0aQlKEla76u-kxVwal3AbDfZoOYb0oT36BL6wNQIsQ9qj3ZVZ3dLlAntvt5EMi-cpTCKsCi8eWvUYW4kNkZQ_y5NJzup_I4Io1S3eh4VFR_4Or_2nwJTCsXVtmW8MI8R17q1mIqlzcRfkFChurdDkL77zMn_d7yTKRquJf8QmBd1tZxc580ZTsTNX1bIOQgn8G4PKwPQVQ_tFX58RYDM1YOidkgJ4SdV-2AaL4wk7eU0qNx0tywBYpjgoM7x4jOJ8a69YkfpfmCNL8a7w</code></pre>
+</div>
 </div>
 </div>
 </div>

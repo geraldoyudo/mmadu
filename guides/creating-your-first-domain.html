@@ -460,7 +460,7 @@ Our <code>client_id</code> is <code>my.app.admin</code>, and our <code>client_se
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="http">POST /clients/token HTTP/1.1
-Host: 192.168.99.100:15553
+Host: localhost:15553
 Authorization: Basic bXkuYXBwLmFkbWluOjEyMzQ1Njc4OTA=
 Content-Type: application/x-www-form-urlencoded
 
@@ -698,21 +698,30 @@ grant_type=refresh_token&amp;refresh_token=oxz46a4uaq11oC47FWQy</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /domains HTTP/1.1
-Content-Type: application/json
+Host: localhost:15551
 Authorization: Bearer &lt;token&gt;
-Host: localhost:15552
+Content-Type: application/json
 
 {
   &quot;domains&quot;: [
     {
       &quot;domainId&quot;: &quot;my-app&quot;,
-      &quot;registrationProfile&quot;: {
-        &quot;defaultRedirectUrl&quot;: &quot;https://localhost.8080&quot;,
-        &quot;headerOne&quot;: &quot;My App&quot;,
-        &quot;headerThree&quot;: &quot;Register&quot;,
-        &quot;instruction&quot;: &quot;Fill all the fields to register&quot;,
-        &quot;submitButtonTitle&quot;: &quot;GO!!&quot;
-      },
+      &quot;registrationProfiles&quot;: [
+        {
+          &quot;defaultRedirectUrl&quot;: &quot;https://localhost.8080&quot;,
+          &quot;headerOne&quot;: &quot;My App&quot;,
+          &quot;headerThree&quot;: &quot;Register&quot;,
+          &quot;instruction&quot;: &quot;Fill all the fields to register&quot;,
+          &quot;submitButtonTitle&quot;: &quot;GO!!&quot;,
+          &quot;code&quot;: &quot;user&quot;,
+          &quot;fields&quot;: [
+            &quot;app.email&quot;,
+            &quot;app.username&quot;,
+            &quot;app.country&quot;,
+            &quot;app.password&quot;
+          ]
+        }
+      ],
       &quot;fields&quot;: [
         {
           &quot;name&quot;: &quot;email&quot;,
@@ -720,6 +729,7 @@ Host: localhost:15552
           &quot;property&quot;: &quot;email&quot;,
           &quot;fieldTypeId&quot;: &quot;mmadu.fields.email&quot;,
           &quot;label&quot;: &quot;Email&quot;,
+          &quot;code&quot;: &quot;app.email&quot;,
           &quot;order&quot;: 1,
           &quot;required&quot;: true
         },
@@ -730,6 +740,7 @@ Host: localhost:15552
           &quot;fieldTypeId&quot;: &quot;mmadu.fields.text&quot;,
           &quot;label&quot;: &quot;Country&quot;,
           &quot;order&quot;: 2,
+          &quot;code&quot;: &quot;app.country&quot;,
           &quot;required&quot;: true
         },
         {
@@ -739,6 +750,7 @@ Host: localhost:15552
           &quot;fieldTypeId&quot;: &quot;mmadu.fields.text&quot;,
           &quot;label&quot;: &quot;Username&quot;,
           &quot;order&quot;: 3,
+          &quot;code&quot;: &quot;app.username&quot;,
           &quot;required&quot;: true
         },
         {
@@ -747,6 +759,7 @@ Host: localhost:15552
           &quot;property&quot;: &quot;password&quot;,
           &quot;fieldTypeId&quot;: &quot;mmadu.fields.password&quot;,
           &quot;label&quot;: &quot;Password&quot;,
+          &quot;code&quot;: &quot;app.password&quot;,
           &quot;order&quot;: 4
         }
       ]
@@ -760,7 +773,7 @@ Host: localhost:15552
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:15553/my-app/register</pre>
+<pre>http://localhost:15551/my-app/register/user</pre>
 </div>
 </div>
 <div class="imageblock">

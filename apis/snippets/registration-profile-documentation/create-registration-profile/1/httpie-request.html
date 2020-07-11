@@ -46,17 +46,20 @@
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">$ echo '{
   &quot;id&quot; : &quot;1&quot;,
+  &quot;code&quot; : &quot;user&quot;,
   &quot;domainId&quot; : &quot;0&quot;,
   &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
   &quot;defaultRoles&quot; : [ &quot;member&quot; ],
   &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;defaultGroups&quot; : [ &quot;admins&quot; ],
+  &quot;fields&quot; : [ &quot;field.username&quot;, &quot;field.email&quot;, &quot;field.password&quot; ],
   &quot;headerOne&quot; : &quot;My App&quot;,
   &quot;headerTwo&quot; : &quot;Register&quot;,
   &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
   &quot;instruction&quot; : &quot;Ensure that all fields are filled&quot;,
   &quot;submitButtonTitle&quot; : &quot;Go&quot;
 }' | http POST 'http://localhost:8080/repo/registrationProfiles' \
-    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5jcmVhdGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZdV3guyfYWBZHjEw87hJLgWuF_Ig_Sx-lWCfcYMIOBG2Awv6tsRETM-JD_E4S6X2CTGX7cZldelDTug40Ls2LeNwbnROZD5f-aOHAHgeldsFB1dXPwPmww-e60oOuMkiF-fpJkdka7MMJIaPNqT-KsxwD2PU_OLtdlG6BGMM4VV-uXEP5rleKp9jGUKH9IJddbnrd2tWCFMq6t6_9M07IKZws9deUZi70okV3n292fdVyxWMhraKtBUq6SChXi25iO8aFH84OvbC4aFRLxzaVw5MaoHFABx9zPnWajvaMcmDOnayv_PjazrueeVYBIPwLxtzGPGUS8pT0NrC40UNbw'</code></pre>
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5jcmVhdGUiLCJleHAiOjE1OTQ0NDkzMzIsImlhdCI6MTU5NDQ0OTMyNywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Y44_2HBFI-8S71_PJKVJoVObt4I1z-RGs1iLL2L4Zq3SaDn1T1xaK1FS1caGvEHb4YZCzlUpl6yTULAe1GqJyLGG7B5VarCFf8ifIyVs6mqtBS3JFE-wPlT15mFqpIIjH8S1Gyl1RAUrQfgB3WYEfYEnjVuhvLqN0rlkaa0k0FI0A9alHYtU3pHFHe2V2faMf6BA-sUoEW6jLPOr4eBlUuVlNLCOrKypwvuDjCv8tEQ95AAbN6F5-Q3RJ4Jn-CVygm5LtgAq-QE35h-LCPPivjiKkeUD1XlCKUeR6uMtxOdlDzNajELt5IV77xqYuB762PLpTD1DMqFaLg2CGRw6pg'</code></pre>
 </div>
 </div>
 

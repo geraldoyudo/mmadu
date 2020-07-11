@@ -55,17 +55,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 5441
+Content-Length: 1781
 
 {
   &quot;_embedded&quot; : {
     &quot;clientInstances&quot; : [ {
-      &quot;id&quot; : &quot;5eec5c82d4de4b28a4a41c50&quot;,
-      &quot;clientId&quot; : &quot;5eec5c82d4de4b28a4a41c4e&quot;,
+      &quot;id&quot; : &quot;5f095509ea78f80ca7c29adc&quot;,
+      &quot;clientId&quot; : &quot;5f095509ea78f80ca7c29ada&quot;,
       &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
       &quot;clientProfile&quot; : &quot;web_app&quot;,
       &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
         &quot;type&quot; : &quot;secret&quot;
       },
       &quot;identifier&quot; : &quot;1111&quot;,
@@ -78,117 +77,25 @@ Content-Length: 5441
       &quot;authorities&quot; : [ &quot;admin&quot; ],
       &quot;issueRefreshTokens&quot; : true,
       &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
+      &quot;implicitGrantTypeTTLSeconds&quot; : 3600,
+      &quot;passwordGrantTypeTTLSeconds&quot; : 86400,
       &quot;accessTokenTTLSeconds&quot; : 300,
       &quot;refreshTokenTTLSeconds&quot; : 3600,
       &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
       &quot;includeUserRoles&quot; : false,
       &quot;includeUserAuthorities&quot; : false,
       &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c82d4de4b28a4a41c50&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c56&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c54&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
+      &quot;scopes&quot; : [ ],
+      &quot;tokenCategory&quot; : &quot;bearer&quot;,
+      &quot;authorizationProfile&quot; : {
+        &quot;autoApproveScopes&quot; : false
       },
-      &quot;identifier&quot; : &quot;1111&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : false,
-      &quot;includeUserAuthorities&quot; : false,
-      &quot;includeUserGroups&quot; : false,
       &quot;_links&quot; : {
         &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc&quot;
         },
         &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c56&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c59&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c57&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
-      },
-      &quot;identifier&quot; : &quot;43e622d5-b661-4c95-89fe-f020ce32bc7d&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://myapp.com/callback&quot;, &quot;https://localhost:8080/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;localhost&quot;, &quot;teamapt.com&quot;, &quot;32.32.182.34&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authentication_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : true,
-      &quot;includeUserAuthorities&quot; : true,
-      &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c59&quot;
-        }
-      }
-    }, {
-      &quot;id&quot; : &quot;5eec5c83d4de4b28a4a41c5c&quot;,
-      &quot;clientId&quot; : &quot;5eec5c83d4de4b28a4a41c5a&quot;,
-      &quot;clientType&quot; : &quot;CONFIDENTIAL&quot;,
-      &quot;clientProfile&quot; : &quot;web_app&quot;,
-      &quot;credentials&quot; : {
-        &quot;secret&quot; : &quot;1234&quot;,
-        &quot;type&quot; : &quot;secret&quot;
-      },
-      &quot;identifier&quot; : &quot;1111&quot;,
-      &quot;redirectionUris&quot; : [ &quot;https://redirect.com/callback&quot;, &quot;https://localhost:832/callback&quot; ],
-      &quot;allowedHosts&quot; : [ &quot;192.168.99.100&quot; ],
-      &quot;tlsEnabled&quot; : true,
-      &quot;supportedGrantTypes&quot; : [ &quot;authorization_code&quot;, &quot;client_credentials&quot; ],
-      &quot;domainId&quot; : &quot;1&quot;,
-      &quot;resources&quot; : [ &quot;test&quot; ],
-      &quot;authorities&quot; : [ &quot;admin&quot; ],
-      &quot;issueRefreshTokens&quot; : true,
-      &quot;authorizationCodeGrantTypeTTLSeconds&quot; : 86400,
-      &quot;accessTokenTTLSeconds&quot; : 300,
-      &quot;refreshTokenTTLSeconds&quot; : 3600,
-      &quot;clientCredentialsGrantTypeTTLSeconds&quot; : 86400,
-      &quot;includeUserRoles&quot; : false,
-      &quot;includeUserAuthorities&quot; : false,
-      &quot;includeUserGroups&quot; : false,
-      &quot;_links&quot; : {
-        &quot;self&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
-        },
-        &quot;clientInstance&quot; : {
-          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5eec5c83d4de4b28a4a41c5c&quot;
+          &quot;href&quot; : &quot;http://localhost:8080/admin/repo/clientInstances/5f095509ea78f80ca7c29adc&quot;
         }
       }
     } ]
@@ -200,7 +107,7 @@ Content-Length: 5441
   },
   &quot;page&quot; : {
     &quot;size&quot; : 20,
-    &quot;totalElements&quot; : 4,
+    &quot;totalElements&quot; : 1,
     &quot;totalPages&quot; : 1,
     &quot;number&quot; : 0
   }

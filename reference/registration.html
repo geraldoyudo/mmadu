@@ -66,31 +66,39 @@
 </ul>
 </li>
 <li><a href="#customizing_registration_forms">6. Customizing Registration Forms</a></li>
-<li><a href="#registration_profiles">7. Registration Profiles</a>
+<li><a href="#domain_flow_configurations">7. Domain Flow Configurations</a>
 <ul class="sectlevel2">
-<li><a href="#creating_a_registration_profile">7.1. Creating a Registration Profile</a></li>
-<li><a href="#retrieving_a_registration_profile">7.2. Retrieving a Registration Profile</a></li>
-<li><a href="#updating_registration_profile_by_id">7.3. Updating Registration Profile by ID</a></li>
-<li><a href="#deleting_a_registration_profile_by_id">7.4. Deleting a Registration Profile by ID</a></li>
+<li><a href="#creating_a_domain_flow_configuration">7.1. Creating a Domain Flow Configuration</a></li>
+<li><a href="#retrieving_a_domain_flow_configuration">7.2. Retrieving a Domain Flow Configuration</a></li>
+<li><a href="#updating_domain_flow_configuration_by_id">7.3. Updating Domain Flow Configuration by ID</a></li>
+<li><a href="#deleting_a_domain_flow_configuration_by_id">7.4. Deleting a Domain Flow Configuration by ID</a></li>
 </ul>
 </li>
-<li><a href="#managing_field_types">8. Managing Field Types</a>
+<li><a href="#registration_profiles">8. Registration Profiles</a>
 <ul class="sectlevel2">
-<li><a href="#creating_a_field_type">8.1. Creating a field Type</a></li>
-<li><a href="#retrieving_a_field_type">8.2. Retrieving a Field Type</a></li>
-<li><a href="#getting_all_field_types">8.3. Getting All Field Types</a></li>
-<li><a href="#updating_a_field_type">8.4. Updating A Field Type</a></li>
-<li><a href="#removing_a_field_type">8.5. Removing A Field Type</a></li>
+<li><a href="#creating_a_registration_profile">8.1. Creating a Registration Profile</a></li>
+<li><a href="#retrieving_a_registration_profile">8.2. Retrieving a Registration Profile</a></li>
+<li><a href="#updating_registration_profile_by_id">8.3. Updating Registration Profile by ID</a></li>
+<li><a href="#deleting_a_registration_profile_by_id">8.4. Deleting a Registration Profile by ID</a></li>
 </ul>
 </li>
-<li><a href="#managing_fields">9. Managing Fields</a>
+<li><a href="#managing_field_types">9. Managing Field Types</a>
 <ul class="sectlevel2">
-<li><a href="#creating_a_field">9.1. Creating a field</a></li>
-<li><a href="#retrieving_a_field">9.2. Retrieving a Field</a></li>
-<li><a href="#retrieving_all_domain_fields">9.3. Retrieving all Domain Fields</a></li>
-<li><a href="#updating_a_field">9.4. Updating A Field</a></li>
-<li><a href="#removing_a_field">9.5. Removing A Field</a></li>
-<li><a href="#defining-markup-for-fields">9.6. Defining Markup for Fields</a></li>
+<li><a href="#creating_a_field_type">9.1. Creating a field Type</a></li>
+<li><a href="#retrieving_a_field_type">9.2. Retrieving a Field Type</a></li>
+<li><a href="#getting_all_field_types">9.3. Getting All Field Types</a></li>
+<li><a href="#updating_a_field_type">9.4. Updating A Field Type</a></li>
+<li><a href="#removing_a_field_type">9.5. Removing A Field Type</a></li>
+</ul>
+</li>
+<li><a href="#managing_fields">10. Managing Fields</a>
+<ul class="sectlevel2">
+<li><a href="#creating_a_field">10.1. Creating a field</a></li>
+<li><a href="#retrieving_a_field">10.2. Retrieving a Field</a></li>
+<li><a href="#retrieving_all_domain_fields">10.3. Retrieving all Domain Fields</a></li>
+<li><a href="#updating_a_field">10.4. Updating A Field</a></li>
+<li><a href="#removing_a_field">10.5. Removing A Field</a></li>
+<li><a href="#defining-markup-for-fields">10.6. Defining Markup for Fields</a></li>
 </ul>
 </li>
 </ul>
@@ -201,9 +209,9 @@ This api is only used for initial domain setup.
 <td class="tableblock halign-left valign-top"><p class="tableblock">Domain ID to be configured</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domains.[].registrationProfile</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Registration form configuration for domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domains.[].registrationProfiles</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration proiles</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>domains.[].fields</code></p></td>
@@ -239,7 +247,7 @@ generates a form from the configured fields and field types of a domain.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://[registration-host]:[registration-port]/[domain-id]/register</pre>
+<pre>http://[registration-host]:[registration-port]/[domain-id]/register/[registration-profile-code]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -248,16 +256,17 @@ by entering the url below on your browser.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:15552/0/register</pre>
+<pre>http://localhost:15552/0/register/user</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The registration services redirects to the defaultRedirectionUrl specified in the registration profile for
-this domain. To specify a url to redirect to, add the redirectUrl parameter.</p>
+this domain. To specify a url to redirect to, add the redirectUrl parameter. Here we are using a registration
+profile with code <code>user</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>http://localhost:1552/0/register?redirectUrl=http://myapp.com</pre>
+<pre>http://localhost:1552/0/register/user?redirectUrl=http://myapp.com</pre>
 </div>
 </div>
 </div>
@@ -273,26 +282,322 @@ The registration service ensures that form fields are created for each field.</p
 </div>
 </div>
 <div class="sect1">
-<h2 id="registration_profiles">7. Registration Profiles</h2>
+<h2 id="domain_flow_configurations">7. Domain Flow Configurations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each domain has a Domain Flow Configuration object that is used for configuring the applications behaviour during
+registration.</p>
+</div>
+<div class="sect2">
+<h3 id="creating_a_domain_flow_configuration">7.1. Creating a Domain Flow Configuration</h3>
+<div class="paragraph">
+<p>A <code>POST /repo/domainFlowConfigurations</code> Request will create a Domain Flow Configuration.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>flow_config.create</code></p>
+</div>
+<div class="sect3">
+<h4 id="create_domain_flow_configuration_request_body">7.1.1. Create Domain Flow Configuration Request Body</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Flow Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_create_domain_flow_configuration_request">7.1.2. Sample Create Domain Flow Configuration Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/domainFlowConfigurations HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLmNyZWF0ZSIsImV4cCI6MTU5NDQ0OTMzMSwiaWF0IjoxNTk0NDQ5MzI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.UJPyN0X93F3FQ3ZmSvFOZcJDoWQ1RFUjeD1Xn2E2WBM5NRq38omOd8SFRtoOyOBu6Je6L34Xzje90mPm7dfDRdqEPCknvQNjOU91vxv1FrrSLNHvSF_v8my5tyzidAmsGAZsJpxXW9Zz3Pc1vYlqBpXA3u5sNfZHxYf25EOvWIHp_H_hz12-VztUJ7xOLLL9Wn1vSzYYFOtuvkTi7H5S6d90cT2bkVUCISYxkKspeay5pmTxMbu1AElEaBIHU5uQ_SBCifuAOqx5GvQcRxjlw7X99RIa0XZdSfGFRNPbFHgApy-jrFRBQIPZVGWsVtztYOC8wAspn-AIrHTA5UGYmg
+Content-Length: 42
+Host: localhost:8080
+
+{
+  &quot;id&quot; : &quot;1&quot;,
+  &quot;domainId&quot; : &quot;1234&quot;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="create_domain_flow_configuration_response">7.1.3. Create Domain Flow Configuration Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 201 CREATED response with an empty body.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="retrieving_a_domain_flow_configuration">7.2. Retrieving a Domain Flow Configuration</h3>
+<div class="paragraph">
+<p>A GET Request will return a Domain Flow Configuration with its ID</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>flow_config.read</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_retrieval_path_parameter">7.2.1. Domain Flow Configuration Retrieval Path Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /repo/domainFlowConfigurations/{domainFlowConfigurationId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainFlowConfigurationId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Flow Configuration ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_retrieval_request">7.2.2. Sample Domain Flow Configuration Retrieval Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/domainFlowConfigurations/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLnJlYWQiLCJleHAiOjE1OTQ0NDkzMzEsImlhdCI6MTU5NDQ0OTMyNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.AHBnDpYHUiqHE048ZHQ9zzOJQWgWbK3aT37dJPH2ASQKk0fBA-Sgm5E6Sf3nrzvT_KhAH4B9bx-SgIyltBKWzQz0g-fcgdO0HSw2lBnfodscv_gi-HNG0cF5eHO8aiB-D1l86PrWHDOJZqCJJJ-T11mizsPRdA3tV9sRp5R7dxaDsAuAGJgrtH9v-Tq9O2gadbZYRF1_CH1AQI7bR3ZL_y2jI_zRY8YQzRxoFmDLnDy8PcwI4VrbAUoN5iRj6KUt71qTyCTeEsHIvg0HCPBkKw2pC5y4hFubqtqDuaWZWhAQyzK2yf8tsaj_f9U54J-1lu9U3iuLNEoK_D0PfKt8Dw
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_retrieval_response">7.2.3. Domain Flow Configuration Retrieval Response</h4>
+<div class="paragraph">
+<p>This API returns the Domain Flow Configuration with the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Flow Configuration ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_retrieval_response">7.2.4. Sample Domain Flow Configuration Retrieval Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/hal+json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 259
+
+{
+  &quot;domainId&quot; : &quot;1234&quot;,
+  &quot;_links&quot; : {
+    &quot;self&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/domainFlowConfigurations/1&quot;
+    },
+    &quot;domainFlowConfiguration&quot; : {
+      &quot;href&quot; : &quot;http://localhost:8080/repo/domainFlowConfigurations/1&quot;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating_domain_flow_configuration_by_id">7.3. Updating Domain Flow Configuration by ID</h3>
+<div class="paragraph">
+<p>A <code>PATCH /repo/domainFlowConfigurations/{domainFlowConfigurationId}</code> Request will update a Domain Flow Configuration.
+The example below updates the defaultRegistrationUrl property.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>flow_config.update</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_update_request_path_parameter">7.3.1. Domain Flow Configuration Update Request Path Parameter</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /repo/domainFlowConfigurations/{domainFlowConfigurationId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainFlowConfigurationId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Flow Configuration ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_update_request">7.3.2. Sample Domain Flow Configuration Update Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/domainFlowConfigurations/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLnVwZGF0ZSIsImV4cCI6MTU5NDQ0OTMzMCwiaWF0IjoxNTk0NDQ5MzI1LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.ZWRjJfAsUsjpRM6nBEwdNIJrdNkO6xw_cvz3PQ3vFjhOvMFUkMKMiERXcgInbNWvEljTCZnVA4h2RGQdZ3vwrWkMt1C4EdXZXeYneT98XSUNvPPeocsqafILj1DiJ5fNQVvJkDeY6CknkVJug0RGaZjOuHYciW5qAheS_kn48uvg6JZ2zf2riFMtossc_M5dvmmJ_-hwwJaWgXz-UDbitkrPm53XyEaTlQfnnPMJWDuS6Z5hXgMWLgxJU5tTaeGFA5dngeR1vd7FQIMwqea1IveXjadr1HINuHITPeQpUDEP73_axPG9KLkgJHbBF3Euim_cURLTfHHaScuGLq83XA
+Content-Length: 23
+Host: localhost:8080
+
+{&quot;domainId&quot;:&quot;my-app-2&quot;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_update_response">7.3.3. Domain Flow Configuration Update Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_update_response">7.3.4. Sample Domain Flow Configuration Update Response</h4>
+<div class="paragraph">
+<p>Authority: <code>flow_config.update</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting_a_domain_flow_configuration_by_id">7.4. Deleting a Domain Flow Configuration by ID</h3>
+<div class="paragraph">
+<p>A <code>DELETE /repo/domainFlowConfigurations/{domainFlowConfigurationID}</code> request will delete a Domain Flow Configuration.</p>
+</div>
+<div class="paragraph">
+<p>Authority: <code>flow_config.delete</code></p>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_delete_request_path">7.4.1. Domain Flow Configuration Delete Request Path</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /repo/domainFlowConfigurations/{domainFlowConfigurationId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainFlowConfigurationId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Domain Flow Configuration ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_delete_request">7.4.2. Sample Domain Flow Configuration Delete Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/domainFlowConfigurations/1 HTTP/1.1
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLmRlbGV0ZSIsImV4cCI6MTU5NDQ0OTMzMSwiaWF0IjoxNTk0NDQ5MzI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.XC6rPooMlYNKjpk4cjWS0wuh0edf_IqcH6twWyN9BgIycT2Fh2LnhYsGsPVmFtdfo0j8kohLmmQ9dcQzClvqDpFpy71gBKjvxowXyry5xvnVhiA-LAJKpP6c29uBQrFyNAPLIp4r1zuHYuZVkFQ0LrTMj_4x6acxUXkKrxR7k4XFd9zBO_Vn6KzpGtxNhnKilT1HQJg49v-vxUUH5ph5YcZH1YUYy-V1oLk8CmtH8SREmSiRuRbAitH88Wce8SuMD7o4lxJok3iDiZfmFOfb5a9yeeoIsQ3QExg3VUQo_CdKGz3CN7AIXBjb3vvArdOwDSOXrxCygW2lzivwUJdLqQ
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="domain_flow_configuration_delete_response">7.4.3. Domain Flow Configuration Delete Response</h4>
+<div class="paragraph">
+<p>This API returns a HTTP 204 NO CONTENT response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sample_domain_flow_configuration_delete_response">7.4.4. Sample Domain Flow Configuration Delete Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="registration_profiles">8. Registration Profiles</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Each domain has a registration profile object that is used for configuring the applications behaviour during
 registration.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-There can be only one registration profile for a domain.
-</td>
-</tr>
-</table>
-</div>
 <div class="sect2">
-<h3 id="creating_a_registration_profile">7.1. Creating a Registration Profile</h3>
+<h3 id="creating_a_registration_profile">8.1. Creating a Registration Profile</h3>
 <div class="paragraph">
 <p>A <code>POST /repo/registrationProfiles</code> Request will create a registration profile.</p>
 </div>
@@ -300,7 +605,7 @@ There can be only one registration profile for a domain.
 <p>Authority: <code>reg_profile.create</code></p>
 </div>
 <div class="sect3">
-<h4 id="create_registration_profile_request_body">7.1.1. Create Registration Profile Request Body</h4>
+<h4 id="create_registration_profile_request_body">8.1.1. Create Registration Profile Request Body</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -336,6 +641,21 @@ There can be only one registration profile for a domain.
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultGroups</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groups assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration Profile code, used in the registration url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fields</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field codes of domain fields to display in this form</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
@@ -369,20 +689,23 @@ There can be only one registration profile for a domain.
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_create_registration_profile_request">7.1.2. Sample Create Registration Profile Request</h4>
+<h4 id="sample_create_registration_profile_request">8.1.2. Sample Create Registration Profile Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/registrationProfiles HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5jcmVhdGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZdV3guyfYWBZHjEw87hJLgWuF_Ig_Sx-lWCfcYMIOBG2Awv6tsRETM-JD_E4S6X2CTGX7cZldelDTug40Ls2LeNwbnROZD5f-aOHAHgeldsFB1dXPwPmww-e60oOuMkiF-fpJkdka7MMJIaPNqT-KsxwD2PU_OLtdlG6BGMM4VV-uXEP5rleKp9jGUKH9IJddbnrd2tWCFMq6t6_9M07IKZws9deUZi70okV3n292fdVyxWMhraKtBUq6SChXi25iO8aFH84OvbC4aFRLxzaVw5MaoHFABx9zPnWajvaMcmDOnayv_PjazrueeVYBIPwLxtzGPGUS8pT0NrC40UNbw
-Content-Length: 358
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5jcmVhdGUiLCJleHAiOjE1OTQ0NDkzMzIsImlhdCI6MTU5NDQ0OTMyNywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Y44_2HBFI-8S71_PJKVJoVObt4I1z-RGs1iLL2L4Zq3SaDn1T1xaK1FS1caGvEHb4YZCzlUpl6yTULAe1GqJyLGG7B5VarCFf8ifIyVs6mqtBS3JFE-wPlT15mFqpIIjH8S1Gyl1RAUrQfgB3WYEfYEnjVuhvLqN0rlkaa0k0FI0A9alHYtU3pHFHe2V2faMf6BA-sUoEW6jLPOr4eBlUuVlNLCOrKypwvuDjCv8tEQ95AAbN6F5-Q3RJ4Jn-CVygm5LtgAq-QE35h-LCPPivjiKkeUD1XlCKUeR6uMtxOdlDzNajELt5IV77xqYuB762PLpTD1DMqFaLg2CGRw6pg
+Content-Length: 482
 Host: localhost:8080
 
 {
   &quot;id&quot; : &quot;1&quot;,
+  &quot;code&quot; : &quot;user&quot;,
   &quot;domainId&quot; : &quot;0&quot;,
   &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
   &quot;defaultRoles&quot; : [ &quot;member&quot; ],
   &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;defaultGroups&quot; : [ &quot;admins&quot; ],
+  &quot;fields&quot; : [ &quot;field.username&quot;, &quot;field.email&quot;, &quot;field.password&quot; ],
   &quot;headerOne&quot; : &quot;My App&quot;,
   &quot;headerTwo&quot; : &quot;Register&quot;,
   &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
@@ -393,14 +716,14 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="create_registration_profile_response">7.1.3. Create Registration Profile Response</h4>
+<h4 id="create_registration_profile_response">8.1.3. Create Registration Profile Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 201 CREATED response with an empty body.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_a_registration_profile">7.2. Retrieving a Registration Profile</h3>
+<h3 id="retrieving_a_registration_profile">8.2. Retrieving a Registration Profile</h3>
 <div class="paragraph">
 <p>A GET Request will return a registration profile with its ID</p>
 </div>
@@ -408,9 +731,9 @@ Host: localhost:8080
 <p>Authority: <code>reg_profile.read</code></p>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_retrieval_path_parameter">7.2.1. Registration Profile Retrieval Path Parameter</h4>
+<h4 id="registration_profile_retrieval_path_parameter">8.2.1. Registration Profile Retrieval Path Parameter</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /repo/registrationProfiles/{profileId}</caption>
+<caption class="title">Table 4. /repo/registrationProfiles/{profileId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -430,17 +753,17 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_retrieval_request">7.2.2. Sample Registration Profile Retrieval Request</h4>
+<h4 id="sample_registration_profile_retrieval_request">8.2.2. Sample Registration Profile Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/registrationProfiles/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlZ19wcm9maWxlLnJlYWQiLCJleHAiOjE1OTI1NTI4MjEsImlhdCI6MTU5MjU1MjgxNiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GACNmS2BZKoZ_TPfo5CV_qWE3-QpbNjI6m99PogScAjPNkgyKm5ICOEmfXQCt8T5q-s10_3DtkOZ3cWKB_1DObUhE1xhJ96iXf3JGdgGYYUtgbJFS1mAnlPi3SspKLvWWkdE-ACNCyWobWRP6lYoLQZ-vXQzTN6zmVRkzZv0IrafyE2lZGYKx-jLVkEt1pEt-A2EItXyIBQGEQflqUmVLiNa-mjUj4GJ8cep18jJirC0j5bvQGLwDGOfnO2GM73XuI9Q6mG_M-FYMH0O-4EjWeLn4O90khPLPfP3FiWcG1CdpxSlR1gD8RXL5UM_iACtybL0YtaTgGTK5jSxhNFPHA
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLnJlZ19wcm9maWxlLnJlYWQiLCJleHAiOjE1OTQ0NDkzMzMsImlhdCI6MTU5NDQ0OTMyOCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.TheT13RmHrAJObkx3BRHK6ramqfgU26c3AxZnK0bFuZ7Jx2xdbYCYaMXxQQhrcblfEyt8LxdZDh_eC7tWc0ur7bTJCax82e0FpGrz7TXMmXFnWeUZNxkJnPoOHy4OtF6DBBTjOW91C5--n1zoIRJUYYvfB82Txn_hGKu-eFmhPzDZ8P3bF-OfH_5n9lBrRcdmtcxSWf4F_cAD2NVPkQN4Jd9hhrs8e22SfEj_LlY29nytbpMr78yUq8QaERA7xIgHIrrbrT8v3p3ecqL0QBOQFmKQ4sXaEwPhMyI2EYgy2jUPaaj3rjIRTJgwW1TZwcRYGSHUCKEbpyHM3ZV4voEPw
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_retrieval_response">7.2.3. Registration Profile Retrieval Response</h4>
+<h4 id="registration_profile_retrieval_response">8.2.3. Registration Profile Retrieval Response</h4>
 <div class="paragraph">
 <p>This API returns the registration profile with the following fields:</p>
 </div>
@@ -479,6 +802,21 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authorities assigned to newly registered users</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultGroups</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groups assigned to newly registered users</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Registration Profile code, used in the registration url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fields</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field codes of domain fields to display in this form</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultRedirectUrl</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Url to redirect to after registration success</p></td>
@@ -512,7 +850,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_retrieval_response">7.2.4. Sample Registration Profile Retrieval Response</h4>
+<h4 id="sample_registration_profile_retrieval_response">8.2.4. Sample Registration Profile Retrieval Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -526,13 +864,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 563
+Content-Length: 687
 
 {
+  &quot;code&quot; : &quot;user&quot;,
   &quot;domainId&quot; : &quot;0&quot;,
   &quot;defaultRedirectUrl&quot; : &quot;http://my.app.com/home&quot;,
   &quot;defaultRoles&quot; : [ &quot;member&quot; ],
   &quot;defaultAuthorities&quot; : [ &quot;view-list&quot; ],
+  &quot;defaultGroups&quot; : [ &quot;admins&quot; ],
+  &quot;fields&quot; : [ &quot;field.username&quot;, &quot;field.email&quot;, &quot;field.password&quot; ],
   &quot;headerOne&quot; : &quot;My App&quot;,
   &quot;headerTwo&quot; : &quot;Register&quot;,
   &quot;headerThree&quot; : &quot;Fill all required fields&quot;,
@@ -552,7 +893,7 @@ Content-Length: 563
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_registration_profile_by_id">7.3. Updating Registration Profile by ID</h3>
+<h3 id="updating_registration_profile_by_id">8.3. Updating Registration Profile by ID</h3>
 <div class="paragraph">
 <p>A <code>PATCH /repo/registrationProfiles/{profileId}</code> Request will update a registration profile.
 The example below updates the defaultRegistrationUrl property.</p>
@@ -561,9 +902,9 @@ The example below updates the defaultRegistrationUrl property.</p>
 <p>Authority: <code>reg_profile.update</code></p>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_update_request_path_parameter">7.3.1. Registration Profile Update Request Path Parameter</h4>
+<h4 id="registration_profile_update_request_path_parameter">8.3.1. Registration Profile Update Request Path Parameter</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. /repo/registrationProfiles/{profileId}</caption>
+<caption class="title">Table 5. /repo/registrationProfiles/{profileId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -583,11 +924,11 @@ The example below updates the defaultRegistrationUrl property.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_update_request">7.3.2. Sample Registration Profile Update Request</h4>
+<h4 id="sample_registration_profile_update_request">8.3.2. Sample Registration Profile Update Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/registrationProfiles/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS51cGRhdGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.LCS-4RGzCClDTI84vC47iGCN4Etk-Tt998lmMNrSEZuhMVrAdBSRHw60e43vuhHfzOlUyd-JSdWXXzM0Nec09Q--Dp-sv61zmaK78zjD6OHOywAuofkANANqbFWwvBEWLfgyJcGdcYuPDMjCTmko45B0zrrU_0RR2Qp3f1mBDF3dkH0alNWpBJPFl8jBwmsXWn4m7LI0L3YC9nYV7BRnhTLj8aLijAWRPHOv_D6WJnxFc83aSiQOJ2qsIYL16jSWN4THMUDVjZ6dFkcOVETUtuYDYyAjXGTciVi-s6VvJN2ek5s2liBaM0t8CUkfxCIi4IUorbot-yfkS_UYtYsoOQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS51cGRhdGUiLCJleHAiOjE1OTQ0NDkzMzIsImlhdCI6MTU5NDQ0OTMyNywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.DOqx179RRq_E8q7r-a1qljdcDYGSz_gHXS_M9o7vMxHufn-XVRjxhxMolTqUTDX28sRJt4a0S_sbLjTdY0yT-tAMng9hGiY9QJYsANHsEtbZOBq7fg6jU5VXpesUieBp7wWcIWYEjE_Rd9u1eejWJnR-UBqqqJptjwK190H47Jjq_dkRMGk_XTKCfxUV5f2A-QBGC9YCGdoC-bL1joaBJEdH09tfhB6X7_D542YU8qB8OGv_ThcNFcts9vFOqanKD6e3byoZl0Sesd5c1-eDXU2lf3YL2JJKvKwqr6J_22tpALn3VnRW0Fky2G726B9PRc6KLmFqfSYkvOeVUeLeAQ
 Content-Length: 48
 Host: localhost:8080
 
@@ -596,13 +937,13 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_update_response">7.3.3. Registration Profile Update Response</h4>
+<h4 id="registration_profile_update_response">8.3.3. Registration Profile Update Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_update_response">7.3.4. Sample Registration Profile Update Response</h4>
+<h4 id="sample_registration_profile_update_response">8.3.4. Sample Registration Profile Update Response</h4>
 <div class="paragraph">
 <p>Authority: <code>reg_profile.update</code></p>
 </div>
@@ -623,7 +964,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting_a_registration_profile_by_id">7.4. Deleting a Registration Profile by ID</h3>
+<h3 id="deleting_a_registration_profile_by_id">8.4. Deleting a Registration Profile by ID</h3>
 <div class="paragraph">
 <p>A <code>DELETE /repo/registrationProfiles/{profileId}</code> request will delete a registration profile.</p>
 </div>
@@ -644,9 +985,9 @@ for that domain will be unavailable.
 <p>Authority: <code>reg_profile.delete</code></p>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_delete_request_path">7.4.1. Registration Profile Delete Request Path</h4>
+<h4 id="registration_profile_delete_request_path">8.4.1. Registration Profile Delete Request Path</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. /repo/registrationProfiles/{profileId}</caption>
+<caption class="title">Table 6. /repo/registrationProfiles/{profileId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -666,23 +1007,23 @@ for that domain will be unavailable.
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_delete_request">7.4.2. Sample Registration Profile Delete Request</h4>
+<h4 id="sample_registration_profile_delete_request">8.4.2. Sample Registration Profile Delete Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/registrationProfiles/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTUsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5kZWxldGUiLCJleHAiOjE1OTI1NTI4MjAsImlhdCI6MTU5MjU1MjgxNSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.HzcDR7r_M56Eks1UWt4TO4nrKalMJdxk1AolYUsrZAqxHotFJB2K9MBSJRsmyiOiU7fmm95dnkxNhm6lhxSyrK9S4226ypN_q-5lq4JDB11Q0qUVDU8PpIBQwlfxW50Ck6St7Co1yyOEkv5QFX6h_w-I0lwRd2cxf-GRpvqbJreg7T6nZTFFMlSI_dfKodhQT7lg2DQ_YhwESyIaK89fflqWqahLVyaoAQUey9J4ctWV7g4Pyg7zcsIsUPGAXAlP4uGlRghgNLnZ5q_GtBFD3uZ4el6UoL6S24Mto7sxGy5q7w1zChAkLBifjRxvC-E7oDiZtu5dc1aVFK0_9WYaew
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMjcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMC5yZWdfcHJvZmlsZS5kZWxldGUiLCJleHAiOjE1OTQ0NDkzMzIsImlhdCI6MTU5NDQ0OTMyNywianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.KjY4nef9dMn-jgT6SSvuo6s_BpCluwtyfFegTPdrgJNekGlD8GYz27Qbwf_SUeV4gXssNSF_sOtmPOYC3HlhtwmoUK-CGdPK41szG5xFGc6MhToWFbPL1VAR5wd8o0nDyiNyUv2xoIgentmPqOwws7GM_GQ76xlzPdk0x3k7NPgQ-qXeyB-YSAJePlijthSWXMrNzKSIJOEqIVGUkZz-vsrFUFlN_l2Lzfp2_IXpsia5g2lXxCoDxfwLOzs6HJzvEfSGwSzzxw2LsIKkhvwtBM2tTwx3p2OcrgFwBJS5AAOQ5yC0GUPTthSsIeMrWriP1W3ExSsJ4zKeB8xG3PSnXw
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="registration_profile_delete_response">7.4.3. Registration Profile Delete Response</h4>
+<h4 id="registration_profile_delete_response">8.4.3. Registration Profile Delete Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_registration_profile_delete_response">7.4.4. Sample Registration Profile Delete Response</h4>
+<h4 id="sample_registration_profile_delete_response">8.4.4. Sample Registration Profile Delete Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -702,7 +1043,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="managing_field_types">8. Managing Field Types</h2>
+<h2 id="managing_field_types">9. Managing Field Types</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Field type objects specify the properties of a field type in the registration form. You can create a field type that
@@ -712,7 +1053,7 @@ can be used by fields in a registration form. Field types are global and can be 
 <p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize field types.</p>
 </div>
 <div class="sect2">
-<h3 id="creating_a_field_type">8.1. Creating a field Type</h3>
+<h3 id="creating_a_field_type">9.1. Creating a field Type</h3>
 <div class="paragraph">
 <p>A <code>POST /repo/fieldTypes</code> request will create a field type</p>
 </div>
@@ -720,7 +1061,7 @@ can be used by fields in a registration form. Field types are global and can be 
 <p>Authority: <code>field_type.create</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_type_creation_request_body">8.1.1. Field Type Creation Request Body</h4>
+<h4 id="field_type_creation_request_body">9.1.1. Field Type Creation Request Body</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -799,11 +1140,11 @@ can be used by fields in a registration form. Field types are global and can be 
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_type_creation_request">8.1.2. Sample Field Type Creation Request</h4>
+<h4 id="sample_field_type_creation_request">9.1.2. Sample Field Type Creation Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fieldTypes HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuY3JlYXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.E6K2RoPCGHWT7WYZPPHYpXkRqFDTTrLsrIoa1UkYUnvajXLvqIpj1Nf2LB11p9t5CEWouMaQrS7PYIF6o2-iPofdb_7BiLyJP5jJsNGtUgOxD5_r2lIwIu20rYRBNme4KG7RLInqn8hrtQPHHRd28GYTF_PMbpMIxGpaEf4g--af5_yxHI1lk4-Zp0HtppGu5SWDOie4OLYMGWWokp8LwAubqVMbOyLwxkbG0dZdgXYasBWjNIYWjreg8WEMSJnla-rcws3JCyh24VOgkhj9RPsafddoCfIHgqO2cKcVXuOE3aZNmPH9NGZg6iXQsuU2sC2zSrG04KfVEEkAwtz_7g
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMzYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuY3JlYXRlIiwiZXhwIjoxNTk0NDQ5MzQxLCJpYXQiOjE1OTQ0NDkzMzYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.DOq9POrsoe7A5JP47UjwxupvWWZKDkHbvAN9cVP6ug7zdeQfn3ne112IuJV7BiZCdE6pnxd2AiPrpfLOjEkaX1DfYGeBOCVXTOs0lxVDDpRbC1cuO0HMM30kMurNT6RHkA2qALQZ_tumwP8bAUJygnksKYOOM0iesDEoR7ljhEsFbJVsyORC3oxwpGIBhUD8jngCiaLOxYnDC0Wv8qC1kboUH5mLChwh4o3Gwr851bN9lfV4_oVfeh6YxsSfzlOecbjXfjM8OJTxYv1HOVn3-W2_CYtVuwWUm9M22dvBicD27MqleAcSR8jK5s7qE5cvP4aganEJOMox7tQgbrBmVA
 Content-Length: 521
 Host: localhost:8080
 
@@ -825,14 +1166,14 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_type_creation_response">8.1.3. Field Type Creation Response</h4>
+<h4 id="field_type_creation_response">9.1.3. Field Type Creation Response</h4>
 <div class="paragraph">
 <p>This API returns a <code>HTTP 201 CREATED</code> response with an empty body.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_a_field_type">8.2. Retrieving a Field Type</h3>
+<h3 id="retrieving_a_field_type">9.2. Retrieving a Field Type</h3>
 <div class="paragraph">
 <p>A `GET /repo/fieldTypes/{fieldTypeId} `request will get a field type with an ID.</p>
 </div>
@@ -840,9 +1181,9 @@ Host: localhost:8080
 <p>Authority: <code>field_type.read</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_type_retrieval_request_path">8.2.1. Field Type Retrieval Request Path</h4>
+<h4 id="field_type_retrieval_request_path">9.2.1. Field Type Retrieval Request Path</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. /repo/fieldTypes/{fieldTypeId}</caption>
+<caption class="title">Table 7. /repo/fieldTypes/{fieldTypeId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -862,17 +1203,17 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_type_retrieval_request">8.2.2. Sample Field Type Retrieval Request</h4>
+<h4 id="sample_field_type_retrieval_request">9.2.2. Sample Field Type Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5MjU1MjgzMSwiaWF0IjoxNTkyNTUyODI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fXkJ9An34zEuH2hghjaZWSW19kcWy3_qoM147jI4v8UeiDY9htMyoeHREt0XncyDI2KnrDuEnPQ3rtItNNBI9jRrxhUhnfPEWtJf7_i7A1ViYhRGdRhHTXL4fu9821AlrCeaQdAUcn7HO3UfE_vQMCUOQHbpwN7mCUQWbJ9RiWukfT8XpjuoN4V7HncDvq-k5KkUt2XfecsgTQeOa40Orx3E0h_xLs4SE27Oo1EG5wN-zYmkX9b3Y84VVinfvylVPlEsj3vgTDUXvOQjp5vtygKsyIifp8oNPc-oJfe3tcPF7tO9PADfwgRwtc0PbNO6os6WUSNNQU98Kvl8xmQEXQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMzYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5NDQ0OTM0MSwiaWF0IjoxNTk0NDQ5MzM2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.BTQCKF5TGbnHfm5vcq5mFHUkH7Ia54qM4gZ2wUzwj_gPuOXtZ7NMvZJEuBu7tV2AynBp5a3PnpR2iBB8Apt0bCxtv3UQvReH0AhlpWKsFVk324HHvvkqzikfsscPWRgoOUOV7wYB1RQzpWatBDe_LmNn3eagfqopDrMDrm5-D1k3Dtg20GhcHDKLL0ulYd_jRVcfAOFHXYpD_MEogWsImx9ylST_fgWTv4eG0zjvylwQphlGsfhOuI8XHBtZfFxCxYBaE5-E1XZpJTygxIjIMzMMHDOZ2PJ7pPEwaYVb1NwyL-tIPCz-_kb-gcmLMsrMB7A6VN8G0DF1Yn7wZsgalA
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_type_retrieval_response">8.2.3. Field Type Retrieval Response</h4>
+<h4 id="field_type_retrieval_response">9.2.3. Field Type Retrieval Response</h4>
 <div class="paragraph">
 <p>This API returns a FieldType object with these fields:</p>
 </div>
@@ -954,7 +1295,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_type_retrieval_response">8.2.4. Sample Field Type Retrieval Response</h4>
+<h4 id="sample_field_type_retrieval_response">9.2.4. Sample Field Type Retrieval Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -996,7 +1337,7 @@ Content-Length: 696
 </div>
 </div>
 <div class="sect2">
-<h3 id="getting_all_field_types">8.3. Getting All Field Types</h3>
+<h3 id="getting_all_field_types">9.3. Getting All Field Types</h3>
 <div class="paragraph">
 <p>A <code>GET /repo/fieldTypes</code> request will get all field types.</p>
 </div>
@@ -1004,17 +1345,17 @@ Content-Length: 696
 <p>Authority: <code>field_type.read</code></p>
 </div>
 <div class="sect3">
-<h4 id="sample_all_fields_retrieval_request">8.3.1. Sample All Fields Retrieval Request</h4>
+<h4 id="sample_all_fields_retrieval_request">9.3.1. Sample All Fields Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fieldTypes HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5MjU1MjgzMSwiaWF0IjoxNTkyNTUyODI2LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fXkJ9An34zEuH2hghjaZWSW19kcWy3_qoM147jI4v8UeiDY9htMyoeHREt0XncyDI2KnrDuEnPQ3rtItNNBI9jRrxhUhnfPEWtJf7_i7A1ViYhRGdRhHTXL4fu9821AlrCeaQdAUcn7HO3UfE_vQMCUOQHbpwN7mCUQWbJ9RiWukfT8XpjuoN4V7HncDvq-k5KkUt2XfecsgTQeOa40Orx3E0h_xLs4SE27Oo1EG5wN-zYmkX9b3Y84VVinfvylVPlEsj3vgTDUXvOQjp5vtygKsyIifp8oNPc-oJfe3tcPF7tO9PADfwgRwtc0PbNO6os6WUSNNQU98Kvl8xmQEXQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMzcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUucmVhZCIsImV4cCI6MTU5NDQ0OTM0MiwiaWF0IjoxNTk0NDQ5MzM3LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.ipWurrptkRBNEyzA2l-np2k04Rr-E3QCthKXX9gkz3_LVQUbSRy4KO6Bdj1fRYPmPiup7S0yjJDI4mdpJDBaT_vZE4MlDdkmrjP7MaOj-6aKG-fAoDACzQgyB8VTmXDxQXzhvxw8d_bcGrshlInH_S4ldkVaZhq98JDmbeLIjzbM14B41u6dACPWFpNFe24XhmFItObFYPwsLvs1D8Iq-qHq-SH3KT3ZN5-CsdRozLQZpNgsvpxLxpFeawf9TPlUQI5qypKzDgiS4wa8Hk0Bx8HQjYalJT8hn9p34OJ04DgqbRzlRZuYsqVEviNhrdRUvt6-gKcYeXSo6joNOs4u8Q
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="all_fields_retrieval_response">8.3.2. All Fields Retrieval Response</h4>
+<h4 id="all_fields_retrieval_response">9.3.2. All Fields Retrieval Response</h4>
 <div class="paragraph">
 <p>This API returns a list of all field types with these fields:</p>
 </div>
@@ -1086,7 +1427,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_all_fields_retrieval_response">8.3.3. Sample All Fields Retrieval Response</h4>
+<h4 id="sample_all_fields_retrieval_response">9.3.3. Sample All Fields Retrieval Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1146,7 +1487,7 @@ Content-Length: 1126
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_field_type">8.4. Updating A Field Type</h3>
+<h3 id="updating_a_field_type">9.4. Updating A Field Type</h3>
 <div class="paragraph">
 <p>A PATCH request will update a field type</p>
 </div>
@@ -1154,9 +1495,9 @@ Content-Length: 1126
 <p>Authority: <code>field_type.update</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_type_update_request">8.4.1. Field Type Update Request</h4>
+<h4 id="field_type_update_request">9.4.1. Field Type Update Request</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. /repo/fieldTypes/{fieldTypeId}</caption>
+<caption class="title">Table 8. /repo/fieldTypes/{fieldTypeId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1176,11 +1517,11 @@ Content-Length: 1126
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_type_update_request">8.4.2. Sample Field Type Update Request</h4>
+<h4 id="sample_field_type_update_request">9.4.2. Sample Field Type Update Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fieldTypes/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUudXBkYXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.ShA2kxUAgEIyxA7d28teBNnMRK_uoiFn_QWLfqaaPjDTOpkX-PW_pLTJmoqWoK6HBJTHkXuPoD7-kXuIA6R959cgACd-mW6magQLjNJ_5N4khSav8Lr5QZRS9Cl4mFc-kXxcbOIrYIDuqCHx1oaOxDFK9K0kWIn0W5IY4VisLawr-KZLc-sf9yYBsr-s0QN2Y5fnPNehJcZSb3_AGWO3RXDD_zyhnmq65ZYwDn1nB2GwnUufQmQKRvoFA702GbeXJcEOQWfKDGR4_stmCaP9DWW0MwRvVaZhcKbYZD4HHJx1-VTDGqSFmko0JdZZwXBeG_XeczxGRw_4vmidev9Rrw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMzcsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUudXBkYXRlIiwiZXhwIjoxNTk0NDQ5MzQyLCJpYXQiOjE1OTQ0NDkzMzcsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.JhJvfKlPbUkToiCXcx_nAapAhEZQzDCQ7HCVkljygLIjmAREoBwxBTk3mP8p9LASpKwLEMNtNEfxrz3IzOvxccAUilS_HxUzQBBV9OSjdqpaaE_iDp7XWwUrupXzIpLR2wDoV1eCRqDNg2ZW1B-wlYax5FDYdAESlxqFkm6rRhvuKTBFmQwfJaaqlfq2xwZCqs8b8n2rDXILLIuPXNv1sYvcGaDTOaSSr5V42B5mbpZhscGrSWeNQXOy1ug0c4ED7yWwOXoAhLzVyXP8jqTqIk5qnW5orEp9syl9Td-uO9ffnWf6dre4KtJm4ySo2FssxFpkQBq-zopapfjZxx2WQw
 Content-Length: 19
 Host: localhost:8080
 
@@ -1189,13 +1530,13 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_type_update_response">8.4.3. Field Type Update Response</h4>
+<h4 id="field_type_update_response">9.4.3. Field Type Update Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_field_type_update_response">8.4.4. Sample Field Type Update Response</h4>
+<h4 id="sample_field_type_update_response">9.4.4. Sample Field Type Update Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -1213,7 +1554,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_field_type">8.5. Removing A Field Type</h3>
+<h3 id="removing_a_field_type">9.5. Removing A Field Type</h3>
 <div class="paragraph">
 <p>A <code>DELETE /repo/fieldTypes/{fieldTypeId}</code> request will remove a field type.</p>
 </div>
@@ -1221,9 +1562,9 @@ X-Frame-Options: DENY</code></pre>
 <p>Authority: <code>field_type.delete</code></p>
 </div>
 <div class="sect3">
-<h4 id="delete_field_type_request">8.5.1. Delete Field Type Request</h4>
+<h4 id="delete_field_type_request">9.5.1. Delete Field Type Request</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. /repo/fieldTypes/{fieldTypeId}</caption>
+<caption class="title">Table 9. /repo/fieldTypes/{fieldTypeId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1243,23 +1584,23 @@ X-Frame-Options: DENY</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_delete_field_type_request">8.5.2. Sample Delete Field Type Request</h4>
+<h4 id="sample_delete_field_type_request">9.5.2. Sample Delete Field Type Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">DELETE /repo/fieldTypes/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MjYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuZGVsZXRlIiwiZXhwIjoxNTkyNTUyODMxLCJpYXQiOjE1OTI1NTI4MjYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.X_z8-R_uunmmYMWsIAQNsj6W-o_N8tlkP7E1yOhPbHQNRZ0YULnILuHrQR0hPwSFmrx8p10cbOcgT4pQiCyfXRdQPaCaS1Wb-QeJqa67OS_txP0lAPPteWa70549WJC_bfLoQiVZMzW338GyRcs6PrRYrh8yZS-vHHpL8cW6cQ-VwUyFbduCn2hw51vnlurwjVXvwTqn0ckCKPXb8VfpqnYhIz2fUD89xBbjJLojgRbHCAo7rA3e2I6jEXRv9KvUETCXt2hxwKrLDiLG1xhzgQmaKAAWmj5N2AaSsQxzYSyOu9mVlDNxntoM5anFfTfB9-gXAFwI_CaNvquAld1-yw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkzMzYsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkX3R5cGUuZGVsZXRlIiwiZXhwIjoxNTk0NDQ5MzQxLCJpYXQiOjE1OTQ0NDkzMzYsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.altTnYyZQz1IR_zsQjLKBcFBN9MTwxM3qQG5my2irEDpPJncEkrMea82yA-oWwP0Z-IbXsZAjX9daIlBsMB72oNqxceZyr69MqS0bfQKR3qlYSSbReAO--d5TrvEk89PIx5fi_nG6Ed2O1vLFHFNpqHYedB_HY742FmNvoBANxrz_hn8xhvhG6CQRiwSvvS1lYYBMFdHs0PdejhcV9ARsETk6hmvnIcwv7yH1TSRWpavfFlV9UqEbvaB-PqHBe658EQnS6NYfQbbJUUqmsWpmg2QIZ9F93GFMntgVmeS7KLrvXODua4RoA2XgnCZgjph2Yu8Cgxs1lBWzwAJ_ZRvqg
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="delete_field_type_response">8.5.3. Delete Field Type Response</h4>
+<h4 id="delete_field_type_response">9.5.3. Delete Field Type Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_delete_field_type_response">8.5.4. Sample Delete Field Type Response</h4>
+<h4 id="sample_delete_field_type_response">9.5.4. Sample Delete Field Type Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -1279,7 +1620,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="managing_fields">9. Managing Fields</h2>
+<h2 id="managing_fields">10. Managing Fields</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Fields contain information used in rendering each field in a registration form. Fields utilize properties
@@ -1290,7 +1631,7 @@ that the input field is bound to. Fields can override and extend certain propert
 <p>See <a href="#defining-markup-for-fields">Defining Markup for fields</a> for more information on how to customize fields.</p>
 </div>
 <div class="sect2">
-<h3 id="creating_a_field">9.1. Creating a field</h3>
+<h3 id="creating_a_field">10.1. Creating a field</h3>
 <div class="paragraph">
 <p>A <code>POST /repo/fields</code> request will create a field.</p>
 </div>
@@ -1298,7 +1639,7 @@ that the input field is bound to. Fields can override and extend certain propert
 <p>Authority: <code>field.create</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_creation_request">9.1.1. Field Creation Request</h4>
+<h4 id="field_creation_request">10.1.1. Field Creation Request</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1364,6 +1705,11 @@ that the input field is bound to. Fields can override and extend certain propert
 <td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the field code</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
@@ -1372,16 +1718,17 @@ that the input field is bound to. Fields can override and extend certain propert
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_creation_request">9.1.2. Sample Field Creation Request</h4>
+<h4 id="sample_field_creation_request">10.1.2. Sample Field Creation Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">POST /repo/fields HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5jcmVhdGUiLCJleHAiOjE1OTI1NTI4MTUsImlhdCI6MTU5MjU1MjgxMCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.ZiY6grnbKnqk03vB-jwyXMsMPLxboYbngFllXGdMDHPI6jUl_k6zsZaeX5Wl_bvA5mW1ubFRcH0Ap5k2O9O2hIsDF5Eh0704R6-7gBYnvuBZCoffG3G284KhWCI-QqALfgbwqvEJMyYk66BL5PsVbH2kj4LCpbWq-e-fCmDGgjYIrZdG9pcN8Cp7ijIt1v3vB5nIoDfSRDWWJA9KiksQwvS0_aJX8yo6IpQvzM0dYNofBa8HOxaCh1Y5yoz9Vbd8ysKgE7rxUiezLhZdQuNqvNf8-BpDHZV2ZZdpZerhOHKiGxBT8FyTZMKDhlGSLVuqSX4i2MobXJd-qz1wojBAwg
-Content-Length: 251
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyOTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5jcmVhdGUiLCJleHAiOjE1OTQ0NDkyOTUsImlhdCI6MTU5NDQ0OTI5MCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.Z1hxaydyULh1V2gU3rkQnqlA6qDeU-3JTpurX-Qw-nrPukjmYwVJ7wFBVEDZsYRqQdMNTh_er4IpMGt2b3gn8TufgejIiTy-vBVSKxEw9mQHlE5TRi8UkhG25l_zIYvqtxXlH8NOYw14cPCmZxW1qHJwW30YJKKxtPr0owd-4ikQ3e81gmlGXU2fkshed1jIlKO6V3TKHlgaF3d9yVTosaJq0qgOnLX3Ug9T2sOpX-Q3DfMb185_u3uYrFizRINwefwy0hfdOsweI-SP62_nxatTnS1QDRzssUNECJXbcWuMGw487aJD5OmAPhm5wrX3nBGKs8QWSYLaSG17BV4svA
+Content-Length: 275
 Host: localhost:8080
 
 {
   &quot;id&quot; : &quot;1&quot;,
+  &quot;code&quot; : &quot;username&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;name&quot; : &quot;username&quot;,
   &quot;placeholder&quot; : &quot;Enter Username&quot;,
@@ -1397,14 +1744,14 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_creation_response">9.1.3. Field Creation Response</h4>
+<h4 id="field_creation_response">10.1.3. Field Creation Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 201 CREATED response with an empty body.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_a_field">9.2. Retrieving a Field</h3>
+<h3 id="retrieving_a_field">10.2. Retrieving a Field</h3>
 <div class="paragraph">
 <p>A <code>GET /repo/fields/{id}</code> request will get a field with an ID.</p>
 </div>
@@ -1412,9 +1759,9 @@ Host: localhost:8080
 <p>Authority: <code>field.read</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_retrieval_request">9.2.1. Field Retrieval Request</h4>
+<h4 id="field_retrieval_request">10.2.1. Field Retrieval Request</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. /repo/fields/{fieldId}</caption>
+<caption class="title">Table 10. /repo/fields/{fieldId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1434,17 +1781,17 @@ Host: localhost:8080
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_retrieval_request">9.2.2. Sample Field Retrieval Request</h4>
+<h4 id="sample_field_retrieval_request">10.2.2. Sample Field Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkLnJlYWQiLCJleHAiOjE1OTI1NTI4MTUsImlhdCI6MTU5MjU1MjgxMCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.gz4JJOQ079Yw-47N7qAxYAopZEqw4MCUfxt4MZ2_yzZXUgYwxvILH-xHc-EKbTEyZRHU6eq9iXs4HF--pudjoPSg80vDzsBKxS21myfbzbgIIzdmMQhbGbP5TomirqbX_9RXhfw-OB-7lfQksfLis4noixK1GgoleeSrO03RdKs5o5ZnaICC0nDI3N5S7DyRmDpcnsfp-4ATCaEayXPh1vTKbRWwfrTqd0_GxPne50w7eJz_Jl5nEprZw9_3kRNbJcVro-7i8Y6Q_5wnwxymeOdT8-nk5P3NABnOd-pykRCU7uIhnLCczgwRVljr7_m_1O59MzAREXFwHH1rnjmLJQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyOTAsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZpZWxkLnJlYWQiLCJleHAiOjE1OTQ0NDkyOTUsImlhdCI6MTU5NDQ0OTI5MCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.OiqRiZdh_w4gnjUljCxugVsHBVOSyPK8MwVHA9wFhhmeen8TNvmy5myLDHAfUaNnmDeTiy7JkH3J9aVbhiLmpyu0ETMX4icreDwFPMHY6cLIFiBGukJN4dgYyXAnt1qKEK7AsTQAph9ktnlrcDjNHVuviWreniDURI8wwwDXwBXrEgE4CISYgxy4fpMBhacoGjwZ14dbdZVmbi7WxLBIBabrSHSVs13dWeiC5po_HOATzCz_k-4OhCuHWpog3GnNLXtiSoIuNuYu36MoALypJBxq0V0uP5fQcfhYfoaWytiUr-KFdKAg8oi1R-V1iG2I2y_zx-4ijHjMmEqd5TQAAQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_retrieval_response">9.2.3. Field Retrieval Response</h4>
+<h4 id="field_retrieval_response">10.2.3. Field Retrieval Response</h4>
 <div class="paragraph">
 <p>This API returns a Field object with these fields:</p>
 </div>
@@ -1513,6 +1860,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the field code</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>domainId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
@@ -1521,7 +1873,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_retrieval_response">9.2.4. Sample Field Retrieval Response</h4>
+<h4 id="sample_field_retrieval_response">10.2.4. Sample Field Retrieval Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1535,9 +1887,10 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 414
+Content-Length: 438
 
 {
+  &quot;code&quot; : &quot;username&quot;,
   &quot;domainId&quot; : &quot;1&quot;,
   &quot;name&quot; : &quot;username&quot;,
   &quot;placeholder&quot; : &quot;Enter Username&quot;,
@@ -1562,7 +1915,7 @@ Content-Length: 414
 </div>
 </div>
 <div class="sect2">
-<h3 id="retrieving_all_domain_fields">9.3. Retrieving all Domain Fields</h3>
+<h3 id="retrieving_all_domain_fields">10.3. Retrieving all Domain Fields</h3>
 <div class="paragraph">
 <p>A <code>GET /repo/fields/search/findByDomainId</code> request will get all fields in a domain.</p>
 </div>
@@ -1570,7 +1923,7 @@ Content-Length: 414
 <p>Authority: <code>field.read</code></p>
 </div>
 <div class="sect3">
-<h4 id="domain_retrieval_request_query_parameter">9.3.1. Domain Retrieval Request Query Parameter</h4>
+<h4 id="domain_retrieval_request_query_parameter">10.3.1. Domain Retrieval Request Query Parameter</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1591,17 +1944,17 @@ Content-Length: 414
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_domain_retrieval_request">9.3.2. Sample Domain Retrieval Request</h4>
+<h4 id="sample_domain_retrieval_request">10.3.2. Sample Domain Retrieval Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">GET /repo/fields/search/findByDomainId?domainId=1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5yZWFkIiwiZXhwIjoxNTkyNTUyODE0LCJpYXQiOjE1OTI1NTI4MDksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.YaTCq97hlL_cQy_MLl8iggnjYB74IfyI8OMuIVs_BneIv_6z0EUVzuINeMKBf2mW3A2ORxAz94L9n_i6nP994oZm0XpPsJCnIkBPioBvXbGqS5KYNeweKZIjQ-rjCmMji3kGcvd9LQgJXez6qCgNEKSc71F4SjDgfAYadIT4kpmUTyMu4iQWloy0BNs0xjMd7Gq5CIA88E-bQLTpYbqvW6hRPQsUPJ9nU5zpil4uxO5f4-mRx9wVnXZdEX-gymdCJunxZujZdzUSp7NiMgoKIuR_BXoSYHRC21cPD-jNkFMPHdbn_ah4AEy1ct_unYr9IgL-A-vGURmm5p8Qhu55sw
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyODksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC5yZWFkIiwiZXhwIjoxNTk0NDQ5Mjk0LCJpYXQiOjE1OTQ0NDkyODksImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.lsKE2SGLAv7LjlDcZVgqdF4uq6phmB7_dLtG4VHFHNt_KazbgxTs-1bvvZ6h82wnt1pKTbEvbPL2bnR5eBcm-kgJlZP28RZEFcC9c41WmtX8EFAP5uDHXmKVY08yycB-cnDHNz2WK0srgpG-PkVm972CCgVOaNzJYqY-CPWSy-DJ1s-QBbcFTLBpeAw7kDqWNnOiSJM_zFyZpzWKXKzBA_ozJ-DKoftajxHpne-yjVwUPxpRjsGHzN0UsisYFOgCS0bJwqY4iVPorXlDiAxVMsvvM-v620_A_wp1ocTjVtA1uVWJBga3c82RE29FJmQleoqJ0t10686TfHkdIy3Ndg
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="domain_retrieval_response">9.3.3. Domain Retrieval Response</h4>
+<h4 id="domain_retrieval_response">10.3.3. Domain Retrieval Response</h4>
 <div class="paragraph">
 <p>This API returns a list of all fields with these properties:</p>
 </div>
@@ -1665,6 +2018,11 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the form name of the field</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the field code</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_embedded.fields.[].domainId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the ID of the domain</p></td>
@@ -1673,7 +2031,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_domain_retrieval_response">9.3.4. Sample Domain Retrieval Response</h4>
+<h4 id="sample_domain_retrieval_response">10.3.4. Sample Domain Retrieval Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -1687,11 +2045,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 658
+Content-Length: 686
 
 {
   &quot;_embedded&quot; : {
     &quot;fields&quot; : [ {
+      &quot;code&quot; : &quot;username&quot;,
       &quot;domainId&quot; : &quot;1&quot;,
       &quot;name&quot; : &quot;username&quot;,
       &quot;placeholder&quot; : &quot;Enter Username&quot;,
@@ -1723,7 +2082,7 @@ Content-Length: 658
 </div>
 </div>
 <div class="sect2">
-<h3 id="updating_a_field">9.4. Updating A Field</h3>
+<h3 id="updating_a_field">10.4. Updating A Field</h3>
 <div class="paragraph">
 <p>A <code>PATCH /repo/fields/{id}</code> request will update a field</p>
 </div>
@@ -1731,9 +2090,9 @@ Content-Length: 658
 <p>Authority: <code>field.update</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_update_request">9.4.1. Field Update Request</h4>
+<h4 id="field_update_request">10.4.1. Field Update Request</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. /repo/fields/{fieldId}</caption>
+<caption class="title">Table 11. /repo/fields/{fieldId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1753,11 +2112,11 @@ Content-Length: 658
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_update_request">9.4.2. Sample Field Update Request</h4>
+<h4 id="sample_field_update_request">10.4.2. Sample Field Update Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTI1NTI4MTQsImlhdCI6MTU5MjU1MjgwOSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GnB1fczo6U4j77TbaBu4j4oZTMrzzVRDDGS8wzRAR5xS8qDHNLmLM5NdcNeExK15GaSKuhX6OdEMlUnfd_XCQXoOdzrdxBSlqp6bQQIIxb1_rJqyZ-AO2Wgagwtso9DzKdrcf5N155KgnaQf7jQzehuxOoUAqLHtUp_6FlYFV8oeCQY-NSphRYv7aUbVm-dg5bCiW1LL6LG-mnw9R_ZpHBnYa8z4l3zYxV7iIIuohgIOIceyOge5R8XsFhTu1x_pcmbB_3Mrl7-k4a7VJy6gOveYasOntSCLvB3apexWrTmBl8sFg3h6s_7012IS3cErfW_Mckk0qbnACRlshJxORQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyODgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTQ0NDkyOTMsImlhdCI6MTU5NDQ0OTI4OCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.nL0_zbyOYdguFR6yMXWhqHtGCvqDpnVkmZFOloYTyfHkLFJdhiHzmOP4G3cp42lPkBw0-rVmD4HLh_8hMftx57Hm3xBRIpfaxbK3FEh13gkDn_-QkD4flE6qEWf6iRVpKxxI-z-w6iUywjNiyt94vOrbZNGCEmfT1zIo7ksAjkcSZqE5NNyXeJjGGmF0t_tf42SxLQl3m3CWftTAh72AR2j2t4nRrU-eEyD0LRZvVC8vzQ4bIiea3LHe3H1RfoUQCGRceXWhYr3YbXe1CbMkHKZSi7dmZCQFdU6Y9HmS5gR8f8nxkArL8t_0eHNIojLVOom_5am_YARDrLFgpVrJzg
 Content-Length: 34
 Host: localhost:8080
 
@@ -1766,13 +2125,13 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_update_response">9.4.3. Field Update Response</h4>
+<h4 id="field_update_response">10.4.3. Field Update Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_field_update_request_2">9.4.4. Sample Field Update Request</h4>
+<h4 id="sample_field_update_request_2">10.4.4. Sample Field Update Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -1790,7 +2149,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="removing_a_field">9.5. Removing A Field</h3>
+<h3 id="removing_a_field">10.5. Removing A Field</h3>
 <div class="paragraph">
 <p>A <code>DELETE /repo/fields/{id}</code> request will remove a field.</p>
 </div>
@@ -1798,9 +2157,9 @@ X-Frame-Options: DENY</code></pre>
 <p>Authority: <code>field.delete</code></p>
 </div>
 <div class="sect3">
-<h4 id="field_removal_request">9.5.1. Field Removal Request</h4>
+<h4 id="field_removal_request">10.5.1. Field Removal Request</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. /repo/fields/{fieldId}</caption>
+<caption class="title">Table 12. /repo/fields/{fieldId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1820,11 +2179,11 @@ X-Frame-Options: DENY</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sample_field_removal_request">9.5.2. Sample Field Removal Request</h4>
+<h4 id="sample_field_removal_request">10.5.2. Sample Field Removal Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">PATCH /repo/fields/1 HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTI1NTI4MDksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTI1NTI4MTQsImlhdCI6MTU5MjU1MjgwOSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.GnB1fczo6U4j77TbaBu4j4oZTMrzzVRDDGS8wzRAR5xS8qDHNLmLM5NdcNeExK15GaSKuhX6OdEMlUnfd_XCQXoOdzrdxBSlqp6bQQIIxb1_rJqyZ-AO2Wgagwtso9DzKdrcf5N155KgnaQf7jQzehuxOoUAqLHtUp_6FlYFV8oeCQY-NSphRYv7aUbVm-dg5bCiW1LL6LG-mnw9R_ZpHBnYa8z4l3zYxV7iIIuohgIOIceyOge5R8XsFhTu1x_pcmbB_3Mrl7-k4a7VJy6gOveYasOntSCLvB3apexWrTmBl8sFg3h6s_7012IS3cErfW_Mckk0qbnACRlshJxORQ
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyODgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuMS5maWVsZC51cGRhdGUiLCJleHAiOjE1OTQ0NDkyOTMsImlhdCI6MTU5NDQ0OTI4OCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.nL0_zbyOYdguFR6yMXWhqHtGCvqDpnVkmZFOloYTyfHkLFJdhiHzmOP4G3cp42lPkBw0-rVmD4HLh_8hMftx57Hm3xBRIpfaxbK3FEh13gkDn_-QkD4flE6qEWf6iRVpKxxI-z-w6iUywjNiyt94vOrbZNGCEmfT1zIo7ksAjkcSZqE5NNyXeJjGGmF0t_tf42SxLQl3m3CWftTAh72AR2j2t4nRrU-eEyD0LRZvVC8vzQ4bIiea3LHe3H1RfoUQCGRceXWhYr3YbXe1CbMkHKZSi7dmZCQFdU6Y9HmS5gR8f8nxkArL8t_0eHNIojLVOom_5am_YARDrLFgpVrJzg
 Content-Length: 34
 Host: localhost:8080
 
@@ -1833,13 +2192,13 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="field_removal_response">9.5.3. Field Removal Response</h4>
+<h4 id="field_removal_response">10.5.3. Field Removal Response</h4>
 <div class="paragraph">
 <p>This API returns a HTTP 204 NO CONTENT response.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sample_field_removal_response">9.5.4. Sample Field Removal Response</h4>
+<h4 id="sample_field_removal_response">10.5.4. Sample Field Removal Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -1857,7 +2216,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="defining-markup-for-fields">9.6. Defining Markup for Fields</h3>
+<h3 id="defining-markup-for-fields">10.6. Defining Markup for Fields</h3>
 <div class="paragraph">
 <p>You define how you want your registration fields by configuring fields and field types. The markup property in
 the field type is used to define the markup of that specific field type. An age field type markup can be defined
