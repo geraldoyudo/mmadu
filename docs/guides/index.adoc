@@ -113,11 +113,12 @@ This also needs a reference to the identity provider.
 
 To run Mmadu with all the services, use the docker-compose file:
 
-Create a docker compose file as shown below:
+Download and run the docker compose file as shown below:
 
-[source,yaml,options="nowrap"]
+[source,sh,options="nowrap"]
 ----
-include::../../docker/prod/docker-compose.yml[]
+curl https://raw.githubusercontent.com/geraldoyudo/mmadu/master/docker/prod/docker-compose.yml --output docker-compose.yml
+docker-compose up
 ----
 
 This starts up four services:
