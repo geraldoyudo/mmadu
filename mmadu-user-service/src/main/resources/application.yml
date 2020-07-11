@@ -34,3 +34,6 @@ mmadu:
 spring:
   main:
     allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      replica-set-name: default-replica-set
