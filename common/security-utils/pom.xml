@@ -6,7 +6,7 @@
 
     <groupId>com.mmadu</groupId>
     <artifactId>security-utils</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.2</version>
     <build>
         <plugins>
             <plugin>
