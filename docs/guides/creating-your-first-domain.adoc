@@ -403,7 +403,7 @@ which you redirect to the authorize endpoint
 This will redirect you to a login screen if you have not logged in.
 
 .Mmadu Login Screen
-image::images/login_screen.png[]
+image::images/login_screen.PNG[]
 
 
 Enter the admin user name and password (admin/admin-password in this case).
