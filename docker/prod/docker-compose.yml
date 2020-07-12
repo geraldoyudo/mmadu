@@ -54,5 +54,5 @@ services:
       - "27017:27017"
     healthcheck:
       test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo --quiet) -eq 1
-      interval: 1m
+      interval: 10s
     command: ["--replSet", "default-replica-set"]
