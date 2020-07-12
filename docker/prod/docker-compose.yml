@@ -27,7 +27,7 @@ services:
       - MMADU_REGISTRATION_ROOT_DIR=/home/mmadu
       - MMADU_APPLICATION_URL=http://localhost:8080
     volumes:
-      - /home/mmadu:/home/mmadu:rw
+      - ${HOME}/mmadu:/home/mmadu:rw
     ports:
       - "15552:8080"
     depends_on:
