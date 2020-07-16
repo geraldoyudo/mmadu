@@ -1,4 +1,6 @@
 mmadu:
+  domain:
+    encrypt-passwords: true
   transactions:
     enabled: true
   admin:
