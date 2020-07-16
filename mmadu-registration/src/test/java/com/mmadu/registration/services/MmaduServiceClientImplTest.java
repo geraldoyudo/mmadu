@@ -93,7 +93,6 @@ public class MmaduServiceClientImplTest {
                 .withRequestBody(equalTo("grant_type=client_credentials&scope=a.*.**+r.*.**"))
                 .withHeader(HttpHeaders.CONTENT_TYPE, equalTo("application/x-www-form-urlencoded;charset=UTF-8"))
                 .withHeader(HttpHeaders.AUTHORIZATION, equalTo("Basic NWY2NWQwY2QtNjEwMy00ODM4LTk3NjYtOTEzMjU4OWU3ZTg5OjExMzIzMjMyMw=="))
-                .withHeader(HttpHeaders.USER_AGENT, equalTo("Java/14.0.1"))
                 .withHeader(HttpHeaders.ACCEPT, equalTo("application/json;charset=UTF-8"))
                 .withHeader(HttpHeaders.HOST, equalTo("localhost:19998"))
                 .withHeader(HttpHeaders.CONNECTION, equalTo("keep-alive"))
