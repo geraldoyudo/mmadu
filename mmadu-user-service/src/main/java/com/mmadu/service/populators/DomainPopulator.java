@@ -2,6 +2,7 @@ package com.mmadu.service.populators;
 
 import com.mmadu.service.config.DomainConfigurationList;
 import com.mmadu.service.entities.*;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,6 +27,7 @@ public class DomainPopulator {
     private UserAuthorityRepository userAuthorityRepository;
     private RoleAuthorityRepository roleAuthorityRepository;
     private ApplicationEventPublisher publisher;
+    private PasswordHasher passwordHasher;
 
     @Autowired
     public void setPublisher(ApplicationEventPublisher publisher) {
@@ -82,6 +84,11 @@ public class DomainPopulator {
         this.userGroupRepository = userGroupRepository;
     }
 
+    @Autowired
+    public void setPasswordHasher(PasswordHasher passwordHasher) {
+        this.passwordHasher = passwordHasher;
+    }
+
     @Transactional
     @EventListener(ContextRefreshedEvent.class)
     public void setUpDomains() {
@@ -125,8 +132,14 @@ public class DomainPopulator {
     private void initializeDomainUsers(List<DomainConfigurationList.UserItem> users, DomainContext context) {
         List<AppUser> appUsers = users.stream()
                 .map(u -> u.toEntity(context.getDomainId()))
+                .map(this::hashUserPassword)
                 .collect(Collectors.toList());
         context.addUsers(appUserRepository.saveAll(appUsers));
+    }
+
+    private AppUser hashUserPassword(AppUser user) {
+        user.setPassword(passwordHasher.hashPassword(user.getPassword()));
+        return user;
     }
 
     private void initializeDomainAuthorities(List<DomainConfigurationList.AuthorityItem> authorities, DomainContext context) {
