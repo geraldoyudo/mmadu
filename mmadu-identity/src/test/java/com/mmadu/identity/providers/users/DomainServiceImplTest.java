@@ -77,7 +77,6 @@ class DomainServiceImplTest {
                 .withPath("/clients/token")
                 .withHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=UTF-8")
                 .withHeader(HttpHeaders.AUTHORIZATION, "Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==")
-                .withHeader(HttpHeaders.USER_AGENT, "Java/14.0.1")
                 .withHeader(HttpHeaders.ACCEPT, "application/json;charset=UTF-8")
                 .withHeader(HttpHeaders.HOST, "localhost:18000")
                 .withHeader(HttpHeaders.CONNECTION, "keep-alive")
