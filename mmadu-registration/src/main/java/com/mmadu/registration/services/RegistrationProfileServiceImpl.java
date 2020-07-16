@@ -21,7 +21,7 @@ public class RegistrationProfileServiceImpl implements RegistrationProfileServic
     }
 
     @Override
-    @Cacheable("registrationProfiles")
+    @Cacheable(value = "registrationProfiles", key = "#domainId + '-' + #code")
     @Transactional(readOnly = true)
     public RegistrationProfile getProfileForDomainAndCode(String domainId, String code) {
         return registrationProfileRepository.findByDomainIdAndCode(domainId, code)
