@@ -6,6 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "mmadu.identity.theme")
 public class ThemeConfiguration {
-    private String iconSvg;
+    private String logoSvg;
     private ThemeColour themeColour = new ThemeColour();
 }
