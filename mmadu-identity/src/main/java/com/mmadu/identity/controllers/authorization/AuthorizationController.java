@@ -1,6 +1,7 @@
 package com.mmadu.identity.controllers.authorization;
 
 import com.mmadu.identity.entities.Scope;
+import com.mmadu.identity.exceptions.DomainNotFoundException;
 import com.mmadu.identity.models.authorization.AuthorizationRequest;
 import com.mmadu.identity.models.authorization.AuthorizationResponse;
 import com.mmadu.identity.models.client.MmaduClient;
@@ -8,6 +9,7 @@ import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.services.authorization.AuthorizationService;
 import com.mmadu.identity.services.authorization.ProposedScopeLimitService;
 import com.mmadu.identity.services.client.MmaduClientService;
+import com.mmadu.identity.services.domain.DomainIdentityConfigurationService;
 import com.mmadu.identity.services.user.ScopeService;
 import com.mmadu.identity.utils.StringListUtils;
 import com.mmadu.identity.validators.authorization.AuthorizationRequestValidator;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +38,12 @@ public class AuthorizationController {
     private ScopeService scopeService;
     private MmaduClientService mmaduClientService;
     private ProposedScopeLimitService proposedScopeLimitService;
+    private DomainIdentityConfigurationService domainIdentityConfigurationService;
+
+    @Autowired
+    public void setDomainIdentityConfigurationService(DomainIdentityConfigurationService domainIdentityConfigurationService) {
+        this.domainIdentityConfigurationService = domainIdentityConfigurationService;
+    }
 
     @Autowired
     public void setAuthorizationRequestValidator(AuthorizationRequestValidator authorizationRequestValidator) {
@@ -104,8 +113,11 @@ public class AuthorizationController {
 
     @PostMapping
     public String authorize(@Valid @ModelAttribute("authorizationResponse") AuthorizationResponse response,
-                            @SessionAttribute("authorizationRequest") AuthorizationRequest request) {
+                            @SessionAttribute("authorizationRequest") AuthorizationRequest request,
+                            @SessionAttribute("domain") String domain, Model model) {
         log.debug("Authorizing: Request: {}, Response: {}", request, response);
+        model.addAttribute("domainConfiguration",
+                domainIdentityConfigurationService.findByDomainId(domain).orElseThrow(DomainNotFoundException::new));
         return authorizationService.processAuthorization(request, response);
     }
 }

@@ -34,7 +34,7 @@ public class DomainResourceController {
         String path = request.getRequestURI().replace("/themes/" + domainId, "");
         DomainIdentityConfiguration configuration = domainIdentityConfigurationService.findByDomainId(domainId)
                 .orElseThrow(DomainNotFoundException::new);
-        model.addAttribute(Optional.ofNullable(configuration.getThemeConfiguration()).orElse(defaultConfiguration));
+        model.addAttribute("theme", Optional.ofNullable(configuration.getThemeConfiguration()).orElse(defaultConfiguration));
         return "/themes" + path;
     }
 }
