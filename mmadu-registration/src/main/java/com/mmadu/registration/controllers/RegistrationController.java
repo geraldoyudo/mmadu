@@ -1,14 +1,17 @@
 package com.mmadu.registration.controllers;
 
+import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.exceptions.DomainNotFoundException;
 import com.mmadu.registration.models.UserForm;
 import com.mmadu.registration.providers.UserFormValidatorFactory;
+import com.mmadu.registration.services.DomainFlowConfigurationService;
 import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.services.RegistrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,6 +29,8 @@ public class RegistrationController {
     private RegistrationService registrationService;
     @Autowired
     private UserFormValidatorFactory userFormValidatorFactory;
+    @Autowired
+    private DomainFlowConfigurationService domainFlowConfigurationService;
 
     @InitBinder("user")
     public void initBinder(@PathVariable("domainId") String domainId, @PathVariable("code") String code,
@@ -55,7 +60,10 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String register() {
+    public String register(@PathVariable("domainId") String domainId, Model model) {
+        model.addAttribute("domain", domainId);
+        model.addAttribute("domainConfiguration",
+                domainFlowConfigurationService.findByDomainId(domainId).orElseThrow(DomainNotFoundException::new));
         return "register";
     }
 

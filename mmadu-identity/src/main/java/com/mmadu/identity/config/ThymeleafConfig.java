@@ -15,7 +15,6 @@ public class ThymeleafConfig {
         SpringResourceTemplateResolver fileTemplateResolver = new SpringResourceTemplateResolver();
         fileTemplateResolver.setResolvablePatterns(Collections.singleton("/themes/**"));
         fileTemplateResolver.setPrefix("classpath:");
-        fileTemplateResolver.setSuffix(".css");
         fileTemplateResolver.setCacheable(true);
         return fileTemplateResolver;
     }
