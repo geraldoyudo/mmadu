@@ -2,6 +2,7 @@ package com.mmadu.identity.controllers;
 
 import com.mmadu.identity.exceptions.AuthorizationException;
 import com.mmadu.identity.exceptions.CredentialNotFoundException;
+import com.mmadu.identity.exceptions.DomainNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -18,6 +19,12 @@ public class GeneralControllerAdvice {
     @ExceptionHandler(CredentialNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleCredentialNotFound() {
+
+    }
+
+    @ExceptionHandler(DomainNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleDomainNotFound() {
 
     }
 
