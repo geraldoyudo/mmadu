@@ -54,7 +54,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
                 fieldWithPath("style").description("Style applied to all fields of the type"),
                 fieldWithPath("type").description("Data type of to field type " +
                         "(integer, date, time, datetime, string, decimal)"),
-                fieldWithPath("css").description("css for all fields with this type (can be overriden by field css)"),
+                fieldWithPath("themes/css").description("css for all fields with this type (can be overriden by field css)"),
                 fieldWithPath("script").description("Script for field"),
                 fieldWithPath("classes").description("css classes for field"),
                 fieldWithPath("markup").description("HTML markup for field type"),

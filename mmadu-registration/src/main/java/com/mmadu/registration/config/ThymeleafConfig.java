@@ -21,4 +21,13 @@ public class ThymeleafConfig {
         fileTemplateResolver.setCacheable(false);
         return fileTemplateResolver;
     }
+
+    @Bean
+    public ITemplateResolver domainResourcesResolver() {
+        SpringResourceTemplateResolver fileTemplateResolver = new SpringResourceTemplateResolver();
+        fileTemplateResolver.setResolvablePatterns(Collections.singleton("/themes/**"));
+        fileTemplateResolver.setPrefix("classpath:");
+        fileTemplateResolver.setCacheable(true);
+        return fileTemplateResolver;
+    }
 }

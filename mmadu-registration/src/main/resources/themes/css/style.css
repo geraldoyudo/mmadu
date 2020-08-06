@@ -1,0 +1,98 @@
+.bg-primary {
+    background-color: /*[- */ lightcoral /* -]*/ /*[+[(${theme.themeColour.primary})]+]*/ !important;
+}
+
+.bg-info {
+    background-color: /*[- */ aliceblue /* -]*/ /*[+[(${theme.themeColour.info})]+]*/ !important;
+}
+
+.bg-secondary {
+    background-color: /*[- */ darkslateblue /* -]*/ /*[+[(${theme.themeColour.secondary})]+]*/ !important;
+}
+
+.text-primary {
+    color: /*[- */ lightcoral /* -]*/ /*[+[(${theme.themeColour.primary})]+]*/ !important;
+}
+
+.text-info {
+    color: /*[- */ aliceblue /* -]*/ /*[+[(${theme.themeColour.info})]+]*/ !important;
+}
+
+.text-secondary {
+    color: /*[- */ darkslateblue /* -]*/ /*[+[(${theme.themeColour.secondary})]+]*/ !important;
+}
+
+
+.btn-primary {
+    color: #fff !important;
+    background-color: /*[- */ lightcoral /* -]*/ /*[+[(${theme.themeColour.primary})]+]*/;
+    border-color: /*[- */ lightcoral /* -]*/ /*[+[(${theme.themeColour.primary})]+]*/;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: /*[- */ #d07070 /* -]*/ /*[+[(${theme.themeColour.primaryDark})]+]*/;
+    border-color: /*[- */ #d07070 /* -]*/ /*[+[(${theme.themeColour.primaryDark})]+]*/;
+}
+.btn-primary:focus, .btn-primary.focus {
+    color: #fff;
+    background-color: /*[- */ #d07070 /* -]*/ /*[+[(${theme.themeColour.primaryDark})]+]*/;
+    border-color: /*[- */ #d07070 /* -]*/ /*[+[(${theme.themeColour.primaryDark})]+]*/;
+    box-shadow: 0 0 0 0.2rem /*[- */ #c06060 /* -]*/ /*[+[(${theme.themeColour.primaryDarkest})]+]*/;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: /*[- */ #d07070 /* -]*/ /*[+[(${theme.themeColour.primaryDark})]+]*/;
+    border-color: /*[- */ #c06060 /* -]*/ /*[+[(${theme.themeColour.primaryDarkest})]+]*/; 
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem /*[- */ #c06060 /* -]*/ /*[+[(${theme.themeColour.primaryDarkest})]+]*/; 
+}
+
+.btn-secondary {
+    color: #fff !important;
+    background-color: /*[- */ darkslateblue /* -]*/ /*[+[(${theme.themeColour.secondary})]+]*/;
+    border-color: /*[- */ darkslateblue /* -]*/ /*[+[(${theme.themeColour.secondary})]+]*/;
+}
+.btn-secondary:hover {
+    color: #fff;
+    background-color: /*[- */ #39306f /* -]*/ /*[+[(${theme.themeColour.secondaryDark})]+]*/;
+    border-color: /*[- */ #39306f /* -]*/ /*[+[(${theme.themeColour.secondaryDark})]+]*/;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+    color: #fff;
+    background-color: /*[- */ #39306f /* -]*/ /*[+[(${theme.themeColour.secondaryDark})]+]*/;
+    border-color: /*[- */ #39306f /* -]*/ /*[+[(${theme.themeColour.secondaryDark})]+]*/;
+    box-shadow: 0 0 0 0.2rem /*[- */ #2b2453 /* -]*/ /*[+[(${theme.themeColour.secondaryDarkest})]+]*/;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: /*[- */ #39306f /* -]*/ /*[+[(${theme.themeColour.secondaryDark})]+]*/;
+    border-color: /*[- */ #2b2453 /* -]*/ /*[+[(${theme.themeColour.secondaryDarkest})]+]*/;
+}
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem /*[- */ #2b2453 /* -]*/ /*[+[(${theme.themeColour.secondaryDarkest})]+]*/;
+}
+
+.form-control:focus {
+    border-color: /*[- */ lightcoral /* -]*/ /*[+[(${theme.themeColour.primary})]+]*/;
+    box-shadow: 0 0 0 0.2rem /*[- */ #c06060 /* -]*/ /*[+[(${theme.themeColour.primaryDarkest})]+]*/;
+}
+
+.alert-success {
+    color: /*[- */ black /* -]*/ /*[+[(${theme.themeColour.successText})]+]*/;
+    background-color: /*[- */ #2b8378 /* -]*/ /*[+[(${theme.themeColour.success})]+]*/;
+    border-color: /*[- */ #2b8378 /* -]*/ /*[+[(${theme.themeColour.success})]+]*/;
+}
+
+.alert-danger {
+    color: /*[- */ white /* -]*/ /*[+[(${theme.themeColour.dangerText})]+]*/;
+    background-color: /*[- */ darkred /* -]*/ /*[+[(${theme.themeColour.danger})]+]*/;
+    border-color: /*[- */ darkred /* -]*/ /*[+[(${theme.themeColour.danger})]+]*/;
+}
