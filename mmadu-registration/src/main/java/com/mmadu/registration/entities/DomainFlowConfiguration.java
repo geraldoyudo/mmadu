@@ -14,5 +14,5 @@ public class DomainFlowConfiguration {
     private String id;
     @NotEmpty(message = "domainId is required")
     private String domainId;
-    private ThemeConfiguration theme;
+    private ThemeConfiguration theme = new ThemeConfiguration();
 }

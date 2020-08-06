@@ -1,9 +1,11 @@
 package com.mmadu.registration.controllers;
 
+import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.models.UserForm;
 import com.mmadu.registration.providers.UserFormValidator;
 import com.mmadu.registration.providers.UserFormValidatorFactory;
+import com.mmadu.registration.services.DomainFlowConfigurationService;
 import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.services.RegistrationService;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -25,14 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.Errors;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static com.mmadu.registration.utils.EntityUtils.createRegistrationProfile;
 import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -61,6 +63,9 @@ public class RegistrationControllerTest {
     private UserFormValidatorFactory userFormValidatorFactory;
     @MockBean
     private UserFormValidator userFormValidator;
+    @MockBean
+    private DomainFlowConfigurationService domainFlowConfigurationService;
+    private DomainFlowConfiguration domainFlowConfiguration = new DomainFlowConfiguration();
 
     private RegistrationProfile profile = createRegistrationProfile(PROFILE_ID, DOMAIN_ID);
 
@@ -69,6 +74,7 @@ public class RegistrationControllerTest {
         doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
         doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomainAndCode(anyString(), anyString());
         doReturn(true).when(userFormValidator).supports(eq(UserForm.class));
+        when(domainFlowConfigurationService.findByDomainId(DOMAIN_ID)).thenReturn(Optional.of(domainFlowConfiguration));
     }
 
     @Test
