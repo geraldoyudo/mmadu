@@ -1,0 +1,74 @@
+.bg-primary {
+    background-color: lightcoral !important;
+}
+
+.bg-info {
+    background-color: aliceblue !important;
+}
+
+.bg-secondary {
+    background-color: darkslateblue !important;
+}
+
+.text-primary {
+    color: lightcoral !important;
+}
+
+.text-info {
+    color: aliceblue !important;
+}
+
+.text-secondary {
+    color: darkslateblue !important;
+}
+
+
+.btn-primary {
+    color: #fff !important;
+    background-color: lightcoral;
+    border-color: lightcoral; }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #d07070;
+    border-color: #d07070;
+}
+.btn-primary:focus, .btn-primary.focus {
+    color: #fff;
+    background-color: #d07070;
+    border-color: #d07070;
+    box-shadow: 0 0 0 0.2rem #c06060;
+}
+
+.btn-secondary {
+    color: #fff !important;
+    background-color: darkslateblue;
+    border-color: darkslateblue; }
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #39306f;
+    border-color: #39306f;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+    color: #fff;
+    background-color: #39306f;
+    border-color: #39306f;
+    box-shadow: 0 0 0 0.2rem #2b2453;
+}
+
+.form-control:focus {
+    border-color: lightcoral;
+    box-shadow: 0 0 0 0.2rem #c06060;
+}
+
+.alert-success {
+    color: black;
+    background-color: #2b8378;
+    border-color: #2b8378;
+}
+
+.alert-danger {
+    color: white;
+    background-color: darkred;
+    border-color: darkred;
+}

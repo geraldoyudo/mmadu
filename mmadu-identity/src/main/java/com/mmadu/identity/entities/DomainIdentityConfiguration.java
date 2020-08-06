@@ -1,5 +1,6 @@
 package com.mmadu.identity.entities;
 
+import com.mmadu.identity.models.themes.ThemeConfiguration;
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
 import com.mmadu.security.api.DomainPayload;
 import lombok.Data;
@@ -34,4 +35,5 @@ public class DomainIdentityConfiguration implements DomainPayload {
     private String refreshTokenProvider = "alphanumeric";
     private Map<String, Object> refreshTokenProperties = new HashMap<>();
     private String issuerId;
+    private ThemeConfiguration themeConfiguration = new ThemeConfiguration();
 }
