@@ -1,6 +1,7 @@
 package com.mmadu.identity.services.domain;
 
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
+import com.mmadu.identity.models.themes.ThemeConfiguration;
 import com.mmadu.identity.repositories.DomainIdentityConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,6 +13,12 @@ import java.util.Optional;
 @Service
 public class DomainIdentityConfigurationServiceImpl implements DomainIdentityConfigurationService {
     private DomainIdentityConfigurationRepository domainIdentityConfigurationRepository;
+    private ThemeConfiguration defaultThemeConfiguration;
+
+    @Autowired
+    public void setDefaultThemeConfiguration(ThemeConfiguration defaultThemeConfiguration) {
+        this.defaultThemeConfiguration = defaultThemeConfiguration;
+    }
 
     @Autowired
     public void setDomainIdentityConfigurationRepository(DomainIdentityConfigurationRepository domainIdentityConfigurationRepository) {
@@ -22,6 +29,14 @@ public class DomainIdentityConfigurationServiceImpl implements DomainIdentityCon
     @Cacheable("domainConfigurations")
     @Transactional(readOnly = true)
     public Optional<DomainIdentityConfiguration> findByDomainId(String domainId) {
-        return domainIdentityConfigurationRepository.findByDomainId(domainId);
+        return domainIdentityConfigurationRepository.findByDomainId(domainId)
+                .map(this::setDefaultThemeIfNull);
+    }
+
+    private DomainIdentityConfiguration setDefaultThemeIfNull(DomainIdentityConfiguration config) {
+        if (config.getThemeConfiguration() == null) {
+            config.setThemeConfiguration(defaultThemeConfiguration);
+        }
+        return config;
     }
 }
