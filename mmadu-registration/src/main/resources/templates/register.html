@@ -6,10 +6,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Please sign in</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="../../../../../../mmadu/common/theme-utils/src/main/resources/META-INF/resources/webjars/mmadu-theme-utils/css/theme.css"
+          th:href="@{/webjars/mmadu-theme-utils/css/theme.css}">
+    <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{'/themes/' + ${domainId} + '/css/style.css'}" href="../themes/css/style.css">
     <script
             src="https://code.jquery.com/jquery-3.4.1.slim.js"
             integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="

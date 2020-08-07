@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.request.ParameterDescriptor;
 
 import java.util.Collections;
@@ -46,8 +47,8 @@ public class DomainFlowConfigurationDocumentation extends AbstractDocumentation 
     private static List<FieldDescriptor> domainFlowConfigurationFields() {
         return asList(
                 fieldWithPath("id").type("string").optional().description("Domain Flow Configuration ID"),
-                fieldWithPath("domainId").type("string").optional().description("Domain Id")
-              
+                fieldWithPath("domainId").type("string").optional().description("Domain Id"),
+                subsectionWithPath("theme").optional().description("Theme Configuration")
         );
     }
 
