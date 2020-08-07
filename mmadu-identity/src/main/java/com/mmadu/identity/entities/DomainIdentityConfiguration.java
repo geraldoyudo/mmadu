@@ -35,5 +35,5 @@ public class DomainIdentityConfiguration implements DomainPayload {
     private String refreshTokenProvider = "alphanumeric";
     private Map<String, Object> refreshTokenProperties = new HashMap<>();
     private String issuerId;
-    private ThemeConfiguration themeConfiguration = new ThemeConfiguration();
+    private ThemeConfiguration theme = new ThemeConfiguration();
 }
