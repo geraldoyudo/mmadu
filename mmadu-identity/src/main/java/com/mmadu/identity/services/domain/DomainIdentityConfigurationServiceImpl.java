@@ -34,8 +34,8 @@ public class DomainIdentityConfigurationServiceImpl implements DomainIdentityCon
     }
 
     private DomainIdentityConfiguration setDefaultThemeIfNull(DomainIdentityConfiguration config) {
-        if (config.getThemeConfiguration() == null) {
-            config.setThemeConfiguration(defaultThemeConfiguration);
+        if (config.getTheme() == null) {
+            config.setTheme(defaultThemeConfiguration);
         }
         return config;
     }
