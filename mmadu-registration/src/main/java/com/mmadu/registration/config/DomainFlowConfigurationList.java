@@ -4,6 +4,7 @@ import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
+import com.mmadu.registration.models.themes.ThemeConfiguration;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -30,10 +31,13 @@ public class DomainFlowConfigurationList {
         @NotNull
         @Size(min = 1)
         private List<FieldItem> fields;
+        @NotNull
+        private ThemeConfiguration theme = new ThemeConfiguration();
 
         public DomainFlowConfiguration toEntity() {
             DomainFlowConfiguration configuration = new DomainFlowConfiguration();
             configuration.setDomainId(domainId);
+            configuration.setTheme(theme);
             return configuration;
         }
     }

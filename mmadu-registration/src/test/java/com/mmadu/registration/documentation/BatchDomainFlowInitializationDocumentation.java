@@ -27,7 +27,8 @@ public class BatchDomainFlowInitializationDocumentation extends AbstractDocument
                         subsectionWithPath("fieldTypes").description("Field Type List"),
                         fieldWithPath("domains.[].domainId").description("Domain ID to be configured"),
                         subsectionWithPath("domains.[].registrationProfiles").description("Registration proiles"),
-                        subsectionWithPath("domains.[].fields").description("List of fields in registration form")
+                        subsectionWithPath("domains.[].fields").description("List of fields in registration form"),
+                        subsectionWithPath("domains.[].theme").description("Theme configuration")
                 )));
     }
 

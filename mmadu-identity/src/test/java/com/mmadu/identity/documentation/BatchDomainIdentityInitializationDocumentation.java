@@ -37,7 +37,8 @@ public class BatchDomainIdentityInitializationDocumentation extends AbstractDocu
                         subsectionWithPath("[].clients").description("List of predefined clients"),
                         subsectionWithPath("[].clientInstances").description("List of predefined client instances"),
                         subsectionWithPath("[].resources").description("List of predefined resources"),
-                        subsectionWithPath("[].scopes").description("List of predefined scopes")
+                        subsectionWithPath("[].scopes").description("List of predefined scopes"),
+                        subsectionWithPath("[].theme").description("Theme Configuration")
                 )));
     }
 

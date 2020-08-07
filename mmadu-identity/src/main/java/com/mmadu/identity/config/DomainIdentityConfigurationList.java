@@ -3,6 +3,7 @@ package com.mmadu.identity.config;
 import com.mmadu.identity.entities.*;
 import com.mmadu.identity.models.authorization.AuthorizationProfile;
 import com.mmadu.identity.models.security.CredentialGenerationRequest;
+import com.mmadu.identity.models.themes.ThemeConfiguration;
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
 import com.mmadu.identity.utils.ClientCategoryUtils;
 import com.mmadu.identity.utils.ClientProfileUtils;
@@ -41,6 +42,8 @@ public class DomainIdentityConfigurationList {
         private Map<String, Object> refreshTokenProperties = new HashMap<>();
         @NotEmpty
         private String issuerId;
+        @NotNull
+        private ThemeConfiguration theme = new ThemeConfiguration();
         private List<ClientItem> clients = Collections.emptyList();
         private List<ClientInstanceItem> clientInstances = Collections.emptyList();
         private List<ResourceItem> resources = Collections.emptyList();
@@ -59,6 +62,7 @@ public class DomainIdentityConfigurationList {
             configuration.setRefreshTokenProvider(refreshTokenProvider);
             configuration.setRefreshTokenProperties(refreshTokenProperties);
             configuration.setIssuerId(issuerId);
+            configuration.setTheme(theme);
             return configuration;
         }
 
