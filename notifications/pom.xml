@@ -10,6 +10,7 @@
 
     <modules>
         <module>notification-endpoint</module>
+        <module>sendgrid-notification-provider</module>
     </modules>
     <build>
         <plugins>

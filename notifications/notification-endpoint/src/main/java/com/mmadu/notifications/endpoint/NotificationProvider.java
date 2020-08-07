@@ -20,4 +20,6 @@ public interface NotificationProvider {
     default Mono<Void> process(NotificationMessage message) {
         return process(message, NONE);
     }
+
+    boolean supportsMessage(NotificationMessage message);
 }

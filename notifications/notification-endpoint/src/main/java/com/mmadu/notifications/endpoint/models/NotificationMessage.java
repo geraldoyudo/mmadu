@@ -11,4 +11,6 @@ public interface NotificationMessage {
     Optional<String> getMessage();
 
     Optional<NotificationContext> getContext();
+
+    String getType();
 }
