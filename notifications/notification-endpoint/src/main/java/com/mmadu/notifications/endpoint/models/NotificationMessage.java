@@ -1,16 +1,16 @@
 package com.mmadu.notifications.endpoint.models;
 
-import java.util.Optional;
-
 public interface NotificationMessage {
 
     String getId();
 
-    Optional<String> getMessageTemplate();
+    String getMessageTemplate();
 
-    Optional<String> getMessage();
+    String getMessage();
 
-    Optional<NotificationContext> getContext();
+    NotificationContext getContext();
+
+    NotificationMessageHeaders getHeaders();
 
     String getType();
 }
