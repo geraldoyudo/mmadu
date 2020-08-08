@@ -13,7 +13,7 @@ import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
 import com.mmadu.notifications.service.provider.NotificationProviderRegistry;
 import com.mmadu.notifications.service.provider.NotificationProviderResolver;
 import com.mmadu.notifications.service.provider.UserService;
-import com.mmadu.notifications.service.repositories.NotificationProviderConfigurationRepository;
+import com.mmadu.notifications.service.repositories.ProviderConfigurationRepository;
 import com.mmadu.notifications.service.utils.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,15 @@ import java.util.Optional;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
+    public static final String DEFAULT_PROFILE = "default";
     private UserService userService;
     private NotificationProviderResolver notificationProviderResolver;
     private NotificationProviderRegistry notificationProviderRegistry;
-    private NotificationProviderConfigurationRepository notificationProviderConfigurationRepository;
+    private ProviderConfigurationRepository providerConfigurationRepository;
 
     @Autowired
-    public void setNotificationProviderConfigurationRepository(NotificationProviderConfigurationRepository notificationProviderConfigurationRepository) {
-        this.notificationProviderConfigurationRepository = notificationProviderConfigurationRepository;
+    public void setProviderConfigurationRepository(ProviderConfigurationRepository providerConfigurationRepository) {
+        this.providerConfigurationRepository = providerConfigurationRepository;
     }
 
     @Autowired
@@ -85,10 +86,10 @@ public class NotificationServiceImpl implements NotificationService {
 
     private NotificationProviderConfiguration getNotificationProviderConfiguration(String domainId, String profileId, String providerId) {
         Optional<NotificationProviderConfiguration> configuration =
-                notificationProviderConfigurationRepository.findByDomainIdAndProfileIdAndProviderId(domainId, profileId, providerId)
+                providerConfigurationRepository.findByDomainIdAndProfileIdAndProviderId(domainId, profileId, providerId)
                         .map(c -> c);
         if (configuration.isEmpty()) {
-            configuration = notificationProviderConfigurationRepository.findByDomainIdAndProfileIdAndProviderId(domainId, null, providerId)
+            configuration = providerConfigurationRepository.findByDomainIdAndProfileIdAndProviderId(domainId, DEFAULT_PROFILE, providerId)
                     .map(c -> c);
         }
         return configuration.orElse(new ProviderConfiguration());

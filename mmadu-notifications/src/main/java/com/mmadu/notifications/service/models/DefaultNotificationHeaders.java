@@ -1,6 +1,8 @@
 package com.mmadu.notifications.service.models;
 
 import com.mmadu.notifications.endpoint.models.NotificationMessageHeaders;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode
+@ToString
 public class DefaultNotificationHeaders implements NotificationMessageHeaders {
     private final Map<String, List<String>> headers;
 

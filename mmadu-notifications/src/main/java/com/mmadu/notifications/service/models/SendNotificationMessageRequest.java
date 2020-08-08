@@ -14,7 +14,7 @@ public class SendNotificationMessageRequest implements DomainPayload {
     @NotEmpty
     private String domainId;
     @NotEmpty
-    private String profileId;
+    private String profileId = "default";
     @NotEmpty
     private String userId;
     @NotEmpty

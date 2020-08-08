@@ -1,4 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/mmadu_registration_db?replicaSet=default-replica-set
+      uri: mongodb://localhost:27017/mmadu_notification_db?replicaSet=default-replica-set

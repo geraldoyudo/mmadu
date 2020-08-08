@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Data
+@EqualsAndHashCode
+@ToString
 public class NotificationUser {
     private String id;
     @JsonProperty("username")

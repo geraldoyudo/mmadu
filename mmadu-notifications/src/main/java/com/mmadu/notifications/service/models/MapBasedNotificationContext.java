@@ -2,11 +2,15 @@ package com.mmadu.notifications.service.models;
 
 import com.mmadu.notifications.endpoint.models.NotificationContext;
 import com.mmadu.notifications.endpoint.models.NotificationUser;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@EqualsAndHashCode
+@ToString
 public class MapBasedNotificationContext implements NotificationContext {
     private Map<String, Object> context;
     private NotificationUser user;

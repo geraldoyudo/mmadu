@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface NotificationProviderConfigurationRepository extends MongoRepository<ProviderConfiguration, String> {
+public interface ProviderConfigurationRepository extends MongoRepository<ProviderConfiguration, String> {
 
     Optional<ProviderConfiguration> findByDomainIdAndProfileIdAndProviderId(
             @Param("domainId") String domainId,
