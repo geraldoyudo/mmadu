@@ -2,8 +2,3 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/mmadu_notification_db?replicaSet=default-replica-set
-mmadu:
-  notifications:
-    sendgrid:
-      api-key: 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
-      sender-email: admin@sacraliturgios.com
