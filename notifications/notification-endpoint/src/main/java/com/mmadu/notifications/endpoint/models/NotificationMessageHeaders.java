@@ -1,9 +1,14 @@
 package com.mmadu.notifications.endpoint.models;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+@JsonSerialize(as = NotificationMessageHeaders.class)
 public interface NotificationMessageHeaders {
 
     List<String> get(String key);
@@ -13,4 +18,7 @@ public interface NotificationMessageHeaders {
                 .stream()
                 .findFirst();
     }
+
+    @JsonAnyGetter
+    Map<String, Object> getAsMap();
 }

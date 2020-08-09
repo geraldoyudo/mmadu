@@ -14,13 +14,11 @@ import java.util.stream.Collectors;
 @ToString
 public class DefaultNotificationHeaders implements NotificationMessageHeaders {
     private final Map<String, List<String>> headers;
-
-    public DefaultNotificationHeaders() {
-        this.headers = new HashMap<>();
-    }
+    private final Map<String, Object> original;
 
     public DefaultNotificationHeaders(Map<String, Object> headers) {
         this.headers = new HashMap<>();
+        this.original = headers;
         headers.forEach((key, value) -> populateHeaderValue(this.headers, key, value));
     }
 
@@ -39,6 +37,11 @@ public class DefaultNotificationHeaders implements NotificationMessageHeaders {
         return value.stream()
                 .map(Object::toString)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Object> getAsMap() {
+        return new HashMap<>(original);
     }
 
     @Override
