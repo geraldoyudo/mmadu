@@ -25,7 +25,7 @@ public class GeneralControllerAdvice {
     public ErrorResponse handleGeneralErrors() {
         return ErrorResponse.builder()
                 .code("99")
-                .message("An unexpected error occured")
+                .message("An unexpected error occurred")
                 .build();
     }
 }
