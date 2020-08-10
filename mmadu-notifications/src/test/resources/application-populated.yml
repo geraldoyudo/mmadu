@@ -1,0 +1,18 @@
+mmadu:
+  domain-notification-config:
+    domains:
+      - domainId: 1
+        profiles:
+          - profileId: profile-one
+            providerConfigurations:
+              - providerId: sendgrid
+                properties:
+                  key-1: value-1
+            rules:
+              - expression: "type = 'email'"
+                provider: sendgrid
+                priority: 100
+        providerConfigurations:
+          - providerId: sendgrid
+            properties:
+              key-1: value-1

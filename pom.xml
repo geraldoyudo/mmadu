@@ -13,8 +13,10 @@
 
     <modules>
         <module>common</module>
+        <module>notifications</module>
         <module>mmadu-user-service</module>
         <module>mmadu-registration</module>
         <module>mmadu-identity</module>
+        <module>mmadu-notifications</module>
     </modules>
 </project>
