@@ -18,8 +18,10 @@ public class ScheduledNotificationMessage {
     private String type;
     private List<String> eventTriggers = Collections.emptyList();
     private String userFilter;
+    private String eventFilter;
     private String messageTemplate;
     private String message;
+    private String profile = "default";
     private Map<String, Object> context = new HashMap<>();
     private Map<String, Object> headers = new HashMap<>();
 }
