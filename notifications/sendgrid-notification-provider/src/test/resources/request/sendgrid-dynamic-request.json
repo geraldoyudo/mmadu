@@ -1,0 +1,18 @@
+{
+  "from": {
+    "email": "admin@sacraliturgios.com"
+  },
+  "personalizations": [
+    {
+      "to": [
+        {
+          "email": "gerald.oyudo@gmail.com"
+        }
+      ],
+      "dynamic_template_data": {
+        "sample": "Boss"
+      }
+    }
+  ],
+  "template_id": "d-197bd78523584a3a8ff97424c98a3269"
+}

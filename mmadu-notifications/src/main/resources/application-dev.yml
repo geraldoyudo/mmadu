@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/mmadu_notification_db?replicaSet=default-replica-set

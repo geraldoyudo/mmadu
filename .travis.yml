@@ -43,5 +43,5 @@ matrix:
       install: mvn -q clean
       script:
         - mvn -q install
-        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity -DskipTests
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity,mmadu-notifications -DskipTests
         - cd ./docker/prod && ./release.sh cd ../../

@@ -1,0 +1,9 @@
+{
+  "id": "test",
+  "roles": [],
+  "authorities": [],
+  "username": "test-user",
+  "password": "my-password",
+  "favourite-colour": "blue",
+  "country": "Nigeria"
+}

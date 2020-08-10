@@ -1,0 +1,17 @@
+{
+  "message": "message",
+  "context": {
+    "user": {
+      "id": "1111",
+      "username": "admin",
+      "country": "Nigeria"
+    },
+    "key2": "val2"
+  },
+  "id": "1234",
+  "type": "email",
+  "headers": {
+    "key1": 2
+  },
+  "messageTemplate": "13232"
+}

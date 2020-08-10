@@ -1,0 +1,30 @@
+spring:
+  data:
+    rest:
+      base-path: /repo
+    mongodb:
+      uri: ${mmadu.notifications.db.uri}
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          mmadu:
+            client-id: ${mmadu.admin.client}
+            client-secret: ${mmadu.admin.secret}
+            authorization-grant-type: client_credentials
+            scope: a.*.**, r.*.**
+        provider:
+          mmadu:
+            token-uri: ${mmadu.identity.url}/clients/token
+mmadu:
+  admin:
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
+  identity:
+    jwt-auto-discovery: true
+    url: ${MMADU_IDENTITY_URL:http://localhost:10084}
+    jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
+  userService:
+    url: ${MMADU_USER_URL:http://localhost:10080}
