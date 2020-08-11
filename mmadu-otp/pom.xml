@@ -72,6 +72,28 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mmadu</groupId>
+            <artifactId>security-utils</artifactId>
+            <version>2.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

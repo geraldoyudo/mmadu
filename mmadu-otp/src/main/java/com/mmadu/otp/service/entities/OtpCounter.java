@@ -11,6 +11,7 @@ public class OtpCounter {
     private String id;
     private String domainId;
     private String profile;
+    private String type;
     private String key;
     private BigDecimal value = BigDecimal.ZERO;
 }
