@@ -34,6 +34,7 @@ public class ScheduledNotificationMessageSubscriptionHandler {
         this.scheduledNotificationManager = scheduledNotificationManager;
     }
 
+    @Autowired
     public void setDomainNotificationConfigurationRepository(DomainNotificationConfigurationRepository domainNotificationConfigurationRepository) {
         this.domainNotificationConfigurationRepository = domainNotificationConfigurationRepository;
     }

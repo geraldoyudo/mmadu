@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ScheduledNotificationManagerImpl implements ScheduledNotificationManager {
-    private static final String ALL_USER_EVENTS = "user.*";
+    private static final String ALL_USER_EVENTS = "user.#";
 
     private final Map<String, EventSubscriber> domainEventSubscriberMap = new ConcurrentHashMap<>();
     private EventSubscriberFactory eventSubscriberFactory;

@@ -1,12 +1,14 @@
 package com.mmadu.notifications.service.populator;
 
-import com.mmadu.notifications.service.DomainNotificationConfigurationList;
+import com.mmadu.notifications.service.config.DomainNotificationConfigurationList;
 import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
 import com.mmadu.notifications.service.entities.NotificationProfile;
 import com.mmadu.notifications.service.entities.ProviderConfiguration;
+import com.mmadu.notifications.service.entities.ScheduledNotificationMessage;
 import com.mmadu.notifications.service.repositories.DomainNotificationConfigurationRepository;
 import com.mmadu.notifications.service.repositories.NotificationProfileRepository;
 import com.mmadu.notifications.service.repositories.ProviderConfigurationRepository;
+import com.mmadu.notifications.service.repositories.ScheduledNotificationMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -24,6 +26,7 @@ public class DomainPopulator {
     private DomainNotificationConfigurationRepository domainNotificationConfigurationRepository;
     private ProviderConfigurationRepository providerConfigurationRepository;
     private NotificationProfileRepository notificationProfileRepository;
+    private ScheduledNotificationMessageRepository scheduledNotificationMessageRepository;
 
     @Autowired
     public void setDomainNotificationConfigurationList(DomainNotificationConfigurationList domainNotificationConfigurationList) {
@@ -43,6 +46,11 @@ public class DomainPopulator {
     @Autowired
     public void setNotificationProfileRepository(NotificationProfileRepository notificationProfileRepository) {
         this.notificationProfileRepository = notificationProfileRepository;
+    }
+
+    @Autowired
+    public void setScheduledNotificationMessageRepository(ScheduledNotificationMessageRepository scheduledNotificationMessageRepository) {
+        this.scheduledNotificationMessageRepository = scheduledNotificationMessageRepository;
     }
 
     @Transactional
@@ -76,6 +84,7 @@ public class DomainPopulator {
         domainNotificationConfigurationRepository.save(configuration);
         saveProviderConfigurations(domainItem);
         saveNotificationProfiles(domainItem);
+        saveScheduledNotificationMessages(domainItem);
     }
 
     private void saveProviderConfigurations(DomainNotificationConfigurationList.DomainItem domainItem) {
@@ -96,5 +105,14 @@ public class DomainPopulator {
                 .map(p -> p.toEntity(domainItem.getDomainId()))
                 .collect(Collectors.toList());
         notificationProfileRepository.saveAll(profiles);
+    }
+
+    private void saveScheduledNotificationMessages(DomainNotificationConfigurationList.DomainItem domainItem) {
+        List<ScheduledNotificationMessage> messages = Optional.ofNullable(domainItem.getNotificationMessages())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(m -> m.toEntity(domainItem.getDomainId()))
+                .collect(Collectors.toList());
+        scheduledNotificationMessageRepository.saveAll(messages);
     }
 }
