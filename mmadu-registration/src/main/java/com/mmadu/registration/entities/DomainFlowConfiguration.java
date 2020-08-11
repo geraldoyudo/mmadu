@@ -1,5 +1,6 @@
 package com.mmadu.registration.entities;
 
+import com.mmadu.registration.models.PasswordResetFlowConfiguration;
 import com.mmadu.registration.models.themes.ThemeConfiguration;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -17,4 +18,5 @@ public class DomainFlowConfiguration {
     @NotEmpty(message = "domainId is required")
     private String domainId;
     private ThemeConfiguration theme = new ThemeConfiguration();
+    private PasswordResetFlowConfiguration passwordReset = new PasswordResetFlowConfiguration();
 }
