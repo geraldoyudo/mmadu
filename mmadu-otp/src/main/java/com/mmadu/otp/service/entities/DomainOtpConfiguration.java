@@ -1,6 +1,5 @@
-package com.mmadu.registration.entities;
+package com.mmadu.otp.service.entities;
 
-import com.mmadu.registration.models.themes.ThemeConfiguration;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,11 +9,10 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @Document
-public class DomainFlowConfiguration {
+public class DomainOtpConfiguration {
     @Id
     private String id;
     @Indexed(unique = true)
     @NotEmpty(message = "domainId is required")
     private String domainId;
-    private ThemeConfiguration theme = new ThemeConfiguration();
 }
