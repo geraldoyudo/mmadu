@@ -43,4 +43,10 @@ mmadu:
         providerConfigurations:
           - providerId: sendgrid
             properties:
-              key-1: value-1
+              sendgrid_api-key: ${SENDGRID_API_KEY}
+              sendgrid_sender-email: ${SENDGRID_SENDER_EMAIL}
+        notificationMessages:
+          - type: email
+            eventTriggers:
+              - user.password.reset.initiation
+            messageTemplate: d-197bd78523584a3a8ff97424c98a3269

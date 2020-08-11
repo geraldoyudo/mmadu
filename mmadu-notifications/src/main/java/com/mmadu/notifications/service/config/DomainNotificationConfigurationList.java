@@ -1,8 +1,9 @@
-package com.mmadu.notifications.service;
+package com.mmadu.notifications.service.config;
 
 import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
 import com.mmadu.notifications.service.entities.NotificationProfile;
 import com.mmadu.notifications.service.entities.ProviderConfiguration;
+import com.mmadu.notifications.service.entities.ScheduledNotificationMessage;
 import com.mmadu.notifications.service.models.NotificationRule;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,6 +29,7 @@ public class DomainNotificationConfigurationList {
         private List<NotificationProfileItem> profiles = Collections.emptyList();
         @Size(min = 1)
         private List<ProviderConfigurationItem> providerConfigurations = Collections.emptyList();
+        private List<ScheduledNotificationMessageItem> notificationMessages = Collections.emptyList();
 
         public DomainNotificationConfiguration toEntity() {
             DomainNotificationConfiguration configuration = new DomainNotificationConfiguration();
@@ -91,6 +93,36 @@ public class DomainNotificationConfigurationList {
 
         public ProviderConfiguration toEntity(String domainId) {
             return toEntity(domainId, "default");
+        }
+    }
+
+    @Data
+    public static class ScheduledNotificationMessageItem {
+        @NotEmpty
+        private String type;
+        @Size(min = 1)
+        private List<String> eventTriggers;
+        private String userFilter;
+        private String eventFilter;
+        private String messageTemplate;
+        private String message;
+        private String profile = "default";
+        private Map<String, Object> context = Collections.emptyMap();
+        private Map<String, Object> headers = Collections.emptyMap();
+
+        public ScheduledNotificationMessage toEntity(String domainId) {
+            ScheduledNotificationMessage notificationMessage = new ScheduledNotificationMessage();
+            notificationMessage.setDomainId(domainId);
+            notificationMessage.setType(type);
+            notificationMessage.setEventTriggers(eventTriggers);
+            notificationMessage.setUserFilter(userFilter);
+            notificationMessage.setEventFilter(eventFilter);
+            notificationMessage.setMessageTemplate(messageTemplate);
+            notificationMessage.setMessage(message);
+            notificationMessage.setProfile(profile);
+            notificationMessage.setContext(new HashMap<>(context));
+            notificationMessage.setHeaders(new HashMap<>(headers));
+            return notificationMessage;
         }
     }
 }
