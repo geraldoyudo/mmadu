@@ -1,7 +1,5 @@
 package com.mmadu.notifications.service.config;
 
-import com.mmadu.notifications.service.DomainNotificationConfigurationList;
-import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

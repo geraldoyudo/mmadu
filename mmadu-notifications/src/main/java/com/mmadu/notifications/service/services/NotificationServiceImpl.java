@@ -15,6 +15,7 @@ import com.mmadu.notifications.service.provider.NotificationProviderResolver;
 import com.mmadu.notifications.service.provider.UserService;
 import com.mmadu.notifications.service.repositories.ProviderConfigurationRepository;
 import com.mmadu.notifications.service.utils.Pair;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
     public static final String DEFAULT_PROFILE = "default";
     private UserService userService;
@@ -51,6 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Mono<Void> send(SendNotificationMessageRequest request) {
+        log.info("Sending message {}", request);
         return userService.findByUserIdAndDomain(request.getUserId(), request.getDomainId())
                 .map(user -> prepareNotificationMessage(request, user))
                 .flatMap(message -> this.sendMessage(message, request.getDomainId(), request.getProfileId()));

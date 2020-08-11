@@ -13,6 +13,7 @@
         <module>encryption-utils</module>
         <module>security-utils</module>
         <module>theme-utils</module>
+        <module>event-bus</module>
     </modules>
 
     <build>

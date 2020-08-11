@@ -15,7 +15,7 @@ public class SendgridProperties {
     }
 
     public String getApiKey() {
-        return getProperty("sendgrid.api-key", defaultProperties.getApiKey());
+        return getProperty("sendgrid_api-key", defaultProperties.getApiKey());
     }
 
     private String getProperty(String property, String defaultValue) {
@@ -34,10 +34,10 @@ public class SendgridProperties {
     }
 
     public String getEndpointUrl() {
-        return getProperty("sendgrid.endpoint-url", defaultProperties.getEndpointUrl());
+        return getProperty("sendgrid_endpoint-url", defaultProperties.getEndpointUrl());
     }
 
     public String getSenderEmail() {
-        return getProperty("sendgrid.sender-email", defaultProperties.getSenderEmail());
+        return getProperty("sendgrid_sender-email", defaultProperties.getSenderEmail());
     }
 }
