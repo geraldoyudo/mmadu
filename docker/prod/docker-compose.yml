@@ -1,5 +1,19 @@
 version: '3.3'
 services:
+  mmadu-otp:
+    image: geraldoyudo/mmadu-otp:2.0.3-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - MMADU_USER_URL=http://mmadu-user-service:8080
+      - MMADU_OTP_DB_URI=mongodb://mongodb/mmadu_db?replicaSet=default-replica-set
+      - MMADU_IDENTITY_URL=http://mmadu-identity:8080
+      - MMADU_ADMIN_CLIENT=mmadu_admin
+      - MMADU_ADMIN_SECRET=1234567890
+    ports:
+      - "15555:8080"
+    depends_on:
+      - mongodb
+      - mmadu-identity
   mmadu-notifications:
     image: geraldoyudo/mmadu-notifications:2.0.3-SNAPSHOT
     environment:
@@ -9,12 +23,8 @@ services:
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
       - MMADU_ADMIN_CLIENT=mmadu_admin
       - MMADU_ADMIN_SECRET=1234567890
-      - MMADU_REGISTRATION_ROOT_DIR=/home/mmadu
-      - MMADU_APPLICATION_URL=http://localhost:8080
-    volumes:
-      - ${HOME}/mmadu:/home/mmadu:rw
     ports:
-      - "15552:8080"
+      - "15554:8080"
     depends_on:
       - mongodb
       - mmadu-identity

@@ -1,0 +1,30 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/mmadu_db?replicaSet=default-replica-set
+    rest:
+      base-path: /repo
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          mmadu:
+            client-id: ${mmadu.admin.client}
+            client-secret: ${mmadu.admin.secret}
+            authorization-grant-type: client_credentials
+            scope: a.*.**, r.*.**
+        provider:
+          mmadu:
+            token-uri: http://localhost:10084/clients/token
+mmadu:
+  transactions:
+    enabled: false
+  admin:
+    client: ${MMADU_ADMIN_CLIENT:mmadu_admin}
+    secret: ${MMADU_ADMIN_SECRET:1234567890}
+  identity:
+    public-key: 30820122300d06092a864886f70d01010105000382010f003082010a0282010100b4278f42c94340ca20f2921a91f3e9878596ebefea7727fb695b6472404db0200bd3709c32e31648d0a3cf81f26096669a93f3b7e42d9a9558d149203eeb215b2a0c0a464d0c98bd076d1c4c6c5b82958ea99cd737ebe5551b16af7b6f83538a60182164fd3b1609f75f84710a26c0ed0ab20a15540e9789bd4ddda892a25b4d2322319bf862e7e33b11f48125d781e2d95126b284f3f94df04e509d6b152ca48f27bf6bfecc4afdaf1cf060b4f961b0130d32ceacadc2ce90918480b79bc464ad2880a7d559342cfa9ec516f391c00b7b6b0054d8654f74ab225319dc6b7d9ac6e33fdb60e6fe5a315904241738e986110018b2d7ddc411cc657eca4d0684910203010001
+  userService:
+    url: http://localhost:10080
