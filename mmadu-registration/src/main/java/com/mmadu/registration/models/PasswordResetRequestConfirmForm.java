@@ -15,7 +15,5 @@ public class PasswordResetRequestConfirmForm {
     @NotEmpty
     private String otpValue;
     @NotEmpty
-    private String oldPassword;
-    @NotEmpty
     private String newPassword;
 }
