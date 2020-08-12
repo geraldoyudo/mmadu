@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Data
 @Document
-public class ScheduledNotificationMessage {
+public class ScheduledUserNotificationMessage {
     @Id
     private String id;
     private String domainId;

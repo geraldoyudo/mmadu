@@ -3,7 +3,7 @@ package com.mmadu.notifications.service.config;
 import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
 import com.mmadu.notifications.service.entities.NotificationProfile;
 import com.mmadu.notifications.service.entities.ProviderConfiguration;
-import com.mmadu.notifications.service.entities.ScheduledNotificationMessage;
+import com.mmadu.notifications.service.entities.ScheduledUserNotificationMessage;
 import com.mmadu.notifications.service.models.NotificationRule;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -110,8 +110,8 @@ public class DomainNotificationConfigurationList {
         private Map<String, Object> context = Collections.emptyMap();
         private Map<String, Object> headers = Collections.emptyMap();
 
-        public ScheduledNotificationMessage toEntity(String domainId) {
-            ScheduledNotificationMessage notificationMessage = new ScheduledNotificationMessage();
+        public ScheduledUserNotificationMessage toEntity(String domainId) {
+            ScheduledUserNotificationMessage notificationMessage = new ScheduledUserNotificationMessage();
             notificationMessage.setDomainId(domainId);
             notificationMessage.setType(type);
             notificationMessage.setEventTriggers(eventTriggers);

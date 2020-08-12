@@ -1,10 +1,10 @@
 package com.mmadu.notifications.service.provider;
 
 import com.mmadu.notifications.endpoint.models.NotificationUser;
-import com.mmadu.notifications.service.entities.ScheduledNotificationMessage;
+import com.mmadu.notifications.service.entities.ScheduledUserNotificationMessage;
 import com.mmadu.notifications.service.models.GenericUserEvent;
 import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
-import com.mmadu.notifications.service.repositories.ScheduledNotificationMessageRepository;
+import com.mmadu.notifications.service.repositories.ScheduledUserNotificationMessageRepository;
 import com.mmadu.notifications.service.services.NotificationService;
 import com.mmadu.notifications.service.utils.Pair;
 import org.springframework.expression.ExpressionParser;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotificationMessageHandler {
     private String domainId;
-    private ScheduledNotificationMessageRepository scheduledNotificationMessageRepository;
+    private ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository;
     private UserService userService;
     private ExpressionParser expressionParser;
     private NotificationService notificationService;
@@ -26,8 +26,8 @@ public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotific
         this.userService = userService;
     }
 
-    public void setScheduledNotificationMessageRepository(ScheduledNotificationMessageRepository scheduledNotificationMessageRepository) {
-        this.scheduledNotificationMessageRepository = scheduledNotificationMessageRepository;
+    public void setScheduledNotificationMessageRepository(ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository) {
+        this.scheduledUserNotificationMessageRepository = scheduledUserNotificationMessageRepository;
     }
 
     public void setExpressionParser(ExpressionParser expressionParser) {
@@ -45,7 +45,7 @@ public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotific
     @Override
     public void handleEvent(GenericUserEvent event) {
         Mono.fromCallable(() ->
-                scheduledNotificationMessageRepository.findByDomainIdAndEventTriggersContains(
+                scheduledUserNotificationMessageRepository.findByDomainIdAndEventTriggersContains(
                         domainId, event.getType()))
                 .flatMap(
                         list -> userService.findByUserIdAndDomain(event.getUserId(), domainId)
@@ -81,13 +81,13 @@ public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotific
         }
     }
 
-    private Mono<Void> notifyUser(ScheduledNotificationMessage message, NotificationUser user, GenericUserEvent event) {
+    private Mono<Void> notifyUser(ScheduledUserNotificationMessage message, NotificationUser user, GenericUserEvent event) {
         return Mono.just(message)
                 .map(m -> toNotificationMessage(m, user, event))
                 .flatMap(m -> this.notificationService.send(m));
     }
 
-    private SendNotificationMessageRequest toNotificationMessage(ScheduledNotificationMessage message,
+    private SendNotificationMessageRequest toNotificationMessage(ScheduledUserNotificationMessage message,
                                                                  NotificationUser user, GenericUserEvent event) {
         SendNotificationMessageRequest request = new SendNotificationMessageRequest();
         request.setMessageTemplate(message.getMessageTemplate());
