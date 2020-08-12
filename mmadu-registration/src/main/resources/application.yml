@@ -22,6 +22,7 @@ spring:
           mmadu:
             token-uri: http://localhost:10084/clients/token
 mmadu:
+  base-url: http://localhost:${server.port}
   transactions:
     enabled: true
   admin:
@@ -33,6 +34,8 @@ mmadu:
   domainKey: 2222
   userService:
     url: http://localhost:10080
+  otpService:
+    url: http://localhost:10086
   registration:
     home: ${mmadu.home}/registration
     templates: file:${mmadu.registration.home}/templates/

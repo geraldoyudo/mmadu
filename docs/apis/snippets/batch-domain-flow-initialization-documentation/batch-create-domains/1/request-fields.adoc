@@ -17,4 +17,8 @@
 |`+Array+`
 |List of fields in registration form
 
+|`+domains.[].theme+`
+|`+Object+`
+|Theme configuration
+
 |===

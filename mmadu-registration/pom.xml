@@ -111,6 +111,11 @@
             <artifactId>theme-utils</artifactId>
             <version>2.0.3-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.mmadu</groupId>
+            <artifactId>event-bus</artifactId>
+            <version>2.0.3-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

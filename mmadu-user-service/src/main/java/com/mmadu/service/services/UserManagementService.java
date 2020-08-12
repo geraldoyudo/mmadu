@@ -1,5 +1,6 @@
 package com.mmadu.service.services;
 
+import com.mmadu.service.models.ResetUserPasswordRequest;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserView;
 import org.springframework.data.domain.Page;
@@ -22,4 +23,6 @@ public interface UserManagementService {
     Page<UserView> queryUsers(String domainId, String query, Pageable pageable);
 
     void patchUpdateUsers(String domainId, String query, UpdateRequest updateRequest);
+
+    void resetUserPassword(String domainId, String userId, String newPassword);
 }
