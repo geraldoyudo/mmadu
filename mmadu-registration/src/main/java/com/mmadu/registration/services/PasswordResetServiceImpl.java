@@ -5,6 +5,7 @@ import com.mmadu.event.bus.providers.EventPublisher;
 import com.mmadu.registration.events.PasswordResetInitiationEvent;
 import com.mmadu.registration.exceptions.DomainNotFoundException;
 import com.mmadu.registration.models.PasswordResetFlowConfiguration;
+import com.mmadu.registration.models.PasswordResetRequestConfirmForm;
 import com.mmadu.registration.models.PasswordResetRequestForm;
 import com.mmadu.registration.models.otp.Otp;
 import com.mmadu.registration.models.otp.OtpGenerationRequest;
@@ -129,6 +130,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         event.setResetLink(link);
         event.setId(UUID.randomUUID().toString());
         return eventPublisher.publishEvent(Mono.just(event));
+    }
+
+    public void confirmPasswordReset(String domainId, PasswordResetRequestConfirmForm requestForm) {
+        log.info("Performing reset for {} {}", domainId, requestForm);
     }
 
     @Data
