@@ -17,7 +17,7 @@ public class WebSecurityConfig extends MmaduWebSecurityConfigurer {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/*/register/**", "/themes/**", "/js/**",  "/webjars/**", "/css/**")
+                .antMatchers("/*/register/**", "/themes/**", "/js/**", "/webjars/**", "/css/**", "/*/passwordReset/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/repo/fields/**")
                 .hasAuthority("field.read")

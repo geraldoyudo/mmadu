@@ -8,12 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -25,16 +21,16 @@ public class RestResourceConfig {
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
-            OAuth2AuthorizedClientRepository authorizedClientRepository) {
+            OAuth2AuthorizedClientService clientService) {
 
         OAuth2AuthorizedClientProvider authorizedClientProvider =
                 OAuth2AuthorizedClientProviderBuilder.builder()
                         .clientCredentials()
                         .build();
 
-        DefaultOAuth2AuthorizedClientManager authorizedClientManager =
-                new DefaultOAuth2AuthorizedClientManager(
-                        clientRegistrationRepository, authorizedClientRepository);
+        AuthorizedClientServiceOAuth2AuthorizedClientManager authorizedClientManager =
+                new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+                        clientRegistrationRepository, clientService);
         authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
         return authorizedClientManager;
@@ -46,6 +42,19 @@ public class RestResourceConfig {
                                        OAuth2AuthorizedClientManager authorizedClientManager,
                                        ObjectMapper objectMapper
     ) {
+        return createMmaduWebClient(userServiceUrl, authorizedClientManager, objectMapper);
+    }
+
+    @Bean
+    @Qualifier("otpService")
+    public WebClient otpServiceClient(@Value("${mmadu.otpService.url}") String otpServiceUrl,
+                                       OAuth2AuthorizedClientManager authorizedClientManager,
+                                       ObjectMapper objectMapper
+    ) {
+        return createMmaduWebClient(otpServiceUrl, authorizedClientManager, objectMapper);
+    }
+
+    private WebClient createMmaduWebClient(@Value("${mmadu.otpService.url}") String otpServiceUrl, OAuth2AuthorizedClientManager authorizedClientManager, ObjectMapper objectMapper) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
         oauth2Client.setDefaultClientRegistrationId("mmadu");
@@ -64,7 +73,7 @@ public class RestResourceConfig {
                 .exchangeStrategies(strategies)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-                .baseUrl(userServiceUrl)
+                .baseUrl(otpServiceUrl)
                 .build();
     }
 }

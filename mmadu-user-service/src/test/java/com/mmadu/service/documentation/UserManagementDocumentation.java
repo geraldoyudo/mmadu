@@ -15,7 +15,6 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
 import java.util.List;
 
-import static com.mmadu.service.utilities.DomainAuthenticationConstants.DOMAIN_AUTH_TOKEN_FIELD;
 import static java.util.Arrays.asList;
 import static org.assertj.core.util.Maps.newHashMap;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -213,5 +212,26 @@ public class UserManagementDocumentation extends AbstractDocumentation {
         assertThat(appUserRepository.queryForUsers("color equals 'green'",
                 PageRequest.of(0, 10)).getTotalElements(),
                 equalTo(3L));
+    }
+
+    @Test
+    void resetUserPassword() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/resetPassword",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.reset_password"))
+                .content(objectMapper.createObjectNode()
+                        .put("newPassword", "new-password")
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("newPassword").description("The new password for the user")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
     }
 }

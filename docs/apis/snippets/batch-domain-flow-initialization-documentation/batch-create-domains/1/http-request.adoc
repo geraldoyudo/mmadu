@@ -2,8 +2,8 @@
 ----
 POST /domains HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTQ0NDkyOTgsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9mbG93LmluaXRpYWxpemUiLCJleHAiOjE1OTQ0NDkzMDMsImlhdCI6MTU5NDQ0OTI5OCwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.c1iwk7DZ8pH3h8fRo-RESRs1D7PL_cWeJDiIk_Um241aWOCXX3uR1Kqzo8lS_qUjvzdrlXKPnNuHugdv1QCTqIJ3gfIXAg9tBw7IRD41DMSraTliO6R-xnL3ODEOAX6kb6u48FMjGaXExubQFES9L0SfTIifSw-__6RZbk3NCLXu7hobxQRMjNIXYHRPwhhhnBg7zAaB0kFyU5EYCGvReNmSq0ERbXptzIUNPrSuTFQlZzfaJvA61UKWNzMkMNpqSlTs0W-O8TxMxb_pYC0HiwNWio4UwxULQGz8Omz1a6ZS-xGDFrmwdr_7ivYU6pgFP6f9Dvp4xAGWJ_fvl4mvHg
-Content-Length: 6695
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTY3ODM5NjksInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmRvbWFpbl9mbG93LmluaXRpYWxpemUiLCJleHAiOjE1OTY3ODM5NzQsImlhdCI6MTU5Njc4Mzk2OSwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.j3k-12i1gHzxkb2XkL0nN-BBFbF69oe8Q6ywPQSeaf5v-sId755SGLCgz6qpiHNpMhqy27lB9gMrmLMeNtCC2GsGjb47ywVEiybkccHS68jsgbgqVYLnRubC_GlpOYJtCDtc8hZi9BlXClR32TApS-gZnva-wZGvQSUTyhbATaMFYuaT8ZeabmoU2y0hV2Perh95shia2OyC78DZRFr3xXv-MOTpCyFccQ3lf1jZrNzr3P4iU1t8SYV7eL_qQzjTldd_oevAVElKkFTFGoHvsqxqfd-J6NsU548OJXC4X0lGrjnFiTH_WlTt1PlkVY5xYs4V9m353elcY7lfkwFrKg
+Content-Length: 7739
 Host: localhost:8080
 
 {
@@ -160,7 +160,23 @@ Host: localhost:8080
           "label": "Delivery Date and Time",
           "order": 9
         }
-      ]
+      ],
+      "theme": {
+        "logoSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"172\" height=\"91\" viewBox=\"-52 -53 100 100\" stroke-width=\"2\"><g fill=\"none\"><ellipse stroke=\"#66899a\" rx=\"6\" ry=\"44\"/><ellipse stroke=\"#e1d85d\" rx=\"6\" ry=\"44\" transform=\"rotate(-66)\"/><ellipse stroke=\"#80a3cf\" rx=\"6\" ry=\"44\" transform=\"rotate(66)\"/><circle stroke=\"#4b541f\" r=\"44\"/></g><g fill=\"#66899a\" stroke=\"white\"><circle fill=\"#80a3cf\" r=\"13\"/><circle cy=\"-44\" r=\"9\"/><circle cx=\"-40\" cy=\"18\" r=\"9\"/><circle cx=\"40\" cy=\"18\" r=\"9\"/></g></svg>",
+        "themeColour": {
+          "primary": "lightcoral",
+          "secondary": "darkslateblue",
+          "info": "aliceblue",
+          "primaryDark": "#d07070",
+          "primaryDarkest": "#c06060",
+          "secondaryDark": "#39306f",
+          "secondaryDarkest": "#2b2453",
+          "danger": "darkred",
+          "dangerText": "white",
+          "success": "#2b8378",
+          "successText": "black"
+        }
+      }
     }
   ]
 }

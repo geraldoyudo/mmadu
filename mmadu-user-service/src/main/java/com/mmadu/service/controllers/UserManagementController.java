@@ -1,5 +1,6 @@
 package com.mmadu.service.controllers;
 
+import com.mmadu.service.models.ResetUserPasswordRequest;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserUpdateRequest;
 import com.mmadu.service.models.UserView;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,5 +103,14 @@ public class UserManagementController {
                                  @PathVariable("domainId") String domainId) {
         UpdateRequest updateRequest = new UpdateRequest(request.getUpdates());
         userManagementService.patchUpdateUsers(domainId, request.getQuery(), updateRequest);
+    }
+
+    @PostMapping("/{userId}/resetPassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.reset_password')")
+    public void resetUserPassword(@RequestBody @Valid ResetUserPasswordRequest request,
+                                  @PathVariable("domainId") String domainId,
+                                  @PathVariable("userId") String userId) {
+        userManagementService.resetUserPassword(domainId, userId, request.getNewPassword());
     }
 }

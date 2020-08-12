@@ -9,4 +9,8 @@
 |`+string+`
 |Domain Id
 
+|`+theme+`
+|`+Object+`
+|Theme Configuration
+
 |===

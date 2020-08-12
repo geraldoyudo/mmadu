@@ -11,10 +11,26 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 259
+Content-Length: 726
 
 {
   "domainId" : "1234",
+  "theme" : {
+    "logoSvg" : null,
+    "themeColour" : {
+      "primary" : "#007D76",
+      "secondary" : "#E6354C",
+      "info" : "#53FCE6",
+      "primaryDark" : "#005752",
+      "primaryDarkest" : "rgba(38, 145, 139, 0.5)",
+      "secondaryDark" : "#ce1a31",
+      "secondaryDarkest" : "rgba(234, 83, 103, 0.5)",
+      "danger" : "#d5d5d5",
+      "dangerText" : "#161616",
+      "success" : "##feffff",
+      "successText" : "#838584"
+    }
+  },
   "_links" : {
     "self" : {
       "href" : "http://localhost:8080/repo/domainFlowConfigurations/1"

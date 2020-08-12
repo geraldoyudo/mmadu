@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -30,5 +32,46 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
                 .retrieve()
                 .toBodilessEntity()
                 .block();
+    }
+
+    @Override
+    public void updateUserPassword(String domainId, String userId, String password) {
+        userServiceClient.post()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/domains/")
+                                .path(domainId)
+                                .path("/users/")
+                                .path(userId)
+                                .path("/resetPassword")
+                                .build()
+                ).body(BodyInserters.fromValue(Map.of("newPassword", password)))
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+    }
+
+    @Override
+    public Mono<String> queryForSingleUser(String domainId, String query) {
+        return userServiceClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/domains/")
+                        .path(domainId)
+                        .path("/users/search")
+                        .queryParam("size", 2)
+                        .queryParam("query", query)
+                        .build()
+                )
+                .retrieve()
+                .bodyToMono(PasswordResetServiceImpl.UserResponse.class)
+                .onErrorResume(WebClientResponseException.class,
+                        ex -> ex.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(ex))
+                .flatMap(this::ensureSingle);
+    }
+
+    private Mono<String> ensureSingle(PasswordResetServiceImpl.UserResponse response) {
+        if (response.getContent() == null || response.getContent().size() != 1) {
+            return Mono.empty();
+        } else {
+            return Mono.just(response.getContent().get(0).getId());
+        }
     }
 }
