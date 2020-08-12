@@ -14,4 +14,8 @@ public class OtpValidationRequest {
     private String otpId;
     @NotEmpty(message = "value is required")
     private String value;
+    @NotEmpty(message = "key is required")
+    private String key;
+    @NotEmpty(message = "profile is required")
+    private String profile;
 }

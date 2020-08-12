@@ -15,6 +15,8 @@ public class OtpToken {
     @Indexed(expireAfterSeconds = 3)
     private ZonedDateTime expiryTime;
     private String type;
+    private int validationAttempts = 0;
+    private int maxAttempts = 3;
 
     public String getId() {
         return id;
@@ -78,5 +80,26 @@ public class OtpToken {
         } else {
             return ZonedDateTime.now().isAfter(expiryTime);
         }
+    }
+
+    public int getValidationAttempts() {
+        return validationAttempts;
+    }
+
+    public void setValidationAttempts(int validationAttempts) {
+        this.validationAttempts = validationAttempts;
+    }
+
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    public void setMaxAttempts(int maxAttempts) {
+        this.maxAttempts = maxAttempts;
+    }
+
+    public boolean recordAttempt() {
+        validationAttempts++;
+        return validationAttempts > maxAttempts;
     }
 }

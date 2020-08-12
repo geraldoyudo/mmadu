@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface DomainOtpConfigurationRepository extends MongoRepository<DomainOtpConfiguration, String> {
 
-    Optional<DomainOtpConfiguration> findBYDomainId(@Param("domainId") String domainId);
+    Optional<DomainOtpConfiguration> findByDomainId(@Param("domainId") String domainId);
+
+    boolean existsByDomainId(@Param("domainId") String domainId);
 }

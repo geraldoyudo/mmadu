@@ -25,6 +25,7 @@ public class OtpProfile {
     private TimeToLive otpValidity;
     private String type;
     private int otpLength;
+    private int maxAttempts = 3;
     private Map<String, Object> configuration = new HashMap<>();
 
     public void setConfiguration(String key, Object property) {

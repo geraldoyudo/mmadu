@@ -1,0 +1,13 @@
+mmadu:
+  domain-otp-config:
+    domains:
+      - domainId: 1
+        supportedProviders:
+          - alphanumeric
+        profiles:
+          - identifier: password-reset
+            otpValidity:
+              timeUnit: HOURS
+              value: 24
+            type: alphanumeric
+            otpLength: 20

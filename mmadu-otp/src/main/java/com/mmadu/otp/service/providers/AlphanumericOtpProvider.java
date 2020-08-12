@@ -45,6 +45,8 @@ public class AlphanumericOtpProvider implements OtpProvider {
         token.setProfile(request.getProfile());
         token.setValue(RandomStringUtils.randomAlphanumeric(profile.getOtpLength()));
         token.setExpiryTime(ZonedDateTime.now().plus(profile.getOtpValidity().getValue(), profile.getOtpValidity().getTimeUnit()));
+        token.setType(OTP_TYPE);
+        token.setMaxAttempts(profile.getMaxAttempts());
         return otpTokenRepository.save(token);
     }
 
@@ -52,10 +54,21 @@ public class AlphanumericOtpProvider implements OtpProvider {
     public boolean validateToken(OtpValidationRequest request) {
         Optional<OtpToken> token = otpTokenRepository.findById(request.getOtpId());
 
-        if (token.isEmpty() || !token.get().getDomainId().equals(request.getDomainId()) ||
-                token.get().hasExpired() || !token.get().getType().equals(OTP_TYPE)) {
+        if (token.isEmpty()) {
             return false;
         }
-        return token.get().getValue().equals(request.getValue());
+        OtpToken tokenValue = token.get();
+        boolean attemptsExceeded = tokenValue.recordAttempt();
+        boolean valid = tokenValue.getDomainId().equals(request.getDomainId()) &&
+                tokenValue.getType().equals(OTP_TYPE) &&
+                !tokenValue.hasExpired() &&
+                tokenValue.getValue().equals(request.getValue()) &&
+                tokenValue.getKey().equals(request.getKey());
+        if (valid || attemptsExceeded) {
+            otpTokenRepository.delete(tokenValue);
+        } else {
+            otpTokenRepository.save(tokenValue);
+        }
+        return valid;
     }
 }
