@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -99,13 +100,15 @@ public class PasswordResetServiceImpl implements PasswordResetService {
                 .key(key)
                 .profile(configuration.getOtpProfile())
                 .build()
-        ).map(otp -> generateResetLinkFromOtp(otp, userId, domainId))
+        ).map(otp -> generateResetLinkFromOtp(otp, userId, domainId, configuration))
                 .flatMap(link -> notifyPasswordResetInitiation(domainId, userId, link, configuration));
     }
 
-    private String generateResetLinkFromOtp(Otp otp, String userId, String domainId) {
+    private String generateResetLinkFromOtp(Otp otp, String userId, String domainId,
+                                            PasswordResetFlowConfiguration configuration) {
         return String.format("%s/%s/passwordReset/confirm?id=%s&token=%s&user=%s",
-                baseUrl, domainId, otp.getId(), otp.getValue(), userId);
+                StringUtils.isEmpty(configuration.getPasswordConfirmationBaseUrl())?
+                        baseUrl: configuration.getPasswordConfirmationBaseUrl(), domainId, otp.getId(), otp.getValue(), userId);
     }
 
     private Mono<Void> notifyPasswordResetInitiation(String domainId, String userId, String link,
