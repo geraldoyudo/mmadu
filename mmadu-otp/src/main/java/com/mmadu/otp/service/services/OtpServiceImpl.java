@@ -6,6 +6,7 @@ import com.mmadu.otp.service.exceptions.ProfileNotFoundException;
 import com.mmadu.otp.service.models.OtpGenerationRequest;
 import com.mmadu.otp.service.models.OtpValidationRequest;
 import com.mmadu.otp.service.providers.OtpProvider;
+import com.mmadu.otp.service.repositories.OtpTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class OtpServiceImpl implements OtpService {
     private Map<String, OtpProvider> otpProviderMap = Collections.emptyMap();
     private OtpProfileService otpProfileService;
+    private OtpTokenRepository otpTokenRepository;
 
     @Autowired
     public void setOtpProfileService(OtpProfileService otpProfileService) {
@@ -31,8 +33,14 @@ public class OtpServiceImpl implements OtpService {
                 .collect(Collectors.toMap(OtpProvider::type, p -> p));
     }
 
+    @Autowired(required = false)
+    public void setOtpTokenRepository(OtpTokenRepository otpTokenRepository) {
+        this.otpTokenRepository = otpTokenRepository;
+    }
+
     @Override
     public OtpToken generateOTP(OtpGenerationRequest request) {
+        otpTokenRepository.deleteByDomainIdAndProfileAndKey(request.getDomainId(), request.getProfile(), request.getKey());
         OtpProfile profile = otpProfileService.getOtpProfile(request.getDomainId(), request.getProfile())
                 .orElseThrow(ProfileNotFoundException::new);
         return Optional.ofNullable(otpProviderMap.get(profile.getType()))

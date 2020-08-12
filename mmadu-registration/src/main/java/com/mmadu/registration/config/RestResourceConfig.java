@@ -42,6 +42,19 @@ public class RestResourceConfig {
                                        OAuth2AuthorizedClientManager authorizedClientManager,
                                        ObjectMapper objectMapper
     ) {
+        return createMmaduWebClient(userServiceUrl, authorizedClientManager, objectMapper);
+    }
+
+    @Bean
+    @Qualifier("otpService")
+    public WebClient otpServiceClient(@Value("${mmadu.otpService.url}") String otpServiceUrl,
+                                       OAuth2AuthorizedClientManager authorizedClientManager,
+                                       ObjectMapper objectMapper
+    ) {
+        return createMmaduWebClient(otpServiceUrl, authorizedClientManager, objectMapper);
+    }
+
+    private WebClient createMmaduWebClient(@Value("${mmadu.otpService.url}") String otpServiceUrl, OAuth2AuthorizedClientManager authorizedClientManager, ObjectMapper objectMapper) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
                 new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
         oauth2Client.setDefaultClientRegistrationId("mmadu");
@@ -60,7 +73,7 @@ public class RestResourceConfig {
                 .exchangeStrategies(strategies)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-                .baseUrl(userServiceUrl)
+                .baseUrl(otpServiceUrl)
                 .build();
     }
 }

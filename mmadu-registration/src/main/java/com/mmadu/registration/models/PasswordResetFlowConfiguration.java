@@ -13,4 +13,5 @@ public class PasswordResetFlowConfiguration {
     private String userFieldPlaceholder;
     private String submitButtonLabel;
     private String initiationSuccessMessage;
+    private String otpProfile = "password-reset";
 }
