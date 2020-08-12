@@ -61,6 +61,7 @@ public class PropertyValidationServiceImpl implements PropertyValidationService 
         } else {
             validationContextRepository.save(context);
         }
+        return valid;
     }
 
     @Autowired
