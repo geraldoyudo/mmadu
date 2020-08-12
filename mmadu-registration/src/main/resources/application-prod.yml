@@ -22,6 +22,7 @@ spring:
           mmadu:
             token-uri: ${mmadu.identity.url}/clients/token
 mmadu:
+  base-url: ${MMADU_BASE_URL:http://localhost:8080}
   application:
     ui: ${MMADU_APPLICATION_URL:http://localhost:8080}
   admin:
@@ -34,6 +35,8 @@ mmadu:
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
     url: ${MMADU_USER_URL:http://localhost:10080}
+  otpService:
+    url: ${MMADU_OTP_URL:http://localhost:10086}
   registration:
     db:
       uri: ${MMADU_REGISTRATION_DB_URI}
