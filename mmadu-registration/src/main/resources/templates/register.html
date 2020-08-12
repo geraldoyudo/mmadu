@@ -16,9 +16,9 @@
             integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-primary">
 <div class="container">
-    <form class="form-signin" action="#"
+    <form class="form-signin card bg-info" action="#"
           th:action="@{'/' + ${domainId} + '/register' + '/' + ${profile.code} + '/' + ${redirectUrl == null ? '': ('?redirectUrl=' + redirectUrl)}}"
           th:object="${user}" method="post">
 
