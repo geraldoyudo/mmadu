@@ -160,6 +160,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .orElseThrow(UserNotFoundException::new);
         appUser.setExternalId(userView.getId());
         appUser.setUsername(userView.getUsername());
+        appUser.setPassword(userView.getPassword());
         appUser.setProperties(userView.getProperties());
         appUserRepository.save(appUser);
     }
@@ -210,5 +211,13 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
         String resultantQuery = ensureQueryAndDomainParameters(domainId, query);
         appUserRepository.updateUsers(resultantQuery, updateRequest);
+    }
+
+    @Override
+    public void resetUserPassword(String domainId, String userId, String newPassword) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setPassword(newPassword);
+        appUserRepository.save(user);
     }
 }
