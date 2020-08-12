@@ -160,7 +160,6 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .orElseThrow(UserNotFoundException::new);
         appUser.setExternalId(userView.getId());
         appUser.setUsername(userView.getUsername());
-        appUser.setPassword(userView.getPassword());
         appUser.setProperties(userView.getProperties());
         appUserRepository.save(appUser);
     }
