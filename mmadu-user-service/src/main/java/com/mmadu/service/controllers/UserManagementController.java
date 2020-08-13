@@ -44,7 +44,8 @@ public class UserManagementController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('user.read')")
+    @PreAuthorize("hasAuthority('user.read') || " +
+            "((@currentUser != null) && (#externalId == @currentUser.userId))")
     public UserView getUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
                                                  @PathVariable("userId") String externalId) {
         return userManagementService.getUserByDomainIdAndExternalId(domainId, externalId);
@@ -60,7 +61,8 @@ public class UserManagementController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('user.update')")
+    @PreAuthorize("hasAuthority('user.update') || " +
+            "((@currentUser != null) && (#externalId == @currentUser.userId))")
     public void updateUserByDomainAndExternalId(@PathVariable("domainId") String domainId,
                                                 @PathVariable("userId") String externalId,
                                                 @RequestBody UserView userView) {
@@ -68,7 +70,8 @@ public class UserManagementController {
     }
 
     @GetMapping("/load")
-    @PreAuthorize("hasAuthority('user.load')")
+    @PreAuthorize("hasAuthority('user.load') || " +
+            "((@currentUser != null) && (#username == @currentUser.username))")
     public UserView loadUserByUsername(@PathVariable("domainId") String domainId,
                                        @RequestParam("username") String username) {
         UserView userView = userManagementService.getUserByDomainIdAndUsername(domainId, username);
@@ -113,7 +116,8 @@ public class UserManagementController {
 
     @PostMapping("/{userId}/changePassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('user.change_password')")
+    @PreAuthorize("hasAuthority('user.change_password') || " +
+            "((@currentUser != null) && (#userId == @currentUser.userId))")
     public void changeUserPassword(@RequestBody @Valid ChangeUserPasswordRequest request,
                                    @PathVariable("domainId") String domainId,
                                    @PathVariable("userId") String userId) {

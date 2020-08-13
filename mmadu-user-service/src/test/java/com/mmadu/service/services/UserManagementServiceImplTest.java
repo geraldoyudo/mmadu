@@ -8,6 +8,7 @@ import com.mmadu.service.models.PatchOperation;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserPatch;
 import com.mmadu.service.models.UserView;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
@@ -62,6 +63,8 @@ public class UserManagementServiceImplTest {
     private UserManagementService userManagementService;
     @Captor
     private ArgumentCaptor<AppUser> appUserArgumentCaptor;
+    @MockBean
+    private PasswordHasher passwordHasher;
 
     @BeforeEach
     void setUp() {
