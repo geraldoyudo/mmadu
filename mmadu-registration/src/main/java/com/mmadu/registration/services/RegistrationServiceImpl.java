@@ -4,6 +4,7 @@ import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.exceptions.UserFormValidationException;
 import com.mmadu.registration.models.UserForm;
 import com.mmadu.registration.models.UserModel;
+import com.mmadu.registration.models.registration.DefaultAccountStatus;
 import com.mmadu.registration.providers.UserFormConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,13 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (!model.get("password").isPresent()) {
             model.set("password", "");
         }
+
+        DefaultAccountStatus status = profile.getDefaultAccountStatus();
+        model.set("active", status.isActive());
+        model.set("locked", status.isLocked());
+        model.set("enabled", status.isEnabled());
+        model.set("credentialExpired", status.isCredentialExpired());
+
         userServiceClient.addUsers(domainId, model.getProperties());
     }
 }
