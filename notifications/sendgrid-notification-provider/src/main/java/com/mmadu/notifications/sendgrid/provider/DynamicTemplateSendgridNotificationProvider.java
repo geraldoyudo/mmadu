@@ -3,6 +3,7 @@ package com.mmadu.notifications.sendgrid.provider;
 import com.mmadu.notifications.endpoint.NotificationProvider;
 import com.mmadu.notifications.endpoint.models.NotificationMessage;
 import com.mmadu.notifications.endpoint.models.NotificationProviderConfiguration;
+import com.mmadu.notifications.endpoint.models.NotificationUser;
 import com.mmadu.notifications.sendgrid.model.DefaultSendgridProperites;
 import com.mmadu.notifications.sendgrid.model.SendgridProperties;
 import com.mmadu.notifications.sendgrid.model.SendgridRequest;
@@ -12,7 +13,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 public class DynamicTemplateSendgridNotificationProvider implements NotificationProvider {
@@ -43,10 +45,7 @@ public class DynamicTemplateSendgridNotificationProvider implements Notification
                                 .from(SendgridRequest.Address.builder().email(properties.getSenderEmail()).build())
                                 .templateId(message.getMessageTemplate())
                                 .personalization(
-                                        SendgridRequest.Personalization.builder()
-                                                .to(SendgridRequest.Address.builder().email("gerald.oyudo@gmail.com").build())
-                                                .data(message.getContext())
-                                                .build()
+                                        createPersonalization(message)
                                 ).build()
                 ))
                 .retrieve()
@@ -54,11 +53,28 @@ public class DynamicTemplateSendgridNotificationProvider implements Notification
                 .then();
     }
 
+    private SendgridRequest.Personalization createPersonalization(NotificationMessage message) {
+        SendgridRequest.Personalization.PersonalizationBuilder builder = SendgridRequest.Personalization.builder()
+                .data(message.getContext());
+        List<String> destination = message.getHeaders().get("destination");
+        if (destination == null || destination.isEmpty()) {
+            NotificationUser user = message.getContext().getUser()
+                    .orElseThrow(() -> new IllegalArgumentException("destination not set and no user present"));
+            destination = Collections.singletonList(
+                    (String) user.getProperty("email").orElseThrow(
+                            () -> new IllegalArgumentException("destination not set and email property not present in user")
+                    )
+            );
+        }
+        destination.forEach(d -> builder.to(SendgridRequest.Address.builder().email(d).build()));
+        return builder.build();
+    }
+
     @Override
     public boolean supportsMessage(NotificationMessage message) {
         return message.getType().equalsIgnoreCase("email")
                 && !StringUtils.isEmpty(message.getMessageTemplate())
-                && message.getContext().getUser().isPresent()
-                && message.getContext().getUser().get().getProperty("email").isPresent();
+                && ((message.getContext().getUser().isPresent() && message.getContext().getUser().get().getProperty("email").isPresent()) ||
+                !message.getHeaders().get("destination").isEmpty());
     }
 }

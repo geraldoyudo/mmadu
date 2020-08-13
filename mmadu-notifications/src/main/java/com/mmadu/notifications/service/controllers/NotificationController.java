@@ -1,6 +1,6 @@
 package com.mmadu.notifications.service.controllers;
 
-import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
+import com.mmadu.notifications.service.models.SendUserNotificationMessageRequest;
 import com.mmadu.notifications.service.services.NotificationService;
 import com.mmadu.notifications.service.validators.SendNotificationMessageRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class NotificationController {
     @PostMapping
     @PreAuthorize("hasAuthority('notification.send')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> send(@RequestBody @Valid SendNotificationMessageRequest request) {
-        return this.notificationService.send(request);
+    public Mono<Void> send(@RequestBody @Valid SendUserNotificationMessageRequest request) {
+        return this.notificationService.sendToUser(request);
     }
 }

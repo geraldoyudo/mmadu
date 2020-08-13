@@ -8,7 +8,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class MmaduServiceClientImpl implements MmaduUserServiceClient {
@@ -73,5 +75,25 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
         } else {
             return Mono.just(response.getContent().get(0).getId());
         }
+    }
+
+    @Override
+    public Mono<String> getUserProperty(String domainId, String userId, String propertyName) {
+        return userServiceClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/domains/")
+                        .path(domainId)
+                        .path("/users/")
+                        .path(userId)
+                        .build()
+                )
+                .retrieve()
+                .bodyToMono(HashMap.class)
+                .onErrorResume(WebClientResponseException.class,
+                        ex -> ex.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(ex))
+                .map(user -> user.get(propertyName))
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .onErrorResume(NullPointerException.class,
+                        ex -> Mono.empty());
     }
 }

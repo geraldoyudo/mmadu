@@ -1,6 +1,7 @@
 package com.mmadu.notifications.service.provider;
 
-import com.mmadu.notifications.service.repositories.ScheduledNotificationMessageRepository;
+import com.mmadu.notifications.service.repositories.ScheduledEventNotificationMessageRepository;
+import com.mmadu.notifications.service.repositories.ScheduledUserNotificationMessageRepository;
 import com.mmadu.notifications.service.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ExpressionParser;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class ScheduledNotificationMessageHandlerFactoryImpl implements
         ScheduledNotificationMessageHandlerFactory {
 
-    private ScheduledNotificationMessageRepository scheduledNotificationMessageRepository;
+    private ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository;
+    private ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository;
     private UserService userService;
     private ExpressionParser expressionParser = new SpelExpressionParser();
     private NotificationService notificationService;
@@ -22,8 +24,8 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
     }
 
     @Autowired
-    public void setScheduledNotificationMessageRepository(ScheduledNotificationMessageRepository scheduledNotificationMessageRepository) {
-        this.scheduledNotificationMessageRepository = scheduledNotificationMessageRepository;
+    public void setScheduledNotificationMessageRepository(ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository) {
+        this.scheduledUserNotificationMessageRepository = scheduledUserNotificationMessageRepository;
     }
 
     @Autowired
@@ -31,6 +33,10 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
         this.notificationService = notificationService;
     }
 
+    @Autowired
+    public void setScheduledEventNotificationMessageRepository(ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository) {
+        this.scheduledEventNotificationMessageRepository = scheduledEventNotificationMessageRepository;
+    }
 
     @Override
     public ScheduledNotificationMessageHandler getHandlerForDomain(String domainId) {
@@ -38,8 +44,9 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
         handler.setDomainId(domainId);
         handler.setExpressionParser(expressionParser);
         handler.setNotificationService(notificationService);
-        handler.setScheduledNotificationMessageRepository(scheduledNotificationMessageRepository);
+        handler.setScheduledNotificationMessageRepository(scheduledUserNotificationMessageRepository);
         handler.setUserService(userService);
+        handler.setScheduledEventNotificationMessageRepository(scheduledEventNotificationMessageRepository);
         return handler;
     }
 }
