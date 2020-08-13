@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/domains")
@@ -22,7 +23,7 @@ public class DomainNotificationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('domain_notification.initialize')")
-    public void registerDomains(@RequestBody @Valid DomainNotificationConfigurationList configuration) {
-        domainPopulator.initializeDomains(configuration.getDomains());
+    public void registerDomains(@RequestBody @Valid List<DomainNotificationConfigurationList.DomainItem> domains) {
+        domainPopulator.initializeDomains(domains);
     }
 }

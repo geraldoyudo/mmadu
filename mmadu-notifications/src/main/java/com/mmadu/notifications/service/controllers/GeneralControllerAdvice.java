@@ -5,7 +5,9 @@ import com.mmadu.notifications.service.exceptions.ProviderNotFoundException;
 import com.mmadu.notifications.service.models.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -49,6 +51,26 @@ public class GeneralControllerAdvice {
     public ErrorResponse handleIllegalStateException(IllegalStateException ex) {
         return ErrorResponse.builder()
                 .code("17")
+                .message(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler({
+            HttpRequestMethodNotSupportedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        return ErrorResponse.builder()
+                .code("22")
+                .message(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler({
+            HttpMessageNotReadableException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        return ErrorResponse.builder()
+                .code("24")
                 .message(ex.getMessage())
                 .build();
     }
