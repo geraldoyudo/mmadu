@@ -33,6 +33,7 @@ public class AppUser implements DomainPayload {
     @NotEmpty
     private String domainId;
     private Map<String, Object> properties = new HashMap<>();
+    private Map<String, Boolean> propertyValidationState = new HashMap<>();
 
     public AppUser() {
 
@@ -107,8 +108,20 @@ public class AppUser implements DomainPayload {
         this.externalId = externalId;
     }
 
+    public Map<String, Boolean> getPropertyValidationState() {
+        return propertyValidationState;
+    }
+
+    public void setPropertyValidationState(Map<String, Boolean> propertyValidationState) {
+        this.propertyValidationState = propertyValidationState;
+    }
+
+    public void addPropertyValidationStateEntry(String property, boolean state) {
+        this.propertyValidationState.put(property, state);
+    }
+
     public UserView userView() {
-        return new UserView(
+        UserView view = new UserView(
                 externalId,
                 username,
                 password,
@@ -116,6 +129,8 @@ public class AppUser implements DomainPayload {
                 Collections.emptyList(),
                 new HashMap<>(properties)
         );
+        view.setPropertyValidationState(propertyValidationState);
+        return view;
     }
 
     @Override
@@ -124,15 +139,16 @@ public class AppUser implements DomainPayload {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        AppUser appUser = (AppUser) o;
+        AppUser user = (AppUser) o;
 
         return new EqualsBuilder()
-                .append(id, appUser.id)
-                .append(externalId, appUser.externalId)
-                .append(username, appUser.username)
-                .append(password, appUser.password)
-                .append(domainId, appUser.domainId)
-                .append(properties, appUser.properties)
+                .append(id, user.id)
+                .append(externalId, user.externalId)
+                .append(username, user.username)
+                .append(password, user.password)
+                .append(domainId, user.domainId)
+                .append(properties, user.properties)
+                .append(propertyValidationState, user.propertyValidationState)
                 .isEquals();
     }
 
@@ -145,6 +161,7 @@ public class AppUser implements DomainPayload {
                 .append(password)
                 .append(domainId)
                 .append(properties)
+                .append(propertyValidationState)
                 .toHashCode();
     }
 }

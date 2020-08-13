@@ -1,5 +1,6 @@
 package com.mmadu.service.services;
 
+import com.mmadu.service.models.PropertyValidationStateUpdateRequest;
 import com.mmadu.service.models.ResetUserPasswordRequest;
 import com.mmadu.service.models.UpdateRequest;
 import com.mmadu.service.models.UserView;
@@ -25,4 +26,6 @@ public interface UserManagementService {
     void patchUpdateUsers(String domainId, String query, UpdateRequest updateRequest);
 
     void resetUserPassword(String domainId, String userId, String newPassword);
+
+    void setPropertyValidationState(String domainId, String userId, PropertyValidationStateUpdateRequest request);
 }

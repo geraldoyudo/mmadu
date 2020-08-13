@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class UserView {
     private String id;
@@ -22,6 +19,7 @@ public class UserView {
     private List<String> authorities;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> groups;
+    private Map<String, Boolean> propertyValidationState = new HashMap<>();
 
     private Map<String, Object> properties = new LinkedHashMap<>();
 
@@ -115,5 +113,13 @@ public class UserView {
 
     public List<String> getGroups() {
         return groups;
+    }
+
+    public Map<String, Boolean> getPropertyValidationState() {
+        return propertyValidationState;
+    }
+
+    public void setPropertyValidationState(Map<String, Boolean> propertyValidationState) {
+        this.propertyValidationState = propertyValidationState;
     }
 }

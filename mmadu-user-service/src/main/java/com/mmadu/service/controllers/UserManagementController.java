@@ -1,9 +1,6 @@
 package com.mmadu.service.controllers;
 
-import com.mmadu.service.models.ResetUserPasswordRequest;
-import com.mmadu.service.models.UpdateRequest;
-import com.mmadu.service.models.UserUpdateRequest;
-import com.mmadu.service.models.UserView;
+import com.mmadu.service.models.*;
 import com.mmadu.service.services.AuthorityManagementService;
 import com.mmadu.service.services.GroupService;
 import com.mmadu.service.services.RoleManagementService;
@@ -112,5 +109,14 @@ public class UserManagementController {
                                   @PathVariable("domainId") String domainId,
                                   @PathVariable("userId") String userId) {
         userManagementService.resetUserPassword(domainId, userId, request.getNewPassword());
+    }
+
+    @PostMapping("/{userId}/setPropertyValidationState")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.set_property_validation_state')")
+    public void setPropertyValidationState(@RequestBody @Valid PropertyValidationStateUpdateRequest request,
+                                           @PathVariable("domainId") String domainId,
+                                           @PathVariable("userId") String userId) {
+        userManagementService.setPropertyValidationState(domainId, userId, request);
     }
 }
