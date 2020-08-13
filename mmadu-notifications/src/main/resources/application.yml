@@ -49,11 +49,11 @@ mmadu:
           - type: email
             eventTriggers:
               - user.password.reset.initiation
-            messageTemplate: d-197bd78523584a3a8ff97424c98a3269
+            messageTemplate: ${SENDGRID_PASSWORD_RESET_TEMPLATE:d-197bd78523584a3a8ff97424c98a3269}
           - type: email
             eventTriggers:
               - user.validation.property.email
-            messageTemplate:  d-d5aab7b34c6a4ef58b00264f6ce0ff1a
+            messageTemplate:  ${SENDGRID_EMAIL_VERIFICATION_TEMPLATE:d-d5aab7b34c6a4ef58b00264f6ce0ff1a}
             destinationProperty: "propertyName"
           - type: sms
             eventTriggers:

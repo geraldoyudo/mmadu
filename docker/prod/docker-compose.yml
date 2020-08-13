@@ -23,10 +23,14 @@ services:
       - MMADU_IDENTITY_URL=http://mmadu-identity:8080
       - MMADU_ADMIN_CLIENT=mmadu_admin
       - MMADU_ADMIN_SECRET=1234567890
+      - MMADU_EVENT_BUS_RABBITMQ_URI=amqp://rabbitmq
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - SENDGRID_SENDER_EMAIL=${SENDGRID_SENDER_EMAIL}
     ports:
       - "15554:8080"
     depends_on:
       - mongodb
+      - rabbitmq
       - mmadu-identity
       - mmadu-user-service
   mmadu-user-service:
@@ -55,8 +59,11 @@ services:
       - MMADU_ADMIN_SECRET=1234567890
       - MMADU_REGISTRATION_ROOT_DIR=/home/mmadu
       - MMADU_APPLICATION_URL=http://localhost:8080
+      - MMADU_EVENT_BUS_RABBITMQ_URI=amqp://rabbitmq
+      - MMADU_OTP_URL=http://mmadu-otp:8080
+      - MMADU_BASE_URL=http://192.168.99.100:15552
     volumes:
-      - ${HOME}/mmadu:/home/mmadu:rw
+      - /home/mmadu:/home/mmadu:rw
     ports:
       - "15552:8080"
     depends_on:
@@ -85,3 +92,9 @@ services:
       test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo --quiet) -eq 1
       interval: 10s
     command: ["--replSet", "default-replica-set"]
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
