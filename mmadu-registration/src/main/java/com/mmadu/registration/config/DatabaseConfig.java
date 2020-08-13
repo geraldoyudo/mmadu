@@ -1,9 +1,6 @@
 package com.mmadu.registration.config;
 
-import com.mmadu.registration.entities.DomainFlowConfiguration;
-import com.mmadu.registration.entities.Field;
-import com.mmadu.registration.entities.FieldType;
-import com.mmadu.registration.entities.RegistrationProfile;
+import com.mmadu.registration.entities.*;
 import com.mmadu.registration.providers.database.DatabaseCollectionInitializer;
 import com.mmadu.registration.utils.converters.ZonedDateTimeReadConverter;
 import com.mmadu.registration.utils.converters.ZonedDateTimeWriteConverter;
@@ -22,7 +19,8 @@ import java.util.List;
 public class DatabaseConfig {
 
     private static final List<Class<?>> COLLECTIONS = List.of(
-            DomainFlowConfiguration.class, Field.class, FieldType.class, RegistrationProfile.class
+            DomainFlowConfiguration.class, Field.class, FieldType.class, RegistrationProfile.class,
+            ValidationContext.class
     );
 
     @Bean
