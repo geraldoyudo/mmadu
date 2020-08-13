@@ -20,7 +20,10 @@ public class UserView {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> groups;
     private Map<String, Boolean> propertyValidationState = new HashMap<>();
-
+    private boolean credentialExpired = false;
+    private boolean enabled = true;
+    private boolean locked = false;
+    private boolean active = true;
     private Map<String, Object> properties = new LinkedHashMap<>();
 
     public UserView() {
@@ -121,5 +124,37 @@ public class UserView {
 
     public void setPropertyValidationState(Map<String, Boolean> propertyValidationState) {
         this.propertyValidationState = propertyValidationState;
+    }
+
+    public boolean isCredentialExpired() {
+        return credentialExpired;
+    }
+
+    public void setCredentialExpired(boolean credentialExpired) {
+        this.credentialExpired = credentialExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

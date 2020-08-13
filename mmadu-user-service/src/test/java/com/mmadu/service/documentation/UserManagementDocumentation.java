@@ -80,7 +80,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("content.[].authorities").type("string list")
                         .description("List of authorities given to ths user"),
                 fieldWithPath("content.[].propertyValidationState")
-                        .description("Property Validation state map")
+                        .description("Property Validation state map"),
+                fieldWithPath("content.[].enabled").description("Whether user is enabled"),
+                fieldWithPath("content.[].active").description("Whether user is active"),
+                fieldWithPath("content.[].locked").description("Whether user is locked"),
+                fieldWithPath("content.[].credentialExpired").description("Whether user's password has expired")
         );
     }
 
@@ -106,7 +110,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("password").description("password of the user"),
                 fieldWithPath("roles").type("string list").description("List of roles assigned to this user"),
                 fieldWithPath("authorities").type("string list").description("List of authorities given to ths user"),
-                fieldWithPath("propertyValidationState").description("Property validation state map")
+                fieldWithPath("propertyValidationState").description("Property validation state map"),
+                fieldWithPath("enabled").description("Whether user is enabled"),
+                fieldWithPath("active").description("Whether user is active"),
+                fieldWithPath("locked").description("Whether user is locked"),
+                fieldWithPath("credentialExpired").description("Whether user's password has expired")
         );
     }
 

@@ -34,6 +34,10 @@ public class AppUser implements DomainPayload {
     private String domainId;
     private Map<String, Object> properties = new HashMap<>();
     private Map<String, Boolean> propertyValidationState = new HashMap<>();
+    private boolean credentialExpired = false;
+    private boolean enabled = true;
+    private boolean locked = false;
+    private boolean active = true;
 
     public AppUser() {
 
@@ -45,6 +49,10 @@ public class AppUser implements DomainPayload {
         this.username = userView.getUsername();
         this.password = userView.getPassword();
         this.properties = new HashMap<>(userView.getProperties());
+        this.active = userView.isActive();
+        this.credentialExpired = userView.isCredentialExpired();
+        this.enabled = userView.isEnabled();
+        this.locked = userView.isLocked();
     }
 
     public String getId() {
@@ -131,6 +139,38 @@ public class AppUser implements DomainPayload {
         );
         view.setPropertyValidationState(propertyValidationState);
         return view;
+    }
+
+    public boolean isCredentialExpired() {
+        return credentialExpired;
+    }
+
+    public void setCredentialExpired(boolean credentialExpired) {
+        this.credentialExpired = credentialExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
