@@ -25,14 +25,16 @@ public class PropertyValidationController {
 
 
     @PostMapping("/request")
-    @PreAuthorize("hasAuthority('validation.property.' + #request.propertyName + '.request')")
+    @PreAuthorize("hasAuthority('validation.property.' + #request.propertyName + '.request') || " +
+            "((@currentUser != null) && (#request.userId == @currentUser.userId))")
     public void initiateValidation(@RequestBody @Valid ValidationRequest request, BindingResult result) {
         propertyValidationRequestValidator.validate(request, result);
         propertyValidationService.initiateValidation(request);
     }
 
     @PostMapping("/attempt")
-    @PreAuthorize("hasAuthority('validation.property.' + #attempt.propertyName + '.attempt')")
+    @PreAuthorize("hasAuthority('validation.property.' + #attempt.propertyName + '.attempt') || " +
+            "((@currentUser != null) && (#attempt.userId == @currentUser.userId))")
     public ValidationResponse attemptValidation(@RequestBody @Valid ValidationAttempt attempt, BindingResult result) {
         propertyValidationAttemptValidator.validate(attempt, result);
         boolean valid = propertyValidationService.evaluateValidation(attempt);
