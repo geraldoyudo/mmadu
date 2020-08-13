@@ -11,4 +11,6 @@ public interface MmaduUserServiceClient {
     void updateUserPassword(String domainId, String userId, String password);
 
     Mono<String> queryForSingleUser(String domainId, String query);
+
+    Mono<String> getUserProperty(String domainId, String userId, String propertyName);
 }

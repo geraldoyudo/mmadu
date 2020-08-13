@@ -5,6 +5,8 @@ import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.providers.database.DatabaseCollectionInitializer;
+import com.mmadu.registration.utils.converters.ZonedDateTimeReadConverter;
+import com.mmadu.registration.utils.converters.ZonedDateTimeWriteConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 import java.util.List;
 
@@ -36,5 +39,15 @@ public class DatabaseConfig {
         initializer.setCollections(COLLECTIONS);
         initializer.setMongoOperations(mongoOperations);
         return initializer;
+    }
+
+    @Bean
+    public MongoCustomConversions customConversions() {
+        return new MongoCustomConversions(
+                List.of(
+                        new ZonedDateTimeReadConverter(),
+                        new ZonedDateTimeWriteConverter()
+                )
+        );
     }
 }

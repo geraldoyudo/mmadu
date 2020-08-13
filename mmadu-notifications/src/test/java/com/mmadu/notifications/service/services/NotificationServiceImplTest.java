@@ -5,7 +5,7 @@ import com.mmadu.notifications.endpoint.models.NotificationMessage;
 import com.mmadu.notifications.endpoint.models.NotificationProviderConfiguration;
 import com.mmadu.notifications.endpoint.models.NotificationUser;
 import com.mmadu.notifications.service.entities.ProviderConfiguration;
-import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
+import com.mmadu.notifications.service.models.SendUserNotificationMessageRequest;
 import com.mmadu.notifications.service.provider.NotificationProviderRegistry;
 import com.mmadu.notifications.service.provider.NotificationProviderResolver;
 import com.mmadu.notifications.service.provider.UserService;
@@ -68,7 +68,7 @@ class NotificationServiceImplTest {
             return Mono.empty();
         });
 
-        notificationService.send(request()).block();
+        notificationService.sendToUser(request()).block();
 
         verify(providerResolver, times(1)).getProviderForMessage(messageCaptor.capture(),
                 eq(DOMAIN_ID), eq(PROFILE_ID));
@@ -106,8 +106,8 @@ class NotificationServiceImplTest {
         return configuration;
     }
 
-    private SendNotificationMessageRequest request() {
-        SendNotificationMessageRequest request = new SendNotificationMessageRequest();
+    private SendUserNotificationMessageRequest request() {
+        SendUserNotificationMessageRequest request = new SendUserNotificationMessageRequest();
         request.setUserId(USER_ID);
         request.setContext(new HashMap<>());
         request.setHeaders(new HashMap<>());

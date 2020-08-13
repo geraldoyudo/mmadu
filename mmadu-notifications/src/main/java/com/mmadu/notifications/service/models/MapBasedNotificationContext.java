@@ -29,6 +29,10 @@ public class MapBasedNotificationContext implements NotificationContext {
         this.context = new HashMap<>();
     }
 
+    public MapBasedNotificationContext(Map<String, Object> context) {
+        this.context = new HashMap<>(context);
+    }
+
     @Override
     public Optional<NotificationUser> getUser() {
         return Optional.ofNullable(user);

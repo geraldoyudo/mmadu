@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Data
 @Document
-public class ScheduledNotificationMessage {
+public class ScheduledUserNotificationMessage {
     @Id
     private String id;
     private String domainId;
@@ -19,6 +19,7 @@ public class ScheduledNotificationMessage {
     private List<String> eventTriggers = Collections.emptyList();
     private String userFilter;
     private String eventFilter;
+    private String destinationProperty;
     private String messageTemplate;
     private String message;
     private String profile = "default";

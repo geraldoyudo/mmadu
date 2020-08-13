@@ -8,10 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class GenericUserEvent implements Event {
+public class GenericEvent implements Event {
     private String id;
     private String domain;
-    private String userId;
     private String type;
     private Map<String, Object> properties = new LinkedHashMap<>();
 
@@ -48,14 +47,6 @@ public class GenericUserEvent implements Event {
         this.domain = domain;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String getType() {
         return type;
@@ -67,10 +58,9 @@ public class GenericUserEvent implements Event {
 
     @Override
     public String toString() {
-        return "GenericUserEvent{" +
+        return "GenericEvent{" +
                 "id='" + id + '\'' +
                 ", domain='" + domain + '\'' +
-                ", userId='" + userId + '\'' +
                 ", type='" + type + '\'' +
                 ", properties=" + properties +
                 '}';
