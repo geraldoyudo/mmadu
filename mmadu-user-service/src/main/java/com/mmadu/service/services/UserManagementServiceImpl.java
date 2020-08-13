@@ -4,10 +4,7 @@ import com.mmadu.service.entities.AppUser;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
-import com.mmadu.service.models.NewGroupUserRequest;
-import com.mmadu.service.models.PagedList;
-import com.mmadu.service.models.UpdateRequest;
-import com.mmadu.service.models.UserView;
+import com.mmadu.service.models.*;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
@@ -219,5 +216,12 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .orElseThrow(UserNotFoundException::new);
         user.setPassword(newPassword);
         appUserRepository.save(user);
+    }
+
+    @Override
+    public void setPropertyValidationState(String domainId, String userId, PropertyValidationStateUpdateRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.addPropertyValidationStateEntry(request.getPropertyName(), request.isValid());
     }
 }

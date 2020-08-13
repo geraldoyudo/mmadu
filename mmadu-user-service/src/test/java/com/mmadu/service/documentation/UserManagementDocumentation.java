@@ -78,7 +78,9 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("content.[].roles").type("string list")
                         .description("List of roles assigned to this user"),
                 fieldWithPath("content.[].authorities").type("string list")
-                        .description("List of authorities given to ths user")
+                        .description("List of authorities given to ths user"),
+                fieldWithPath("content.[].propertyValidationState")
+                        .description("Property Validation state map")
         );
     }
 
@@ -103,7 +105,8 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("username").description("Username of the user"),
                 fieldWithPath("password").description("password of the user"),
                 fieldWithPath("roles").type("string list").description("List of roles assigned to this user"),
-                fieldWithPath("authorities").type("string list").description("List of authorities given to ths user")
+                fieldWithPath("authorities").type("string list").description("List of authorities given to ths user"),
+                fieldWithPath("propertyValidationState").description("Property validation state map")
         );
     }
 
@@ -229,6 +232,29 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .andExpect(status().isNoContent())
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         fieldWithPath("newPassword").description("The new password for the user")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
+    void setPropertyValidationState() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setPropertyValidationState",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.set_property_validation_state"))
+                .content(objectMapper.createObjectNode()
+                        .put("propertyName", "email")
+                        .put("valid", true)
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("propertyName").description("The property to be validated"),
+                        fieldWithPath("valid").description("Validity of the property")
                 ), pathParameters(
                         parameterWithName("domainId").description("The domain id of the user"),
                         parameterWithName("userId").description("The external user id of the user")
