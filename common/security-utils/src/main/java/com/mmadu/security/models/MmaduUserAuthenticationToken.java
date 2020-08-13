@@ -21,6 +21,7 @@ public class MmaduUserAuthenticationToken extends AbstractMmaduAuthenticationTok
                 .clientId(jwt.getClaimAsString("client_id"))
                 .domainId(jwt.getClaimAsString("domain_id"))
                 .userId(jwt.getClaimAsString("user_id"))
+                .username(jwt.getClaimAsString("username"))
                 .authorities(AuthoritiesUtils.getAuthorities(getAuthorities()))
                 .roles(AuthoritiesUtils.getRoles(getAuthorities()))
                 .build();
@@ -32,6 +33,7 @@ public class MmaduUserAuthenticationToken extends AbstractMmaduAuthenticationTok
         private String domainId;
         private String clientId;
         private String userId;
+        private String username;
         private List<String> roles;
         private List<String> authorities;
     }
