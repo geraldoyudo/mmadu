@@ -8,6 +8,7 @@ import com.mmadu.registration.models.PropertyValidationConfiguration;
 import com.mmadu.registration.models.events.OTPPropertyValidationEvent;
 import com.mmadu.registration.models.otp.Otp;
 import com.mmadu.registration.models.otp.OtpGenerationRequest;
+import com.mmadu.registration.models.otp.OtpValidationRequest;
 import com.mmadu.registration.models.propertyvalidation.ValidationAttempt;
 import com.mmadu.registration.models.propertyvalidation.ValidationRequest;
 import com.mmadu.registration.providers.otp.OtpService;
@@ -43,15 +44,18 @@ public abstract class OTPEventBasedPropertyValidator implements PropertyValidato
                 .getPropertyValidation();
         PropertyValidationConfiguration configuration = Optional.ofNullable(configurationMap).orElse(emptyMap())
                 .getOrDefault(propertyName, new PropertyValidationConfiguration());
+        String key = String.format("%s|%s|%s", request.getUserId(), "property.validation", propertyName);
         Otp otp = otpService.generateOtp(OtpGenerationRequest.builder()
                 .domainId(request.getDomainId())
                 .profile(configuration.getOtpProfile())
-                .key(String.format("%s|%s|%s", request.getUserId(), "property.validation", propertyName))
+                .key(key)
                 .build()).block();
         eventPublisher.publishEvent(Mono.just(createEvent(otp, request, userProperty)))
                 .subscribe();
         return Map.of(
-                "value", otp.getValue(),
+                "otpId", otp.getId(),
+                "otpProfile", configuration.getOtpProfile(),
+                "otpKey", key,
                 propertyName, userProperty
         );
     }
@@ -78,8 +82,21 @@ public abstract class OTPEventBasedPropertyValidator implements PropertyValidato
     @Override
     public boolean validate(ValidationAttempt attempt, Map<String, Object> context) {
         String code = attempt.get("code", String.class).orElse("");
-        String value = (String) Optional.ofNullable(context.get("value")).orElseThrow(() -> new IllegalStateException("otp value not in context"));
-        return value.equals(code);
+        String otpId = getProperty("otpId", context);
+        String otpProfile = getProperty("otpProfile", context);
+        String otpKey = getProperty("otpKey", context);
+        return otpService.validateOtp(OtpValidationRequest.builder()
+                .value(code)
+                .otpId(otpId)
+                .profile(otpProfile)
+                .domainId(attempt.getDomainId())
+                .key(otpKey)
+                .build()).blockOptional().orElse(false);
+    }
+
+    private String getProperty(String property, Map<String, Object> context) {
+        return (String) Optional.ofNullable(context.get(property))
+                .orElseThrow(() -> new IllegalStateException(property + " not in context"));
     }
 
     @Autowired
