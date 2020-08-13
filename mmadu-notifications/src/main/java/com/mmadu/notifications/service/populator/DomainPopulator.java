@@ -1,14 +1,8 @@
 package com.mmadu.notifications.service.populator;
 
 import com.mmadu.notifications.service.config.DomainNotificationConfigurationList;
-import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
-import com.mmadu.notifications.service.entities.NotificationProfile;
-import com.mmadu.notifications.service.entities.ProviderConfiguration;
-import com.mmadu.notifications.service.entities.ScheduledUserNotificationMessage;
-import com.mmadu.notifications.service.repositories.DomainNotificationConfigurationRepository;
-import com.mmadu.notifications.service.repositories.NotificationProfileRepository;
-import com.mmadu.notifications.service.repositories.ProviderConfigurationRepository;
-import com.mmadu.notifications.service.repositories.ScheduledUserNotificationMessageRepository;
+import com.mmadu.notifications.service.entities.*;
+import com.mmadu.notifications.service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -27,6 +21,7 @@ public class DomainPopulator {
     private ProviderConfigurationRepository providerConfigurationRepository;
     private NotificationProfileRepository notificationProfileRepository;
     private ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository;
+    private ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository;
 
     @Autowired
     public void setDomainNotificationConfigurationList(DomainNotificationConfigurationList domainNotificationConfigurationList) {
@@ -51,6 +46,11 @@ public class DomainPopulator {
     @Autowired
     public void setScheduledNotificationMessageRepository(ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository) {
         this.scheduledUserNotificationMessageRepository = scheduledUserNotificationMessageRepository;
+    }
+
+    @Autowired
+    public void setScheduledEventNotificationMessageRepository(ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository) {
+        this.scheduledEventNotificationMessageRepository = scheduledEventNotificationMessageRepository;
     }
 
     @Transactional
@@ -84,7 +84,8 @@ public class DomainPopulator {
         domainNotificationConfigurationRepository.save(configuration);
         saveProviderConfigurations(domainItem);
         saveNotificationProfiles(domainItem);
-        saveScheduledNotificationMessages(domainItem);
+        saveScheduledUserNotificationMessages(domainItem);
+        saveScheduledEventNotificationMessages(domainItem);
     }
 
     private void saveProviderConfigurations(DomainNotificationConfigurationList.DomainItem domainItem) {
@@ -107,12 +108,21 @@ public class DomainPopulator {
         notificationProfileRepository.saveAll(profiles);
     }
 
-    private void saveScheduledNotificationMessages(DomainNotificationConfigurationList.DomainItem domainItem) {
-        List<ScheduledUserNotificationMessage> messages = Optional.ofNullable(domainItem.getNotificationMessages())
+    private void saveScheduledUserNotificationMessages(DomainNotificationConfigurationList.DomainItem domainItem) {
+        List<ScheduledUserNotificationMessage> messages = Optional.ofNullable(domainItem.getUserNotificationMessages())
                 .orElse(Collections.emptyList())
                 .stream()
                 .map(m -> m.toEntity(domainItem.getDomainId()))
                 .collect(Collectors.toList());
         scheduledUserNotificationMessageRepository.saveAll(messages);
+    }
+
+    private void saveScheduledEventNotificationMessages(DomainNotificationConfigurationList.DomainItem domainItem) {
+        List<ScheduledEventNotificationMessage> messages = Optional.ofNullable(domainItem.getEventNotificationMessages())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(m -> m.toEntity(domainItem.getDomainId()))
+                .collect(Collectors.toList());
+        scheduledEventNotificationMessageRepository.saveAll(messages);
     }
 }

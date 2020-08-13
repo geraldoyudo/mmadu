@@ -45,7 +45,7 @@ mmadu:
             properties:
               sendgrid_api-key: ${SENDGRID_API_KEY}
               sendgrid_sender-email: ${SENDGRID_SENDER_EMAIL}
-        notificationMessages:
+        userNotificationMessages:
           - type: email
             eventTriggers:
               - user.password.reset.initiation
