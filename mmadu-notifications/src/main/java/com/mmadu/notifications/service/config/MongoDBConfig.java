@@ -1,11 +1,7 @@
-package com.mmadu.otp.service.config;
+package com.mmadu.notifications.service.config;
 
-import com.mmadu.otp.service.entities.DomainOtpConfiguration;
-import com.mmadu.otp.service.entities.OtpProfile;
-import com.mmadu.otp.service.entities.OtpToken;
-import com.mmadu.otp.service.providers.database.DatabaseCollectionInitializer;
-import com.mmadu.otp.service.utils.ZonedDateTimeReadConverter;
-import com.mmadu.otp.service.utils.ZonedDateTimeWriteConverter;
+import com.mmadu.notifications.service.entities.*;
+import com.mmadu.notifications.service.provider.database.DatabaseCollectionInitializer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +9,16 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 import java.util.List;
 
 @Configuration
-public class MongoDbConfiguration {
+public class MongoDBConfig {
 
     private static final List<Class<?>> COLLECTIONS = List.of(
-            DomainOtpConfiguration.class, OtpProfile.class,
-            OtpToken.class
+            DomainNotificationConfiguration.class, NotificationProfile.class,
+            ProviderConfiguration.class, ScheduledEventNotificationMessage.class,
+            ScheduledUserNotificationMessage.class
     );
 
 
@@ -40,15 +36,5 @@ public class MongoDbConfiguration {
         initializer.setCollections(COLLECTIONS);
         initializer.setMongoOperations(mongoOperations);
         return initializer;
-    }
-
-    @Bean
-    public MongoCustomConversions customConversions() {
-        return new MongoCustomConversions(
-                List.of(
-                        new ZonedDateTimeReadConverter(),
-                        new ZonedDateTimeWriteConverter()
-                )
-        );
     }
 }
