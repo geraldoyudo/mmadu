@@ -1,7 +1,7 @@
 package com.mmadu.notifications.service.provider;
 
 import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
-import com.mmadu.notifications.service.models.GenericUserEvent;
+import com.mmadu.notifications.service.models.GenericEvent;
 import com.mmadu.notifications.service.repositories.DomainNotificationConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -18,8 +18,8 @@ import java.util.Optional;
 
 @Component
 @RepositoryEventHandler
-public class ScheduledNotificationMessageSubscriptionHandler {
-    private ScheduledNotificationManager scheduledNotificationManager;
+public class ScheduledEventNotificationMessageSubscriptionHandler {
+    private ScheduledEventNotificationManager scheduledEventNotificationManager;
     private ScheduledNotificationMessageHandlerFactory messageHandlerFactory;
     private DomainNotificationConfigurationRepository domainNotificationConfigurationRepository;
     private final Map<String, Disposable> subscription = new HashMap<>();
@@ -30,8 +30,8 @@ public class ScheduledNotificationMessageSubscriptionHandler {
     }
 
     @Autowired
-    public void setScheduledNotificationManager(ScheduledNotificationManager scheduledNotificationManager) {
-        this.scheduledNotificationManager = scheduledNotificationManager;
+    public void setScheduledEventNotificationManager(ScheduledEventNotificationManager scheduledEventNotificationManager) {
+        this.scheduledEventNotificationManager = scheduledEventNotificationManager;
     }
 
     @Autowired
@@ -48,8 +48,8 @@ public class ScheduledNotificationMessageSubscriptionHandler {
     private void initializeSubscriberForDomain(DomainNotificationConfiguration domainNotificationConfiguration) {
         String domainId = domainNotificationConfiguration.getDomainId();
         ScheduledNotificationMessageHandler handler = messageHandlerFactory.getHandlerForDomain(domainId);
-        Disposable disposable = scheduledNotificationManager.getSubscriberForDomain(domainId)
-                .receiveEventsFor(GenericUserEvent.class)
+        Disposable disposable = scheduledEventNotificationManager.getSubscriberForDomain(domainId)
+                .receiveEventsFor(GenericEvent.class)
                 .subscribe(handler::handleEvent);
         subscription.put(domainId, disposable);
     }

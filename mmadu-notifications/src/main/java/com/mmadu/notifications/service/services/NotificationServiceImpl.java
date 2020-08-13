@@ -6,10 +6,7 @@ import com.mmadu.notifications.endpoint.models.NotificationProviderConfiguration
 import com.mmadu.notifications.endpoint.models.NotificationUser;
 import com.mmadu.notifications.service.entities.ProviderConfiguration;
 import com.mmadu.notifications.service.exceptions.ProviderNotFoundException;
-import com.mmadu.notifications.service.models.DefaultNotificationHeaders;
-import com.mmadu.notifications.service.models.DefaultNotificationMessage;
-import com.mmadu.notifications.service.models.MapBasedNotificationContext;
-import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
+import com.mmadu.notifications.service.models.*;
 import com.mmadu.notifications.service.provider.NotificationProviderRegistry;
 import com.mmadu.notifications.service.provider.NotificationProviderResolver;
 import com.mmadu.notifications.service.provider.UserService;
@@ -20,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,14 +51,14 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Mono<Void> send(SendNotificationMessageRequest request) {
+    public Mono<Void> sendToUser(SendUserNotificationMessageRequest request) {
         log.info("Sending message {}", request);
         return userService.findByUserIdAndDomain(request.getUserId(), request.getDomainId())
                 .map(user -> prepareNotificationMessage(request, user))
                 .flatMap(message -> this.sendMessage(message, request.getDomainId(), request.getProfileId()));
     }
 
-    private NotificationMessage prepareNotificationMessage(SendNotificationMessageRequest request, NotificationUser user) {
+    private NotificationMessage prepareNotificationMessage(SendUserNotificationMessageRequest request, NotificationUser user) {
         return DefaultNotificationMessage.builder()
                 .id(request.getId())
                 .context(new MapBasedNotificationContext(request.getContext(), user))
@@ -96,5 +95,26 @@ public class NotificationServiceImpl implements NotificationService {
                     .map(c -> c);
         }
         return configuration.orElse(new ProviderConfiguration());
+    }
+
+    @Override
+    public Mono<Void> send(SendNotificationMessageRequest request) {
+        log.info("Sending message {}", request);
+        return prepareGeneralNotificationMessage(request)
+                .flatMap(message -> this.sendMessage(message, request.getDomainId(), request.getProfileId()));
+    }
+
+
+    private Mono<DefaultNotificationMessage> prepareGeneralNotificationMessage(SendNotificationMessageRequest request) {
+        Map<String, Object> headers = new HashMap<>(request.getHeaders());
+        headers.put("destination", request.getDestination());
+        return Mono.just(DefaultNotificationMessage.builder()
+                .id(request.getId())
+                .context(new MapBasedNotificationContext(request.getContext()))
+                .headers(new DefaultNotificationHeaders(headers))
+                .message(request.getMessageContent())
+                .messageTemplate(request.getMessageTemplate())
+                .type(request.getType())
+                .build());
     }
 }

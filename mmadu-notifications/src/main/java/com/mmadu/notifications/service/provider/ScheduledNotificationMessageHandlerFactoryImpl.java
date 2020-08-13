@@ -1,5 +1,6 @@
 package com.mmadu.notifications.service.provider;
 
+import com.mmadu.notifications.service.repositories.ScheduledEventNotificationMessageRepository;
 import com.mmadu.notifications.service.repositories.ScheduledUserNotificationMessageRepository;
 import com.mmadu.notifications.service.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
         ScheduledNotificationMessageHandlerFactory {
 
     private ScheduledUserNotificationMessageRepository scheduledUserNotificationMessageRepository;
+    private ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository;
     private UserService userService;
     private ExpressionParser expressionParser = new SpelExpressionParser();
     private NotificationService notificationService;
@@ -31,6 +33,10 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
         this.notificationService = notificationService;
     }
 
+    @Autowired
+    public void setScheduledEventNotificationMessageRepository(ScheduledEventNotificationMessageRepository scheduledEventNotificationMessageRepository) {
+        this.scheduledEventNotificationMessageRepository = scheduledEventNotificationMessageRepository;
+    }
 
     @Override
     public ScheduledNotificationMessageHandler getHandlerForDomain(String domainId) {
@@ -40,6 +46,7 @@ public class ScheduledNotificationMessageHandlerFactoryImpl implements
         handler.setNotificationService(notificationService);
         handler.setScheduledNotificationMessageRepository(scheduledUserNotificationMessageRepository);
         handler.setUserService(userService);
+        handler.setScheduledEventNotificationMessageRepository(scheduledEventNotificationMessageRepository);
         return handler;
     }
 }

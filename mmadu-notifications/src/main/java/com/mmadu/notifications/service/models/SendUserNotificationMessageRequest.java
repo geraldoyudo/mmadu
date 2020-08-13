@@ -4,18 +4,17 @@ import com.mmadu.security.api.DomainPayload;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class SendNotificationMessageRequest implements DomainPayload {
+public class SendUserNotificationMessageRequest implements DomainPayload {
     private String id = UUID.randomUUID().toString();
     @NotEmpty
     private String domainId;
     @NotEmpty
     private String profileId = "default";
     @NotEmpty
-    private List<String> destination;
+    private String userId;
     @NotEmpty
     private String type;
     private String messageTemplate;
@@ -48,12 +47,12 @@ public class SendNotificationMessageRequest implements DomainPayload {
         this.profileId = profileId;
     }
 
-    public List<String> getDestination() {
-        return destination;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDestination(List<String> destination) {
-        this.destination = destination;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getType() {

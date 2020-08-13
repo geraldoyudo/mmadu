@@ -2,7 +2,7 @@ package com.mmadu.notifications.service.provider;
 
 import com.mmadu.event.bus.providers.EventSubscriber;
 
-public interface ScheduledNotificationManager {
+public interface ScheduledEventNotificationManager {
 
     EventSubscriber getSubscriberForDomain(String domainId);
 
