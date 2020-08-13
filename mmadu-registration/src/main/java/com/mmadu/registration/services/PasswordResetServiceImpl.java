@@ -88,7 +88,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     }
 
     private String convertToQuery(String property, PasswordResetRequestForm form) {
-        return String.format("%s equals %s", property, form.getUser());
+        return String.format("%s equals '%s'", property, form.getUser());
     }
 
     private Mono<Void> createPasswordRequestTokenForUser(String domainId, String userId,

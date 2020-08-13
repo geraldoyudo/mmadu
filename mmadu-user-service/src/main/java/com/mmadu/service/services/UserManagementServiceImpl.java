@@ -1,10 +1,12 @@
 package com.mmadu.service.services;
 
 import com.mmadu.service.entities.AppUser;
+import com.mmadu.service.exceptions.CredentialsInvalidException;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.models.*;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
@@ -28,6 +30,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     private GroupService groupService;
     private RoleManagementService roleManagementService;
     private AuthorityManagementService authorityManagementService;
+    private PasswordHasher passwordHasher;
 
     @Autowired
     public void setRoleManagementService(RoleManagementService roleManagementService) {
@@ -57,6 +60,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Autowired
     public void setUniqueUserIdGenerator(UniqueUserIdGenerator uniqueUserIdGenerator) {
         this.uniqueUserIdGenerator = uniqueUserIdGenerator;
+    }
+
+    @Autowired
+    public void setPasswordHasher(PasswordHasher passwordHasher) {
+        this.passwordHasher = passwordHasher;
     }
 
     @Override
@@ -219,10 +227,53 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
+    public void changeUserPassword(String domainId, String userId, ChangeUserPasswordRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (!passwordHasher.matches(request.getOldPassword(), user.getPassword())) {
+            throw new CredentialsInvalidException();
+        }
+        user.setPassword(request.getNewPassword());
+        appUserRepository.save(user);
+    }
+
+    @Override
     public void setPropertyValidationState(String domainId, String userId, PropertyValidationStateUpdateRequest request) {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
         user.addPropertyValidationStateEntry(request.getPropertyName(), request.isValid());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setUserEnabled(String domainId, String userId, SetEnabledRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setEnabled(request.isEnabled());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setUserLocked(String domainId, String userId, SetLockedRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setLocked(request.isLocked());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setUserActive(String domainId, String userId, SetActiveRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setActive(request.isActive());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setCredentialsExpired(String domainId, String userId, SetCredentialsExpiredRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setCredentialExpired(request.isCredentialExpired());
         appUserRepository.save(user);
     }
 }

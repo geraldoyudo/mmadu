@@ -50,7 +50,7 @@ public class JacksonDateTimeSerializationTest {
     void serializeInUserView() throws Exception {
         UserView userView = new UserView();
         userView.setProperty("key", LocalDateTime.of(1990, 1, 1, 1, 1, 0));
-        assertThat(objectMapper.writeValueAsString(userView),
-                equalTo("{\"id\":null,\"propertyValidationState\":{},\"username\":null,\"password\":null,\"key\":\"1990-01-01T01:01:00\"}"));
+        assertThat(objectMapper.valueToTree(userView).get("key").asText(),
+                equalTo("1990-01-01T01:01:00"));
     }
 }

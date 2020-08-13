@@ -80,7 +80,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("content.[].authorities").type("string list")
                         .description("List of authorities given to ths user"),
                 fieldWithPath("content.[].propertyValidationState")
-                        .description("Property Validation state map")
+                        .description("Property Validation state map"),
+                fieldWithPath("content.[].enabled").description("Whether user is enabled"),
+                fieldWithPath("content.[].active").description("Whether user is active"),
+                fieldWithPath("content.[].locked").description("Whether user is locked"),
+                fieldWithPath("content.[].credentialExpired").description("Whether user's password has expired")
         );
     }
 
@@ -106,7 +110,11 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 fieldWithPath("password").description("password of the user"),
                 fieldWithPath("roles").type("string list").description("List of roles assigned to this user"),
                 fieldWithPath("authorities").type("string list").description("List of authorities given to ths user"),
-                fieldWithPath("propertyValidationState").description("Property validation state map")
+                fieldWithPath("propertyValidationState").description("Property validation state map"),
+                fieldWithPath("enabled").description("Whether user is enabled"),
+                fieldWithPath("active").description("Whether user is active"),
+                fieldWithPath("locked").description("Whether user is locked"),
+                fieldWithPath("credentialExpired").description("Whether user's password has expired")
         );
     }
 
@@ -239,6 +247,29 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
+    void changeUserPassword() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/changePassword",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.change_password"))
+                .content(objectMapper.createObjectNode()
+                        .put("newPassword", "new-password")
+                        .put("oldPassword", "my-password")
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("newPassword").description("The new password for the user"),
+                        fieldWithPath("oldPassword").description("The old password for the user")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
     void setPropertyValidationState() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setPropertyValidationState",
@@ -255,6 +286,90 @@ public class UserManagementDocumentation extends AbstractDocumentation {
                 .andDo(document(DOCUMENTATION_NAME, requestFields(
                         fieldWithPath("propertyName").description("The property to be validated"),
                         fieldWithPath("valid").description("Validity of the property")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
+    void setUserEnabled() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setEnabled",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.set_enabled"))
+                .content(objectMapper.createObjectNode()
+                        .put("enabled", true)
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("enabled").description("Whether the user is enabled or not")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
+    void setUserActive() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setActive",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.set_active"))
+                .content(objectMapper.createObjectNode()
+                        .put("active", true)
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("active").description("Whether the user is active or not")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
+    void setUserLocked() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setLocked",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.set_locked"))
+                .content(objectMapper.createObjectNode()
+                        .put("locked", false)
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("locked").description("Whether the user is locked or not")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
+    void setCredentialsExpired() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setCredentialsExpired",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.set_credentials_expired"))
+                .content(objectMapper.createObjectNode()
+                        .put("credentialExpired", true)
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("credentialExpired").description("Whether the user's credentials have expired")
                 ), pathParameters(
                         parameterWithName("domainId").description("The domain id of the user"),
                         parameterWithName("userId").description("The external user id of the user")
