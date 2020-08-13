@@ -18,5 +18,6 @@
         <module>mmadu-registration</module>
         <module>mmadu-identity</module>
         <module>mmadu-notifications</module>
+        <module>mmadu-otp</module>
     </modules>
 </project>
