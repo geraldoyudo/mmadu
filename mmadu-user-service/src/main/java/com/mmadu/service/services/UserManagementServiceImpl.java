@@ -1,10 +1,12 @@
 package com.mmadu.service.services;
 
 import com.mmadu.service.entities.AppUser;
+import com.mmadu.service.exceptions.CredentialsInvalidException;
 import com.mmadu.service.exceptions.DomainNotFoundException;
 import com.mmadu.service.exceptions.DuplicationException;
 import com.mmadu.service.exceptions.UserNotFoundException;
 import com.mmadu.service.models.*;
+import com.mmadu.service.providers.PasswordHasher;
 import com.mmadu.service.providers.UniqueUserIdGenerator;
 import com.mmadu.service.repositories.AppDomainRepository;
 import com.mmadu.service.repositories.AppUserRepository;
@@ -28,6 +30,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     private GroupService groupService;
     private RoleManagementService roleManagementService;
     private AuthorityManagementService authorityManagementService;
+    private PasswordHasher passwordHasher;
 
     @Autowired
     public void setRoleManagementService(RoleManagementService roleManagementService) {
@@ -57,6 +60,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Autowired
     public void setUniqueUserIdGenerator(UniqueUserIdGenerator uniqueUserIdGenerator) {
         this.uniqueUserIdGenerator = uniqueUserIdGenerator;
+    }
+
+    @Autowired
+    public void setPasswordHasher(PasswordHasher passwordHasher) {
+        this.passwordHasher = passwordHasher;
     }
 
     @Override
@@ -215,6 +223,17 @@ public class UserManagementServiceImpl implements UserManagementService {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
         user.setPassword(newPassword);
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void changeUserPassword(String domainId, String userId, ChangeUserPasswordRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (!passwordHasher.matches(request.getOldPassword(), user.getPassword())) {
+            throw new CredentialsInvalidException();
+        }
+        user.setPassword(request.getNewPassword());
         appUserRepository.save(user);
     }
 

@@ -247,6 +247,29 @@ public class UserManagementDocumentation extends AbstractDocumentation {
     }
 
     @Test
+    void changeUserPassword() throws Exception {
+        createAUserAndSave();
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/changePassword",
+                USER_DOMAIN_ID, USER_EXTERNAL_ID)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, authorization("a.test-app.user.change_password"))
+                .content(objectMapper.createObjectNode()
+                        .put("newPassword", "new-password")
+                        .put("oldPassword", "my-password")
+                        .toPrettyString()
+                )
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document(DOCUMENTATION_NAME, requestFields(
+                        fieldWithPath("newPassword").description("The new password for the user"),
+                        fieldWithPath("oldPassword").description("The old password for the user")
+                ), pathParameters(
+                        parameterWithName("domainId").description("The domain id of the user"),
+                        parameterWithName("userId").description("The external user id of the user")
+                )));
+    }
+
+    @Test
     void setPropertyValidationState() throws Exception {
         createAUserAndSave();
         mockMvc.perform(RestDocumentationRequestBuilders.post("/domains/{domainId}/users/{userId}/setPropertyValidationState",

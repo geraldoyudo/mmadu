@@ -24,6 +24,8 @@ public interface UserManagementService {
 
     void resetUserPassword(String domainId, String userId, String newPassword);
 
+    void changeUserPassword(String domainId, String userId, ChangeUserPasswordRequest request);
+
     void setPropertyValidationState(String domainId, String userId, PropertyValidationStateUpdateRequest request);
 
     void setUserEnabled(String domainId, String userId, SetEnabledRequest request);

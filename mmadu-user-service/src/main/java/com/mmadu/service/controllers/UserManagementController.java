@@ -111,6 +111,15 @@ public class UserManagementController {
         userManagementService.resetUserPassword(domainId, userId, request.getNewPassword());
     }
 
+    @PostMapping("/{userId}/changePassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.change_password')")
+    public void changeUserPassword(@RequestBody @Valid ChangeUserPasswordRequest request,
+                                   @PathVariable("domainId") String domainId,
+                                   @PathVariable("userId") String userId) {
+        userManagementService.changeUserPassword(domainId, userId, request);
+    }
+
     @PostMapping("/{userId}/setPropertyValidationState")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('user.set_property_validation_state')")
