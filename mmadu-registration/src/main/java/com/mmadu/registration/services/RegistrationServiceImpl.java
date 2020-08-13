@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class RegistrationServiceImpl implements RegistrationService {
@@ -59,7 +61,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             model.set("password", "");
         }
 
-        DefaultAccountStatus status = profile.getDefaultAccountStatus();
+        DefaultAccountStatus status = Optional.ofNullable(profile.getDefaultAccountStatus()).orElse(new DefaultAccountStatus());
         model.set("active", status.isActive());
         model.set("locked", status.isLocked());
         model.set("enabled", status.isEnabled());
