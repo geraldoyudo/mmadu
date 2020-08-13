@@ -58,6 +58,8 @@ public class PropertyValidationServiceImpl implements PropertyValidationService 
 
         if (valid) {
             validationContextRepository.delete(context);
+            userServiceClient.setPropertyValidationState(attempt.getDomainId(),
+                    attempt.getUserId(), attempt.getPropertyName(), true).block();
         } else {
             validationContextRepository.save(context);
         }

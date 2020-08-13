@@ -96,4 +96,23 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
                 .onErrorResume(NullPointerException.class,
                         ex -> Mono.empty());
     }
+
+    @Override
+    public Mono<Void> setPropertyValidationState(String domainId, String userId, String propertyName, boolean valid) {
+        return userServiceClient.post()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/domains/")
+                                .path(domainId)
+                                .path("/users/")
+                                .path(userId)
+                                .path("/setPropertyValidationState")
+                                .build()
+                ).body(BodyInserters.fromValue(Map.of(
+                        "propertyName", propertyName,
+                        "valid", valid
+                )))
+                .retrieve()
+                .toBodilessEntity()
+                .then();
+    }
 }
