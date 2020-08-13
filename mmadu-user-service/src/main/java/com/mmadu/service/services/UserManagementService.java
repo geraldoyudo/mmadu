@@ -1,9 +1,6 @@
 package com.mmadu.service.services;
 
-import com.mmadu.service.models.PropertyValidationStateUpdateRequest;
-import com.mmadu.service.models.ResetUserPasswordRequest;
-import com.mmadu.service.models.UpdateRequest;
-import com.mmadu.service.models.UserView;
+import com.mmadu.service.models.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,4 +25,12 @@ public interface UserManagementService {
     void resetUserPassword(String domainId, String userId, String newPassword);
 
     void setPropertyValidationState(String domainId, String userId, PropertyValidationStateUpdateRequest request);
+
+    void setUserEnabled(String domainId, String userId, SetEnabledRequest request);
+
+    void setUserLocked(String domainId, String userId, SetLockedRequest request);
+
+    void setUserActive(String domainId, String userId, SetActiveRequest request);
+
+    void setCredentialsExpired(String domainId, String userId, SetCredentialsExpiredRequest request);
 }

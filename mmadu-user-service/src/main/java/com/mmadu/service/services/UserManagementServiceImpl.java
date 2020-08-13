@@ -225,4 +225,36 @@ public class UserManagementServiceImpl implements UserManagementService {
         user.addPropertyValidationStateEntry(request.getPropertyName(), request.isValid());
         appUserRepository.save(user);
     }
+
+    @Override
+    public void setUserEnabled(String domainId, String userId, SetEnabledRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setEnabled(request.isEnabled());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setUserLocked(String domainId, String userId, SetLockedRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setLocked(request.isLocked());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setUserActive(String domainId, String userId, SetActiveRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setActive(request.isActive());
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void setCredentialsExpired(String domainId, String userId, SetCredentialsExpiredRequest request) {
+        AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
+                .orElseThrow(UserNotFoundException::new);
+        user.setCredentialExpired(request.isCredentialExpired());
+        appUserRepository.save(user);
+    }
 }

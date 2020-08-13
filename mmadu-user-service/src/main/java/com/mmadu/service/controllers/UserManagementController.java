@@ -119,4 +119,40 @@ public class UserManagementController {
                                            @PathVariable("userId") String userId) {
         userManagementService.setPropertyValidationState(domainId, userId, request);
     }
+
+    @PostMapping("/{userId}/setEnabled")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.set_enabled')")
+    public void setUserEnabled(@RequestBody @Valid SetEnabledRequest request,
+                               @PathVariable("domainId") String domainId,
+                               @PathVariable("userId") String userId) {
+        userManagementService.setUserEnabled(domainId, userId, request);
+    }
+
+    @PostMapping("/{userId}/setActive")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.set_active')")
+    public void setUserActive(@RequestBody @Valid SetActiveRequest request,
+                              @PathVariable("domainId") String domainId,
+                              @PathVariable("userId") String userId) {
+        userManagementService.setUserActive(domainId, userId, request);
+    }
+
+    @PostMapping("/{userId}/setLocked")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.set_locked')")
+    public void setUserLocked(@RequestBody @Valid SetLockedRequest request,
+                              @PathVariable("domainId") String domainId,
+                              @PathVariable("userId") String userId) {
+        userManagementService.setUserLocked(domainId, userId, request);
+    }
+
+    @PostMapping("/{userId}/setCredentialsExpired")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('user.set_credentials_expired')")
+    public void setUserCredentialsExpired(@RequestBody @Valid SetCredentialsExpiredRequest request,
+                                          @PathVariable("domainId") String domainId,
+                                          @PathVariable("userId") String userId) {
+        userManagementService.setCredentialsExpired(domainId, userId, request);
+    }
 }
