@@ -223,5 +223,6 @@ public class UserManagementServiceImpl implements UserManagementService {
         AppUser user = appUserRepository.findByDomainIdAndExternalId(domainId, userId)
                 .orElseThrow(UserNotFoundException::new);
         user.addPropertyValidationStateEntry(request.getPropertyName(), request.isValid());
+        appUserRepository.save(user);
     }
 }
