@@ -218,6 +218,7 @@ public class DomainNotificationConfigurationList {
         private String messageTemplate;
         private String message;
         private String profile = "default";
+        private String destinationProperty;
         private Map<String, Object> context = Collections.emptyMap();
         private Map<String, Object> headers = Collections.emptyMap();
 
@@ -269,6 +270,14 @@ public class DomainNotificationConfigurationList {
             this.message = message;
         }
 
+        public String getDestinationProperty() {
+            return destinationProperty;
+        }
+
+        public void setDestinationProperty(String destinationProperty) {
+            this.destinationProperty = destinationProperty;
+        }
+
         public String getProfile() {
             return profile;
         }
@@ -305,6 +314,7 @@ public class DomainNotificationConfigurationList {
             notificationMessage.setProfile(profile);
             notificationMessage.setContext(new HashMap<>(context));
             notificationMessage.setHeaders(new HashMap<>(headers));
+            notificationMessage.setDestinationProperty(destinationProperty);
             return notificationMessage;
         }
     }

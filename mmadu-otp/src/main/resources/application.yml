@@ -40,3 +40,9 @@ mmadu:
               value: 24
             type: alphanumeric
             otpLength: 20
+          - identifier: property-validation
+            otpValidity:
+              timeUnit: HOURS
+              value: 24
+            type: numeric
+            otpLength: 8

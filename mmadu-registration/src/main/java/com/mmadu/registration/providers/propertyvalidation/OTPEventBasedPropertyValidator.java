@@ -58,11 +58,12 @@ public abstract class OTPEventBasedPropertyValidator implements PropertyValidato
 
     private Event createEvent(Otp otp, ValidationRequest request, String userProperty) {
         OTPPropertyValidationEvent event = new OTPPropertyValidationEvent();
-        event.setType("validation.property." + request.getValidationType());
+        event.setType("user.validation.property." + request.getValidationType());
         event.setCode(otp.getValue());
         event.setDomain(request.getDomainId());
         event.setPropertyName(request.getPropertyName());
         event.setPropertyValue(userProperty);
+        event.setUserId(request.getUserId());
         return event;
     }
 

@@ -92,6 +92,8 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
                         ex -> ex.getRawStatusCode() == 404 ? Mono.empty() : Mono.error(ex))
                 .map(user -> user.get(propertyName))
                 .filter(Objects::nonNull)
-                .map(Object::toString);
+                .map(Object::toString)
+                .onErrorResume(NullPointerException.class,
+                        ex -> Mono.empty());
     }
 }

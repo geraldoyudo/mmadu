@@ -15,6 +15,7 @@ import com.mmadu.notifications.service.utils.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -59,10 +60,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private NotificationMessage prepareNotificationMessage(SendUserNotificationMessageRequest request, NotificationUser user) {
+        Map<String, Object> headers = new HashMap<>(request.getHeaders());
+        if (!StringUtils.isEmpty(request.getDestinationProperty()) &&
+                user.getProperty(request.getDestinationProperty()).isPresent()) {
+            headers.put("destination", user.getProperty(request.getDestinationProperty()).get());
+        }
         return DefaultNotificationMessage.builder()
                 .id(request.getId())
                 .context(new MapBasedNotificationContext(request.getContext(), user))
-                .headers(new DefaultNotificationHeaders(request.getHeaders()))
+                .headers(new DefaultNotificationHeaders(headers))
                 .message(request.getMessageContent())
                 .messageTemplate(request.getMessageTemplate())
                 .type(request.getType())

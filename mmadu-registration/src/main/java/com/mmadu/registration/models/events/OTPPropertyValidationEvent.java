@@ -7,6 +7,7 @@ public class OTPPropertyValidationEvent implements Event {
     private String domain;
     private String type;
     private String code;
+    private String userId;
     private String propertyName;
     private String propertyValue;
 
@@ -59,5 +60,13 @@ public class OTPPropertyValidationEvent implements Event {
 
     public void setPropertyValue(String propertyValue) {
         this.propertyValue = propertyValue;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

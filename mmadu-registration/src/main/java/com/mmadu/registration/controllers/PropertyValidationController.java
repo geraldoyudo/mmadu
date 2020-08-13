@@ -8,8 +8,11 @@ import com.mmadu.registration.validators.PropertyValidationAttemptValidator;
 import com.mmadu.registration.validators.PropertyValidationRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -20,23 +23,18 @@ public class PropertyValidationController {
     private PropertyValidationAttemptValidator propertyValidationAttemptValidator;
     private PropertyValidationService propertyValidationService;
 
-    @InitBinder
-    public void setUpValidators(WebDataBinder binder) {
-        binder.addValidators(
-                propertyValidationRequestValidator,
-                propertyValidationAttemptValidator
-        );
-    }
 
     @PostMapping("/request")
     @PreAuthorize("hasAuthority('validation.property.' + #request.propertyName + '.request')")
-    public void initiateValidation(@RequestBody @Valid ValidationRequest request) {
+    public void initiateValidation(@RequestBody @Valid ValidationRequest request, BindingResult result) {
+        propertyValidationRequestValidator.validate(request, result);
         propertyValidationService.initiateValidation(request);
     }
 
     @PostMapping("/attempt")
-    @PreAuthorize("hasAuthority('validation.property.' + #request.propertyName + '.attempt')")
-    public ValidationResponse attemptValidation(@RequestBody @Valid ValidationAttempt attempt) {
+    @PreAuthorize("hasAuthority('validation.property.' + #attempt.propertyName + '.attempt')")
+    public ValidationResponse attemptValidation(@RequestBody @Valid ValidationAttempt attempt, BindingResult result) {
+        propertyValidationAttemptValidator.validate(attempt, result);
         boolean valid = propertyValidationService.evaluateValidation(attempt);
         return new ValidationResponse(valid);
     }

@@ -19,6 +19,7 @@ public class ScheduledUserNotificationMessage {
     private List<String> eventTriggers = Collections.emptyList();
     private String userFilter;
     private String eventFilter;
+    private String destinationProperty;
     private String messageTemplate;
     private String message;
     private String profile = "default";

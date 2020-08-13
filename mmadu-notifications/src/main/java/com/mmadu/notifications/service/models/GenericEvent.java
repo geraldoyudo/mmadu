@@ -55,4 +55,14 @@ public class GenericEvent implements Event {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "GenericEvent{" +
+                "id='" + id + '\'' +
+                ", domain='" + domain + '\'' +
+                ", type='" + type + '\'' +
+                ", properties=" + properties +
+                '}';
+    }
 }

@@ -19,6 +19,7 @@ public class SendUserNotificationMessageRequest implements DomainPayload {
     private String type;
     private String messageTemplate;
     private String messageContent;
+    private String destinationProperty;
     private Map<String, Object> headers = Collections.emptyMap();
     private Map<String, Object> context = Collections.emptyMap();
 
@@ -93,5 +94,13 @@ public class SendUserNotificationMessageRequest implements DomainPayload {
 
     public void setContext(Map<String, Object> context) {
         this.context = context;
+    }
+
+    public String getDestinationProperty() {
+        return destinationProperty;
+    }
+
+    public void setDestinationProperty(String destinationProperty) {
+        this.destinationProperty = destinationProperty;
     }
 }

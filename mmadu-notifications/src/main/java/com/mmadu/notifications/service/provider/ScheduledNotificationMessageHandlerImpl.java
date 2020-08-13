@@ -12,7 +12,6 @@ import com.mmadu.notifications.service.repositories.ScheduledEventNotificationMe
 import com.mmadu.notifications.service.repositories.ScheduledUserNotificationMessageRepository;
 import com.mmadu.notifications.service.services.NotificationService;
 import com.mmadu.notifications.service.utils.Pair;
-import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
@@ -113,6 +112,10 @@ public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotific
         request.setContext(context);
         request.setUserId(user.getId());
         request.setType(message.getType());
+        if (!StringUtils.isEmpty(message.getDestinationProperty())) {
+            String destinationProperty = (String) event.getProperty(message.getDestinationProperty()).orElse("");
+            request.setDestinationProperty(destinationProperty);
+        }
         return request;
     }
 
@@ -151,8 +154,7 @@ public class ScheduledNotificationMessageHandlerImpl implements ScheduledNotific
             Map<String, Object> headers = Optional.ofNullable(message.getHeaders()).orElse(Collections.emptyMap());
             destination = headers.getOrDefault("destination", emptyList());
         } else {
-            Expression expression = expressionParser.parseExpression(message.getDestinationExpression());
-            destination = expression.getValue(event);
+            destination = event.getProperty(message.getDestinationExpression()).orElse(emptyList());
         }
         if (destination instanceof List) {
             List<Object> list = (List<Object>) destination;

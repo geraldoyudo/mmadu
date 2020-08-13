@@ -64,4 +64,15 @@ public class GenericUserEvent implements Event {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "GenericUserEvent{" +
+                "id='" + id + '\'' +
+                ", domain='" + domain + '\'' +
+                ", userId='" + userId + '\'' +
+                ", type='" + type + '\'' +
+                ", properties=" + properties +
+                '}';
+    }
 }
