@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/domains/test-app/users/123453432/setEnabled' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTczMjAxMjEsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5zZXRfZW5hYmxlZCIsImV4cCI6MTU5NzMyMDEyNiwiaWF0IjoxNTk3MzIwMTIxLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.aRnn2x_A0H9PriUg9BJ3GpntftFIJZmaOnW_dGBuk27k4wGiJvAbsj9wk_Mbznls73dBs9k6E-ei0IKRWvf5IoOeGxhSUwrV6rIClOS01exwCKVyZzCHhicQPImXj6myzmzMhcZrIxmPVOCpAtwIBK3_bXGr9NXhu6qLhyOCQDzneCRfpNWu4tbk9o7_oXxpQLEFKIC4DfX9sqiPmMu8IWVl3kC2tl2NheWWxLAW_GHm3jhjWH1ILZpvbV3koMK1qlg8rTp0vwtGPbNoNqfOAON1nwjkXVFvlPYj5iiOsEN6raynRvwlWEtq1YmIm_SwH7oIsMGfpqUvrXxNhM4I9A' \
+    -d '{
+  "enabled" : true
+}'
+----

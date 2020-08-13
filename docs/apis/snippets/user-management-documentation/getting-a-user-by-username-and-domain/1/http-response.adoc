@@ -8,7 +8,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 152
+Content-Length: 251
 
-{"id":"123453432","roles":[],"authorities":[],"groups":[],"username":"test-user","password":"my-password","favourite-colour":"blue","country":"Nigeria"}
+{"id":"123453432","roles":[],"authorities":[],"groups":[],"propertyValidationState":{},"credentialExpired":false,"enabled":true,"locked":false,"active":true,"username":"test-user","password":"my-password","favourite-colour":"blue","country":"Nigeria"}
 ----

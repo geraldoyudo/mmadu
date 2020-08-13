@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+enabled+`
+|`+Boolean+`
+|Whether the user is enabled or not
+
+|===

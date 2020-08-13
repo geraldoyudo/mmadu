@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+active+`
+|`+Boolean+`
+|Whether the user is active or not
+
+|===

@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+newPassword+`
+|`+String+`
+|The new password for the user
+
+|`+oldPassword+`
+|`+String+`
+|The old password for the user
+
+|===

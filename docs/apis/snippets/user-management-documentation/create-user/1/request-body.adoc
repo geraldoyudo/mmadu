@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"id":"123","username":"user","password":"password","color":"blue"}
+{"id":"123","propertyValidationState":{},"credentialExpired":false,"enabled":true,"locked":false,"active":true,"username":"user","password":"password","color":"blue"}
 ----

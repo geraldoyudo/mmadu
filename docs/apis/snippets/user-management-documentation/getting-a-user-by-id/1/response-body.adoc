@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"id":"123453432","roles":[],"authorities":[],"username":"test-user","password":"my-password","favourite-colour":"blue","country":"Nigeria"}
+{"id":"123453432","roles":[],"authorities":[],"propertyValidationState":{},"credentialExpired":false,"enabled":true,"locked":false,"active":true,"username":"test-user","password":"my-password","favourite-colour":"blue","country":"Nigeria"}
 ----

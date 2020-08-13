@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+locked+`
+|`+Boolean+`
+|Whether the user is locked or not
+
+|===

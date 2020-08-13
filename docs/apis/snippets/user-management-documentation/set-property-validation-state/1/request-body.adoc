@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "propertyName" : "email",
+  "valid" : true
+}
+----

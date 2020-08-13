@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "newPassword" : "new-password",
+  "oldPassword" : "my-password"
+}
+----

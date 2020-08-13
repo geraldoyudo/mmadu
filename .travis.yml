@@ -19,7 +19,7 @@ matrix:
       dist: trusty
       install: mvn clean
       script: mvn -q install
-      if: branch != master
+      if: branch != master && branch !~ /^release.*/
       deploy:
         - provider: releases
           api_key: "$GITHUB_OAUTH_TOKEN"
@@ -33,7 +33,7 @@ matrix:
       name: "Package Releases"
       jdk:
         - oraclejdk14
-      if: branch = master AND type = push
+      if: (branch = master or branch =~ /^release.*/) AND type = push
       sudo: false
       dist: trusty
       services:

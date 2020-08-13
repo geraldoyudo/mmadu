@@ -1,0 +1,11 @@
+.+/domains/{domainId}/users/{userId}/resetPassword+
+|===
+|Parameter|Description
+
+|`+domainId+`
+|The domain id of the user
+
+|`+userId+`
+|The external user id of the user
+
+|===

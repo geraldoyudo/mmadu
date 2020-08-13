@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "newPassword" : "new-password",
+  "oldPassword" : "my-password"
+}' | http POST 'http://localhost:8080/domains/test-app/users/123453432/changePassword' \
+    'Content-Type:application/json' \
+    'Authorization:Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTczMjI0NDIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudXNlci5jaGFuZ2VfcGFzc3dvcmQiLCJleHAiOjE1OTczMjI0NDcsImlhdCI6MTU5NzMyMjQ0MiwianRpIjoiZjViZjc1YTYtMDRhMC00MmY3LWExZTAtNTgzZTI5Y2RlODZjIn0.abtq9-V290CBvMUuqm7ohKSoHKIx80vaLH6FdtCLo-GvO5SV1qPFrEB1blykCTt18pkdbgNcovtUukWS-h0oVd1QIQP_itAaPYt-0MzOi3Npoklm378vMCEMrseJoyxN9h8Hqj71h_6cN4bTNswAXmiwg3lPukvlCgqdlZCm3y5fVrOlH4U3N60_-mdZQUYCuFqEKC1VYOTYjDal4r7hhYaZsFsuxmIHNIEi1cD_aOwIfRYDkL1zDaA8vDKN4-9NnCBq8PII9CmRL7uNJ1C8VUl5Cxoc5WC6cwn4scjNJYNrLLMgAe_yiHKqiBbFkRD0mvt_qIR_YoJJTvDxhOSzyg'
+----

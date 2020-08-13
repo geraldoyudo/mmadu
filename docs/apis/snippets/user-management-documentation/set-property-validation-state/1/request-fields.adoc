@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+propertyName+`
+|`+String+`
+|The property to be validated
+
+|`+valid+`
+|`+Boolean+`
+|Validity of the property
+
+|===

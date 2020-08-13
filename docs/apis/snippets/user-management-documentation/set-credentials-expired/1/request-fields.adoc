@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+credentialExpired+`
+|`+Boolean+`
+|Whether the user's credentials have expired
+
+|===

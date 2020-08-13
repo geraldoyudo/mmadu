@@ -21,4 +21,24 @@
 |`+string list+`
 |List of authorities given to ths user
 
+|`+content.[].propertyValidationState+`
+|`+Object+`
+|Property Validation state map
+
+|`+content.[].enabled+`
+|`+Boolean+`
+|Whether user is enabled
+
+|`+content.[].active+`
+|`+Boolean+`
+|Whether user is active
+
+|`+content.[].locked+`
+|`+Boolean+`
+|Whether user is locked
+
+|`+content.[].credentialExpired+`
+|`+Boolean+`
+|Whether user's password has expired
+
 |===
