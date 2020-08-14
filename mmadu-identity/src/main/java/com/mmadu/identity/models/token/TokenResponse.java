@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @Builder
@@ -28,7 +29,7 @@ public class TokenResponse {
         if (expiresIn == null) {
             return null;
         } else {
-            return expiresIn.toEpochSecond();
+            return ZonedDateTime.now().until(expiresIn, ChronoUnit.SECONDS);
         }
     }
 }

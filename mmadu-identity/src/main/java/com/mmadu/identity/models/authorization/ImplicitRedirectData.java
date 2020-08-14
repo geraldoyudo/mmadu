@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class ImplicitRedirectData implements RedirectData {
 
     private String getTimeStampString() {
         return Optional.ofNullable(expiryTimestamp)
-                .map(ZonedDateTime::toEpochSecond)
+                .map(t -> ZonedDateTime.now().until(t, ChronoUnit.SECONDS))
                 .map(Object::toString)
                 .orElse("");
     }
