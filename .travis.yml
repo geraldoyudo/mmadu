@@ -33,7 +33,7 @@ matrix:
       name: "Package Releases"
       jdk:
         - oraclejdk14
-      if: (branch = master or branch =~ /^release.*/) AND type = push
+      if: branch = master AND type = push
       sudo: false
       dist: trusty
       services:
@@ -45,3 +45,19 @@ matrix:
         - mvn -q install
         - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity,mmadu-notifications,mmadu-otp -DskipTests
         - cd ./docker/prod && ./release.sh cd ../../
+    - language: java
+      name: "Package Releases"
+      jdk:
+        - oraclejdk14
+      if: branch =~ /^release.*/ AND type = push
+      sudo: false
+      dist: trusty
+      services:
+        - docker
+      before_install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      install: mvn -q clean
+      script:
+        - mvn -q install
+        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity,mmadu-notifications,mmadu-otp -DskipTests
+        - cd ./docker/prod && ./release-build.sh cd ../../
