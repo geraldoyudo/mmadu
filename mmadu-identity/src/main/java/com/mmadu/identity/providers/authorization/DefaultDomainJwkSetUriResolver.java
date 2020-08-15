@@ -27,7 +27,7 @@ public class DefaultDomainJwkSetUriResolver implements DomainJwkSetUriResolver {
                 .map(this::deriveJwkSetUri);
     }
 
-    @Value("${mmadu.identity.url:http://localhost:${server.port}}")
+    @Value("${mmadu.identity.url:http://localhost:8080}")
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
