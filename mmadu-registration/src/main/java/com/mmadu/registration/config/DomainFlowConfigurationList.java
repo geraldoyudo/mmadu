@@ -40,6 +40,7 @@ public class DomainFlowConfigurationList {
     public static class DomainItem {
         @NotEmpty
         private String domainId;
+        private String jwkSetUri;
         @NotNull
         private List<RegistrationProfileItem> registrationProfiles;
         @NotNull
@@ -54,6 +55,14 @@ public class DomainFlowConfigurationList {
 
         public void setDomainId(String domainId) {
             this.domainId = domainId;
+        }
+
+        public String getJwkSetUri() {
+            return jwkSetUri;
+        }
+
+        public void setJwkSetUri(String jwkSetUri) {
+            this.jwkSetUri = jwkSetUri;
         }
 
         public List<RegistrationProfileItem> getRegistrationProfiles() {
@@ -84,6 +93,7 @@ public class DomainFlowConfigurationList {
             DomainFlowConfiguration configuration = new DomainFlowConfiguration();
             configuration.setDomainId(domainId);
             configuration.setTheme(theme);
+            configuration.setJwkSetUri(jwkSetUri);
             return configuration;
         }
     }

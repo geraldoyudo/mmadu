@@ -27,6 +27,7 @@ public class DomainNotificationConfigurationList {
     public static class DomainItem {
         @NotEmpty
         private String domainId;
+        private String jwkSetUri;
         @Size(min = 1)
         private List<NotificationProfileItem> profiles = Collections.emptyList();
         @Size(min = 1)
@@ -40,6 +41,14 @@ public class DomainNotificationConfigurationList {
 
         public void setDomainId(String domainId) {
             this.domainId = domainId;
+        }
+
+        public String getJwkSetUri() {
+            return jwkSetUri;
+        }
+
+        public void setJwkSetUri(String jwkSetUri) {
+            this.jwkSetUri = jwkSetUri;
         }
 
         public List<NotificationProfileItem> getProfiles() {
@@ -77,6 +86,7 @@ public class DomainNotificationConfigurationList {
         public DomainNotificationConfiguration toEntity() {
             DomainNotificationConfiguration configuration = new DomainNotificationConfiguration();
             configuration.setDomainId(domainId);
+            configuration.setJwkSetUri(jwkSetUri);
             return configuration;
         }
     }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -23,7 +22,6 @@ public class DefaultDomainJwkSetUriResolver implements DomainJwkSetUriResolver {
     @Override
     public Optional<String> getJwkSetUriForDomain(String domain) {
         return appDomainRepository.findById(domain)
-                .map(AppDomain::getJwkSetUri)
-                .filter(Objects::nonNull);
+                .map(AppDomain::getJwkSetUri);
     }
 }
