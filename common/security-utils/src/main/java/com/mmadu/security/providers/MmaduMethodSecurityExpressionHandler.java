@@ -29,9 +29,10 @@ public class MmaduMethodSecurityExpressionHandler extends DefaultMethodSecurityE
         root.setThis(invocation.getThis());
         root.setPermissionEvaluator(this.getPermissionEvaluator());
         root.setTrustResolver(this.getTrustResolver());
-        List<Object> domainPayloads = new LinkedList<>(Arrays.asList(invocation.getArguments()));
+        List<Object> domainPayloads = new LinkedList<>();
         RequestUtils.getCurrentRequest()
                 .ifPresent(domainPayloads::add);
+        domainPayloads.addAll(Arrays.asList(invocation.getArguments()));
         String domainId = domainPayloads.stream()
                 .flatMap(payload -> domainParser.parseDomain(payload).stream())
                 .findFirst()

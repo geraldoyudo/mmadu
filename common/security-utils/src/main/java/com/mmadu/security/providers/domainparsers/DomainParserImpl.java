@@ -13,8 +13,12 @@ public class DomainParserImpl implements DomainParser {
 
     @Override
     public Optional<String> parseDomain(Object request) {
-        return extractors.stream()
-                .flatMap(extractor -> extractor.extractDomainId(request).stream())
-                .findFirst();
+        for (DomainExtractor extractor : extractors) {
+            Optional<String> domain = extractor.extractDomainId(request);
+            if (domain.isPresent()) {
+                return domain;
+            }
+        }
+        return Optional.empty();
     }
 }

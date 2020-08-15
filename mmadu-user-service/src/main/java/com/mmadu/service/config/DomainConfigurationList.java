@@ -127,6 +127,7 @@ public class DomainConfigurationList {
             AppDomain domain = new AppDomain();
             domain.setName(name);
             domain.setId(id);
+            domain.setJwkSetUri(jwkSetUri);
             return domain;
         }
     }

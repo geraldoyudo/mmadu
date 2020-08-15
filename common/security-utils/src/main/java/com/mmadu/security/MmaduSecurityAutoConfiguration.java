@@ -7,10 +7,7 @@ import com.mmadu.security.models.MmaduQualifiedBean;
 import com.mmadu.security.providers.MmaduJwtAuthenticationConverter;
 import com.mmadu.security.providers.MmaduMethodSecurityExpressionHandler;
 import com.mmadu.security.providers.MmaduWebSecurityExpressionHandler;
-import com.mmadu.security.providers.authorization.DefaultJwkSetUriResolver;
-import com.mmadu.security.providers.authorization.DomainJwkSetUriResolver;
-import com.mmadu.security.providers.authorization.TenantBasedAuthenticationManagerResolver;
-import com.mmadu.security.providers.authorization.TenantBasedAuthenticationResolver;
+import com.mmadu.security.providers.authorization.*;
 import com.mmadu.security.providers.converters.AppClientAuthenticationConversionStrategy;
 import com.mmadu.security.providers.converters.AppUserAuthenticationConversionStrategy;
 import com.mmadu.security.providers.converters.DefaultAuthenticationConversionStrategy;
@@ -122,12 +119,6 @@ public class MmaduSecurityAutoConfiguration {
     }
 
     @Bean
-    @Order(10000)
-    public DomainJwkSetUriResolver defaultDomainJwkSetUriResolver() {
-        return new DefaultJwkSetUriResolver(jwkSetUri);
-    }
-
-    @MmaduQualifiedBean
     @ConditionalOnProperty(name = "mmadu.identity.jwt-auto-discovery", havingValue = "true")
     public AuthenticationManagerResolver<String> tenantAuthenticationManagerResolver(
             List<DomainJwkSetUriResolver> domainJwkSetUriResolvers,
@@ -139,10 +130,10 @@ public class MmaduSecurityAutoConfiguration {
         return resolver;
     }
 
-    @MmaduQualifiedBean
+    @Bean
     @ConditionalOnProperty(name = "mmadu.identity.jwt-auto-discovery", havingValue = "true")
     public AuthenticationManagerResolver<HttpServletRequest> tenantBasedJwtIssuerAuthenticationManagerResolver(
-            @MmaduQualified AuthenticationManagerResolver<String> authenticationManagerResolver,
+            AuthenticationManagerResolver<String> authenticationManagerResolver,
             TenantExtractor tenantExtractor
     ) {
         TenantBasedAuthenticationManagerResolver resolver = new TenantBasedAuthenticationManagerResolver();
@@ -150,6 +141,22 @@ public class MmaduSecurityAutoConfiguration {
         resolver.setTenantExtractor(tenantExtractor);
         resolver.setDefaultDomain(defaultDomain);
         return resolver;
+    }
+
+    @Bean
+    public DomainLimiter domainLimiter(List<DomainExtractor> extractors,
+                                       TenantExtractor tenantExtractor) {
+        DefaultDomainLimiter limiter = new DefaultDomainLimiter();
+        limiter.setDomainExtractors(extractors);
+        limiter.setTenantExtractor(tenantExtractor);
+        return limiter;
+    }
+
+    @Bean
+    public DomainLimiterFilter domainLimiterFilter(DomainLimiter domainLimiter) {
+        DomainLimiterFilter filter = new DomainLimiterFilter();
+        filter.setDomainLimiter(domainLimiter);
+        return filter;
     }
 
     @Configuration
@@ -190,6 +197,18 @@ public class MmaduSecurityAutoConfiguration {
         }
     }
 
+    @Configuration
+    static class JwkUriResolverConfiguration {
+
+        @Bean
+        @Order(10000)
+        public DomainJwkSetUriResolver defaultConstantJwkSetUriResolver(
+                @Value("${mmadu.identity.jwk-set-uri:http://localhost:10084/metadata/0/jwks.json}")
+                        String jwkSetUri) {
+            return new DefaultJwkSetUriResolver(jwkSetUri);
+        }
+
+    }
 
     @Configuration
     static class DomainExtractorConfiguration {
