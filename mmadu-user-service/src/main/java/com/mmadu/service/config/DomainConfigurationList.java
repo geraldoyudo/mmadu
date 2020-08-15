@@ -1,7 +1,6 @@
 package com.mmadu.service.config;
 
 import com.mmadu.service.entities.*;
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -11,15 +10,22 @@ import java.util.*;
 
 @Component
 @ConfigurationProperties(prefix = "mmadu.domain-config")
-@Data
 public class DomainConfigurationList {
     private List<DomainItem> domains = new ArrayList<>();
 
-    @Data
+    public List<DomainItem> getDomains() {
+        return domains;
+    }
+
+    public void setDomains(List<DomainItem> domains) {
+        this.domains = domains;
+    }
+
     public static class DomainItem {
         @NotEmpty
         private String name;
         private String id;
+        private String jwkSetUri;
         private List<UserItem> users = Collections.emptyList();
         private List<AuthorityItem> authorities = Collections.emptyList();
         private List<GroupItem> groups = Collections.emptyList();
@@ -29,6 +35,94 @@ public class DomainConfigurationList {
         private List<UserGroupItem> userGroups = Collections.emptyList();
         private List<UserRoleItem> userRoles = Collections.emptyList();
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getJwkSetUri() {
+            return jwkSetUri;
+        }
+
+        public void setJwkSetUri(String jwkSetUri) {
+            this.jwkSetUri = jwkSetUri;
+        }
+
+        public List<UserItem> getUsers() {
+            return users;
+        }
+
+        public void setUsers(List<UserItem> users) {
+            this.users = users;
+        }
+
+        public List<AuthorityItem> getAuthorities() {
+            return authorities;
+        }
+
+        public void setAuthorities(List<AuthorityItem> authorities) {
+            this.authorities = authorities;
+        }
+
+        public List<GroupItem> getGroups() {
+            return groups;
+        }
+
+        public void setGroups(List<GroupItem> groups) {
+            this.groups = groups;
+        }
+
+        public List<RoleItem> getRoles() {
+            return roles;
+        }
+
+        public void setRoles(List<RoleItem> roles) {
+            this.roles = roles;
+        }
+
+        public List<RoleAuthorityItem> getRoleAuthorities() {
+            return roleAuthorities;
+        }
+
+        public void setRoleAuthorities(List<RoleAuthorityItem> roleAuthorities) {
+            this.roleAuthorities = roleAuthorities;
+        }
+
+        public List<UserAuthorityItem> getUserAuthorities() {
+            return userAuthorities;
+        }
+
+        public void setUserAuthorities(List<UserAuthorityItem> userAuthorities) {
+            this.userAuthorities = userAuthorities;
+        }
+
+        public List<UserGroupItem> getUserGroups() {
+            return userGroups;
+        }
+
+        public void setUserGroups(List<UserGroupItem> userGroups) {
+            this.userGroups = userGroups;
+        }
+
+        public List<UserRoleItem> getUserRoles() {
+            return userRoles;
+        }
+
+        public void setUserRoles(List<UserRoleItem> userRoles) {
+            this.userRoles = userRoles;
+        }
+
         public AppDomain toEntity() {
             AppDomain domain = new AppDomain();
             domain.setName(name);
@@ -37,7 +131,6 @@ public class DomainConfigurationList {
         }
     }
 
-    @Data
     public static class UserItem {
         @NotEmpty
         private String username;
@@ -46,6 +139,38 @@ public class DomainConfigurationList {
         @NotEmpty
         private String externalId;
         private Map<String, Object> properties = Collections.emptyMap();
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getExternalId() {
+            return externalId;
+        }
+
+        public void setExternalId(String externalId) {
+            this.externalId = externalId;
+        }
+
+        public Map<String, Object> getProperties() {
+            return properties;
+        }
+
+        public void setProperties(Map<String, Object> properties) {
+            this.properties = properties;
+        }
 
         public AppUser toEntity(String domainId) {
             AppUser user = new AppUser();
@@ -60,7 +185,6 @@ public class DomainConfigurationList {
         }
     }
 
-    @Data
     public static class AuthorityItem {
         @NotEmpty
         private String identifier;
@@ -68,6 +192,30 @@ public class DomainConfigurationList {
         private String name;
         @NotEmpty
         private String description;
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
         public Authority toEntity(String domainId) {
             Authority auth = new Authority();
@@ -79,7 +227,6 @@ public class DomainConfigurationList {
         }
     }
 
-    @Data
     public static class GroupItem {
         @NotEmpty
         private String identifier;
@@ -88,6 +235,38 @@ public class DomainConfigurationList {
         @NotEmpty
         private String description;
         private String parent;
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
+        public void setParent(String parent) {
+            this.parent = parent;
+        }
 
         public Group toEntity(String domainId, GroupResolver resolver) {
             Group group = new Group();
@@ -111,7 +290,6 @@ public class DomainConfigurationList {
         Optional<Group> getGroup(String identifier);
     }
 
-    @Data
     public static class RoleItem {
         @NotEmpty
         private String identifier;
@@ -119,6 +297,30 @@ public class DomainConfigurationList {
         private String name;
         @NotEmpty
         private String description;
+
+        public String getIdentifier() {
+            return identifier;
+        }
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
         public Role toEntity(String domainId) {
             Role role = new Role();
@@ -131,12 +333,27 @@ public class DomainConfigurationList {
         }
     }
 
-    @Data
     public static class RoleAuthorityItem {
         @NotEmpty
         private String role;
         @NotEmpty
         private String authority;
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getAuthority() {
+            return authority;
+        }
+
+        public void setAuthority(String authority) {
+            this.authority = authority;
+        }
 
         public RoleAuthority toEntity(String domainId, AuthorityResolver authorityResolver,
                                       RoleResolver roleResolver) {
@@ -164,12 +381,27 @@ public class DomainConfigurationList {
         Optional<Authority> getAuthority(String identifier);
     }
 
-    @Data
     public static class UserAuthorityItem {
         @NotEmpty
         private String user;
         @NotEmpty
         private String authority;
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
+
+        public String getAuthority() {
+            return authority;
+        }
+
+        public void setAuthority(String authority) {
+            this.authority = authority;
+        }
 
         public UserAuthority toEntity(String domainId, AuthorityResolver authorityResolver,
                                       UserResolver userResolver) {
@@ -192,12 +424,27 @@ public class DomainConfigurationList {
         Optional<AppUser> getUser(String externalIdOrUsername);
     }
 
-    @Data
     public static class UserGroupItem {
         @NotEmpty
         private String user;
         @NotEmpty
         private String group;
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public void setGroup(String group) {
+            this.group = group;
+        }
 
         public UserGroup toEntity(String domainId, GroupResolver groupResolver,
                                   UserResolver userResolver) {
@@ -215,12 +462,27 @@ public class DomainConfigurationList {
         }
     }
 
-    @Data
     public static class UserRoleItem {
         @NotEmpty
         private String user;
         @NotEmpty
         private String role;
+
+        public String getUser() {
+            return user;
+        }
+
+        public void setUser(String user) {
+            this.user = user;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
 
         public UserRole toEntity(String domainId, RoleResolver roleResolver,
                                  UserResolver userResolver) {

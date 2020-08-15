@@ -8,6 +8,7 @@ public class AppDomain {
     @Id
     private String id;
     private String name;
+    private String jwkSetUri;
 
     public String getId() {
         return id;
@@ -23,5 +24,13 @@ public class AppDomain {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getJwkSetUri() {
+        return jwkSetUri;
+    }
+
+    public void setJwkSetUri(String jwkSetUri) {
+        this.jwkSetUri = jwkSetUri;
     }
 }
