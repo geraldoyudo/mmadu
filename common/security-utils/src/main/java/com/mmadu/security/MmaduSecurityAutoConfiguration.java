@@ -157,6 +157,19 @@ public class MmaduSecurityAutoConfiguration {
     static class DomainExtractorConfiguration {
 
         @Bean
+        public TenantExtractor tenantExtractor() {
+            return new HeaderBasedTenantExtractor();
+        }
+
+        @Bean
+        @Order(20)
+        public DomainExtractor tenantBasedDomainExtractor() {
+            TenantBasedDomainExtractor extractor = new TenantBasedDomainExtractor();
+            extractor.setTenantExtractor(tenantExtractor());
+            return extractor;
+        }
+
+        @Bean
         @Order(50)
         public DomainExtractor domainPayloadExtractor() {
             return new DomainPayloadExtractor();

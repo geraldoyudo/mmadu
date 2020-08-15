@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public class RequestUtils {
 
+    public static final String DOMAIN_HEADER = "Mmadu-Domain";
+    
     public static Optional<HttpServletRequest> getCurrentRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
