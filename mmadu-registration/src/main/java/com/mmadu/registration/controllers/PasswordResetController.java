@@ -7,6 +7,7 @@ import com.mmadu.registration.services.DomainFlowConfigurationService;
 import com.mmadu.registration.services.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,15 @@ public class PasswordResetController {
     @ModelAttribute(name = "domainConfiguration")
     public DomainFlowConfiguration setUpDomainConfiguration(@PathVariable("domainId") String domainId) {
         return domainFlowConfigurationService.findByDomainId(domainId).orElseThrow(DomainNotFoundException::new);
+    }
+
+    @ModelAttribute(name = "proxyPath")
+    public String setUpProxyPath(@RequestHeader(name = "X-Forwarded-Prefix", defaultValue = "") String proxyPath) {
+        if (StringUtils.isEmpty(proxyPath)) {
+            return "/";
+        } else {
+            return String.format("/%s/", proxyPath);
+        }
     }
 
     @GetMapping

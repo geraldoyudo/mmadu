@@ -59,6 +59,15 @@ public class RegistrationController {
         return registrationProfileService.getProfileForDomainAndCode(domainId, registrationCode);
     }
 
+    @ModelAttribute(name = "proxyPath")
+    public String setUpProxyPath(@RequestHeader(name = "X-Forwarded-Prefix", defaultValue = "") String proxyPath) {
+        if (StringUtils.isEmpty(proxyPath)) {
+            return "/";
+        } else {
+            return String.format("/%s/", proxyPath);
+        }
+    }
+
     @GetMapping
     public String register(@PathVariable("domainId") String domainId, Model model) {
         model.addAttribute("domain", domainId);
