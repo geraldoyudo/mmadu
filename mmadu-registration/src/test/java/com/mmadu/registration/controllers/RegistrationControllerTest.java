@@ -8,6 +8,7 @@ import com.mmadu.registration.providers.UserFormValidatorFactory;
 import com.mmadu.registration.services.DomainFlowConfigurationService;
 import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.services.RegistrationService;
+import com.mmadu.registration.validators.UniqueFieldsValidator;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -65,12 +66,15 @@ public class RegistrationControllerTest {
     private UserFormValidator userFormValidator;
     @MockBean
     private DomainFlowConfigurationService domainFlowConfigurationService;
+    @MockBean
+    private UniqueFieldsValidator uniqueFieldsValidator;
     private DomainFlowConfiguration domainFlowConfiguration = new DomainFlowConfiguration();
 
     private RegistrationProfile profile = createRegistrationProfile(PROFILE_ID, DOMAIN_ID);
 
     @BeforeEach
     public void setUp() {
+        doReturn(true).when(uniqueFieldsValidator).supports(UserForm.class);
         doReturn(profile).when(registrationProfileService).getProfileForDomainAndCode(DOMAIN_ID, DOMAIN_CODE);
         doReturn(userFormValidator).when(userFormValidatorFactory).createValidatorForDomainAndCode(anyString(), anyString());
         doReturn(true).when(userFormValidator).supports(eq(UserForm.class));

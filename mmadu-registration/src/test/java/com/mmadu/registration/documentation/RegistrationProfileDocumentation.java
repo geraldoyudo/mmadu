@@ -71,6 +71,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                 fieldWithPath("instruction")
                         .description("Instruction message for registering " +
                                 "users displayed at the top of the form"),
+                subsectionWithPath("defaultAccountStatus").description("Default account status configuration"),
                 fieldWithPath("submitButtonTitle")
                         .description("Submit button text")
         );

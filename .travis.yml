@@ -58,6 +58,4 @@ matrix:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       install: mvn -q clean
       script:
-        - mvn -q install
-        - mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity,mmadu-notifications,mmadu-otp -DskipTests
-        - cd ./docker/prod && ./release-build.sh cd ../../
+        - mvn -q install && mvn spring-boot:build-image -pl mmadu-user-service,mmadu-registration,mmadu-identity,mmadu-notifications,mmadu-otp -DskipTests && cd ./docker/prod && ./release-build.sh cd ../../

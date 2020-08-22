@@ -59,6 +59,7 @@ public class FieldTypesDocumentation extends AbstractDocumentation {
                 fieldWithPath("classes").description("css classes for field"),
                 fieldWithPath("markup").description("HTML markup for field type"),
                 fieldWithPath("name").description("The field type name"),
+                subsectionWithPath("options").description("Field options for select fields"),
                 fieldWithPath("enclosingElement").description("The element enclosing the field")
         );
     }

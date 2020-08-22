@@ -54,6 +54,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
                 fieldWithPath("property").description("User property that the field will set"),
                 fieldWithPath("order").description("Order of the field in Layout"),
                 fieldWithPath("required").description("If the field input is required or not"),
+                fieldWithPath("unique").description("If the field should be unique or not"),
                 fieldWithPath("name").description("the form name of the field"),
                 fieldWithPath("code").description("the field code"),
                 fieldWithPath("domainId").description("the ID of the domain")
@@ -124,6 +125,7 @@ public class FieldsDocumentation extends AbstractDocumentation {
                 fieldWithPath("_embedded.fields.[].property").description("User property that the field will set"),
                 fieldWithPath("_embedded.fields.[].order").description("Order of the field in Layout"),
                 fieldWithPath("_embedded.fields.[].required").description("If the field input is required or not"),
+                fieldWithPath("_embedded.fields.[].unique").description("If the field should be unique or not"),
                 fieldWithPath("_embedded.fields.[].name").description("the form name of the field"),
                 fieldWithPath("_embedded.fields.[].code").description("the field code"),
                 fieldWithPath("_embedded.fields.[].domainId").description("the ID of the domain")

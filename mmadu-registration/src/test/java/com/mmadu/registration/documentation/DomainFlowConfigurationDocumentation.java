@@ -47,7 +47,10 @@ public class DomainFlowConfigurationDocumentation extends AbstractDocumentation 
     private static List<FieldDescriptor> domainFlowConfigurationFields() {
         return asList(
                 fieldWithPath("id").type("string").optional().description("Domain Flow Configuration ID"),
+                fieldWithPath("jwkSetUri").type("string").optional().description("The jwk set uri required for accessing api with domain token"),
                 fieldWithPath("domainId").type("string").optional().description("Domain Id"),
+                subsectionWithPath("passwordReset").optional().description("Password reset Configuration"),
+                subsectionWithPath("propertyValidation").optional().description("User property validation configuration"),
                 subsectionWithPath("theme").optional().description("Theme Configuration")
         );
     }
