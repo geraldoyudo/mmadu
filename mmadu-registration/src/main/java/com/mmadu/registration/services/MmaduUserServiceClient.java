@@ -15,4 +15,6 @@ public interface MmaduUserServiceClient {
     Mono<String> getUserProperty(String domainId, String userId, String propertyName);
 
     Mono<Void> setPropertyValidationState(String domainId, String userId, String propertyName, boolean valid);
+
+    Mono<Boolean> containsByQuery(String domainId, String query);
 }

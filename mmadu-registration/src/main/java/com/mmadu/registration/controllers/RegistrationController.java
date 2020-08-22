@@ -8,6 +8,7 @@ import com.mmadu.registration.providers.UserFormValidatorFactory;
 import com.mmadu.registration.services.DomainFlowConfigurationService;
 import com.mmadu.registration.services.RegistrationProfileService;
 import com.mmadu.registration.services.RegistrationService;
+import com.mmadu.registration.validators.UniqueFieldsValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,12 +31,15 @@ public class RegistrationController {
     @Autowired
     private UserFormValidatorFactory userFormValidatorFactory;
     @Autowired
+    private UniqueFieldsValidator uniqueFieldsValidator;
+    @Autowired
     private DomainFlowConfigurationService domainFlowConfigurationService;
 
     @InitBinder("user")
     public void initBinder(@PathVariable("domainId") String domainId, @PathVariable("code") String code,
                            WebDataBinder binder) {
         binder.addValidators(userFormValidatorFactory.createValidatorForDomainAndCode(domainId, code));
+        binder.addValidators(uniqueFieldsValidator);
     }
 
     @ModelAttribute(name = "user")
@@ -51,6 +55,11 @@ public class RegistrationController {
     @ModelAttribute(name = "redirectUrl")
     public String setUpRedirectUrl(@RequestParam(name = "redirectUrl", required = false) String redirectUrl) {
         return redirectUrl;
+    }
+
+    @ModelAttribute(name = "domainConfiguration")
+    public DomainFlowConfiguration setUpDomainConfiguration(@PathVariable("domainId") String domainId) {
+        return domainFlowConfigurationService.findByDomainId(domainId).orElseThrow(DomainNotFoundException::new);
     }
 
     @ModelAttribute(name = "profile")
@@ -69,10 +78,7 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String register(@PathVariable("domainId") String domainId, Model model) {
-        model.addAttribute("domain", domainId);
-        model.addAttribute("domainConfiguration",
-                domainFlowConfigurationService.findByDomainId(domainId).orElseThrow(DomainNotFoundException::new));
+    public String register() {
         return "register";
     }
 
@@ -87,8 +93,9 @@ public class RegistrationController {
             registrationService.registerUser(domainId, code, user);
             if (StringUtils.isEmpty(redirectUrl))
                 return "redirect:" + profile.getDefaultRedirectUrl();
-            else
+            else {
                 return "redirect:" + redirectUrl;
+            }
         }
         return "register";
     }

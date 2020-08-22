@@ -38,4 +38,5 @@ public class Field implements Serializable, DomainPayload {
     private int order;
     private String pattern;
     boolean required;
+    boolean unique;
 }

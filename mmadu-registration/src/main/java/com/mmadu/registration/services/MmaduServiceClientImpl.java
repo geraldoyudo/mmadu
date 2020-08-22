@@ -54,13 +54,14 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
 
     @Override
     public Mono<String> queryForSingleUser(String domainId, String query) {
+
         return userServiceClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/domains/")
                         .path(domainId)
                         .path("/users/search")
-                        .queryParam("size", 2)
-                        .queryParam("query", query)
-                        .build()
+                        .queryParam("size", "{size}")
+                        .queryParam("query", "{query}")
+                        .build(2, query)
                 )
                 .retrieve()
                 .bodyToMono(PasswordResetServiceImpl.UserResponse.class)
@@ -114,5 +115,22 @@ public class MmaduServiceClientImpl implements MmaduUserServiceClient {
                 .retrieve()
                 .toBodilessEntity()
                 .then();
+    }
+
+    @Override
+    public Mono<Boolean> containsByQuery(String domainId, String query) {
+        return userServiceClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/domains/")
+                        .path(domainId)
+                        .path("/users/search")
+                        .queryParam("size", "{size}")
+                        .queryParam("query", "{query}")
+                        .build(1, query)
+                )
+                .retrieve()
+                .bodyToMono(PasswordResetServiceImpl.UserResponse.class)
+                .map(userResponse -> !userResponse.getContent().isEmpty())
+                .onErrorResume(WebClientResponseException.class,
+                        ex -> ex.getRawStatusCode() == 404 ? Mono.just(false) : Mono.error(ex));
     }
 }

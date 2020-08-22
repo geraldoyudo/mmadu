@@ -256,7 +256,8 @@ public class DomainFlowConfigurationList {
         private String label;
         private int order;
         private String pattern;
-        boolean required;
+        private boolean required;
+        private boolean unique;
 
         public String getName() {
             return name;
@@ -338,6 +339,14 @@ public class DomainFlowConfigurationList {
             this.required = required;
         }
 
+        public boolean isUnique() {
+            return unique;
+        }
+
+        public void setUnique(boolean unique) {
+            this.unique = unique;
+        }
+
         public Field toEntity(String domainId) {
             Field field = new Field();
             field.setDomainId(domainId);
@@ -351,6 +360,7 @@ public class DomainFlowConfigurationList {
             field.setOrder(order);
             field.setPattern(pattern);
             field.setRequired(required);
+            field.setUnique(unique);
             return field;
         }
     }

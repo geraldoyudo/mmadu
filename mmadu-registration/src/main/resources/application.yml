@@ -118,6 +118,7 @@ mmadu:
               label: Email
               order: 1
               required: true
+              unique: true
             - name: full-name
               code: mmadu.field.full_name
               placeholder: Full Name
@@ -126,6 +127,7 @@ mmadu:
               label: Full Name
               order: 2
               required: true
+              unique: false
             - name: username
               code: mmadu.field.username
               placeholder: Username
@@ -134,6 +136,7 @@ mmadu:
               label: Username
               order: 3
               required: true
+              unique: true
             - name: password
               code: mmadu.field.password
               placeholder: Password
