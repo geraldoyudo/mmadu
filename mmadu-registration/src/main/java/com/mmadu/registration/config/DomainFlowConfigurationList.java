@@ -4,6 +4,7 @@ import com.mmadu.registration.entities.DomainFlowConfiguration;
 import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
+import com.mmadu.registration.models.FieldOptions;
 import com.mmadu.registration.models.registration.DefaultAccountStatus;
 import com.mmadu.registration.models.themes.ThemeConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -113,6 +114,7 @@ public class DomainFlowConfigurationList {
         private String css;
         private String max;
         private String min;
+        private List<FieldOptions> options;
 
         public String getId() {
             return id;
@@ -210,6 +212,14 @@ public class DomainFlowConfigurationList {
             this.min = min;
         }
 
+        public List<FieldOptions> getOptions() {
+            return options;
+        }
+
+        public void setOptions(List<FieldOptions> options) {
+            this.options = options;
+        }
+
         public FieldType toEntity() {
             FieldType fieldType = new FieldType();
             fieldType.setId(id);
@@ -224,6 +234,7 @@ public class DomainFlowConfigurationList {
             fieldType.setCss(css);
             fieldType.setMax(max);
             fieldType.setMin(min);
+            fieldType.setOptions(options);
             return fieldType;
         }
     }

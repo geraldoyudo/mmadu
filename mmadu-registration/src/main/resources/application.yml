@@ -86,6 +86,15 @@ mmadu:
           markup: "<label for='$field.name' class='sr-only'>$field.label</label><input type='datetime-local' id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' $maxValue $minValue autofocus $required $inputField $inputStyle $errorStyle >$errorDisplay"
           min: 2011-08-19T13:45:00
           max: 2020-08-19T13:45:00
+        - id: mmadu.fields.gender
+          name: gender
+          type: text
+          markup: "<label for='$field.name' class='sr-only'>$field.label</label><select id='$field.name' name='$field.name' class='form-control' placeholder='$field.placeholder' autofocus $required $inputField $inputStyle $errorStyle>#foreach( $option in $type.options )<option value='$option.value'>$option.text</option> #end </select> $errorDisplay"
+          options:
+            - text: MALE
+              value: MALE
+            - text: FEMALE
+              value: FEMALE
       domains:
         - domainId: 0
           registration-profiles:
