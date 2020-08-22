@@ -33,6 +33,10 @@
 |`+Boolean+`
 |If the field input is required or not
 
+|`+_embedded.fields.[].unique+`
+|`+Boolean+`
+|If the field should be unique or not
+
 |`+_embedded.fields.[].name+`
 |`+String+`
 |the form name of the field

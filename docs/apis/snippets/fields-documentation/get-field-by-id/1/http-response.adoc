@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 438
+Content-Length: 459
 
 {
   "code" : "username",
@@ -25,6 +25,7 @@ Content-Length: 438
   "order" : 1,
   "pattern" : "",
   "required" : true,
+  "unique" : false,
   "_links" : {
     "self" : {
       "href" : "http://localhost:8080/repo/fields/1"

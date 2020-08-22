@@ -37,6 +37,10 @@
 |`+Boolean+`
 |If the field input is required or not
 
+|`+unique+`
+|`+Boolean+`
+|If the field should be unique or not
+
 |`+name+`
 |`+String+`
 |the form name of the field

@@ -12,6 +12,7 @@
   "label" : "Username",
   "order" : 1,
   "pattern" : "",
-  "required" : true
+  "required" : true,
+  "unique" : false
 }
 ----

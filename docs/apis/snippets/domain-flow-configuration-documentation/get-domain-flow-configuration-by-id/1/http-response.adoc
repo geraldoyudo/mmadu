@@ -11,10 +11,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 726
+Content-Length: 1232
 
 {
   "domainId" : "1234",
+  "jwkSetUri" : null,
   "theme" : {
     "logoSvg" : null,
     "themeColour" : {
@@ -31,6 +32,20 @@ Content-Length: 726
       "successText" : "#838584"
     }
   },
+  "passwordReset" : {
+    "userFields" : [ "username" ],
+    "initiationFormTitle" : null,
+    "initiationFormDescription" : null,
+    "confirmationFormTitle" : null,
+    "confirmationFormDescription" : null,
+    "userFieldPlaceholder" : null,
+    "submitButtonLabel" : null,
+    "initiationSuccessMessage" : null,
+    "confirmationSuccessMessage" : null,
+    "otpProfile" : "password-reset",
+    "passwordConfirmationBaseUrl" : null
+  },
+  "propertyValidation" : { },
   "_links" : {
     "self" : {
       "href" : "http://localhost:8080/repo/domainFlowConfigurations/1"

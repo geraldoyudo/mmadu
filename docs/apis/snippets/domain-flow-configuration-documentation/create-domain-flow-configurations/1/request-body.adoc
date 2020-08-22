@@ -3,6 +3,7 @@
 {
   "id" : "1",
   "domainId" : "1234",
+  "jwkSetUri" : null,
   "theme" : {
     "logoSvg" : null,
     "themeColour" : {
@@ -18,6 +19,20 @@
       "success" : "##feffff",
       "successText" : "#838584"
     }
-  }
+  },
+  "passwordReset" : {
+    "userFields" : [ "username" ],
+    "initiationFormTitle" : null,
+    "initiationFormDescription" : null,
+    "confirmationFormTitle" : null,
+    "confirmationFormDescription" : null,
+    "userFieldPlaceholder" : null,
+    "submitButtonLabel" : null,
+    "initiationSuccessMessage" : null,
+    "confirmationSuccessMessage" : null,
+    "otpProfile" : "password-reset",
+    "passwordConfirmationBaseUrl" : null
+  },
+  "propertyValidation" : { }
 }
 ----

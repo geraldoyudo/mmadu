@@ -9,6 +9,7 @@
       "defaultRoles" : [ "member" ],
       "defaultAuthorities" : [ "view-list" ],
       "defaultGroups" : [ "admins" ],
+      "defaultAccountStatus" : null,
       "fields" : [ "field.username", "field.email", "field.password" ],
       "headerOne" : "My App",
       "headerTwo" : "Register",

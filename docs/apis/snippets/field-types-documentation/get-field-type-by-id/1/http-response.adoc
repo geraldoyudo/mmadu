@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 696
+Content-Length: 717
 
 {
   "name" : "Age",
@@ -25,6 +25,7 @@ Content-Length: 696
   "css" : "",
   "max" : "100",
   "min" : "10",
+  "options" : null,
   "_links" : {
     "self" : {
       "href" : "http://localhost:8080/repo/fieldTypes/1"

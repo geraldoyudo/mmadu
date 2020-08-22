@@ -45,6 +45,10 @@
 |`+String+`
 |The field type name
 
+|`+options+`
+|`+Null+`
+|Field options for select fields
+
 |`+enclosingElement+`
 |`+String+`
 |The element enclosing the field

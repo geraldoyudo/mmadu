@@ -5,9 +5,21 @@
 |`+string+`
 |Domain Flow Configuration ID
 
+|`+jwkSetUri+`
+|`+string+`
+|The jwk set uri required for accessing api with domain token
+
 |`+domainId+`
 |`+string+`
 |Domain Id
+
+|`+passwordReset+`
+|`+Object+`
+|Password reset Configuration
+
+|`+propertyValidation+`
+|`+Object+`
+|User property validation configuration
 
 |`+theme+`
 |`+Object+`

@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 687
+Content-Length: 721
 
 {
   "code" : "user",
@@ -20,6 +20,7 @@ Content-Length: 687
   "defaultRoles" : [ "member" ],
   "defaultAuthorities" : [ "view-list" ],
   "defaultGroups" : [ "admins" ],
+  "defaultAccountStatus" : null,
   "fields" : [ "field.username", "field.email", "field.password" ],
   "headerOne" : "My App",
   "headerTwo" : "Register",

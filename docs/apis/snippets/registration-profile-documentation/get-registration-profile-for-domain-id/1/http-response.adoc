@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 967
+Content-Length: 1005
 
 {
   "_embedded" : {
@@ -22,6 +22,7 @@ Content-Length: 967
       "defaultRoles" : [ "member" ],
       "defaultAuthorities" : [ "view-list" ],
       "defaultGroups" : [ "admins" ],
+      "defaultAccountStatus" : null,
       "fields" : [ "field.username", "field.email", "field.password" ],
       "headerOne" : "My App",
       "headerTwo" : "Register",
