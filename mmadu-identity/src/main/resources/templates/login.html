@@ -43,6 +43,15 @@
 
             </div>
             </div>
+            <h3 class="text" th:if="${(session.loginMode != null) && (domainConfiguration?.loginProfiles?.get(session.loginMode)?.title != null)}"
+                th:text="${domainConfiguration.loginProfiles.get(session.loginMode).title}"></h3>
+            <h3 class="text" th:if="${(session.loginMode == null) && (domainConfiguration?.defaultLoginProfile?.title != null)}"
+                th:text="${domainConfiguration.defaultLoginProfile.title}"></h3>
+            <p class="text" th:if="${(session.loginMode != null) && (domainConfiguration?.loginProfiles?.get(session.loginMode)?.message != null)}"
+               th:text="${domainConfiguration.loginProfiles?.get(session.loginMode).message}"></p>
+            <p class="text" th:if="${(session.loginMode == null) && (domainConfiguration?.defaultLoginProfile?.message != null)}"
+                th:text="${domainConfiguration.defaultLoginProfile.message}"></p>
+
             <p class="alert alert-danger" role="alert" th:if="${param.error}">
                 Error: Invalid Username or password.
             </p>

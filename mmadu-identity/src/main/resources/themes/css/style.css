@@ -18,6 +18,11 @@
     color: /*[- */ aliceblue /* -]*/ /*[+[(${theme.themeColour.info})]+]*/ !important;
 }
 
+.text {
+    text-align: center;
+    color: /*[- */ black /* -]*/ /*[+[(${theme.themeColour.text})]+]*/ !important;
+}
+
 .text-secondary {
     color: /*[- */ darkslateblue /* -]*/ /*[+[(${theme.themeColour.secondary})]+]*/ !important;
 }

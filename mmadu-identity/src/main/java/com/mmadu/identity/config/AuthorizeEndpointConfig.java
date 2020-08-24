@@ -2,6 +2,7 @@ package com.mmadu.identity.config;
 
 import com.mmadu.identity.models.user.MmaduUser;
 import com.mmadu.identity.providers.authorization.ClientDomainPopulatorFilter;
+import com.mmadu.identity.providers.authorization.LoginModeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,12 @@ import org.springframework.web.context.WebApplicationContext;
 public class AuthorizeEndpointConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationProvider userAuthenticationProvider;
     private ClientDomainPopulatorFilter clientDomainPopulatorFilter;
+    private LoginModeFilter loginModeFilter;
+
+    @Autowired
+    public void setLoginModeFilter(LoginModeFilter loginModeFilter) {
+        this.loginModeFilter = loginModeFilter;
+    }
 
     @Autowired
     public void setClientDomainPopulatorFilter(ClientDomainPopulatorFilter clientDomainPopulatorFilter) {
@@ -52,7 +59,8 @@ public class AuthorizeEndpointConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .authenticationProvider(userAuthenticationProvider)
-                .addFilterBefore(clientDomainPopulatorFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(clientDomainPopulatorFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(loginModeFilter, ClientDomainPopulatorFilter.class);
     }
 
     @Bean

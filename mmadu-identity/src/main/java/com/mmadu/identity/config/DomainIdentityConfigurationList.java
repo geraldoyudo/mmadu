@@ -3,6 +3,7 @@ package com.mmadu.identity.config;
 import com.mmadu.identity.entities.*;
 import com.mmadu.identity.models.authorization.AuthorizationProfile;
 import com.mmadu.identity.models.security.CredentialGenerationRequest;
+import com.mmadu.identity.models.signin.SignInProfile;
 import com.mmadu.identity.models.themes.ThemeConfiguration;
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
 import com.mmadu.identity.utils.ClientCategoryUtils;
@@ -47,6 +48,8 @@ public class DomainIdentityConfigurationList {
         private Map<String, Object> refreshTokenProperties = new HashMap<>();
         @NotEmpty
         private String issuerId;
+        private SignInProfile defaultLoginProfile = new SignInProfile();
+        private Map<String, SignInProfile> loginProfiles = new HashMap<>();
         @NotNull
         private ThemeConfiguration theme = new ThemeConfiguration();
         private List<ClientItem> clients = Collections.emptyList();
@@ -182,6 +185,22 @@ public class DomainIdentityConfigurationList {
             this.scopes = scopes;
         }
 
+        public SignInProfile getDefaultLoginProfile() {
+            return defaultLoginProfile;
+        }
+
+        public void setDefaultLoginProfile(SignInProfile defaultLoginProfile) {
+            this.defaultLoginProfile = defaultLoginProfile;
+        }
+
+        public Map<String, SignInProfile> getLoginProfiles() {
+            return loginProfiles;
+        }
+
+        public void setLoginProfiles(Map<String, SignInProfile> loginProfiles) {
+            this.loginProfiles = loginProfiles;
+        }
+
         public DomainIdentityConfiguration toEntity() {
             DomainIdentityConfiguration configuration = new DomainIdentityConfiguration();
             configuration.setDomainId(domainId);
@@ -196,6 +215,8 @@ public class DomainIdentityConfigurationList {
             configuration.setRefreshTokenProperties(refreshTokenProperties);
             configuration.setIssuerId(issuerId);
             configuration.setTheme(theme);
+            configuration.setDefaultLoginProfile(defaultLoginProfile);
+            configuration.setLoginProfiles(loginProfiles);
             return configuration;
         }
 
