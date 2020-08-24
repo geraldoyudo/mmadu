@@ -106,9 +106,14 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
     private String generateResetLinkFromOtp(Otp otp, String userId, String domainId,
                                             PasswordResetFlowConfiguration configuration) {
-        return String.format("%s/%s/passwordReset/confirm?id=%s&token=%s&user=%s",
-                StringUtils.isEmpty(configuration.getPasswordConfirmationBaseUrl())?
-                        baseUrl: configuration.getPasswordConfirmationBaseUrl(), domainId, otp.getId(), otp.getValue(), userId);
+        if(StringUtils.isEmpty(configuration.getConfirmationFormUrl())) {
+            return String.format("%s/%s/passwordReset/confirm?id=%s&token=%s&user=%s",
+                    StringUtils.isEmpty(configuration.getLinkPasswordConfirmationBaseUrl()) ?
+                            baseUrl : configuration.getLinkPasswordConfirmationBaseUrl(), domainId, otp.getId(), otp.getValue(), userId);
+        } else {
+            return String.format("%s?id=%s&token=%s&user=%s",
+                    configuration.getLinkPasswordConfirmationUrl(), otp.getId(), otp.getValue(), userId);
+        }
     }
 
     private Mono<Void> notifyPasswordResetInitiation(String domainId, String userId, String link,

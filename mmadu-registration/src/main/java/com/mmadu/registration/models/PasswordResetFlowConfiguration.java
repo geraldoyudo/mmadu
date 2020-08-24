@@ -15,11 +15,13 @@ public class PasswordResetFlowConfiguration {
     private String userFieldPlaceholder;
     private String submitButtonLabel;
     private String resourcesBaseUrl;
-    private String formUrl;
+    private String initiationFormUrl;
+    private String confirmationFormUrl;
     private String initiationSuccessMessage;
     private String confirmationSuccessMessage;
     private String otpProfile = "password-reset";
-    private String passwordConfirmationBaseUrl;
+    private String linkPasswordConfirmationBaseUrl;
+    private String linkPasswordConfirmationUrl;
 
     public List<String> getUserFields() {
         return userFields;
@@ -85,12 +87,12 @@ public class PasswordResetFlowConfiguration {
         this.resourcesBaseUrl = resourcesBaseUrl;
     }
 
-    public String getFormUrl() {
-        return formUrl;
+    public String getInitiationFormUrl() {
+        return initiationFormUrl;
     }
 
-    public void setFormUrl(String formUrl) {
-        this.formUrl = formUrl;
+    public void setInitiationFormUrl(String initiationFormUrl) {
+        this.initiationFormUrl = initiationFormUrl;
     }
 
     public String getInitiationSuccessMessage() {
@@ -117,12 +119,28 @@ public class PasswordResetFlowConfiguration {
         this.otpProfile = otpProfile;
     }
 
-    public String getPasswordConfirmationBaseUrl() {
-        return passwordConfirmationBaseUrl;
+    public String getLinkPasswordConfirmationBaseUrl() {
+        return linkPasswordConfirmationBaseUrl;
     }
 
-    public void setPasswordConfirmationBaseUrl(String passwordConfirmationBaseUrl) {
-        this.passwordConfirmationBaseUrl = passwordConfirmationBaseUrl;
+    public void setLinkPasswordConfirmationBaseUrl(String linkPasswordConfirmationBaseUrl) {
+        this.linkPasswordConfirmationBaseUrl = linkPasswordConfirmationBaseUrl;
+    }
+
+    public String getConfirmationFormUrl() {
+        return confirmationFormUrl;
+    }
+
+    public void setConfirmationFormUrl(String confirmationFormUrl) {
+        this.confirmationFormUrl = confirmationFormUrl;
+    }
+
+    public String getLinkPasswordConfirmationUrl() {
+        return linkPasswordConfirmationUrl;
+    }
+
+    public void setLinkPasswordConfirmationUrl(String linkPasswordConfirmationUrl) {
+        this.linkPasswordConfirmationUrl = linkPasswordConfirmationUrl;
     }
 
     @Override
@@ -142,11 +160,13 @@ public class PasswordResetFlowConfiguration {
                 .append(userFieldPlaceholder, that.userFieldPlaceholder)
                 .append(submitButtonLabel, that.submitButtonLabel)
                 .append(resourcesBaseUrl, that.resourcesBaseUrl)
-                .append(formUrl, that.formUrl)
+                .append(initiationFormUrl, that.initiationFormUrl)
+                .append(confirmationFormUrl, that.confirmationFormUrl)
                 .append(initiationSuccessMessage, that.initiationSuccessMessage)
                 .append(confirmationSuccessMessage, that.confirmationSuccessMessage)
                 .append(otpProfile, that.otpProfile)
-                .append(passwordConfirmationBaseUrl, that.passwordConfirmationBaseUrl)
+                .append(linkPasswordConfirmationBaseUrl, that.linkPasswordConfirmationBaseUrl)
+                .append(linkPasswordConfirmationUrl, that.linkPasswordConfirmationUrl)
                 .isEquals();
     }
 
@@ -161,11 +181,13 @@ public class PasswordResetFlowConfiguration {
                 .append(userFieldPlaceholder)
                 .append(submitButtonLabel)
                 .append(resourcesBaseUrl)
-                .append(formUrl)
+                .append(initiationFormUrl)
+                .append(confirmationFormUrl)
                 .append(initiationSuccessMessage)
                 .append(confirmationSuccessMessage)
                 .append(otpProfile)
-                .append(passwordConfirmationBaseUrl)
+                .append(linkPasswordConfirmationBaseUrl)
+                .append(linkPasswordConfirmationUrl)
                 .toHashCode();
     }
 }
