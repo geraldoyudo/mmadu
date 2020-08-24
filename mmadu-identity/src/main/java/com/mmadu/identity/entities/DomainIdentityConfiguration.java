@@ -37,6 +37,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
     private ThemeConfiguration theme = new ThemeConfiguration();
     private Map<String, SignInProfile> loginProfiles = new HashMap<>();
     private SignInProfile defaultLoginProfile = new SignInProfile();
+    private String passwordResetUrl;
 
     public String getId() {
         return id;
@@ -159,6 +160,14 @@ public class DomainIdentityConfiguration implements DomainPayload {
         this.defaultLoginProfile = defaultLoginProfile;
     }
 
+    public String getPasswordResetUrl() {
+        return passwordResetUrl;
+    }
+
+    public void setPasswordResetUrl(String passwordResetUrl) {
+        this.passwordResetUrl = passwordResetUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -183,6 +192,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
                 .append(theme, that.theme)
                 .append(loginProfiles, that.loginProfiles)
                 .append(defaultLoginProfile, that.defaultLoginProfile)
+                .append(passwordResetUrl, that.passwordResetUrl)
                 .isEquals();
     }
 
@@ -204,6 +214,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
                 .append(theme)
                 .append(loginProfiles)
                 .append(defaultLoginProfile)
+                .append(passwordResetUrl)
                 .toHashCode();
     }
 }

@@ -56,6 +56,7 @@ public class DomainIdentityConfigurationList {
         private List<ClientInstanceItem> clientInstances = Collections.emptyList();
         private List<ResourceItem> resources = Collections.emptyList();
         private List<ScopeItem> scopes = Collections.emptyList();
+        private String passwordResetUrl;
 
         public String getDomainId() {
             return domainId;
@@ -201,6 +202,14 @@ public class DomainIdentityConfigurationList {
             this.loginProfiles = loginProfiles;
         }
 
+        public void setPasswordResetUrl(String passwordResetUrl) {
+            this.passwordResetUrl = passwordResetUrl;
+        }
+
+        public String getPasswordResetUrl() {
+            return passwordResetUrl;
+        }
+
         public DomainIdentityConfiguration toEntity() {
             DomainIdentityConfiguration configuration = new DomainIdentityConfiguration();
             configuration.setDomainId(domainId);
@@ -217,6 +226,7 @@ public class DomainIdentityConfigurationList {
             configuration.setTheme(theme);
             configuration.setDefaultLoginProfile(defaultLoginProfile);
             configuration.setLoginProfiles(loginProfiles);
+            configuration.setPasswordResetUrl(passwordResetUrl);
             return configuration;
         }
 

@@ -71,6 +71,9 @@
                     <button type="submit" class="btn btn-primary w-100 text-info">Sign In</button>
                 </form>
             </div>
+            <div style="text-align: center" th:if="${((session.loginMode != null) && (domainConfiguration?.loginProfiles?.get(session.loginMode)?.showResetPassword)) || ((session.loginMode == null) && (domainConfiguration?.defaultLoginProfile?.showResetPassword))}">
+                <a th:if="${domainConfiguration.passwordResetUrl} != null" th:href="${domainConfiguration.passwordResetUrl}" class="text">Forgot Password?</a>
+            </div>
         </div>
         <div class="col">
 
