@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="proxyPath=${profile.resourcesBaseUrl?:'/'}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +35,7 @@
         An Error occurred. Please fix form issues and try again.
     </p>
     <form class="form-signin card bg-info" action="#"
-          th:action="@{${proxyPath} + ${domainId} + '/register' + '/' + ${profile.code} + '/' + ${redirectUrl == null ? '': ('?redirectUrl=' + redirectUrl)}}"
+          th:action="@{${(profile.formUrl != null) ? profile.formUrl: ('/' + domainId + '/register/' + profile.code + (redirectUrl == null? '' : ('?redirectUrl=' + redirectUrl)) )}}"
           th:object="${user}" method="post">
 
         <h1 id="headerOne" class="form-signin-heading" th:text="${profile.headerOne ?: 'Register'}">Register</h1>

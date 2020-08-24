@@ -27,6 +27,8 @@ public class RegistrationProfile implements DomainPayload {
     @Indexed(unique = true)
     private String domainId;
     private String defaultRedirectUrl;
+    private String resourcesBaseUrl;
+    private String formUrl;
     private List<String> defaultRoles;
     private List<String> defaultAuthorities;
     private List<String> defaultGroups;
@@ -153,6 +155,22 @@ public class RegistrationProfile implements DomainPayload {
         this.submitButtonTitle = submitButtonTitle;
     }
 
+    public String getResourcesBaseUrl() {
+        return resourcesBaseUrl;
+    }
+
+    public void setResourcesBaseUrl(String resourcesBaseUrl) {
+        this.resourcesBaseUrl = resourcesBaseUrl;
+    }
+
+    public String getFormUrl() {
+        return formUrl;
+    }
+
+    public void setFormUrl(String formUrl) {
+        this.formUrl = formUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,6 +184,8 @@ public class RegistrationProfile implements DomainPayload {
                 .append(code, that.code)
                 .append(domainId, that.domainId)
                 .append(defaultRedirectUrl, that.defaultRedirectUrl)
+                .append(resourcesBaseUrl, that.resourcesBaseUrl)
+                .append(formUrl, that.formUrl)
                 .append(defaultRoles, that.defaultRoles)
                 .append(defaultAuthorities, that.defaultAuthorities)
                 .append(defaultGroups, that.defaultGroups)
@@ -186,6 +206,8 @@ public class RegistrationProfile implements DomainPayload {
                 .append(code)
                 .append(domainId)
                 .append(defaultRedirectUrl)
+                .append(resourcesBaseUrl)
+                .append(formUrl)
                 .append(defaultRoles)
                 .append(defaultAuthorities)
                 .append(defaultGroups)

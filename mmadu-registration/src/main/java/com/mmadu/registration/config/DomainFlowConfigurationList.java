@@ -5,6 +5,7 @@ import com.mmadu.registration.entities.Field;
 import com.mmadu.registration.entities.FieldType;
 import com.mmadu.registration.entities.RegistrationProfile;
 import com.mmadu.registration.models.FieldOptions;
+import com.mmadu.registration.models.PasswordResetFlowConfiguration;
 import com.mmadu.registration.models.registration.DefaultAccountStatus;
 import com.mmadu.registration.models.themes.ThemeConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -49,6 +50,7 @@ public class DomainFlowConfigurationList {
         private List<FieldItem> fields;
         @NotNull
         private ThemeConfiguration theme = new ThemeConfiguration();
+        private PasswordResetFlowConfiguration passwordReset = new PasswordResetFlowConfiguration();
 
         public String getDomainId() {
             return domainId;
@@ -90,11 +92,20 @@ public class DomainFlowConfigurationList {
             this.theme = theme;
         }
 
+        public PasswordResetFlowConfiguration getPasswordReset() {
+            return passwordReset;
+        }
+
+        public void setPasswordReset(PasswordResetFlowConfiguration passwordReset) {
+            this.passwordReset = passwordReset;
+        }
+
         public DomainFlowConfiguration toEntity() {
             DomainFlowConfiguration configuration = new DomainFlowConfiguration();
             configuration.setDomainId(domainId);
             configuration.setTheme(theme);
             configuration.setJwkSetUri(jwkSetUri);
+            configuration.setPasswordReset(passwordReset);
             return configuration;
         }
     }
@@ -377,6 +388,8 @@ public class DomainFlowConfigurationList {
         private String instruction;
         private String submitButtonTitle;
         private List<String> fields;
+        private String resourcesBaseUrl;
+        private String formUrl;
         private DefaultAccountStatus defaultAccountStatus;
 
         public String getCode() {
@@ -475,6 +488,22 @@ public class DomainFlowConfigurationList {
             this.defaultAccountStatus = defaultAccountStatus;
         }
 
+        public String getResourcesBaseUrl() {
+            return resourcesBaseUrl;
+        }
+
+        public void setResourcesBaseUrl(String resourcesBaseUrl) {
+            this.resourcesBaseUrl = resourcesBaseUrl;
+        }
+
+        public String getFormUrl() {
+            return formUrl;
+        }
+
+        public void setFormUrl(String formUrl) {
+            this.formUrl = formUrl;
+        }
+
         public RegistrationProfile toEntity(String domainId) {
             RegistrationProfile profile = new RegistrationProfile();
             profile.setDomainId(domainId);
@@ -490,6 +519,8 @@ public class DomainFlowConfigurationList {
             profile.setFields(fields);
             profile.setDefaultGroups(defaultGroups);
             profile.setDefaultAccountStatus(defaultAccountStatus);
+            profile.setResourcesBaseUrl(resourcesBaseUrl);
+            profile.setFormUrl(formUrl);
             return profile;
         }
     }

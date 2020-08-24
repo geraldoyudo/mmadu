@@ -12,7 +12,6 @@ import com.mmadu.registration.validators.UniqueFieldsValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -66,15 +65,6 @@ public class RegistrationController {
     public RegistrationProfile setUpRegistrationProfile(@PathVariable("domainId") String domainId,
                                                         @PathVariable("code") String registrationCode) {
         return registrationProfileService.getProfileForDomainAndCode(domainId, registrationCode);
-    }
-
-    @ModelAttribute(name = "proxyPath")
-    public String setUpProxyPath(@RequestHeader(name = "X-Forwarded-Prefix", defaultValue = "") String proxyPath) {
-        if (StringUtils.isEmpty(proxyPath)) {
-            return "/";
-        } else {
-            return String.format("/%s/", proxyPath);
-        }
     }
 
     @GetMapping
