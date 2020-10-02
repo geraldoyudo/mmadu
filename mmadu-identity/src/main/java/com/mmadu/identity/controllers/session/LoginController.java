@@ -26,9 +26,10 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(@SessionAttribute(name = "domain", required = false) String domain, Model model) {
-        log.info("Login called: domain = {}", Optional.ofNullable(domain).orElse(defaultDomain));
+        String domainId = Optional.ofNullable(domain).orElse(defaultDomain);
+        log.info("Login called: domain = {}", domainId);
         model.addAttribute("domainConfiguration",
-                domainIdentityConfigurationService.findByDomainId(domain).orElseThrow(DomainNotFoundException::new));
+                domainIdentityConfigurationService.findByDomainId(domainId).orElseThrow(DomainNotFoundException::new));
         return "login";
     }
 }
