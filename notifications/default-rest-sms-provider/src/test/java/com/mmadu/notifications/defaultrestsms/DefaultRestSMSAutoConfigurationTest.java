@@ -110,7 +110,7 @@ class DefaultRestSMSAutoConfigurationTest {
                 .respond(
                         response()
                                 .withStatusCode(200)
-                                .withBody("{\"status\":\"OK\",\"count\":1,\"price\":2}", MediaType.APPLICATION_JSON)
+                                .withBody("{\"status\":\"OK\",\"count\":1,\"price\":2}", MediaType.TEXT_HTML)
                 );
         return request;
     }

@@ -44,7 +44,7 @@ public class DefaultRestSMSProvider implements NotificationProvider {
                         .queryParam("mobiles", String.join(",", destination))
                         .build()
                 ).retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(String.class)
                 .flatMap(this::ensureSuccess)
                 .then();
     }
@@ -65,10 +65,9 @@ public class DefaultRestSMSProvider implements NotificationProvider {
                 .collect(Collectors.toList());
     }
 
-    private Mono<Map<String, Object>> ensureSuccess(Map<String, Object> response) {
-        String status = (String) response.getOrDefault("status", "error");
-        if (!status.equalsIgnoreCase("OK")) {
-            return Mono.error(new RestProviderException((String) response.getOrDefault("error", "An error occurred sending message")));
+    private Mono<String> ensureSuccess(String response) {
+        if (!response.contains("OK")) {
+            return Mono.error(new RestProviderException(response));
         } else {
             return Mono.just(response);
         }
