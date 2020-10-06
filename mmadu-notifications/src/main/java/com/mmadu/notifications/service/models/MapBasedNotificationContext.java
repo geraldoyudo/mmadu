@@ -46,6 +46,10 @@ public class MapBasedNotificationContext implements NotificationContext {
 
     @Override
     public Map<String, Object> getAsMap() {
-        return new HashMap<>(context);
+        Map<String, Object> output = new HashMap<>(context);
+        if (user != null) {
+            output.put("user", user);
+        }
+        return output;
     }
 }
