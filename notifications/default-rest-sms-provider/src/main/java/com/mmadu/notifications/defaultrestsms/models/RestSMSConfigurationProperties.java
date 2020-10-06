@@ -21,11 +21,11 @@ public class RestSMSConfigurationProperties {
     }
 
     public String getUsername() {
-        return getProperty("rest_sms_username", properties.getSenderId());
+        return getProperty("rest_sms_username", properties.getUsername());
     }
 
     public String getPassword() {
-        return getProperty("rest_sms_password", properties.getSenderId());
+        return getProperty("rest_sms_password", properties.getPassword());
     }
 
     private String getProperty(String property, String defaultValue) {
