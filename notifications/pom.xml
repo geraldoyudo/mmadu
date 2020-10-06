@@ -11,6 +11,7 @@
     <modules>
         <module>notification-endpoint</module>
         <module>sendgrid-notification-provider</module>
+        <module>default-rest-sms-provider</module>
     </modules>
     <build>
         <plugins>
