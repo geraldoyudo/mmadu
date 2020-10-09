@@ -17,7 +17,7 @@ spring:
             scope: a.*.**, r.*.**
         provider:
           mmadu:
-            token-uri: http://localhost:10084/clients/token
+            token-uri: http://localhost:15553/clients/token
 mmadu:
   transactions:
     enabled: true
