@@ -42,3 +42,5 @@ spring:
   data:
     mongodb:
       uri: ${mmadu.user.db.uri}
+server:
+  port: 8080
