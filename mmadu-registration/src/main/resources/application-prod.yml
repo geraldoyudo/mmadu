@@ -135,3 +135,5 @@ mmadu:
               fieldTypeId: mmadu.fields.password
               label: Password
               order: 4
+server:
+  port: 8080

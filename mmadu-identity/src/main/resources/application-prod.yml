@@ -98,3 +98,5 @@ mmadu:
             authorities:
               - a.*.**
               - r.super_admin
+server:
+  port: 8080

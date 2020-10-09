@@ -28,3 +28,5 @@ mmadu:
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
     url: ${MMADU_USER_URL:http://localhost:10080}
+server:
+  port: 8080
