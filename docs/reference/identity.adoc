@@ -850,7 +850,7 @@ The flow is as follows:
 [source,http]
 ----
 POST /clients/token HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
 Content-Type: application/x-www-form-urlencoded
@@ -862,7 +862,7 @@ grant_type=password&username=admin&password=password&scope=super_admin+visitor
 [source,http]
 ----
 POST /clients/token HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
@@ -1013,7 +1013,7 @@ token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwN
 [source,http]
 ----
 POST /clients/checkToken HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
@@ -1066,7 +1066,7 @@ Tokens can be revoked using the revoke token endpoint, `POST /clients/revokeToke
 [source,http]
 ----
 POST /clients/revokeToken HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Authorization: Basic bW1hZHVfYWRtaW46MTIzNDU2Nzg5MA==
 Content-Type: application/x-www-form-urlencoded
@@ -1078,7 +1078,7 @@ token=eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJkb21haW5faWQiOiIwIiwic3ViIjoiNWYwN
 [source,http]
 ----
 POST /clients/revokeToken HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
@@ -1089,7 +1089,7 @@ client_id=mmadu_admin&client_secret=1234567890&token=eyJraWQiOiIxMjMiLCJhbGciOiJ
 [source,http]
 ----
 POST /clients/revokeToken HTTP/1.1
-Host: localhost:10084
+Host: localhost:15553
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 

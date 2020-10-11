@@ -32,7 +32,7 @@ mmadu:
     domain-parsing:
       path-keys: domain,domainId,domains
   userService:
-    url: http://localhost:10080
+    url: http://localhost:15551
   domain-identity-config:
     domains:
       - domainId: "0"

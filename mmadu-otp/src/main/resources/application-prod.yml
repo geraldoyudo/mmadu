@@ -24,9 +24,9 @@ mmadu:
     secret: ${MMADU_ADMIN_SECRET:1234567890}
   identity:
     jwt-auto-discovery: true
-    url: ${MMADU_IDENTITY_URL:http://localhost:10084}
+    url: ${MMADU_IDENTITY_URL:http://localhost:15553}
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
-    url: ${MMADU_USER_URL:http://localhost:10080}
+    url: ${MMADU_USER_URL:http://localhost:15551}
 server:
   port: 8080

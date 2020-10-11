@@ -31,12 +31,12 @@ mmadu:
   home: ${MMADU_REGISTRATION_ROOT_DIR:/root/mmadu}
   identity:
     jwt-auto-discovery: true
-    url: ${MMADU_IDENTITY_URL:http://localhost:10084}
+    url: ${MMADU_IDENTITY_URL:http://localhost:15553}
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
-    url: ${MMADU_USER_URL:http://localhost:10080}
+    url: ${MMADU_USER_URL:http://localhost:15551}
   otpService:
-    url: ${MMADU_OTP_URL:http://localhost:10086}
+    url: ${MMADU_OTP_URL:http://localhost:15555}
   registration:
     db:
       uri: ${MMADU_REGISTRATION_DB_URI}

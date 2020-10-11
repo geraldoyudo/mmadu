@@ -21,12 +21,10 @@ mmadu:
     enabled: false
   home: ${user.home}/mmadu-test
   domainKey: 2222
-  tokenService:
-    url: http://localhost:10082
   userService:
-    url: http://localhost:10080
+    url: http://localhost:15551
   otpService:
-    url: http://localhost:10086
+    url: http://localhost:15555
   registration:
     home: ${mmadu.home}/registration
     templates: file:${mmadu.registration.home}/templates
