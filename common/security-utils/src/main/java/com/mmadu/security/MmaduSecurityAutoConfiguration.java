@@ -42,7 +42,7 @@ import java.util.List;
 @Configuration
 public class MmaduSecurityAutoConfiguration {
     private String publicKey;
-    @Value("${mmadu.identity.jwk-set-uri:http://localhost:10084/metadata/0/jwks.json}")
+    @Value("${mmadu.identity.jwk-set-uri:http://localhost:15553/metadata/0/jwks.json}")
     private String jwkSetUri;
     @Value("${mmadu.identity.default-domain:0}")
     private String defaultDomain;
@@ -203,7 +203,7 @@ public class MmaduSecurityAutoConfiguration {
         @Bean
         @Order(10000)
         public DomainJwkSetUriResolver defaultConstantJwkSetUriResolver(
-                @Value("${mmadu.identity.jwk-set-uri:http://localhost:10084/metadata/0/jwks.json}")
+                @Value("${mmadu.identity.jwk-set-uri:http://localhost:15553/metadata/0/jwks.json}")
                         String jwkSetUri) {
             return new DefaultJwkSetUriResolver(jwkSetUri);
         }

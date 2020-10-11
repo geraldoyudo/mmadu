@@ -7,8 +7,6 @@ mmadu:
     master-key: 11111111111111111111111111111111
     domain-parsing:
       path-keys: domain,domainId,domains,appDomains
-  tokenService:
-    url: http://localhost:10082
   domainKey: 2222
   domain-config:
     domains:

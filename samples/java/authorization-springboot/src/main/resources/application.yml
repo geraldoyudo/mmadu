@@ -13,5 +13,5 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           mmadu:
-            authorization-uri: http://mmadu.com:10084/oauth/authorize
-            token-uri: http://mmadu.com:10084/clients/token
+            authorization-uri: http://mmadu.com:15553/oauth/authorize
+            token-uri: http://mmadu.com:15553/clients/token

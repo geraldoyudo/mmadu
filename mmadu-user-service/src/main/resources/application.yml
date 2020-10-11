@@ -39,3 +39,5 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/mmadu_db?replicaSet=default-replica-set
+server:
+  port: 15551

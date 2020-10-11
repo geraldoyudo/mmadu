@@ -38,7 +38,7 @@ mmadu:
     url: ${MMADU_IDENTITY_URL:http://localhost:8080}
     jwk-set-uri: ${mmadu.identity.url}/metadata/0/jwks.json
   userService:
-    url: ${MMADU_USER_URL:http://localhost:10080}
+    url: ${MMADU_USER_URL:http://localhost:15551}
   domain-identity-config:
     domains:
       - domainId: "0"
@@ -98,3 +98,5 @@ mmadu:
             authorities:
               - a.*.**
               - r.super_admin
+server:
+  port: 8080
