@@ -436,6 +436,104 @@ The API returns 204 No content for a successful update.
 
 include::{snippets}/user-management-documentation/updating-users-by-query/1/http-response.adoc[]
 
+=== Change User Password
+
+A User's Password can be changed by supplying the old and the new password as shown below:
+
+Access: A user with `user.change_password` authority or the user whose password is to be changed.
+
+==== Change User Password Request Fields
+
+include::{snippets}/user-management-documentation/change-user-password/1/request-fields.adoc[]
+
+==== Sample Change User Password Request
+
+include::{snippets}/user-management-documentation/change-user-password/1/http-request.adoc[]
+
+
+=== Reset User Password
+
+A User's Password can be changed by supplying the new password as shown below:
+
+==== Change Reset Password Request Fields
+
+Authority: `user.reset_password`
+
+include::{snippets}/user-management-documentation/reset-user-password/1/request-fields.adoc[]
+
+==== Sample Reset User Password Request
+
+include::{snippets}/user-management-documentation/reset-user-password/1/http-request.adoc[]
+
+=== Activating a User
+
+Authority: `user.set_active`
+
+Activating a user sets its `active` property to `true`. This can be handled anyhow by the client. For example,
+non-active users can be prevented from accessing certain features.
+A `POST` request can activate a user.
+
+==== User Activation Request Fields
+
+include::{snippets}/user-management-documentation/set-user-active/1/request-fields.adoc[]
+
+==== Sample User Activation Request
+
+include::{snippets}/user-management-documentation/set-user-active/1/http-request.adoc[]
+
+=== Enabling a User
+
+Authority: `user.set_enabled`
+
+Enabling a user sets its `enabled` property to `true`. This can be handled anyhow by the client. For example,
+disabled users can be prevented from accessing the client's application. For some applications, `enabled` or `active`
+can mean the same or different things. If it means the same in your application, you can stick with only one of them.
+
+A `POST` request can enable a user.
+
+==== User Enable Request Fields
+
+include::{snippets}/user-management-documentation/set-user-enabled/1/request-fields.adoc[]
+
+==== Sample User Enable Request
+
+include::{snippets}/user-management-documentation/set-user-enabled/1/http-request.adoc[]
+
+
+=== Locking a User
+
+Authority: `user.set_locked`
+
+Locking a user sets its `locked` property to `true`. This can be handled anyhow by the client.
+
+A `POST` request can lock a user.
+
+==== User Lock Request Fields
+
+include::{snippets}/user-management-documentation/set-user-locked/1/request-fields.adoc[]
+
+==== Sample User Lock Request
+
+include::{snippets}/user-management-documentation/set-user-locked/1/http-request.adoc[]
+
+=== User Credentials Expiration
+
+Authority: `user.set_credentials_expired`
+
+Expiring a user's credentials sets its `credentialExpired` property to `true`. This can be handled anyhow by the client. For example,
+prevent users with expired credentials from logging in, or redirect them to change their password.
+
+A `POST` request can set the user credentials expiration.
+
+==== User Credential Expiration Request Fields
+
+include::{snippets}/user-management-documentation/set-credentials-expired/1/request-fields.adoc[]
+
+==== Sample User Enable Request
+
+include::{snippets}/user-management-documentation/set-credentials-expired/1/http-request.adoc[]
+
+
 == Managing Groups
 
 Users can be categorized into groups and groups can be a parent or a child of another group. This
