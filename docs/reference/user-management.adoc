@@ -438,9 +438,9 @@ include::{snippets}/user-management-documentation/updating-users-by-query/1/http
 
 === Change User Password
 
-A User's Password can be changed by supplying the old and the new password as shown below:
-
 Access: A user with `user.change_password` authority or the user whose password is to be changed.
+
+A User's Password can be changed by supplying the old and the new password as shown below:
 
 ==== Change User Password Request Fields
 
@@ -453,11 +453,11 @@ include::{snippets}/user-management-documentation/change-user-password/1/http-re
 
 === Reset User Password
 
+Authority: `user.reset_password`
+
 A User's Password can be changed by supplying the new password as shown below:
 
 ==== Change Reset Password Request Fields
-
-Authority: `user.reset_password`
 
 include::{snippets}/user-management-documentation/reset-user-password/1/request-fields.adoc[]
 
