@@ -34,6 +34,7 @@ public class DomainIdentityConfigurationList {
     public static class DomainIdentityItem {
         @NotEmpty
         private String domainId;
+        private String displayName;
         @NotEmpty
         private String authorizationCodeType = AlphaNumericCodeGenerator.TYPE;
         private Map<String, Object> authorizationCodeTypeProperties = Collections.emptyMap();
@@ -64,6 +65,14 @@ public class DomainIdentityConfigurationList {
 
         public void setDomainId(String domainId) {
             this.domainId = domainId;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
         }
 
         public String getAuthorizationCodeType() {
@@ -213,6 +222,7 @@ public class DomainIdentityConfigurationList {
         public DomainIdentityConfiguration toEntity() {
             DomainIdentityConfiguration configuration = new DomainIdentityConfiguration();
             configuration.setDomainId(domainId);
+            configuration.setDisplayName(displayName);
             configuration.setAuthorizationCodeType(authorizationCodeType);
             configuration.setAuthorizationCodeTypeProperties(authorizationCodeTypeProperties);
             configuration.setAuthorizationCodeTTLSeconds(authorizationCodeTTLSeconds);

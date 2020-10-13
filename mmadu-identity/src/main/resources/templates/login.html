@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title th:if="${domainConfiguration.theme.loginTitle == null}">Mmadu Login</title>
-    <title th:if="${domainConfiguration.theme.loginTitle != null}"
-           th:text="${domainConfiguration.theme.loginTitle}"></title>
+    <title th:if="${domainConfiguration.displayName == null}">Mmadu Login</title>
+    <title th:if="${domainConfiguration.displayName != null}"
+           th:text="${domainConfiguration.displayName}"></title>
     <link rel="stylesheet"
           href="../../../../../../mmadu/common/theme-utils/src/main/resources/META-INF/resources/webjars/mmadu-theme-utils/css/theme.css"
           th:href="@{/webjars/mmadu-theme-utils/css/theme.css}">

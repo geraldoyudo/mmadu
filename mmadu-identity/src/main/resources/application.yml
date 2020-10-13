@@ -38,6 +38,7 @@ mmadu:
   domain-identity-config:
     domains:
       - domainId: "0"
+        displayName: "Mmadu"
         authorization-code-type: alphanumeric
         authorization-code-ttl-seconds: 600
         max-authorization-ttl-seconds: 3600
