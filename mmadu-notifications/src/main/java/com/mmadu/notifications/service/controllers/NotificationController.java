@@ -1,5 +1,6 @@
 package com.mmadu.notifications.service.controllers;
 
+import com.mmadu.notifications.service.models.SendNotificationMessageRequest;
 import com.mmadu.notifications.service.models.SendUserNotificationMessageRequest;
 import com.mmadu.notifications.service.services.NotificationService;
 import com.mmadu.notifications.service.validators.SendNotificationMessageRequestValidator;
@@ -28,10 +29,17 @@ public class NotificationController {
         binder.addValidators(requestValidator);
     }
 
-    @PostMapping
+    @PostMapping("/sendToUser")
     @PreAuthorize("hasAuthority('notification.send')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Mono<Void> send(@RequestBody @Valid SendUserNotificationMessageRequest request) {
+    public Mono<Void> sendToUser(@RequestBody @Valid SendUserNotificationMessageRequest request) {
         return this.notificationService.sendToUser(request);
+    }
+
+    @PostMapping("/send")
+    @PreAuthorize("hasAuthority('notification.send')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> send(@RequestBody @Valid SendNotificationMessageRequest request) {
+        return this.notificationService.send(request);
     }
 }
