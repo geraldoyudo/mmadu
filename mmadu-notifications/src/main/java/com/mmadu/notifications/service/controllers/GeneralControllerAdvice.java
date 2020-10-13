@@ -4,6 +4,8 @@ import com.mmadu.notifications.service.exceptions.ProfileNotFoundException;
 import com.mmadu.notifications.service.exceptions.ProviderNotFoundException;
 import com.mmadu.notifications.service.models.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -11,6 +13,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -62,6 +66,21 @@ public class GeneralControllerAdvice {
         return ErrorResponse.builder()
                 .code("22")
                 .message(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(
+            RepositoryConstraintViolationException.class
+    )
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleRepositoryConstraintVioationError(RepositoryConstraintViolationException ex) {
+        return ErrorResponse.builder()
+                .code("23")
+                .message(String.format("Validation failed: %s",
+                        ex.getErrors().getAllErrors()
+                                .stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .collect(Collectors.joining(","))))
                 .build();
     }
 
