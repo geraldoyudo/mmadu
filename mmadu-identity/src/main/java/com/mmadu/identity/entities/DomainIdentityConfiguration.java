@@ -21,6 +21,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
     @Indexed(unique = true)
     @NotEmpty(message = "domainId is required")
     private String domainId;
+    private String displayName;
     @NotEmpty(message = "authorizationCodeType is required")
     private String authorizationCodeType = AlphaNumericCodeGenerator.TYPE;
     private Map<String, Object> authorizationCodeTypeProperties = new HashMap<>();
@@ -54,6 +55,14 @@ public class DomainIdentityConfiguration implements DomainPayload {
 
     public void setDomainId(String domainId) {
         this.domainId = domainId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getAuthorizationCodeType() {
@@ -180,6 +189,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
                 .append(refreshTokenEnabled, that.refreshTokenEnabled)
                 .append(id, that.id)
                 .append(domainId, that.domainId)
+                .append(displayName, that.displayName)
                 .append(authorizationCodeType, that.authorizationCodeType)
                 .append(authorizationCodeTypeProperties, that.authorizationCodeTypeProperties)
                 .append(authorizationCodeTTLSeconds, that.authorizationCodeTTLSeconds)
@@ -201,6 +211,7 @@ public class DomainIdentityConfiguration implements DomainPayload {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(domainId)
+                .append(displayName)
                 .append(authorizationCodeType)
                 .append(authorizationCodeTypeProperties)
                 .append(authorizationCodeTTLSeconds)
