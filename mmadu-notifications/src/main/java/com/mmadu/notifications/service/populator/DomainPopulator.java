@@ -97,11 +97,11 @@ public class DomainPopulator {
     private void initializeDomain(DomainNotificationConfigurationList.DomainItem domainItem) {
         DomainNotificationConfiguration configuration = domainItem.toEntity();
         domainNotificationConfigurationRepository.save(configuration);
-        applicationEventPublisher.publishEvent(new DomainInitializedEvent(configuration.getDomainId()));
         saveProviderConfigurations(domainItem);
         saveNotificationProfiles(domainItem);
         saveScheduledUserNotificationMessages(domainItem);
         saveScheduledEventNotificationMessages(domainItem);
+        applicationEventPublisher.publishEvent(new DomainInitializedEvent(configuration.getDomainId()));
     }
 
     private void saveProviderConfigurations(DomainNotificationConfigurationList.DomainItem domainItem) {
