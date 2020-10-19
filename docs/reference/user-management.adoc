@@ -533,6 +533,20 @@ include::{snippets}/user-management-documentation/set-credentials-expired/1/requ
 
 include::{snippets}/user-management-documentation/set-credentials-expired/1/http-request.adoc[]
 
+=== Setting User Property Validation State
+
+Authority: `user.set_property_validation_state`
+
+The user management service provides apis for keeping track of which fields have been validatated. Clients can use
+any method of validation they deem fit, and record the outcomes of such validation with this api.
+
+==== User Validation State Update Request Fields
+
+include::{snippets}/user-management-documentation/set-property-validation-state/1/request-fields.adoc[]
+
+==== Sample User Enable Request
+
+include::{snippets}/user-management-documentation/set-property-validation-state/1/http-request.adoc[]
 
 == Managing Groups
 
