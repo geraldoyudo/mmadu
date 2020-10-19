@@ -51,7 +51,10 @@ public class DomainFlowConfigurationDocumentation extends AbstractDocumentation 
                 fieldWithPath("domainId").type("string").optional().description("Domain Id"),
                 subsectionWithPath("passwordReset").optional().description("Password reset Configuration"),
                 subsectionWithPath("propertyValidation").optional().description("User property validation configuration"),
-                subsectionWithPath("theme").optional().description("Theme Configuration")
+                subsectionWithPath("theme").optional().description("Theme Configuration"),
+                subsectionWithPath("theme.logoSvg").optional().description("SVG code for your application logo (should be covered in <svg></svg> markup)"),
+                subsectionWithPath("theme.themeColour").optional().description("CSS color for customizing user interface elements")
+
         );
     }
 
