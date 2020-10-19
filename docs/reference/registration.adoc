@@ -200,6 +200,7 @@ include::{snippets}/domain-flow-configuration-documentation/delete-domain-flow-c
 Each domain has a registration profile object that is used for configuring the applications behaviour during
 registration.
 
+[#_creating_a_registration_profile]
 === Creating a Registration Profile
 
 A `POST /repo/registrationProfiles` Request will create a registration profile.
@@ -576,3 +577,48 @@ the `$field.name` returns the name property in the field object.
 |minValue
 |min attribute, any element with this will have the min attribute set to the min value of the field type
 |===
+
+[#user-workflows]
+=== User Workflows
+
+Mmadu Registration provides workflows that manage the status of the users. The available workflows are as follows:
+
+* User Registration
+* Password Reset
+* User Property Validation
+
+==== User Registration
+
+The registration service provides the ability to create multiple registration
+profiles to configure different forms and behaviour for registering different types of users.
+For example collecting email for admin users and phone number for regular users.
+
+A registration profile enables you to set the default roles, authorities and groups a user
+will have/belong to  when registered.
+
+In addition to this, you can also configure the default account status of each user as soon as registration
+is complete. The default Account status is a json object that specifies whether
+the user's account is locked, enabled, active or expired upon registration. See <<_creating_a_registration_profile, Creating a Registration Profile>>
+for more information on how to set default account status and other profile customizations.
+
+
+==== Password Reset
+
+The registration service also provides a flow for password reset and customization. The basic stebs are as follows:
+
+. User clicks on the password reset link
+. User enters his account identification (username, email, phone number or any other identifiable property).
+. The service sends a notification if it finds only one account matching the identification. This notification
+contains the password reset link.
+. The user clicks on this password reset link in the notification received.
+. The user is redirected to a reset page to enter a new password.
+. The user enters a new password and clicks on submit.
+. The user's password is changed.
+
+The password reset flow is uses notifications to send reset links to the user. The client
+can configure these to send an email, sms, or other notifications. The registration services
+utilizes the notification service by default, but any other notification service can be configured
+to work with the registration service by listening to amqp events fired by the registration service on
+password reset initiation.
+
+The password reset behaviour can be configured through the passwordReset property of the domain registration configuration.
