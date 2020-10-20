@@ -1,0 +1,13 @@
+[source,options="nowrap"]
+----
+{
+  "domainId" : "test-app",
+  "userId" : "2222",
+  "key" : "user|2222|sample-property",
+  "propertyName" : "email",
+  "validationType" : "sample-property",
+  "data" : {
+    "key1" : "value1"
+  }
+}
+----

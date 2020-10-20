@@ -1,0 +1,16 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/propertyValidation/attempt' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE2MDMxNzk0MDIsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEudGVzdC1hcHAudmFsaWRhdGlvbi5wcm9wZXJ0eS5lbWFpbC5hdHRlbXB0IiwiZXhwIjoxNjAzMTc5NDA3LCJpYXQiOjE2MDMxNzk0MDIsImp0aSI6ImY1YmY3NWE2LTA0YTAtNDJmNy1hMWUwLTU4M2UyOWNkZTg2YyJ9.UmphOxYST0VgbT07-xz0lu_3wJasmH4NxY5vN-hFfG-4nnQVE8bCvjKYNOhQ5oX85zs4y0l3P_yLeeHs7qCYaa2mF-hIDzUm5MMJsvqJBsEbBCHmAVAAW_0uPhPsAlVyZfFO0ofrqbgf8w8ZWZI5w1XNWpaiZN0MU__l7vFYQYGQZsJgvqc9tfaK-Ofz0u7txC9vx5Mgxs8H4v70-euyEX_HQRj2SJjBLwuqaQdLpbIAYWWlB7VsopJ9WmQPvzxFefgsNUY6bVTbzB_P4Fmb-kwe1kQTpo2Zew1qVx9QwkmjNur5uYCTss7hgsmP16v_4s3qxvLTPKEh_DrZ1FOZNg' \
+    -d '{
+  "domainId" : "test-app",
+  "userId" : "2222",
+  "key" : "user|2222|sample-property",
+  "propertyName" : "email",
+  "validationType" : "sample-property",
+  "data" : {
+    "key1" : "value1"
+  }
+}'
+----

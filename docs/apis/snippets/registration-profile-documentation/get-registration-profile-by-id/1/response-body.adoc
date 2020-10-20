@@ -4,10 +4,17 @@
   "code" : "user",
   "domainId" : "0",
   "defaultRedirectUrl" : "http://my.app.com/home",
+  "resourcesBaseUrl" : null,
+  "formUrl" : null,
   "defaultRoles" : [ "member" ],
   "defaultAuthorities" : [ "view-list" ],
   "defaultGroups" : [ "admins" ],
-  "defaultAccountStatus" : null,
+  "defaultAccountStatus" : {
+    "credentialExpired" : false,
+    "active" : true,
+    "enabled" : true,
+    "locked" : false
+  },
   "fields" : [ "field.username", "field.email", "field.password" ],
   "headerOne" : "My App",
   "headerTwo" : "Register",

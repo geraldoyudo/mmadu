@@ -17,6 +17,66 @@
 |`+Object+`
 |Password reset Configuration
 
+|`+passwordReset.userFields+`
+|`+Array+`
+|The user fields to use to search for a user account to reset
+
+|`+passwordReset.initiationFormTitle+`
+|`+Null+`
+|The title displayed on the account look up page
+
+|`+passwordReset.initiationFormDescription+`
+|`+Null+`
+|A description message displayed on the account look up page
+
+|`+passwordReset.confirmationFormTitle+`
+|`+Null+`
+|A title displayed on the password reset confirmation page
+
+|`+passwordReset.confirmationFormDescription+`
+|`+Null+`
+|A description message displayed on the password reset confirmation page
+
+|`+passwordReset.userFieldPlaceholder+`
+|`+Null+`
+|Placeholder for the account lookup field
+
+|`+passwordReset.submitButtonLabel+`
+|`+Null+`
+|Submit button label
+
+|`+passwordReset.resourcesBaseUrl+`
+|`+Null+`
+|Base Url for resolving css, js files for the form (if page is served through proxy)
+
+|`+passwordReset.initiationFormUrl+`
+|`+Null+`
+|POST url to send the password reset initiation request (for proxy use)
+
+|`+passwordReset.confirmationFormUrl+`
+|`+Null+`
+|POST url to send the password reset confirmation request (for proxy use)
+
+|`+passwordReset.initiationSuccessMessage+`
+|`+Null+`
+|Success message displayed to the user on successful account look up and password reset initiation
+
+|`+passwordReset.confirmationSuccessMessage+`
+|`+Null+`
+|Success message displayed to the user on successful password reset
+
+|`+passwordReset.linkPasswordConfirmationBaseUrl+`
+|`+Null+`
+|Base url used for generating passoword reset links
+
+|`+passwordReset.linkPasswordConfirmationUrl+`
+|`+Null+`
+|Url used for generating password reset links (for proxying requests)
+
+|`+passwordReset.otpProfile+`
+|`+String+`
+|The OTP Profile used for generating password reset tokens
+
 |`+propertyValidation+`
 |`+Object+`
 |User property validation configuration
@@ -24,5 +84,13 @@
 |`+theme+`
 |`+Object+`
 |Theme Configuration
+
+|`+theme.logoSvg+`
+|`+Null+`
+|SVG code for your application logo (should be covered in <svg></svg> markup)
+
+|`+theme.themeColour+`
+|`+Object+`
+|CSS color for customizing user interface elements
 
 |===

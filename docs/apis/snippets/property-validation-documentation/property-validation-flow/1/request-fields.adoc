@@ -1,0 +1,28 @@
+|===
+|Path|Type|Description
+
+|`+domainId+`
+|`+String+`
+|The domain id
+
+|`+userId+`
+|`+String+`
+|The user's external id to be validated
+
+|`+key+`
+|`+String+`
+|A unique key given to this validation process
+
+|`+propertyName+`
+|`+String+`
+|The user property to be validated
+
+|`+validationType+`
+|`+String+`
+|The validation type to be used
+
+|`+data+`
+|`+Object+`
+|Extra data needed by the validation type. (See <<property-validation-types, Property Validation Types>>)
+
+|===

@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1232
+Content-Length: 1406
 
 {
   "domainId" : "1234",
@@ -29,7 +29,8 @@ Content-Length: 1232
       "danger" : "#d5d5d5",
       "dangerText" : "#161616",
       "success" : "##feffff",
-      "successText" : "#838584"
+      "successText" : "#838584",
+      "text" : "#000000"
     }
   },
   "passwordReset" : {
@@ -40,10 +41,14 @@ Content-Length: 1232
     "confirmationFormDescription" : null,
     "userFieldPlaceholder" : null,
     "submitButtonLabel" : null,
+    "resourcesBaseUrl" : null,
+    "initiationFormUrl" : null,
+    "confirmationFormUrl" : null,
     "initiationSuccessMessage" : null,
     "confirmationSuccessMessage" : null,
     "otpProfile" : "password-reset",
-    "passwordConfirmationBaseUrl" : null
+    "linkPasswordConfirmationBaseUrl" : null,
+    "linkPasswordConfirmationUrl" : null
   },
   "propertyValidation" : { },
   "_links" : {
