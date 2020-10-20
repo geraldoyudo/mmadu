@@ -1,8 +1,10 @@
 package com.mmadu.notifications.service.provider;
 
 import com.mmadu.notifications.service.entities.DomainNotificationConfiguration;
+import com.mmadu.notifications.service.models.DomainInitializedEvent;
 import com.mmadu.notifications.service.models.GenericEvent;
 import com.mmadu.notifications.service.repositories.DomainNotificationConfigurationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @RepositoryEventHandler
 public class ScheduledEventNotificationMessageSubscriptionHandler {
@@ -52,6 +55,12 @@ public class ScheduledEventNotificationMessageSubscriptionHandler {
                 .receiveEventsFor(GenericEvent.class)
                 .subscribe(handler::handleEvent);
         subscription.put(domainId, disposable);
+    }
+
+    @EventListener
+    public void handleDomainInitialized(DomainInitializedEvent event){
+        domainNotificationConfigurationRepository.findByDomainId(event.getDomainId())
+                .ifPresentOrElse(this::initializeSubscriberForDomain, () -> log.warn("DomainNotificationConfiguration with domain not found {}", event.getDomainId()));
     }
 
     @HandleAfterCreate
