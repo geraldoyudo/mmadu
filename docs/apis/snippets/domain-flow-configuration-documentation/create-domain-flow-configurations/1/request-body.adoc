@@ -17,7 +17,8 @@
       "danger" : "#d5d5d5",
       "dangerText" : "#161616",
       "success" : "##feffff",
-      "successText" : "#838584"
+      "successText" : "#838584",
+      "text" : "#000000"
     }
   },
   "passwordReset" : {
@@ -28,10 +29,14 @@
     "confirmationFormDescription" : null,
     "userFieldPlaceholder" : null,
     "submitButtonLabel" : null,
+    "resourcesBaseUrl" : null,
+    "initiationFormUrl" : null,
+    "confirmationFormUrl" : null,
     "initiationSuccessMessage" : null,
     "confirmationSuccessMessage" : null,
     "otpProfile" : "password-reset",
-    "passwordConfirmationBaseUrl" : null
+    "linkPasswordConfirmationBaseUrl" : null,
+    "linkPasswordConfirmationUrl" : null
   },
   "propertyValidation" : { }
 }

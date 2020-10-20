@@ -1,6 +1,7 @@
 package com.mmadu.registration.documentation;
 
 import com.mmadu.registration.entities.RegistrationProfile;
+import com.mmadu.registration.models.registration.DefaultAccountStatus;
 import com.mmadu.registration.repositories.RegistrationProfileRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,9 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
                         .description("Field codes of domain fields to display in this form"),
                 fieldWithPath("defaultRedirectUrl")
                         .description("Url to redirect to after registration success"),
+                fieldWithPath("resourcesBaseUrl")
+                        .description("Base Url to resolve html js and css dependencies (in case of serving page through proxy)"),
+                fieldWithPath("formUrl").description("Url to send the POST request upon registration form submit (for proxy and custom handling)"),
                 fieldWithPath("headerOne").description("Main registration page title - h1"),
                 fieldWithPath("headerTwo").description("Secondary registration page title - h2"),
                 fieldWithPath("headerThree").description("Tertiary registration page title - h3"),
@@ -92,6 +96,7 @@ public class RegistrationProfileDocumentation extends AbstractDocumentation {
         profile.setSubmitButtonTitle("Go");
         profile.setCode("user");
         profile.setFields(asList("field.username", "field.email", "field.password"));
+        profile.setDefaultAccountStatus(new DefaultAccountStatus());
         return profile;
     }
 

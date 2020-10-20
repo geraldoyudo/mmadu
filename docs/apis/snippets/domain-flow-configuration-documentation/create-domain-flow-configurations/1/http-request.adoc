@@ -1,8 +1,8 @@
 [source,http,options="nowrap"]
 ----
 POST /repo/domainFlowConfigurations HTTP/1.1
-Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE1OTgwODQ4MzQsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLmNyZWF0ZSIsImV4cCI6MTU5ODA4NDgzOSwiaWF0IjoxNTk4MDg0ODM0LCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.fF0rnGAzV0J-TBZrztpndlRyW5AxL9U8GjROyXuy-Jk-oyCCeURmhXMdeJ56iGsRXod5_k2VcSoLWFb7oC1iDbxrKHtcHtQCYhtHiQ6Aznlp8jmIZvpF7uYB2qF-H3dozvYTAx2yF_UBd17P7c9UNxffUGSVwri3R6vx3l__hLtixPicMgBblz13W7pKQuUmxrJtN_ZOhgby1aHbBO5Js7Bv5VSieME_yK0ZN9dYWDHqLVQf8KXF_3W_DIV2JidMHf0hX_4oQyPNO8GAhzg5qkPJ3Fnf13f0EvH9c8BkJLhl57y0VVfMIG_DTGQAdbiPscYf9kHUrLZigFCQQK2Abg
-Content-Length: 1015
+Authorization: Bearer eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZWUzNzhhZDQ3NDg5MTI5Y2M0OWIzYjAiLCJyb2xlcyI6W10sImlzcyI6Im1tYWR1LmNvbSIsImdyb3VwcyI6W10sImF1dGhvcml0aWVzIjpbXSwiY2xpZW50X2lkIjoiMjJlNjViNzItOTIzNC00MjgxLTlkNzMtMzIzMDA4OWQ0OWE3IiwiZG9tYWluX2lkIjoiMCIsImF1ZCI6InRlc3QiLCJuYmYiOjE2MDMwOTg5MjMsInVzZXJfaWQiOiIxMTExMTExMTEiLCJzY29wZSI6ImEuZ2xvYmFsLmZsb3dfY29uZmlnLmNyZWF0ZSIsImV4cCI6MTYwMzA5ODkyOCwiaWF0IjoxNjAzMDk4OTIzLCJqdGkiOiJmNWJmNzVhNi0wNGEwLTQyZjctYTFlMC01ODNlMjljZGU4NmMifQ.m24McPu84QM5PweJ0DVGb957cSK6g9N79_ZpJ2wXX2xcNKnysU6q6qg1ziVro_mzK0n3yIN7h3RbKvLeKazYjxpp6-mkzeN9YuWsbXXLHIsHe8jFtTk2P1UgsfSH54VY6BgWyTXo9aLLA0EdAov63S_MOHz56nI3RzCCGXsN4eGsM94JMOuXDjJcGK13mQ9zzZ8lS8ymvSNP4Jl055ib3my6BZYd-pZBdeZF_qAc93KOUePywlQvqPhka8BkLtrYMTr_N_lDx2OPA53VDyB-2wNGw7xKMElPmP0Y7Uk3d-dzuegsdzHY74yPpHpgEYjPUkjQQesvgnd_Tg3Suw9RvQ
+Content-Length: 1189
 Host: localhost:8080
 
 {
@@ -22,7 +22,8 @@ Host: localhost:8080
       "danger" : "#d5d5d5",
       "dangerText" : "#161616",
       "success" : "##feffff",
-      "successText" : "#838584"
+      "successText" : "#838584",
+      "text" : "#000000"
     }
   },
   "passwordReset" : {
@@ -33,10 +34,14 @@ Host: localhost:8080
     "confirmationFormDescription" : null,
     "userFieldPlaceholder" : null,
     "submitButtonLabel" : null,
+    "resourcesBaseUrl" : null,
+    "initiationFormUrl" : null,
+    "confirmationFormUrl" : null,
     "initiationSuccessMessage" : null,
     "confirmationSuccessMessage" : null,
     "otpProfile" : "password-reset",
-    "passwordConfirmationBaseUrl" : null
+    "linkPasswordConfirmationBaseUrl" : null,
+    "linkPasswordConfirmationUrl" : null
   },
   "propertyValidation" : { }
 }
