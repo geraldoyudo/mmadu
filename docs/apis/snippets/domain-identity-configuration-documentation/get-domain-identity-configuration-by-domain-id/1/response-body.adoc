@@ -1,8 +1,9 @@
 [source,options="nowrap"]
 ----
 {
-  "id" : "5f09551dea78f80ca7c29aee",
+  "id" : "5f8feb0c6fe69541eeb9084f",
   "domainId" : "1",
+  "displayName" : "Test Domain",
   "authorizationCodeType" : "alphanumeric",
   "authorizationCodeTypeProperties" : { },
   "authorizationCodeTTLSeconds" : 600,
@@ -13,12 +14,42 @@
   "refreshTokenProvider" : "alphanumeric",
   "refreshTokenProperties" : { },
   "issuerId" : "mmadu.com",
+  "theme" : {
+    "logoSvg" : null,
+    "themeColour" : {
+      "primary" : "#007D76",
+      "secondary" : "#E6354C",
+      "info" : "#53FCE6",
+      "primaryDark" : "#005752",
+      "primaryDarkest" : "rgba(38, 145, 139, 0.5)",
+      "secondaryDark" : "#ce1a31",
+      "secondaryDarkest" : "rgba(234, 83, 103, 0.5)",
+      "danger" : "#d5d5d5",
+      "dangerText" : "#161616",
+      "success" : "##feffff",
+      "successText" : "#838584",
+      "text" : "black"
+    }
+  },
+  "loginProfiles" : {
+    "user" : {
+      "title" : "Login",
+      "message" : "Sign In as User",
+      "showResetPassword" : true
+    }
+  },
+  "defaultLoginProfile" : {
+    "title" : "Test Domain - Login",
+    "message" : "Sign In",
+    "showResetPassword" : false
+  },
+  "passwordResetUrl" : "http://mydomain.com/passwordReset",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551dea78f80ca7c29aee"
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f8feb0c6fe69541eeb9084f"
     },
     "domainIdentityConfiguration" : {
-      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551dea78f80ca7c29aee"
+      "href" : "http://localhost:8080/admin/repo/domainIdentityConfigurations/5f8feb0c6fe69541eeb9084f"
     }
   }
 }
