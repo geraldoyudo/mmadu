@@ -3,6 +3,8 @@ package com.mmadu.identity.documentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mmadu.identity.entities.DomainIdentityConfiguration;
+import com.mmadu.identity.models.signin.SignInProfile;
+import com.mmadu.identity.models.themes.ThemeConfiguration;
 import com.mmadu.identity.providers.authorization.code.AlphaNumericCodeGenerator;
 import com.mmadu.identity.repositories.DomainIdentityConfigurationRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +16,7 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.request.ParameterDescriptor;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -52,6 +55,7 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
     private String newDomainIdentityConfigurationRequest() {
         ObjectNode node = objectMapper.createObjectNode();
         node.put("domainId", DOMAIN_ID)
+                .put("displayName", "Test Domain")
                 .put("authorizationCodeType", AlphaNumericCodeGenerator.TYPE)
                 .put("authorizationCodeTTLSeconds", 600L)
                 .put("maxAuthorizationTTLSeconds", 24 * 60 * 60L)
@@ -59,17 +63,38 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 .put("refreshTokenEnabled", true)
                 .put("accessTokenProvider", "jwt")
                 .put("refreshTokenProvider", "alphanumeric")
+                .put("passwordResetUrl", "http://mydomain.com/passwordReset")
                 .put("issuerId", "mmadu.com");
         node.putObject("authorizationCodeTypeProperties");
         node.putObject("accessTokenProperties");
         node.putObject("refreshTokenProperties");
+        node.putPOJO("theme", new ThemeConfiguration());
+        node.putPOJO("defaultLoginProfile", signinProfile());
+        node.putPOJO("loginProfiles", Map.of("user", userSignInProfile()));
         return node.toPrettyString();
+    }
+
+    private SignInProfile signinProfile() {
+        SignInProfile profile = new SignInProfile();
+        profile.setMessage("Sign In");
+        profile.setShowResetPassword(false);
+        profile.setTitle("Test Domain - Login");
+        return profile;
+    }
+
+    private SignInProfile userSignInProfile() {
+        SignInProfile profile = new SignInProfile();
+        profile.setMessage("Sign In as User");
+        profile.setShowResetPassword(true);
+        profile.setTitle("Login");
+        return profile;
     }
 
     private static List<FieldDescriptor> domainIdentityConfigurationFields() {
         return asList(
                 fieldWithPath("id").type("string").optional().description("Domain Identity Configuration ID"),
                 fieldWithPath("domainId").description("The Domain Id"),
+                fieldWithPath("displayName").description("The Domain Display Name"),
                 fieldWithPath("authorizationCodeType").description("The format of authorization code generated in authorization_code grant type flow"),
                 subsectionWithPath("authorizationCodeTypeProperties").description("Properties for customizing the authorization code generation").optional(),
                 fieldWithPath("authorizationCodeTTLSeconds").description("Validity of the authorization code in seconds"),
@@ -79,7 +104,16 @@ public class DomainIdentityConfigurationDocumentation extends AbstractDocumentat
                 subsectionWithPath("accessTokenProperties").description("Properties for customizing the access token generation").optional(),
                 fieldWithPath("refreshTokenProvider").description("The provider used for generating refresh tokens"),
                 subsectionWithPath("refreshTokenProperties").description("Properties for customizing the refresh token generation").optional(),
-                fieldWithPath("issuerId").description("issuer id of the domain")
+                fieldWithPath("issuerId").description("issuer id of the domain"),
+                fieldWithPath("passwordResetUrl").description("The value of href for the forgot password link shown in the login page"),
+                subsectionWithPath("theme").description("Theming configuration"),
+                subsectionWithPath("theme.logoSvg").description("SVG logo (with <svg></svg> tags)"),
+                subsectionWithPath("theme.themeColour").description("CSS color for styling pages"),
+                subsectionWithPath("defaultLoginProfile").description("Default login profile"),
+                subsectionWithPath("defaultLoginProfile.title").description("The text shown on the page header"),
+                subsectionWithPath("defaultLoginProfile.message").description("A message shown below the page header"),
+                subsectionWithPath("defaultLoginProfile.showResetPassword").description("When true, it displays a 'forgot password' link below the login form"),
+                subsectionWithPath("loginProfiles").description("Map representing login profiles (map value) for each sign in code (map key)")
         );
     }
 

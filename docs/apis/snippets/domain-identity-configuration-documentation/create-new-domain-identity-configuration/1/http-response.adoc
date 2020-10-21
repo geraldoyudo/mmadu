@@ -4,7 +4,7 @@ HTTP/1.1 201 Created
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Location: http://localhost:8080/admin/repo/domainIdentityConfigurations/5f09551cea78f80ca7c29aeb
+Location: http://localhost:8080/admin/repo/domainIdentityConfigurations/5f8feb0c6fe69541eeb9084c
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate

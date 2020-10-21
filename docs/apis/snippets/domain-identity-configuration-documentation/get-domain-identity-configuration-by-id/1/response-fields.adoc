@@ -9,6 +9,10 @@
 |`+String+`
 |The Domain Id
 
+|`+displayName+`
+|`+String+`
+|The Domain Display Name
+
 |`+authorizationCodeType+`
 |`+String+`
 |The format of authorization code generated in authorization_code grant type flow
@@ -48,5 +52,29 @@
 |`+issuerId+`
 |`+String+`
 |issuer id of the domain
+
+|`+passwordResetUrl+`
+|`+String+`
+|The value of href for the forgot password link shown in the login page
+
+|`+theme+`
+|`+Object+`
+|Theming configuration
+
+|`+theme.logoSvg+`
+|`+Null+`
+|SVG logo (with <svg></svg> tags)
+
+|`+theme.themeColour+`
+|`+Object+`
+|CSS color for styling pages
+
+|`+defaultLoginProfile+`
+|`+Object+`
+|Default login profile
+
+|`+loginProfiles+`
+|`+Object+`
+|Map representing login profiles (map value) for each sign in code (map key)
 
 |===
